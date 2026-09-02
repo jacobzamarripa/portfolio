@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Nexus FiberOps Unified - a retrospective case study of the QR data pipeline I built and ran as a fiber installation lead, rebuilt as a role-aware operations app.">
+<meta name="author" content="Jacob Zamarripa">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nexus - FiberOps Unified">
+<meta property="og:description" content="Nexus FiberOps Unified - a retrospective case study of the QR data pipeline I built and ran as a fiber installation lead, rebuilt as a role-aware operations app.">
+<meta property="og:url" content="https://jacobzamarripa.github.io/portfolio/centric-fiberops/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexus - FiberOps Unified">
+<meta name="twitter:description" content="Nexus FiberOps Unified - a retrospective case study of the QR data pipeline I built and ran as a fiber installation lead, rebuilt as a role-aware operations app.">
+<link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/centric-fiberops/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9889;</text></svg>">
+<title>Nexus &mdash; FiberOps Unified</title>
+<style>
+:root{--slate-950:#020617;--slate-900:#0f172a;--slate-800:#1e293b;--slate-600:#475569;--slate-500:#64748b;--slate-400:#94a3b8;--slate-300:#cbd5e1;--slate-700:#334155;--slate-200:#e2e8f0;--slate-100:#f1f5f9;--slate-50:#f8fafc;--blue:#2563eb;--blue-50:#eff6ff;--emerald:#059669;--emerald-50:#ecfdf5;--amber:#f59e0b;--amber-50:#fffbeb;--rose:#f43f5e;--rose-50:#fff1f2;--violet:#7c3aed;--white:#fff;--radius:24px;--shadow:0 22px 54px -30px rgba(15,23,42,.42)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--slate-50);color:var(--slate-900);font:15px/1.6 Lexend,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}.wrap{width:min(1180px,calc(100% - 36px));margin:auto}.eyebrow{font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{letter-spacing:-.045em;line-height:1.05}.hero{padding:24px 0 84px;background:radial-gradient(circle at 80% 15%,rgba(37,99,235,.18),transparent 28rem),var(--slate-900);color:#fff}.topbar{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:13px}.bolt{display:grid;place-items:center;width:44px;height:44px;border-radius:16px;background:#fff;color:var(--slate-900);font-size:22px;font-weight:900;transform:rotate(-3deg)}.brand b{display:block;font-size:22px;line-height:1}.brand span{font-size:10px;font-weight:900;color:#60a5fa;letter-spacing:.2em;text-transform:uppercase}.proto{padding:8px 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.06);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#cbd5e1}.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:70px;align-items:end;padding-top:80px}.hero h1{font-size:clamp(3rem,7vw,6.2rem);margin-bottom:24px}.hero h1 span{color:#60a5fa}.hero-copy{max-width:62ch;color:#cbd5e1;font-weight:600}.truth{padding:22px;border-radius:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.truth strong{display:block;color:#fff;margin-bottom:6px}.truth p{margin:0;color:#94a3b8;font-size:13px}.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.meta div{padding:14px;border-radius:18px;background:rgba(255,255,255,.05)}.meta small{display:block;color:#64748b;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.meta b{font-size:12px;color:#e2e8f0}.section{padding:86px 0;border-bottom:1px solid var(--slate-200)}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:34px}.section h2{font-size:clamp(2rem,4vw,3.3rem);margin:8px 0 0}.section-note{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--slate-400)}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:760px;background:#fff;border:1px solid var(--slate-200);border-radius:32px;overflow:hidden;box-shadow:0 32px 80px -36px rgba(15,23,42,.48)}.sidebar{padding:28px 20px;border-right:1px solid var(--slate-200);background:#fff}.sidebar .brand{margin:0 6px 38px}.sidebar .bolt{width:38px;height:38px;background:var(--slate-900);color:#fff}.sidebar .brand b{color:var(--slate-800)}.nav-label{padding:20px 14px 8px;color:#cbd5e1;font-size:9px;font-weight:700;text-transform:uppercase}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:var(--slate-500);border-radius:16px;padding:12px 14px;text-align:left;font-weight:900;cursor:pointer;transition:.2s}.nav button:hover{background:var(--slate-100);color:var(--slate-900)}.nav button.active{background:var(--slate-900);color:#fff;box-shadow:var(--shadow);transform:translateX(3px)}.nav button span{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:10px;border-radius:10px;background:var(--slate-100);color:var(--slate-500)}.nav button.active span{background:var(--blue);color:#fff;transform:rotate(3deg)}.surface{padding:38px;background:var(--slate-50);min-width:0}.surface-view{display:none}.surface-view.active{display:block}.surface-header{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}.live{display:flex;gap:8px;align-items:center;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--emerald)}.live b{padding:3px 7px;border-radius:5px;background:var(--blue);color:#fff}.surface h3{font-size:40px;margin:9px 0 0}.primary{border:0;border-radius:16px;padding:14px 20px;background:var(--slate-900);color:#fff;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;cursor:pointer}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.hud,.panel,.job{background:#fff;border:1px solid var(--slate-100);border-radius:24px;box-shadow:var(--shadow)}.hud{padding:22px}.hud small{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--slate-400)}.hud b{display:block;font-size:32px;letter-spacing:-.05em;margin:10px 0 2px}.hud em{font-size:9px;color:var(--blue);font-style:normal;font-weight:900;text-transform:uppercase}.split{display:grid;grid-template-columns:1.6fr .8fr;gap:20px;margin-top:20px}.panel{padding:24px}.panel h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em}.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.quick div{padding:18px;border-radius:20px;background:var(--slate-50);border:1px solid transparent}.quick b{display:block}.quick small{color:var(--slate-400);font-weight:700}.alert{margin-top:14px;padding:16px;border:1px solid #fecdd3;background:var(--rose-50);border-radius:20px;color:#881337;font-weight:800}.feed{display:grid;gap:14px}.feed div{padding-left:14px;border-left:3px solid var(--blue)}.feed small{display:block;color:var(--slate-400)}.brief{padding:26px;border-radius:28px;background:var(--slate-900);color:#fff}.brief p{color:#94a3b8}.brief-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.next-stop{padding:20px;border-radius:22px;background:#fff;color:var(--slate-900)}.next-stop small{color:var(--blue);font-weight:900;text-transform:uppercase}.brief-counts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.brief-counts div{padding:14px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.05)}.brief-counts b{font-size:24px}.brief-counts small{display:block;color:#94a3b8;text-transform:uppercase;font-size:8px;font-weight:900}.jobs{display:grid;gap:12px;margin-top:18px}.job{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px}.job .time{font-weight:900;font-size:20px}.job small{display:block;color:var(--slate-400)}.pill{padding:6px 10px;border-radius:999px;font-size:9px;font-weight:900;text-transform:uppercase}.pill.blue{background:var(--blue-50);color:var(--blue)}.pill.amber{background:var(--amber-50);color:#b45309}.pill.green{background:var(--emerald-50);color:var(--emerald)}
+.story-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:70px}.story h3{font-size:20px;margin:34px 0 10px}.story h3:first-child{margin-top:0}.story p,.story li{color:var(--slate-600)}.story li{margin:8px 0}.evidence{display:grid;gap:14px}.evidence article{padding:24px;border-radius:24px;background:#fff;border:1px solid var(--slate-200);box-shadow:var(--shadow)}.evidence b{font-size:34px;letter-spacing:-.05em}.evidence small{display:block;color:var(--slate-500)}.boundary{border-left:4px solid var(--blue)!important}.footer{padding:70px 0;background:var(--slate-900);color:#fff}.footer-grid{display:flex;align-items:end;justify-content:space-between;gap:30px}.footer h2{font-size:clamp(2rem,4vw,3.2rem);max-width:15ch}.footer p{color:#94a3b8;max-width:52ch}.footer a{display:inline-block;margin-top:18px;padding:13px 18px;border-radius:16px;background:#fff;color:var(--slate-900);text-decoration:none;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+@media(max-width:900px){.hero-grid,.story-grid{grid-template-columns:1fr}.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--slate-200)}.sidebar .brand{margin-bottom:18px}.nav-label{display:none}.nav{display:flex;overflow-x:auto}.nav button{white-space:nowrap}.cards{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.hero-grid{padding-top:60px}.sidebar{padding:18px}.surface{padding:24px}.app{min-height:0}}
+@media(max-width:560px){.topbar,.section-head,.surface-header,.footer-grid{align-items:flex-start;flex-direction:column}.hero{padding-bottom:62px}.hero-grid{gap:30px}.hero h1{font-size:44px}.meta,.cards,.quick,.brief-grid{grid-template-columns:1fr}.surface{padding:18px}.surface h3{font-size:32px}.job{align-items:flex-start;flex-direction:column}.section{padding:64px 0}.proto{display:none}}
+/* Fidelity pass: the portfolio frame now uses the same light Nexus shell and dark briefing card as the app. */
+.hero{background:radial-gradient(circle at 80% 15%,rgba(37,99,235,.10),transparent 28rem),var(--slate-50);color:var(--slate-900);border-bottom:1px solid var(--slate-200)}
+.hero .bolt{background:var(--slate-900);color:#fff;box-shadow:var(--shadow)}
+.hero .brand b{color:var(--slate-800)}
+.hero .brand span{color:var(--blue)}
+.hero .proto{border-color:#bfdbfe;background:var(--blue-50);color:var(--blue)}
+.hero-grid{align-items:center}
+.hero h1{font-size:clamp(3rem,6vw,5.4rem)}
+.hero h1 span{color:var(--blue)}
+.hero-copy{color:var(--slate-600)}
+.hero .truth{padding:24px;border-radius:28px;background:var(--slate-900);border-color:var(--slate-900);box-shadow:var(--shadow)}
+.hero .truth strong{color:#fff}.hero .truth p{color:var(--slate-400)}
+.hero .meta div{padding:16px;border-radius:20px;background:#fff;border:1px solid var(--slate-200);box-shadow:var(--shadow)}
+.hero .meta small{color:var(--slate-400)}.hero .meta b{color:var(--slate-800)}
+
+/* An author `display` rule beats the UA sheet's [hidden]{display:none}, so
+   .qr-empty{display:grid} kept rendering while hidden. Make hidden win. */
+[hidden]{display:none!important}
+
+/* Quick-access tiles are real navigation, so they are buttons. Keep the
+   original tile look and add an affordance. */
+.quick button{display:block;width:100%;text-align:left;font:inherit;cursor:pointer;
+  padding:18px;border-radius:20px;background:var(--slate-50);border:1px solid transparent;transition:.18s}
+.quick button:hover{border-color:#bfdbfe;background:var(--blue-50);transform:translateY(-1px)}
+.quick button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.quick button b{display:block;color:var(--slate-900)}
+.quick button small{color:var(--slate-400);font-weight:700}
+
+/* ===== Three-tier truth boundary (hero) ===== */
+.tiers{display:grid;gap:8px;margin-top:14px}
+.tier{display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px;align-items:start;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.tier-dot{width:9px;height:9px;border-radius:50%;margin-top:5px}
+.tier-real .tier-dot{background:#34d399}
+.tier-retro .tier-dot{background:#60a5fa}
+.tier-plan .tier-dot{background:#94a3b8}
+.tier b{display:block;font-size:12px;color:#fff;line-height:1.35}
+.tier small{display:block;color:#94a3b8;font-size:11px;font-weight:600;margin-top:2px}
+.tier-tag{font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border-radius:5px;margin-left:6px;vertical-align:1px}
+.tier-real .tier-tag{background:rgba(52,211,153,.16);color:#34d399}
+.tier-retro .tier-tag{background:rgba(96,165,250,.16);color:#60a5fa}
+.tier-plan .tier-tag{background:rgba(148,163,184,.16);color:#cbd5e1}
+
+/* ===== Pipeline diagram ===== */
+.pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:20px}
+.pipe-step{position:relative;padding:12px 10px 11px;border-radius:16px;background:#fff;border:1px solid var(--slate-200);text-align:left;transition:.22s}
+.pipe-step small{display:block;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-400)}
+.pipe-step b{display:block;font-size:12px;margin-top:5px;line-height:1.25;color:var(--slate-600)}
+.pipe-step.is-done{border-color:#a7f3d0;background:var(--emerald-50)}
+.pipe-step.is-done b{color:#065f46}
+.pipe-step.is-done small{color:var(--emerald)}
+.pipe-step.is-active{border-color:var(--blue);background:var(--blue-50);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.pipe-step.is-active b{color:var(--slate-900)}
+.pipe-step.is-active small{color:var(--blue)}
+.pipe-step .tick{position:absolute;top:10px;right:11px;font-size:11px;color:var(--emerald);opacity:0;transition:.22s}
+.pipe-step.is-done .tick{opacity:1}
+
+/* ===== QR pipeline layout ===== */
+.qr-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
+.qr-stage{display:grid;place-items:center;gap:10px;padding:18px;border-radius:24px;background:#fff;border:1px solid var(--slate-200);box-shadow:var(--shadow);text-align:center}
+.qr-canvas{width:196px;height:196px;image-rendering:pixelated;border-radius:8px;background:#fff}
+.qr-empty{width:196px;height:196px;display:grid;place-items:center;border-radius:12px;border:2px dashed var(--slate-200);color:var(--slate-400);font-size:11px;font-weight:800;text-align:center;padding:16px;line-height:1.5}
+.qr-scanhint{font-size:10px;font-weight:800;color:var(--slate-500);max-width:26ch;line-height:1.5}
+.qr-scanhint b{color:var(--blue)}
+
+/* ===== Record field table ===== */
+.rec{display:grid;gap:5px}
+.rec-row{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 11px;border-radius:12px;background:var(--slate-50);border:1px solid transparent;transition:.2s}
+.rec-k{font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-400)}
+.rec-v{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;color:var(--slate-800);word-break:break-word}
+.rec-row.is-dirty{background:#fff7ed;border-color:#fed7aa}
+.rec-row.is-dirty .rec-v{color:#9a3412}
+.rec-row.is-clean{background:var(--emerald-50);border-color:#a7f3d0}
+.rec-row.is-clean .rec-v{color:#065f46}
+.rec-row.is-pending .rec-v{color:var(--slate-400)}
+.rec-row.is-filled{background:var(--blue-50);border-color:#bfdbfe}
+.rec-row.is-filled .rec-v{color:var(--blue)}
+.rec-row.is-bad{background:#fff1f2;border-color:#fecdd3}
+.rec-row.is-bad .rec-v{color:#9f1239}
+.rec-note{grid-column:1/-1;font-family:inherit;font-size:10px;font-weight:800;margin-top:3px}
+.rec-row.is-dirty .rec-note{color:#c2410c}
+.rec-row.is-bad .rec-note{color:#e11d48}
+.rec-row.is-clean .rec-note{color:var(--emerald)}
+
+/* ===== Action bar ===== */
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.stepbtn{border:1px solid var(--slate-200);border-radius:14px;padding:11px 15px;background:#fff;color:var(--slate-600);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:.18s}
+.stepbtn:hover:not(:disabled){border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.stepbtn.is-next{background:var(--slate-900);border-color:var(--slate-900);color:#fff}
+.stepbtn.is-next:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.stepbtn:disabled{opacity:.38;cursor:not-allowed}
+.stepbtn.ghost{background:transparent}
+
+/* ===== Event log ===== */
+.log{margin-top:16px;border-radius:20px;border:1px solid var(--slate-200);background:#fff;overflow:hidden}
+.log-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--slate-100)}
+.log-head h5{margin:0;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-500)}
+.log-body{max-height:190px;overflow-y:auto}
+.log-row{display:grid;grid-template-columns:66px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 16px;border-bottom:1px solid var(--slate-50);font-size:11px}
+.log-row:last-child{border-bottom:0}
+.log-t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--slate-400)}
+.log-m{font-weight:700;color:var(--slate-700)}
+.log-s{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:5px}
+.log-s.ok{background:var(--emerald-50);color:var(--emerald)}
+.log-s.err{background:#fff1f2;color:#e11d48}
+.log-s.info{background:var(--blue-50);color:var(--blue)}
+.log-empty{padding:18px 16px;font-size:11px;font-weight:700;color:var(--slate-400)}
+
+/* ===== Manual vs scan race ===== */
+.race{margin-top:16px;padding:18px;border-radius:22px;background:var(--slate-900);color:#fff}
+.race h5{margin:0 0 4px;font-size:13px}
+.race p{margin:0 0 14px;color:#94a3b8;font-size:11.5px;max-width:56ch}
+.race-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.race-card{padding:14px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+.race-card small{display:block;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#64748b;margin-bottom:8px}
+.race-target{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:700;color:#93c5fd;letter-spacing:.04em;margin-bottom:9px}
+.race-input{width:100%;padding:9px 11px;border-radius:11px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.28);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:.04em}
+.race-input:focus{outline:2px solid var(--blue);outline-offset:1px}
+.race-input.ok{border-color:#34d399}
+.race-input.bad{border-color:#fb7185}
+.race-stat{display:flex;gap:14px;margin-top:10px}
+.race-stat div{flex:1}
+.race-stat b{display:block;font-size:19px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.race-stat small{font-size:8px;letter-spacing:.1em}
+.race-verdict{margin-top:12px;padding:11px 13px;border-radius:14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.28);font-size:11.5px;font-weight:700;color:#a7f3d0}
+
+/* ===== Route map ===== */
+.routemap{width:100%;height:auto;display:block;border-radius:20px;background:linear-gradient(150deg,#f8fafc,#eef2f7);border:1px solid var(--slate-200)}
+.stop{cursor:pointer}
+.stop circle.hit{fill:transparent}
+.stop .disc{fill:#fff;stroke:var(--slate-400);stroke-width:2;transition:.2s}
+.stop .lbl{font:900 11px ui-monospace,Menlo,monospace;fill:var(--slate-500);text-anchor:middle;dominant-baseline:central}
+.stop.is-active .disc{fill:var(--slate-900);stroke:var(--slate-900);r:15}
+.stop.is-active .lbl{fill:#fff}
+.stop.is-exception .disc{stroke:var(--rose);stroke-dasharray:3 2}
+.stop.is-exception .lbl{fill:#e11d48}
+.stop:hover .disc{stroke:var(--blue)}
+.stop .cap{font:800 9px system-ui,sans-serif;fill:var(--slate-500);text-anchor:middle}
+.stop.is-active .cap{fill:var(--slate-900)}
+.routeline{fill:none;stroke:var(--slate-300);stroke-width:2;stroke-dasharray:5 4}
+.map-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:10px;font-weight:800;color:var(--slate-500)}
+.map-legend span{display:flex;align-items:center;gap:6px}
+.map-key{width:9px;height:9px;border-radius:50%;border:2px solid var(--slate-400);background:#fff}
+.map-key.act{background:var(--slate-900);border-color:var(--slate-900)}
+.map-key.exc{border-color:var(--rose);border-style:dashed}
+
+/* ===== Provisioning ===== */
+.prov{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.prov-state{padding:13px 15px;border-radius:16px;font-size:11.5px;font-weight:800;margin-bottom:14px}
+.prov-state.waiting{background:var(--slate-50);color:var(--slate-500);border:1px dashed var(--slate-200)}
+.prov-state.filled{background:var(--emerald-50);color:#065f46;border:1px solid #a7f3d0}
+.prov-state.blocked{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+
+/* ===== Job selection ===== */
+.job{cursor:pointer;transition:.18s;border:1px solid var(--slate-100)}
+.job:hover{border-color:#bfdbfe;transform:translateY(-1px)}
+.job.is-active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.job-pick{display:flex;align-items:center;gap:9px}
+.demo-note{margin:0 0 16px;padding:11px 14px;border-radius:14px;background:var(--blue-50);border:1px solid #bfdbfe;color:#1e40af;font-size:11px;font-weight:700}
+.count-note{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-400)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media(max-width:900px){
+  .qr-grid,.prov{grid-template-columns:minmax(0,1fr)}
+  .pipe{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .race-grid{grid-template-columns:minmax(0,1fr)}
+  .app>*{min-width:0}
+}
+@media(max-width:560px){
+  .pipe{grid-template-columns:minmax(0,1fr)}
+  .rec-row{grid-template-columns:minmax(0,1fr)}
+  .log-row{grid-template-columns:56px minmax(0,1fr);row-gap:4px}
+  .log-row .log-s{grid-column:2}
+}
+@media (prefers-reduced-motion: reduce){
+  .pipe-step,.stepbtn,.job,.stop .disc{transition:none}
+  .stepbtn:hover:not(:disabled),.job:hover{transform:none}
+}
+
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap"><div class="topbar"><div class="brand"><div class="bolt">&#991;</div><div><b>Nexus</b><span>FiberOps Unified</span></div></div><div class="proto">Retrospective portfolio prototype</div></div>
+<div class="hero-grid"><div><div class="eyebrow">Field experience &rarr; operating-system design</div>
+<h1>Four years of field work,<br><span>rebuilt as a product.</span></h1>
+<p class="hero-copy">I installed and repaired fiber for four years, then built the tools I kept wishing existed &mdash; a QR-driven data pipeline that cut manual entry out of closeout, and a lead's tracker for everything the schedule didn't capture. Nexus is those two tools rebuilt as one role-aware command center.</p></div>
+<div><div class="truth"><strong>Truth boundary</strong>
+<p>Three different things live in this case study. They are not the same and I don't blend them.</p>
+<div class="tiers">
+<div class="tier tier-real"><span class="tier-dot"></span><div><b>L-FIT tracker + QR pipeline<span class="tier-tag">Real</span></b><small>Built and used during my Centric employment. The barcode workflow remained in use after my departure.</small></div></div>
+<div class="tier tier-retro"><span class="tier-dot"></span><div><b>Nexus FiberOps Unified<span class="tier-tag">Retrospective</span></b><small>The unified application below. Built after I left Centric, as a portfolio prototype. Never deployed there, no production adoption.</small></div></div>
+<div class="tier tier-plan"><span class="tier-dot"></span><div><b>SOP library &amp; iPad rollout<span class="tier-tag">Planned</span></b><small>Intent only. Scoped, never built. Shown here as roadmap, never claimed as delivered.</small></div></div>
+</div></div>
+<div class="meta"><div><small>Formal roles</small><b>Installation Technician &rarr; Fiber Installation Lead</b></div><div><small>Prototype stack</small><b>Apps Script &middot; React &middot; Sheets</b></div></div></div></div></div></header>
+
+<main><section class="section"><div class="wrap"><div class="section-head"><div><div class="eyebrow">01 / Interactive walkthrough</div><h2>Inside Nexus</h2></div><div class="section-note">All demo records are fictional</div></div>
+<div class="app">
+<aside class="sidebar"><div class="brand"><div class="bolt">&#991;</div><div><b>Nexus</b><span>FiberOps Unified</span></div></div>
+<div class="nav" role="tablist" aria-label="Demo view">
+<div class="nav-label">Operations</div>
+<button class="active" data-view="overview" role="tab" aria-selected="true"><span>&#8962;</span>Dashboard</button>
+<button data-view="jobs" role="tab" aria-selected="false"><span>&#10003;</span>My Jobs</button>
+<button data-view="calendar" role="tab" aria-selected="false"><span>&#9638;</span>Calendar</button>
+<button data-view="map" role="tab" aria-selected="false"><span>&#8982;</span>Map View</button>
+<div class="nav-label">Field tools</div>
+<button data-view="qr" role="tab" aria-selected="false"><span>&#9646;</span>QR Pipeline</button>
+<button data-view="prov" role="tab" aria-selected="false"><span>&#9707;</span>Provisioning</button>
+</div></aside>
+
+<div class="surface">
+
+<div class="surface-view active" id="overview"><div class="surface-header"><div><div class="live"><b>Live</b> &#9679; All systems operational</div><h3>Overview</h3></div></div>
+<div class="cards">
+<div class="hud"><small>Jobs in queue</small><b id="hudQueue">5</b><em id="hudQueueSub">across 3 communities</em></div>
+<div class="hud"><small>Completed today</small><b id="hudDone" style="color:var(--emerald)">0</b><em id="hudDoneSub">of 5 in the slice</em></div>
+<div class="hud"><small>Records scanned</small><b id="hudScan" style="color:var(--blue)">0</b><em>via the QR pipeline</em></div>
+<div class="hud"><small>Manual keystrokes saved</small><b id="hudKeys">0</b><em id="hudKeysSub">28 per record avoided</em></div>
+</div>
+<div class="split">
+<div class="panel"><h4>Quick access</h4>
+<div class="quick">
+<button type="button" data-goto="qr"><b>QR Pipeline</b><small>Generate &amp; scan closeout records</small></button>
+<button type="button" data-goto="jobs"><b>My Jobs</b><small>Today-first technician agenda</small></button>
+<button type="button" data-goto="map"><b>Field map</b><small>Stops &amp; route sequence</small></button>
+<button type="button" data-goto="prov"><b>Provisioning</b><small>Equipment association</small></button>
+</div>
+<div class="alert" id="dashAlert">! North Ridge queue &mdash; 1 job needs rescheduling</div>
+</div>
+<div class="panel"><h4>Operations feed</h4><div class="feed" id="opsFeed"></div></div>
+</div></div>
+
+<div class="surface-view" id="jobs"><div class="surface-header"><div><div class="eyebrow">Technician agenda</div><h3>My Jobs</h3></div><div class="count-note" id="jobsCount">5 of 5 shown &middot; demo slice</div></div>
+<div class="brief"><div class="eyebrow" style="color:#93c5fd">Morning brief</div>
+<h3 style="font-size:30px">Good morning, Taylor</h3>
+<p id="briefLine">Five stops on the board. Start with the service activation at Alder Grove.</p>
+<div class="brief-grid"><div class="next-stop"><small>First stop / next action</small><h4 style="font-size:23px;margin:10px 0" id="briefStop">8:30 AM &middot; Service activation</h4><p style="color:var(--slate-500);margin:0" id="briefAddr">128 Lantern Way &middot; Alder Grove</p></div>
+<div class="brief-counts">
+<div><b id="cntProg">1</b><small>In progress</small></div>
+<div><b id="cntToday">3</b><small>Today</small></div>
+<div><b id="cntFuture">1</b><small>Future</small></div>
+<div><b id="cntClaim">1</b><small>Claim</small></div>
+</div></div></div>
+<div class="jobs" id="jobList"></div></div>
+
+<div class="surface-view" id="calendar"><div class="surface-header"><div><div class="eyebrow">Dispatch &amp; capacity</div><h3>Calendar</h3></div><div class="count-note">Week of September 14</div></div>
+<p class="demo-note">Select a day to filter the agenda. Capacity is recalculated from the jobs assigned to it.</p>
+<div class="jobs" id="calList"></div></div>
+
+<div class="surface-view" id="map"><div class="surface-header"><div><div class="eyebrow">Coverage &amp; routes</div><h3>Field map</h3></div><div class="count-note" id="mapNote">Select a stop</div></div>
+<p class="demo-note">Route geometry and community shapes are invented. Selecting a stop selects the job everywhere else in the app.</p>
+<svg class="routemap" viewBox="0 0 700 330" role="img" aria-label="Sanitized route canvas with five stops"><g id="routeG"></g></svg>
+<div class="map-legend"><span><i class="map-key"></i>Stop</span><span><i class="map-key act"></i>Selected</span><span><i class="map-key exc"></i>Exception &mdash; needs rescheduling</span></div></div>
+
+<div class="surface-view" id="qr"><div class="surface-header"><div><div class="eyebrow">Field tools &middot; the workflow that outlived me</div><h3>QR Pipeline</h3></div><div class="count-note" id="qrJobTag">J-2291</div></div>
+<p class="demo-note"><b>Real workflow, invented records.</b> This is the pipeline I built and ran at Centric, reproduced step for step. Every address, customer initial, serial and ONT ID below is fictional &mdash; and the QR codes are genuinely scannable, so if you scan one with your phone you'll see exactly that fictional payload.</p>
+<div class="pipe" id="pipe">
+<div class="pipe-step" data-step="0"><span class="tick">&#10003;</span><small>Step 1</small><b>Pull from the assignment board</b></div>
+<div class="pipe-step" data-step="1"><span class="tick">&#10003;</span><small>Step 2</small><b>Cleanse &amp; normalize</b></div>
+<div class="pipe-step" data-step="2"><span class="tick">&#10003;</span><small>Step 3</small><b>Generate scannable code</b></div>
+<div class="pipe-step" data-step="3"><span class="tick">&#10003;</span><small>Step 4</small><b>Scan into provisioning</b></div>
+<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Write back &amp; log output</b></div>
+</div>
+<div class="qr-grid">
+<div><div class="rec" id="recList"></div>
+<div class="acts">
+<button class="stepbtn is-next" id="btnPull">Pull record</button>
+<button class="stepbtn" id="btnClean" disabled>Cleanse</button>
+<button class="stepbtn" id="btnGen" disabled>Generate code</button>
+<button class="stepbtn" id="btnScan" disabled>Scan</button>
+<button class="stepbtn" id="btnWrite" disabled>Write back</button>
+<button class="stepbtn ghost" id="btnReset">Reset</button>
+</div></div>
+<div class="qr-stage">
+<div class="qr-empty" id="qrEmpty">The code renders here once the record is cleansed and generated.</div>
+<canvas class="qr-canvas" id="qrCanvas" width="196" height="196" hidden></canvas>
+<div class="qr-scanhint" id="qrHint" hidden><b>Scan it.</b> This is a real QR code encoding the fictional record.</div>
+</div></div>
+<div class="race">
+<h5>Why it stuck: keying vs scanning</h5>
+<p>Every closeout needed the ONT ID typed by hand against the address. One transposed character meant a failed association and, often, a second truck roll. Try typing this one exactly.</p>
+<div class="race-grid">
+<div class="race-card"><small>Key it by hand</small><div class="race-target" id="raceTarget">CXNX-4471-8829</div>
+<label class="sr-only" for="raceInput">Retype the ONT ID</label>
+<input class="race-input" id="raceInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type it exactly&hellip;">
+<div class="race-stat"><div><b id="raceKeys">0</b><small>Keystrokes</small></div><div><b id="raceTime">0.0s</b><small>Elapsed</small></div><div><b id="raceErr">0</b><small>Wrong chars</small></div></div></div>
+<div class="race-card"><small>Scan it</small><div class="race-target">1 scan &middot; 0 keystrokes</div>
+<button class="stepbtn is-next" id="raceScan" style="width:100%">Scan instead</button>
+<div class="race-stat"><div><b id="raceScanKeys">0</b><small>Keystrokes</small></div><div><b id="raceScanTime">0.2s</b><small>Elapsed</small></div><div><b>0</b><small>Wrong chars</small></div></div></div>
+</div>
+<div class="race-verdict" id="raceVerdict" hidden></div>
+</div>
+<div class="log"><div class="log-head"><h5>Pipeline log</h5><span class="count-note" id="logCount">0 events</span></div>
+<div class="log-body" id="logBody"><div class="log-empty">No events yet. Run the pipeline above.</div></div></div>
+</div>
+
+<div class="surface-view" id="prov"><div class="surface-header"><div><div class="eyebrow">Equipment association</div><h3>Provisioning</h3></div><div class="count-note" id="provTag">Awaiting scan</div></div>
+<p class="demo-note">This is the destination the codes were built to feed. Fields arrive from a scan &mdash; nothing here is hand-keyed.</p>
+<div class="prov">
+<div class="panel"><h4>Provisioning record</h4><div id="provState" class="prov-state waiting">Waiting for a scan from the QR pipeline.</div><div class="rec" id="provList"></div></div>
+<div class="panel"><h4>Write-back &amp; output</h4><div id="wbState" class="prov-state waiting">Nothing written yet.</div>
+<div class="feed" id="wbFeed"></div>
+<h4 style="margin-top:22px">Technician output</h4>
+<div class="jobs" id="outList"></div></div>
+</div></div>
+
+</div></div></div></section>
+
+<section class="section"><div class="wrap"><div class="section-head"><div><div class="eyebrow">02 / Case study</div><h2>From field friction to system design</h2></div></div>
+<div class="story-grid"><div class="story">
+<h3>The operating problem</h3>
+<p>Fiber work crosses several handoffs: scheduling, customer readiness, installation, splicing, provisioning, QA, transfer claims, and closeout. When those steps live in separate trackers, the technician reconstructs the day while dispatch and leadership reconstruct the portfolio. The expensive failure wasn't any single step &mdash; it was re-keying the same record into each one.</p>
+
+<h3>What I actually built, and where</h3>
+<p>Two tools, during the job. <strong>L-FIT</strong> &mdash; the Lead Fiber Installation Tech Tracker, a name my partner and I made up &mdash; held what the official schedule didn't. Alongside it I built a QR pipeline: pull the assigned work from the system of record through its API, cleanse it, generate a scannable code carrying the address, customer, serial and ONT ID together, scan that into the provisioning platform, then write back so both systems agreed. It recorded what was completed and when, which is what made a real technician-output dashboard possible for managers.</p>
+<p>The point was never the codes. It was that the association between an address and the equipment installed at it stopped depending on somebody typing fourteen characters correctly at the end of a long day.</p>
+<p><strong>Nexus is the retrospective part.</strong> After I left, I rebuilt both tools as one role-aware application &mdash; the walkthrough above. It was never deployed at Centric and I claim no production adoption for it. The QR pipeline is the piece that was real, and it remained in use after my departure.</p>
+
+<h3>What I designed into Nexus</h3>
+<ul>
+<li><strong>Technician dayflow:</strong> first stop, current work, future queue, claims, provisioning, and field guides.</li>
+<li><strong>Operational control:</strong> dispatch board, calendar, map context, intake, status lifecycle, and end-of-day reporting.</li>
+<li><strong>Quality layer:</strong> structured splicing and equipment fields, QA exceptions, and performance views.</li>
+<li><strong>Role boundaries:</strong> technician, lead, dispatcher, manager, and administrator views expose only the work each role needs.</li>
+</ul>
+
+<h3>What I scoped but never shipped</h3>
+<p>An in-app SOP library anyone could reference, and an iPad rollout the whole interface was being optimized for. Both were real plans. Neither was built, and I don't count them as delivery.</p>
+
+<h3>My role and the boundary</h3>
+<p>My formal Centric roles were In-Home Installation Technician (October 2022&ndash;December 2024) and Fiber Installation Lead (January 2025&ndash;January 2026). I performed fusion splicing, OTDR validation, troubleshooting, quality checks, and employee training. I did not hold a Project Manager title there, and nothing on this page should be read as claiming one.</p>
+</div>
+<aside class="evidence">
+<article><div class="eyebrow">Verified field impact</div><b>8</b><small>employees trained in repeatable fiber methods</small></article>
+<article><div class="eyebrow">Adopted automation</div><b style="font-size:22px">Still in use</b><small>The barcode workflow I built remained in use after my departure</small></article>
+<article class="boundary"><div class="eyebrow">Prototype status</div><b style="font-size:22px">Retrospective</b><small>Nexus demonstrates product and workflow design; no production adoption or performance outcome is claimed for it.</small></article>
+<article><div class="eyebrow">Prototype stack</div><small>Google Apps Script &middot; React &middot; Tailwind-style utility system &middot; Google Sheets &middot; Maps &middot; role-based access</small></article>
+</aside></div></div></section>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid"><div><div class="eyebrow" style="color:#60a5fa">Next</div><h2>Want to walk through the operating model?</h2><p>I can show how field experience shaped the lifecycle, role boundaries, technician dayflow, QA logic, and the decisions I would make before a real deployment.</p><a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a></div>
+<p style="font-size:11px">Nexus FiberOps Unified &mdash; sanitized retrospective portfolio prototype. Not affiliated with or endorsed by any former employer. All demo people, places, addresses, schedules, equipment identifiers and metrics are fictional.</p></div></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------------
+     QR matrices. Pre-generated at build time with a reference encoder and
+     embedded as packed bitmaps, so the codes on this page are genuinely
+     scannable rather than decorative. Each encodes only the fictional
+     payload for its job. 41x41 modules, error correction level M.
+     --------------------------------------------------------------------- */
+  var QR_N = 41;
+  var QR_DATA = {
+  'J-2291':'/uzKCz/BD2ly0G6VJ6Frt11NSeXbqUo0ouwXU5V5B/qqqqr+AbG/CwCL0XO//JK3RAis3Pdjbzr8MCjl8r2g9WTNa4Gp76j/7KE+65LK1M49CWPMdKbdFEZUB3xV9rFEGD267eCovahDm3X9DlqIafLvhRZYyyARjlzTQuXyqZkQczULvduKi00JYbkdtuS+rczzxC+DkrymxErb1uhKMkT6WsrnLGRF+QBh5TRHP7xp/iuwSzHGsbupwYt/pdIbQmbm6FAOZ5MEfC9pK/6TtRehAA==',
+  'J-2288':'/tVPcr/BR1p00G6xJzBrt0LE/xXbrJVh8uwQf04RB/qqqqr+ANkC1ACfu22GS/rBHSw+vZSLxQpLl9k39YJxQbMDeaPsrKZEbryC9dJYWSV3vBYVNxSI0gIKsmYEm6XeWjIIfjljbj2hKIM1IzGKOdaKj7zxAEth5ymTGvBUpajC2cULrea2n7xcZ49gQHn4NjHg0GzLBzX1c0hz/2Qb0cpw4ibaxHqX/wB83QvGP6S4TOqQWmlm0aupXmq/7dYMCG7W6V3rWesEeLV0Vf7B4VP0AA==',
+  'J-2294':'/pIPyz/BABt30G6XOKMrt1haqyXbqrAckuwXMZV9B/qqqqr+ASK+KQCLrhu+/I6VlAiUkJkb/iCtnE/h9b3uJaiEfoO8lbT5yWNcadMAiP4OGZvq5EFZZj1l9T9D0YvtAasS0bKwtflAm+U264EYoXDozBRYe/p032ypc4fSuc5CkfULjda+utyJPaaZ9umQJWh5hLYL4cS0+C55r+hKWT6KCuDO03zI/AB7h+rFf7iwX2owSr5m0Rur+7J/ldPQCmbW6IOswZME/EwrK/6XZBbjAA==',
+  'J-2286':'/tTWOr/Bd1ahUG6TlPwrt1djOCXbpy0o0uwS4MAtB/qqqqr+AYXjegC3YlkUJZjKSjBPQKvi4QIOFuBPWC62VKPRFwngYaA8PUJptqfxNEklWGdghWHBIhIDcimspKs/nhGE/SOI66VhMdNMr9Zr79rMUy67XLNLZLR5WvXu2F52Nk3qM/HYfhjcPivhx2Ob+lvvtOFg9+nzorqoWNCQEe/kKy1ez07v+4BLawzEP7KKaCtQVRtsERunmExv1df6zF4W69PastcEWOg2mv6fxNGdAA==',
+  'J-2279':'/h7Lcr/BcJREUG6mYSJLt1Wm/zXboS3zuuwQtVZxB/qqqqr+AahyFwCCq3/PZxxrXSw+iv2ZjC7FkPBWM5QkqLMDbenYb6pHjrHL0UlrxWV3vHfjfzAemlIrFX7j5GXGWj4bvnFTpXa4DBF2IhmIOfXvKpnjKEI2YXDyj57UpajgPZk7bu2IWy4VWp1AQHn8s91ymU4hRS20xzk4fWQTCccAJSq3Amje+4BiXQvGP5MLDeoQT2EDUYunlmq/9dLGy2LG6ZQifXEEpPU0lf7EaHdGAA=='
+  };
+
+  function unpack(b64, n) {
+    var bin = atob(b64), bits = '', i;
+    for (i = 0; i < bin.length; i++) bits += ('0000000' + bin.charCodeAt(i).toString(2)).slice(-8);
+    var rows = [];
+    for (i = 0; i < n; i++) rows.push(bits.slice(i * n, (i + 1) * n));
+    return rows;
+  }
+
+  function drawQR(canvas, b64) {
+    var rows = unpack(b64, QR_N), quiet = 4, total = QR_N + quiet * 2;
+    var px = Math.floor(canvas.width / total);
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0f172a';
+    for (var r = 0; r < QR_N; r++) {
+      for (var c = 0; c < QR_N; c++) {
+        if (rows[r][c] === '1') ctx.fillRect((c + quiet) * px, (r + quiet) * px, px, px);
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------- */
+  var ONT_RE = /^CXNX-\d{4}-\d{4}$/;
+  var SER_RE = /^FJ\d{10}$/;
+
+  // Every value here is invented. See the private provenance note.
+  var JOBS = [
+    { id: 'J-2291', kind: 'Service activation', time: '8:30 AM', day: 'Mon', status: 'In progress', pill: 'amber',
+      comm: 'Alder Grove', addr: '128 Lantern Way', cust: 'R.O.', ont: 'CXNX-4471-8829', ser: 'FJ2208871144',
+      raw: { addr: '128  lantern way ', comm: 'alder grove', cust: 'r.o.', ont: 'cxnx 4471 8829', ser: 'fj2208871144' },
+      x: 110, y: 92, seq: 1, exception: false },
+    { id: 'J-2288', kind: 'Fiber repair', time: '11:15 AM', day: 'Mon', status: 'Scheduled', pill: 'blue',
+      comm: 'Pine Crossing', addr: '41 Willow Bend', cust: 'D.W.', ont: 'CXNX-5510-2277', ser: 'FJ2209140382',
+      raw: { addr: '41 willow  bend', comm: 'PINE CROSSING', cust: 'D.w.', ont: 'CXNX55102277', ser: 'fj 2209140382' },
+      x: 255, y: 178, seq: 2, exception: false },
+    { id: 'J-2294', kind: 'New install', time: '1:45 PM', day: 'Tue', status: 'Scheduled', pill: 'blue',
+      comm: 'North Ridge', addr: '7 Cedar Loop', cust: 'M.A.', ont: 'CXNX-6032-9145', ser: 'FJ2209660471',
+      raw: { addr: ' 7 cedar loop', comm: 'north ridge', cust: 'm.a.', ont: 'cxnx-6032-9145', ser: 'FJ2209660471' },
+      x: 400, y: 86, seq: 3, exception: false },
+    { id: 'J-2286', kind: 'Transfer claim', time: '3:20 PM', day: 'Wed', status: 'On hold', pill: 'amber',
+      comm: 'Alder Grove', addr: '219 Quarry Road', cust: 'T.B.', ont: 'CXNX-4188-3390', ser: 'FJ2207713028',
+      // arrives from the board with a truncated serial - this is the rejection path
+      raw: { addr: '219 quarry rd', comm: 'alder grove', cust: 't.b.', ont: 'cxnx-4188-3390', ser: 'fj220771302' },
+      x: 520, y: 212, seq: 4, exception: true },
+    { id: 'J-2279', kind: 'QA rework', time: '4:40 PM', day: 'Tue', status: 'Complete', pill: 'green',
+      comm: 'Pine Crossing', addr: '88 Harrow Lane', cust: 'K.N.', ont: 'CXNX-3927-6614', ser: 'FJ2206458890',
+      raw: { addr: '88 harrow ln', comm: 'pine crossing', cust: 'k.n.', ont: 'CXNX 3927 6614', ser: 'fj2206458890' },
+      x: 630, y: 122, seq: 5, exception: false }
+  ];
+
+  var byId = {};
+  JOBS.forEach(function (j) { byId[j.id] = j; });
+
+  var state = {
+    job: 'J-2291',
+    step: -1,          // -1 none, 0 pulled, 1 cleansed, 2 generated, 3 scanned, 4 written
+    blocked: false,    // validation failure
+    fixed: {},         // jobs whose source record was corrected
+    scanned: {},       // jobs scanned
+    written: {},       // jobs written back
+    dayFilter: null,
+    events: [],
+    keysSaved: 0
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function clock() {
+    var d = new Date();
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2);
+  }
+
+  /* ---------------- views ---------------- */
+  var tabs = document.querySelectorAll('[data-view]');
+  function show(view) {
+    document.querySelectorAll('.surface-view').forEach(function (v) {
+      v.classList.toggle('active', v.id === view);
+    });
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-view') === view;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { show(t.getAttribute('data-view')); });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function (b) {
+    b.addEventListener('click', function () { show(b.getAttribute('data-goto')); });
+  });
+
+  /* ---------------- log ---------------- */
+  function logEvent(msg, kind) {
+    state.events.unshift({ t: clock(), m: msg, s: kind || 'info' });
+    renderLog();
+    renderFeed();
+  }
+  function renderLog() {
+    var body = $('logBody');
+    body.innerHTML = '';
+    if (!state.events.length) {
+      body.appendChild(el('div', 'log-empty', 'No events yet. Run the pipeline above.'));
+    } else {
+      state.events.forEach(function (e) {
+        var r = el('div', 'log-row');
+        r.appendChild(el('span', 'log-t', e.t));
+        r.appendChild(el('span', 'log-m', e.m));
+        r.appendChild(el('span', 'log-s ' + e.s, e.s === 'err' ? 'Rejected' : e.s === 'ok' ? 'OK' : 'Info'));
+        body.appendChild(r);
+      });
+    }
+    $('logCount').textContent = state.events.length + (state.events.length === 1 ? ' event' : ' events');
+  }
+  function renderFeed() {
+    var feed = $('opsFeed');
+    feed.innerHTML = '';
+    var items = state.events.slice(0, 4);
+    if (!items.length) {
+      items = [{ m: 'Awaiting pipeline activity', t: '—' }];
+    }
+    items.forEach(function (e) {
+      var d = el('div');
+      d.appendChild(el('b', null, e.m));
+      d.appendChild(el('small', null, e.t));
+      feed.appendChild(d);
+    });
+  }
+
+  /* ---------------- record rendering ---------------- */
+  var FIELDS = [
+    { k: 'addr', label: 'Address' },
+    { k: 'comm', label: 'Community' },
+    { k: 'cust', label: 'Customer' },
+    { k: 'ont', label: 'ONT ID' },
+    { k: 'ser', label: 'Serial' }
+  ];
+
+  function sourceVal(job, k) {
+    if (k === 'ser' && state.fixed[job.id]) return job.ser;
+    return job.raw[k];
+  }
+
+  function renderRecord() {
+    var job = byId[state.job];
+    var list = $('recList');
+    list.innerHTML = '';
+    $('qrJobTag').textContent = job.id;
+
+    if (state.step < 0) {
+      var empty = el('div', 'rec-row is-pending');
+      empty.appendChild(el('span', 'rec-k', 'Record'));
+      empty.appendChild(el('span', 'rec-v', 'Nothing pulled yet — press Pull record.'));
+      list.appendChild(empty);
+      return;
+    }
+
+    FIELDS.forEach(function (f) {
+      var row = el('div', 'rec-row');
+      var raw = sourceVal(job, f.k);
+      var clean = job[f.k];
+      var val, note = null, cls;
+
+      if (state.step === 0) {
+        val = '"' + raw + '"';
+        cls = raw === clean ? 'is-clean' : 'is-dirty';
+        if (raw !== clean) note = 'inconsistent — as received from the assignment board';
+      } else {
+        val = clean;
+        cls = 'is-clean';
+        if (f.k === 'ser' && state.blocked) {
+          val = raw.toUpperCase().replace(/\s+/g, '');
+          cls = 'is-bad';
+          note = 'fails serial format FJ + 10 digits — ' + (val.length - 2) + ' digits present';
+        } else if (state.step >= 3) {
+          cls = 'is-filled';
+        }
+      }
+
+      row.className = 'rec-row ' + cls;
+      row.appendChild(el('span', 'rec-k', f.label));
+      row.appendChild(el('span', 'rec-v', val));
+      if (note) row.appendChild(el('span', 'rec-note', note));
+      list.appendChild(row);
+    });
+  }
+
+  function renderPipe() {
+    document.querySelectorAll('.pipe-step').forEach(function (p) {
+      var i = +p.getAttribute('data-step');
+      p.classList.toggle('is-done', state.step > i);
+      p.classList.toggle('is-active', state.step === i);
+    });
+  }
+
+  function renderButtons() {
+    var blocked = state.blocked;
+    $('btnPull').disabled = state.step >= 0;
+    $('btnClean').disabled = state.step !== 0;
+    $('btnGen').disabled = state.step !== 1 || blocked;
+    $('btnScan').disabled = state.step !== 2;
+    $('btnWrite').disabled = state.step !== 3;
+    $('btnPull').classList.toggle('is-next', state.step < 0);
+    $('btnClean').classList.toggle('is-next', state.step === 0);
+    $('btnGen').classList.toggle('is-next', state.step === 1 && !blocked);
+    $('btnScan').classList.toggle('is-next', state.step === 2);
+    $('btnWrite').classList.toggle('is-next', state.step === 3);
+
+    var fix = $('btnFix');
+    if (blocked && !fix) {
+      fix = el('button', 'stepbtn is-next', 'Fix at source &amp; retry');
+      fix.id = 'btnFix';
+      fix.addEventListener('click', function () {
+        state.fixed[state.job] = true;
+        state.blocked = false;
+        logEvent(state.job + ' · serial corrected at source, re-validated', 'ok');
+        renderAll();
+      });
+      $('btnGen').parentNode.insertBefore(fix, $('btnGen'));
+    } else if (!blocked && fix) {
+      fix.remove();
+    }
+  }
+
+  function renderQR() {
+    var canvas = $('qrCanvas'), empty = $('qrEmpty'), hint = $('qrHint');
+    var on = state.step >= 2;
+    canvas.hidden = !on;
+    empty.hidden = on;
+    hint.hidden = !on;
+    if (on) drawQR(canvas, QR_DATA[state.job]);
+  }
+
+  /* ---------------- provisioning ---------------- */
+  function renderProv() {
+    var job = byId[state.job];
+    var list = $('provList');
+    list.innerHTML = '';
+    var scanned = state.step >= 3;
+    $('provTag').textContent = scanned ? job.id + ' · associated' : 'Awaiting scan';
+
+    var st = $('provState');
+    if (scanned) {
+      st.className = 'prov-state filled';
+      st.textContent = 'Populated from one scan. Five fields, zero keystrokes.';
+    } else if (state.blocked) {
+      st.className = 'prov-state blocked';
+      st.textContent = 'Blocked — the source record failed validation before a code could be issued.';
+    } else {
+      st.className = 'prov-state waiting';
+      st.textContent = 'Waiting for a scan from the QR pipeline.';
+    }
+
+    FIELDS.forEach(function (f) {
+      var row = el('div', 'rec-row ' + (scanned ? 'is-filled' : 'is-pending'));
+      row.appendChild(el('span', 'rec-k', f.label));
+      row.appendChild(el('span', 'rec-v', scanned ? job[f.k] : '—'));
+      list.appendChild(row);
+    });
+
+    var wb = $('wbState');
+    var written = state.step >= 4;
+    wb.className = 'prov-state ' + (written ? 'filled' : 'waiting');
+    wb.textContent = written
+      ? 'System of record and provisioning platform now agree on ' + job.id + '.'
+      : 'Nothing written yet.';
+
+    var wf = $('wbFeed');
+    wf.innerHTML = '';
+    if (written) {
+      [['Record written back to the system of record', 'both sides now equivalent'],
+       ['Completion event stamped', job.id + ' · ' + clock()],
+       ['Output dashboard updated', 'technician throughput recalculated']].forEach(function (p) {
+        var d = el('div');
+        d.appendChild(el('b', null, p[0]));
+        d.appendChild(el('small', null, p[1]));
+        wf.appendChild(d);
+      });
+    }
+
+    var out = $('outList');
+    out.innerHTML = '';
+    var doneIds = Object.keys(state.written);
+    if (!doneIds.length) {
+      out.appendChild(el('div', 'log-empty', 'No completions recorded yet.'));
+    } else {
+      doneIds.forEach(function (id) {
+        var j = byId[id];
+        var row = el('div', 'job');
+        var left = el('div');
+        left.appendChild(el('span', 'pill green', 'Recorded'));
+        left.appendChild(el('div', 'time', j.time));
+        left.appendChild(el('b', null, j.kind + ' · ' + j.comm));
+        left.appendChild(el('small', null, j.addr + ' · ' + j.ont));
+        row.appendChild(left);
+        row.appendChild(el('span', 'count-note', '0 keystrokes'));
+        out.appendChild(row);
+      });
+    }
+  }
+
+  /* ---------------- jobs / calendar / map ---------------- */
+  function visibleJobs() {
+    return state.dayFilter ? JOBS.filter(function (j) { return j.day === state.dayFilter; }) : JOBS;
+  }
+
+  function renderJobs() {
+    var list = $('jobList');
+    list.innerHTML = '';
+    var vis = visibleJobs();
+    vis.forEach(function (j) {
+      var row = el('div', 'job' + (j.id === state.job ? ' is-active' : ''));
+      row.setAttribute('data-job', j.id);
+      var left = el('div');
+      left.appendChild(el('span', 'pill ' + j.pill, state.written[j.id] ? 'Complete' : j.status));
+      left.appendChild(el('div', 'time', j.time));
+      left.appendChild(el('b', null, j.kind + ' · ' + j.comm));
+      left.appendChild(el('small', null, j.addr + ' · ONT ' + j.ont));
+      row.appendChild(left);
+      var btn = el('button', 'primary', 'Run pipeline');
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        selectJob(j.id);
+        show('qr');
+      });
+      row.appendChild(btn);
+      row.addEventListener('click', function () { selectJob(j.id); });
+      list.appendChild(row);
+    });
+    $('jobsCount').textContent = vis.length + ' of ' + JOBS.length + ' shown' +
+      (state.dayFilter ? ' · ' + state.dayFilter : ' · demo slice');
+
+    var first = vis[0] || JOBS[0];
+    $('briefStop').textContent = first.time + ' · ' + first.kind;
+    $('briefAddr').textContent = first.addr + ' · ' + first.comm;
+    $('briefLine').textContent = vis.length + (vis.length === 1 ? ' stop' : ' stops') +
+      ' on the board. Start with the ' + first.kind.toLowerCase() + ' at ' + first.comm + '.';
+
+    var done = Object.keys(state.written).length;
+    $('cntProg').textContent = vis.filter(function (j) { return j.status === 'In progress' && !state.written[j.id]; }).length;
+    $('cntToday').textContent = Math.max(vis.length - done, 0);
+    $('cntFuture').textContent = vis.filter(function (j) { return j.day !== 'Mon'; }).length;
+    $('cntClaim').textContent = vis.filter(function (j) { return j.kind === 'Transfer claim'; }).length;
+  }
+
+  function renderCalendar() {
+    var list = $('calList');
+    list.innerHTML = '';
+    ['Mon', 'Tue', 'Wed'].forEach(function (day) {
+      var n = JOBS.filter(function (j) { return j.day === day; }).length;
+      var row = el('div', 'job' + (state.dayFilter === day ? ' is-active' : ''));
+      var left = el('div');
+      left.appendChild(el('span', 'pill ' + (n > 1 ? 'amber' : 'green'), day));
+      left.appendChild(el('b', null, n + (n === 1 ? ' scheduled' : ' scheduled') + ' · ' + (n > 1 ? 'route pressure' : 'capacity available')));
+      left.appendChild(el('small', null, JOBS.filter(function (j) { return j.day === day; })
+        .map(function (j) { return j.kind; }).join(' · ')));
+      row.appendChild(left);
+      var b = el('button', 'primary', state.dayFilter === day ? 'Clear filter' : 'Filter agenda');
+      b.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        state.dayFilter = state.dayFilter === day ? null : day;
+        renderCalendar(); renderJobs();
+        if (state.dayFilter) show('jobs');
+      });
+      row.appendChild(b);
+      list.appendChild(row);
+    });
+  }
+
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function svg(tag, attrs) {
+    var e = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function renderMap() {
+    var g = $('routeG');
+    g.innerHTML = '';
+    var pts = JOBS.slice().sort(function (a, b) { return a.seq - b.seq; });
+    var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p.x + ' ' + p.y; }).join(' ');
+    g.appendChild(svg('path', { d: d, class: 'routeline' }));
+
+    pts.forEach(function (j) {
+      var grp = svg('g', {
+        class: 'stop' + (j.id === state.job ? ' is-active' : '') + (j.exception ? ' is-exception' : ''),
+        tabindex: '0', role: 'button'
+      });
+      grp.setAttribute('aria-label', j.kind + ' at ' + j.addr + ', ' + j.comm);
+      grp.appendChild(svg('circle', { class: 'disc', cx: j.x, cy: j.y, r: 13 }));
+      var t = svg('text', { class: 'lbl', x: j.x, y: j.y });
+      t.textContent = j.seq;
+      grp.appendChild(t);
+      var cap = svg('text', { class: 'cap', x: j.x, y: j.y + 30 });
+      cap.textContent = j.comm;
+      grp.appendChild(cap);
+      grp.appendChild(svg('circle', { class: 'hit', cx: j.x, cy: j.y, r: 24 }));
+      function pick() { selectJob(j.id); $('mapNote').textContent = j.id + ' · ' + j.addr; }
+      grp.addEventListener('click', pick);
+      grp.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); }
+      });
+      g.appendChild(grp);
+    });
+  }
+
+  function renderDash() {
+    var done = Object.keys(state.written).length;
+    var scans = Object.keys(state.scanned).length;
+    $('hudQueue').textContent = JOBS.length - done;
+    $('hudDone').textContent = done;
+    $('hudDoneSub').textContent = 'of ' + JOBS.length + ' in the slice';
+    $('hudScan').textContent = scans;
+    $('hudKeys').textContent = state.keysSaved;
+    $('hudKeysSub').textContent = scans ? '28 per record avoided' : 'run a scan to accumulate';
+    var exc = JOBS.filter(function (j) { return j.exception && !state.written[j.id]; }).length;
+    $('dashAlert').textContent = exc
+      ? '! ' + JOBS.filter(function (j) { return j.exception; })[0].comm + ' queue — ' + exc + ' job needs rescheduling'
+      : '✓ No open exceptions in the demo slice';
+    $('dashAlert').style.cssText = exc ? '' : 'background:var(--emerald-50);border-color:#a7f3d0;color:#065f46';
+  }
+
+  /* ---------------- pipeline actions ---------------- */
+  function selectJob(id) {
+    if (state.job === id) return;
+    state.job = id;
+    state.step = -1;
+    state.blocked = false;
+    renderAll();
+  }
+
+  function renderAll() {
+    renderRecord(); renderPipe(); renderButtons(); renderQR();
+    renderProv(); renderJobs(); renderCalendar(); renderMap(); renderDash();
+    var job = byId[state.job];
+    $('raceTarget').textContent = job.ont;
+    resetRace();
+  }
+
+  $('btnPull').addEventListener('click', function () {
+    var job = byId[state.job];
+    state.step = 0;
+    var dirty = FIELDS.filter(function (f) { return sourceVal(job, f.k) !== job[f.k]; }).length;
+    logEvent(job.id + ' · pulled from the assignment board — ' + dirty + ' of 5 fields inconsistent', 'info');
+    renderAll();
+  });
+
+  $('btnClean').addEventListener('click', function () {
+    var job = byId[state.job];
+    state.step = 1;
+    var ser = sourceVal(job, 'ser').toUpperCase().replace(/\s+/g, '');
+    var ont = sourceVal(job, 'ont').toUpperCase().replace(/\s+/g, '-');
+    state.blocked = !SER_RE.test(ser) || !ONT_RE.test(ont);
+    if (state.blocked) {
+      logEvent(job.id + ' · validation failed — serial does not match FJ + 10 digits', 'err');
+    } else {
+      logEvent(job.id + ' · cleansed and validated — address, ONT and serial normalized', 'ok');
+    }
+    renderAll();
+  });
+
+  $('btnGen').addEventListener('click', function () {
+    state.step = 2;
+    logEvent(state.job + ' · scannable code issued — 5 fields in one symbol', 'ok');
+    renderAll();
+  });
+
+  $('btnScan').addEventListener('click', function () {
+    state.step = 3;
+    if (!state.scanned[state.job]) {
+      state.scanned[state.job] = true;
+      state.keysSaved += 28;
+    }
+    logEvent(state.job + ' · scanned into provisioning — equipment associated to address', 'ok');
+    renderAll();
+  });
+
+  $('btnWrite').addEventListener('click', function () {
+    state.step = 4;
+    state.written[state.job] = true;
+    logEvent(state.job + ' · written back, completion stamped, output dashboard updated', 'ok');
+    renderAll();
+  });
+
+  $('btnReset').addEventListener('click', function () {
+    state.step = -1; state.blocked = false;
+    state.fixed = {}; state.scanned = {}; state.written = {};
+    state.keysSaved = 0; state.events = []; state.dayFilter = null;
+    renderLog(); renderAll();
+  });
+
+  /* ---------------- manual vs scan ---------------- */
+  var raceStart = null, raceKeys = 0, raceTimer = null;
+  function resetRace() {
+    raceStart = null; raceKeys = 0;
+    if (raceTimer) { clearInterval(raceTimer); raceTimer = null; }
+    var inp = $('raceInput');
+    inp.value = ''; inp.className = 'race-input';
+    $('raceKeys').textContent = '0';
+    $('raceTime').textContent = '0.0s';
+    $('raceErr').textContent = '0';
+    $('raceVerdict').hidden = true;
+  }
+  $('raceInput').addEventListener('keydown', function () {
+    raceKeys++;
+    if (!raceStart) {
+      raceStart = Date.now();
+      raceTimer = setInterval(function () {
+        $('raceTime').textContent = ((Date.now() - raceStart) / 1000).toFixed(1) + 's';
+      }, 100);
+    }
+    $('raceKeys').textContent = raceKeys;
+  });
+  $('raceInput').addEventListener('input', function () {
+    var target = byId[state.job].ont, v = this.value;
+    var wrong = 0;
+    for (var i = 0; i < v.length; i++) if (v[i] !== target[i]) wrong++;
+    $('raceErr').textContent = wrong;
+    this.className = 'race-input' + (v.length ? (v === target ? ' ok' : (wrong ? ' bad' : '')) : '');
+    if (v === target) {
+      if (raceTimer) { clearInterval(raceTimer); raceTimer = null; }
+      var secs = ((Date.now() - raceStart) / 1000).toFixed(1);
+      var vd = $('raceVerdict');
+      vd.hidden = false;
+      vd.textContent = 'Typed in ' + secs + 's with ' + raceKeys + ' keystrokes. The scan does the same in one action with none — and it cannot transpose a character. Multiply by every install in a day.';
+    }
+  });
+  $('raceScan').addEventListener('click', function () {
+    var vd = $('raceVerdict');
+    vd.hidden = false;
+    vd.textContent = 'Scanned. Address, customer, ONT and serial associated in one action — no keystrokes, no transposition, no second truck roll.';
+    $('raceScanKeys').textContent = '0';
+  });
+
+  /* ---------------- boot ---------------- */
+  renderLog();
+  renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.DS_Store
+.claude/
+node_modules/
+
+# Private, reversible sanitization keys. Never push these.
+.private/
