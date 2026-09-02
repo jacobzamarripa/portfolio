@@ -292,7 +292,11 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
    SECTIONS
    ============================================================ */
 .section{padding:36px 0}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:18px;padding:0 4px}
+/* Grid, not flex-wrap. As flex the long h2 pushed .section-note onto its own
+   line where it kept text-align:right, stranding it as a narrow right-aligned
+   block under the heading. Grid keeps them paired, and the stack below is an
+   explicit, left-aligned state. */
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;margin-bottom:18px;padding:0 4px}
 .section h2{font-size:clamp(1.5rem,2.8vw,2.15rem);margin-top:8px}
 .section-note{font-size:11px;color:var(--text-muted);max-width:44ch;text-align:right;font-weight:500}
 .section-head-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
@@ -1079,7 +1083,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .vocab{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
 .vocab-card{
   position:relative;grid-column:span 1;
-  display:grid;grid-template-columns:184px minmax(0,1fr);grid-template-rows:1fr auto;
+  display:grid;grid-template-columns:208px minmax(0,1fr);grid-template-rows:1fr auto;
   gap:0 15px;padding:13px;
   background:var(--card-bg);border:1px solid var(--border);border-radius:var(--card-radius);
   transition:border-color var(--transition-fast),box-shadow var(--transition-fast);
@@ -1109,11 +1113,17 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .spec-row.warn{border-left-color:var(--color-review)}
 .spec-row.info{border-left-color:var(--color-insight)}
 .spec-row.ok{border-left-color:var(--qb-done)}
-.spec-stack{display:grid;gap:6px;width:100%}
+/* minmax(0,1fr): an auto column sizes to max-content, which let the three-chip
+   focus row (228px) spill 44px past the spec column and collide with the text. */
+.spec-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;width:100%;min-width:0}
+.spec-stack>div{flex-wrap:wrap;min-width:0}
 .spec-fill{height:10px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--border) 80%,transparent)}
 .spec-fill i{display:block;height:100%;border-radius:999px}
-.spec-caption{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted)}
+.spec-caption{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);overflow-wrap:anywhere}
 .spec-bar-demo{position:relative;width:100%;height:34px}
+/* These two carry two annotations each; at 34px both landed in the same
+   vertical band and overlapped. Taller bar + staggered rows separates them. */
+[data-vocab="today"] .spec-bar-demo,[data-vocab="annot"] .spec-bar-demo{height:58px}
 .spec-glow{width:100%;height:44px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);display:grid;place-items:center;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted)}
 .spec-glow.g1{border-color:#93c5fd;box-shadow:0 0 22px rgba(37,99,235,.3)}
 .spec-glow.g2{border-color:#86efac;box-shadow:0 0 22px rgba(34,197,94,.34)}
@@ -1252,8 +1262,12 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;border-radius:8px 8px 0 0}
   .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
   .rail-label,.rail-meta{display:none}
+  .section-head{grid-template-columns:minmax(0,1fr)}
+  .section-note{text-align:left;max-width:70ch}
+  /* Stacked, the 70ch measure left ~370px of dead space beside the prose. */
+  .prose p,.prose li{max-width:none}
   .vocab{grid-template-columns:1fr}
-  .vocab-card.is-lead{grid-column:span 1;grid-template-columns:184px minmax(0,1fr)}
+  .vocab-card.is-lead{grid-column:span 1;grid-template-columns:208px minmax(0,1fr)}
   .hero-body,.study{grid-template-columns:1fr;gap:28px}
   .evidence,.risk-map-box{position:static}
   .app{grid-template-columns:1fr;min-height:0}
@@ -2495,10 +2509,10 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
       <article data-vocab="annot" data-anat-view="timeline" class="vocab-card rv">
         <div class="vocab-spec">
           <div class="spec-bar-demo">
-            <i class="gantt-eom-line" style="left:34%"></i>
-            <span class="gantt-eom-label" style="left:34%;top:2px">Jun EOM</span>
-            <i class="gantt-spike-bg" style="left:74%"></i>
-            <span class="gantt-spike-label" style="left:74%;top:2px">Splice spike</span>
+            <i class="gantt-eom-line" style="left:22%"></i>
+            <span class="gantt-eom-label" style="left:22%;top:2px">Jun EOM</span>
+            <i class="gantt-spike-bg" style="left:78%"></i>
+            <span class="gantt-spike-label" style="left:78%;top:auto;bottom:2px">Splice spike</span>
           </div>
         </div>
         <div>
