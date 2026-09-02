@@ -910,6 +910,20 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .topbar-right{display:flex;align-items:center;gap:8px}
 .topbar .ws-btn{height:32px;padding:0 13px;font-size:10px}
 
+/* Theme toggle. Deliberately NOT persisted: every load follows the visitor's
+   OS preference, and the button is a session-only override. That keeps the
+   page honest about `prefers-color-scheme` instead of trapping someone in a
+   mode they picked once months ago. */
+.theme-btn{
+  display:inline-grid;place-items:center;width:32px;height:32px;flex:none;
+  border:1px solid var(--border);border-radius:9px;background:var(--card-bg);
+  color:var(--text-muted);font-size:13px;line-height:1;cursor:pointer;
+  transition:color .18s,border-color .18s,transform .18s;
+}
+.theme-btn:hover{color:var(--text-main);border-color:var(--accent);transform:translateY(-1px)}
+.theme-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.theme-btn{transition:none}.theme-btn:hover{transform:none}}
+
 .shellgrid{display:grid;grid-template-columns:172px minmax(0,1fr);gap:24px;align-items:start;padding:22px 0 0}
 /* Deliberately not a panel. The app's own sidebar inside the walkthrough
    must stay the only thing on screen that looks like an app sidebar. */
@@ -1291,6 +1305,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
     </div>
     <div class="topbar-right">
       <span class="sev-chip">Demo data <b>fictional</b></span>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button>
       <a class="ws-btn is-primary" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
@@ -3682,6 +3697,30 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         el.setAttribute('role', 'note');
       }
     });
+  })();
+
+
+  /* ---- Theme toggle: session-only override, system preference on load ---- */
+  (function(){
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    if (!btn) return;
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    function effective(){
+      return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light');
+    }
+    function sync(){
+      var e = effective();
+      btn.textContent = e === 'dark' ? '\u263D' : '\u2600';
+      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
+      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
+    }
+    btn.addEventListener('click', function(){
+      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
+      sync();
+    });
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    sync();
   })();
 
 })();

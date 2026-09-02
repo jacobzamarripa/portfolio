@@ -63,3 +63,76 @@ address, a local file path, or anything requiring a former-employer account.
 4. Confirm every outbound LinkedIn link points at `/in/jacobizamarripa`.
    The handle without the `i` is a different person with the same name in the
    same city — that mistake shipped once already.
+
+## The case-study shell (template)
+
+Both case studies now share one chrome so they read as a system rather than
+two unrelated pages. Start case study #3 by copying it.
+
+**Structure**
+
+```html
+<div class="topbar"><div class="wrap topbar-inner">
+  <div class="topbar-left">  mark · name · context pill        </div>
+  <div class="topbar-right"> demo chip · #themeBtn · LinkedIn  </div>
+</div></div>
+
+<div class="wrap shellgrid">
+  <aside class="railnav" id="railnav">
+    <div class="rail-label">Case study</div>
+    <a href="#intro"><span class="n">01</span>Overview</a>
+    ...
+    <div class="rail-meta"> Role · Period · Built on </div>
+  </aside>
+  <main class="content">
+    <section id="intro">…</section>
+    <section id="walkthrough">…</section>
+    <section id="case">…</section>
+    <footer id="contact">…</footer>
+  </main>
+</div>
+```
+
+**Required tokens:** `--topbar-h` (54px), a surface token, a rule/border token,
+and an ink token. Nexus additionally splits `--ink` out of its slate ramp —
+see below.
+
+**Behaviour:** one IIFE provides `syncRail()` (scrollspy highlighting the
+current section) and the theme toggle. Copy it verbatim.
+
+### Theming: three states, no persistence
+
+Tokens live on bare `:root` (light). Dark is declared **twice**:
+
+```css
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ … } }
+:root[data-theme="dark"]{ … }
+```
+
+The `:not()` guard lets the toggle force light on a dark-OS machine, and the
+second block lets it force dark on a light-OS machine. Omit either and the
+toggle only works in one direction.
+
+**The toggle deliberately does not persist.** Every load follows the visitor's
+OS preference; the button is a session-only override. Do not add
+`localStorage` — a visitor should not be trapped in a mode they picked once.
+
+### Two traps this chrome already hit
+
+1. **`--slate-900` was overloaded in Nexus** — 13 background/fill uses (the
+   intentionally dark morning brief, race panel, truth boundary, footer) and
+   11 ink uses. Inverting the ramp would have turned those dark cards light.
+   Ink was split into its own `--ink` token; `--slate-900` stays dark in both
+   themes. Check for this before inverting any ramp.
+2. **`.topbar` already existed inside the Nexus hero.** Adding the sticky
+   topbar created a duplicate class declaration and the later rule won. The
+   hero's bar is now `.hero-bar`. Always run the duplicate-class check below
+   after adding chrome.
+
+### Measuring theme changes
+
+`body` carries `transition: background-color .2s, color .2s`. Reading
+`getComputedStyle` in the same tick as a `data-theme` change — or one or two
+animation frames later — returns a mid-transition colour, not the final one.
+Wait ~300ms before asserting on a theme switch, or you will chase bugs that
+are not there.
