@@ -149,7 +149,7 @@
   text-transform:uppercase;color:var(--slate-400)}
 .rail-meta b{display:block;font-size:11px;color:var(--slate-600);line-height:1.35;margin-top:2px}
 
-@media(max-width:1100px){
+@media(max-width:1200px){
   .shellgrid{grid-template-columns:minmax(0,1fr);gap:14px;padding-top:14px}
   .railnav{position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;gap:5px;
     min-width:0;padding:10px 0;background:var(--slate-50);border-bottom:1px solid var(--slate-200)}
@@ -175,10 +175,10 @@
 .tier-plan .tier-tag{background:rgba(148,163,184,.16);color:#cbd5e1}
 
 /* ===== Pipeline diagram ===== */
-.pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:20px}
+.pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .pipe-step{position:relative;padding:12px 10px 11px;border-radius:16px;background:var(--surface);border:1px solid var(--slate-200);text-align:left;transition:.22s}
-.pipe-step small{display:block;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-400)}
-.pipe-step b{display:block;font-size:12px;margin-top:5px;line-height:1.25;color:var(--slate-600)}
+.pipe-step small{display:block;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-400)}
+.pipe-step b{display:block;font-size:13.5px;margin-top:4px;line-height:1.2;color:var(--slate-600);letter-spacing:-.01em}
 .pipe-step.is-done{border-color:var(--ok-rule);background:var(--ok-bg)}
 .pipe-step.is-done b{color:var(--ok-ink)}
 .pipe-step.is-done small{color:var(--emerald)}
@@ -188,19 +188,27 @@
 .pipe-step .tick{position:absolute;top:10px;right:11px;font-size:11px;color:var(--emerald);opacity:0;transition:.22s}
 .pipe-step.is-done .tick{opacity:1}
 
-/* ===== QR pipeline layout ===== */
-.qr-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
-.qr-stage{display:grid;place-items:center;gap:10px;padding:18px;border-radius:24px;background:var(--surface);border:1px solid var(--slate-200);box-shadow:var(--shadow);text-align:center}
-.qr-canvas{width:196px;height:196px;image-rendering:pixelated;border-radius:8px;background:var(--surface)}
-.qr-empty{width:196px;height:196px;display:grid;place-items:center;border-radius:12px;border:2px dashed var(--slate-200);color:var(--slate-400);font-size:11px;font-weight:800;text-align:center;padding:16px;line-height:1.5}
-.qr-scanhint{font-size:10px;font-weight:800;color:var(--slate-500);max-width:26ch;line-height:1.5}
-.qr-scanhint b{color:var(--blue)}
+/* ===== Closeout pipeline layout ===== */
+.pipe-detail{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:10px 0 18px;padding:11px 15px;
+  border-radius:14px;background:var(--surface);border:1px solid var(--slate-200)}
+.pipe-detail b{font-size:13px;color:var(--ink)}
+.pipe-detail span{font-size:12.5px;font-weight:600;color:var(--slate-500)}
+.qr-grid{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:18px;align-items:start}
+.qr-stage{display:grid;justify-items:center;gap:11px;padding:20px 18px;border-radius:24px;background:var(--surface);border:1px solid var(--slate-200);box-shadow:var(--shadow);text-align:center}
+.qr-size{width:clamp(168px,19vw,212px);aspect-ratio:1}
+.qr-canvas{width:100%;height:100%;image-rendering:pixelated;border-radius:8px;background:var(--surface)}
+.qr-empty{display:grid;place-items:center;border-radius:14px;border:2px dashed var(--slate-200);color:var(--slate-400);font-size:12px;font-weight:800;text-align:center;padding:18px;line-height:1.5}
+.qr-scanhint{font-size:12px;font-weight:700;color:var(--slate-500);max-width:28ch;line-height:1.5}
+.qr-scanhint b{color:var(--blue);font-weight:900}
+.qr-payload{width:100%;text-align:left;padding:10px 12px;border-radius:12px;background:var(--slate-50);border:1px solid var(--slate-200)}
+.qr-payload small{display:block;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-400);margin-bottom:4px}
+.qr-payload code{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.5;color:var(--slate-600);word-break:break-all}
 
 /* ===== Record field table ===== */
 .rec{display:grid;gap:5px}
 .rec-row{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 11px;border-radius:12px;background:var(--slate-50);border:1px solid transparent;transition:.2s}
-.rec-k{font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-400)}
-.rec-v{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;color:var(--slate-800);word-break:break-word}
+.rec-k{font-size:11px;font-weight:900;letter-spacing:.04em;color:var(--slate-500)}
+.rec-v{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:var(--slate-800);word-break:break-word}
 .rec-row.is-dirty{background:var(--warn-bg);border-color:var(--warn-rule)}
 .rec-row.is-dirty .rec-v{color:var(--warn-ink)}
 .rec-row.is-clean{background:var(--ok-bg);border-color:var(--ok-rule)}
@@ -210,34 +218,71 @@
 .rec-row.is-filled .rec-v{color:var(--blue)}
 .rec-row.is-bad{background:var(--bad-bg);border-color:var(--bad-rule)}
 .rec-row.is-bad .rec-v{color:var(--bad-ink)}
-.rec-note{grid-column:1/-1;font-family:inherit;font-size:10px;font-weight:800;margin-top:3px}
+.rec-note{grid-column:1/-1;font-family:inherit;font-size:11.5px;font-weight:700;margin-top:4px;line-height:1.45}
 .rec-row.is-dirty .rec-note{color:var(--warn-ink)}
 .rec-row.is-bad .rec-note{color:var(--bad-ink)}
 .rec-row.is-clean .rec-note{color:var(--emerald)}
 
+/* ===== Source -> normalized ledger =====
+   The pipeline table shows the transformation instead of destroying it:
+   what the assignment board sent, beside what the pipeline made of it. */
+.led{display:grid;gap:6px}
+.led-cols{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1fr) 92px;gap:12px;align-items:baseline}
+.led-head{padding:0 13px 2px}
+.led-head span{font-size:10.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-400)}
+.led-head .to{color:var(--blue)}
+.led-row{padding:10px 13px;border-radius:13px;background:var(--slate-50);border:1px solid transparent;transition:.2s}
+.led-k{font-size:11.5px;font-weight:900;color:var(--slate-500);letter-spacing:-.01em}
+.led-src,.led-out{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;
+  word-break:break-word;line-height:1.45}
+.led-src{color:var(--slate-500)}
+.led-out{color:var(--slate-800)}
+.led-out.pending{color:var(--slate-400);font-family:inherit;font-weight:700;font-size:12px}
+.ws{color:var(--amber);font-weight:900}
+.led-tag{justify-self:start;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;white-space:nowrap}
+.led-tag.same{background:var(--slate-100);color:var(--slate-500)}
+.led-tag.norm{background:var(--ok-bg);color:var(--emerald)}
+.led-tag.wait{background:var(--info-bg);color:var(--blue)}
+.led-tag.bad{background:var(--bad-bg);color:var(--bad-ink)}
+.led-row.is-norm{background:var(--ok-bg);border-color:var(--ok-rule)}
+.led-row.is-norm .led-out{color:var(--ok-ink)}
+.led-row.is-bad{background:var(--bad-bg);border-color:var(--bad-rule)}
+.led-row.is-bad .led-out{color:var(--bad-ink)}
+.led-note{grid-column:2/-1;font-size:11.5px;font-weight:700;margin-top:5px;line-height:1.45}
+.led-row.is-bad .led-note{color:var(--bad-ink)}
+.led-empty{padding:16px 13px;border-radius:13px;background:var(--slate-50);
+  font-size:12.5px;font-weight:700;color:var(--slate-400)}
+
 /* ===== Action bar ===== */
-.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.stepbtn{border:1px solid var(--slate-200);border-radius:14px;padding:11px 15px;background:var(--surface);color:var(--slate-600);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:.18s}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
+.acts-primary{flex:1 1 260px;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  border:1px solid var(--ink);border-radius:16px;padding:15px 20px;background:var(--slate-900);color:#fff;
+  font-size:14px;font-weight:900;letter-spacing:-.01em;text-align:left;cursor:pointer;transition:.18s}
+.acts-primary:hover:not(:disabled){background:var(--blue);border-color:var(--blue);transform:translateY(-1px)}
+.acts-primary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.acts-primary:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.acts-primary .arrow{font-size:15px;opacity:.7}
+.acts-primary.is-fix{background:var(--blue);border-color:var(--blue)}
+.stepbtn{border:1px solid var(--slate-200);border-radius:14px;padding:12px 16px;background:var(--surface);color:var(--slate-600);font-size:11.5px;font-weight:900;letter-spacing:-.01em;cursor:pointer;transition:.18s}
 .stepbtn:hover:not(:disabled){border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
-.stepbtn.is-next{background:var(--slate-900);border-color:var(--ink);color:#fff}
-.stepbtn.is-next:hover{background:var(--blue);border-color:var(--blue);color:#fff}
 .stepbtn:disabled{opacity:.38;cursor:not-allowed}
 .stepbtn.ghost{background:transparent}
 
 /* ===== Event log ===== */
 .log{margin-top:16px;border-radius:20px;border:1px solid var(--slate-200);background:var(--surface);overflow:hidden}
 .log-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--slate-100)}
-.log-head h5{margin:0;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-500)}
+.log-head h5{margin:0;font-size:11.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--slate-500)}
 .log-body{max-height:190px;overflow-y:auto}
-.log-row{display:grid;grid-template-columns:66px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 16px;border-bottom:1px solid var(--slate-50);font-size:11px}
+.log-row{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:10px 16px;border-bottom:1px solid var(--slate-50);font-size:12.5px}
 .log-row:last-child{border-bottom:0}
-.log-t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--slate-400)}
+.log-t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--slate-400)}
 .log-m{font-weight:700;color:var(--slate-700)}
-.log-s{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:5px}
+.log-s{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:6px}
 .log-s.ok{background:var(--ok-bg);color:var(--emerald)}
 .log-s.err{background:var(--bad-bg);color:var(--bad-ink)}
 .log-s.info{background:var(--info-bg);color:var(--blue)}
-.log-empty{padding:18px 16px;font-size:11px;font-weight:700;color:var(--slate-400)}
+.log-empty{padding:18px 16px;font-size:12.5px;font-weight:700;color:var(--slate-400)}
 
 /* ===== Manual vs scan race ===== */
 .race{margin-top:16px;padding:18px;border-radius:22px;background:var(--slate-900);color:#fff}
@@ -255,6 +300,8 @@
 .race-stat div{flex:1}
 .race-stat b{display:block;font-size:19px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .race-stat small{font-size:8px;letter-spacing:.1em}
+.race .stepbtn{background:#fff;border-color:#fff;color:var(--slate-900)}
+.race .stepbtn:hover:not(:disabled){background:#dbeafe;border-color:#dbeafe;color:var(--slate-900)}
 .race-verdict{margin-top:12px;padding:11px 13px;border-radius:14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.28);font-size:11.5px;font-weight:700;color:var(--ok-rule)}
 
 /* ===== Route map ===== */
@@ -279,7 +326,7 @@
 
 /* ===== Provisioning ===== */
 .prov{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
-.prov-state{padding:13px 15px;border-radius:16px;font-size:11.5px;font-weight:800;margin-bottom:14px}
+.prov-state{padding:14px 16px;border-radius:16px;font-size:12.5px;font-weight:800;margin-bottom:14px;line-height:1.5}
 .prov-state.waiting{background:var(--slate-50);color:var(--slate-500);border:1px dashed var(--slate-200)}
 .prov-state.filled{background:var(--ok-bg);color:var(--ok-ink);border:1px solid var(--ok-rule)}
 .prov-state.blocked{background:var(--bad-bg);color:var(--bad-ink);border:1px solid var(--bad-rule)}
@@ -289,21 +336,43 @@
 .job:hover{border-color:var(--info-rule);transform:translateY(-1px)}
 .job.is-active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
 .job-pick{display:flex;align-items:center;gap:9px}
-.demo-note{margin:0 0 16px;padding:11px 14px;border-radius:14px;background:var(--info-bg);border:1px solid var(--info-rule);color:var(--info-ink);font-size:11px;font-weight:700}
-.count-note{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-400)}
+.demo-note{margin:0 0 18px;padding:13px 16px;border-radius:14px;background:var(--info-bg);border:1px solid var(--info-rule);color:var(--info-ink);font-size:12.5px;font-weight:700;line-height:1.55}
+.count-note{font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--slate-400)}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
+/* iPad mini landscape is 1133pt: reclaim width from the shell so the
+   ledger keeps a readable measure instead of crushing to ~290px. */
+@media(max-width:1200px) and (min-width:901px){
+  .app{grid-template-columns:200px 1fr}
+  .sidebar{padding:22px 14px}
+  .surface{padding:26px}
+  .qr-grid{grid-template-columns:minmax(0,1fr) 216px;gap:14px}
+  .led-cols{grid-template-columns:88px minmax(0,1fr) minmax(0,1fr) 86px;gap:10px}
+}
 @media(max-width:900px){
   .qr-grid,.prov{grid-template-columns:minmax(0,1fr)}
-  .pipe{grid-template-columns:repeat(2,minmax(0,1fr))}
   .race-grid{grid-template-columns:minmax(0,1fr)}
   .app>*{min-width:0}
+  .qr-stage{justify-items:start;text-align:left}
+  .qr-size{width:min(212px,60vw)}
+}
+@media(max-width:700px){
+  .pipe{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:560px){
   .pipe{grid-template-columns:minmax(0,1fr)}
   .rec-row{grid-template-columns:minmax(0,1fr)}
   .log-row{grid-template-columns:56px minmax(0,1fr);row-gap:4px}
   .log-row .log-s{grid-column:2}
+  /* ledger stacks: label, then received above normalized, then verdict */
+  .led-cols{grid-template-columns:minmax(0,1fr);gap:3px}
+  .led-head{display:none}
+  .led-row .led-src::before{content:'Received  ';font-family:inherit;font-size:10.5px;font-weight:900;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--slate-400)}
+  .led-row .led-out::before{content:'Normalized  ';font-family:inherit;font-size:10.5px;font-weight:900;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--blue)}
+  .led-note{grid-column:1/-1}
+  .acts-primary{flex:1 1 100%}
 }
 @media (prefers-reduced-motion: reduce){
   .pipe-step,.stepbtn,.job,.stop .disc{transition:none}
@@ -363,7 +432,7 @@
 <button data-view="calendar" role="tab" aria-selected="false"><span>&#9638;</span>Calendar</button>
 <button data-view="map" role="tab" aria-selected="false"><span>&#8982;</span>Map View</button>
 <div class="nav-label">Field tools</div>
-<button data-view="qr" role="tab" aria-selected="false"><span>&#9646;</span>QR Pipeline</button>
+<button data-view="qr" role="tab" aria-selected="false"><span>&#9646;</span>Closeout</button>
 <button data-view="prov" role="tab" aria-selected="false"><span>&#9707;</span>Provisioning</button>
 </div></aside>
 
@@ -373,13 +442,13 @@
 <div class="cards">
 <div class="hud"><small>Jobs in queue</small><b id="hudQueue">5</b><em id="hudQueueSub">across 3 communities</em></div>
 <div class="hud"><small>Completed today</small><b id="hudDone" style="color:var(--emerald)">0</b><em id="hudDoneSub">of 5 in the slice</em></div>
-<div class="hud"><small>Records scanned</small><b id="hudScan" style="color:var(--blue)">0</b><em>via the QR pipeline</em></div>
+<div class="hud"><small>Records scanned</small><b id="hudScan" style="color:var(--blue)">0</b><em>via closeout scans</em></div>
 <div class="hud"><small>Manual keystrokes saved</small><b id="hudKeys">0</b><em id="hudKeysSub">28 per record avoided</em></div>
 </div>
 <div class="split">
 <div class="panel"><h4>Quick access</h4>
 <div class="quick">
-<button type="button" data-goto="qr"><b>QR Pipeline</b><small>Generate &amp; scan closeout records</small></button>
+<button type="button" data-goto="qr"><b>Closeout</b><small>Carry the record in one scan</small></button>
 <button type="button" data-goto="jobs"><b>My Jobs</b><small>Today-first technician agenda</small></button>
 <button type="button" data-goto="map"><b>Field map</b><small>Stops &amp; route sequence</small></button>
 <button type="button" data-goto="prov"><b>Provisioning</b><small>Equipment association</small></button>
@@ -411,29 +480,27 @@
 <svg class="routemap" viewBox="0 0 700 330" role="img" aria-label="Sanitized route canvas with five stops"><g id="routeG"></g></svg>
 <div class="map-legend"><span><i class="map-key"></i>Stop</span><span><i class="map-key act"></i>Selected</span><span><i class="map-key exc"></i>Exception &mdash; needs rescheduling</span></div></div>
 
-<div class="surface-view" id="qr"><div class="surface-header"><div><div class="eyebrow">Field tools &middot; the workflow that outlived me</div><h3>QR Pipeline</h3></div><div class="count-note" id="qrJobTag">J-2291</div></div>
+<div class="surface-view" id="qr"><div class="surface-header"><div><div class="eyebrow">Field tools &middot; the workflow that outlived me</div><h3>Closeout Pipeline</h3></div><div class="count-note" id="qrJobTag">J-2291</div></div>
 <p class="demo-note"><b>Real workflow, invented records.</b> This is the pipeline I built and ran at Centric, reproduced step for step. Every address, customer initial, serial and ONT ID below is fictional &mdash; and the QR codes are genuinely scannable, so if you scan one with your phone you'll see exactly that fictional payload.</p>
 <div class="pipe" id="pipe">
-<div class="pipe-step" data-step="0"><span class="tick">&#10003;</span><small>Step 1</small><b>Pull from the assignment board</b></div>
-<div class="pipe-step" data-step="1"><span class="tick">&#10003;</span><small>Step 2</small><b>Cleanse &amp; normalize</b></div>
-<div class="pipe-step" data-step="2"><span class="tick">&#10003;</span><small>Step 3</small><b>Generate scannable code</b></div>
-<div class="pipe-step" data-step="3"><span class="tick">&#10003;</span><small>Step 4</small><b>Scan into provisioning</b></div>
-<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Write back &amp; log output</b></div>
+<div class="pipe-step" data-step="0"><span class="tick">&#10003;</span><small>Step 1</small><b>Pull</b></div>
+<div class="pipe-step" data-step="1"><span class="tick">&#10003;</span><small>Step 2</small><b>Normalize</b></div>
+<div class="pipe-step" data-step="2"><span class="tick">&#10003;</span><small>Step 3</small><b>Encode</b></div>
+<div class="pipe-step" data-step="3"><span class="tick">&#10003;</span><small>Step 4</small><b>Scan</b></div>
+<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Write back</b></div>
 </div>
+<div class="pipe-detail"><b id="pipeTitle">Not started</b><span id="pipeDesc">Pull the assigned work from the system of record to begin.</span></div>
 <div class="qr-grid">
-<div><div class="rec" id="recList"></div>
+<div><div class="led" id="recList"></div>
 <div class="acts">
-<button class="stepbtn is-next" id="btnPull">Pull record</button>
-<button class="stepbtn" id="btnClean" disabled>Cleanse</button>
-<button class="stepbtn" id="btnGen" disabled>Generate code</button>
-<button class="stepbtn" id="btnScan" disabled>Scan</button>
-<button class="stepbtn" id="btnWrite" disabled>Write back</button>
+<button class="acts-primary" id="btnStep"><span id="btnStepLabel">Pull record</span><span class="arrow" aria-hidden="true">&rarr;</span></button>
 <button class="stepbtn ghost" id="btnReset">Reset</button>
 </div></div>
 <div class="qr-stage">
-<div class="qr-empty" id="qrEmpty">The code renders here once the record is cleansed and generated.</div>
-<canvas class="qr-canvas" id="qrCanvas" width="196" height="196" hidden></canvas>
-<div class="qr-scanhint" id="qrHint" hidden><b>Scan it.</b> This is a real QR code encoding the fictional record.</div>
+<div class="qr-empty qr-size" id="qrEmpty">The code renders here once the record is normalized.</div>
+<div class="qr-size" id="qrCanvasWrap" hidden><canvas class="qr-canvas" id="qrCanvas" width="196" height="196"></canvas></div>
+<div class="qr-scanhint" id="qrHint" hidden><b>Scan it.</b> A real QR code carrying the whole fictional record.</div>
+<div class="qr-payload" id="qrPayload" hidden><small>Encoded payload</small><code id="qrPayloadText"></code></div>
 </div></div>
 <div class="race">
 <h5>Why it stuck: keying vs scanning</h5>
@@ -444,7 +511,7 @@
 <input class="race-input" id="raceInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type it exactly&hellip;">
 <div class="race-stat"><div><b id="raceKeys">0</b><small>Keystrokes</small></div><div><b id="raceTime">0.0s</b><small>Elapsed</small></div><div><b id="raceErr">0</b><small>Wrong chars</small></div></div></div>
 <div class="race-card"><small>Scan it</small><div class="race-target">1 scan &middot; 0 keystrokes</div>
-<button class="stepbtn is-next" id="raceScan" style="width:100%">Scan instead</button>
+<button class="stepbtn" id="raceScan" style="width:100%">Scan instead</button>
 <div class="race-stat"><div><b id="raceScanKeys">0</b><small>Keystrokes</small></div><div><b id="raceScanTime">0.2s</b><small>Elapsed</small></div><div><b>0</b><small>Wrong chars</small></div></div></div>
 </div>
 <div class="race-verdict" id="raceVerdict" hidden></div>
@@ -456,7 +523,7 @@
 <div class="surface-view" id="prov"><div class="surface-header"><div><div class="eyebrow">Equipment association</div><h3>Provisioning</h3></div><div class="count-note" id="provTag">Awaiting scan</div></div>
 <p class="demo-note">This is the destination the codes were built to feed. Fields arrive from a scan &mdash; nothing here is hand-keyed.</p>
 <div class="prov">
-<div class="panel"><h4>Provisioning record</h4><div id="provState" class="prov-state waiting">Waiting for a scan from the QR pipeline.</div><div class="rec" id="provList"></div></div>
+<div class="panel"><h4>Provisioning record</h4><div id="provState" class="prov-state waiting">Waiting for a scan from closeout.</div><div class="rec" id="provList"></div></div>
 <div class="panel"><h4>Write-back &amp; output</h4><div id="wbState" class="prov-state waiting">Nothing written yet.</div>
 <div class="feed" id="wbFeed"></div>
 <h4 style="margin-top:22px">Technician output</h4>
@@ -609,10 +676,22 @@
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+    revealNav(view);
   }
   tabs.forEach(function (t) {
     t.addEventListener('click', function () { show(t.getAttribute('data-view')); });
   });
+  /* The sidebar becomes a horizontal scroller on tablet and phone widths,
+     where the selected item can sit off-screen. Keep it in view. */
+  function revealNav(view) {
+    var nav = document.querySelector('.nav');
+    if (!nav || nav.scrollWidth <= nav.clientWidth) return;
+    var on = nav.querySelector('[data-view="' + view + '"]');
+    if (on && on.scrollIntoView) {
+      on.scrollIntoView({ block: 'nearest', inline: 'center',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+  }
   document.querySelectorAll('[data-goto]').forEach(function (b) {
     b.addEventListener('click', function () { show(b.getAttribute('data-goto')); });
   });
@@ -668,6 +747,22 @@
     return job.raw[k];
   }
 
+  /* Show whitespace the assignment board sent, so the cleanse step has
+     something visible to have done. */
+  function showWs(v) {
+    return String(v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/^(\s+)|(\s+)$/g, function (m) { return '<span class="ws">' + m.replace(/\s/g, '\u00b7') + '</span>'; })
+      .replace(/(\S)(\s{2,})(\S)/g, function (m, a, w, b) { return a + '<span class="ws">' + w.replace(/\s/g, '\u00b7') + '</span>' + b; });
+  }
+
+  function normalized(job, k) {
+    var raw = sourceVal(job, k);
+    if (k === 'ser') return raw.toUpperCase().replace(/\s+/g, '');
+    if (k === 'ont') return raw.toUpperCase().replace(/\s+/g, '-');
+    return job[k];
+  }
+
   function renderRecord() {
     var job = byId[state.job];
     var list = $('recList');
@@ -675,42 +770,52 @@
     $('qrJobTag').textContent = job.id;
 
     if (state.step < 0) {
-      var empty = el('div', 'rec-row is-pending');
-      empty.appendChild(el('span', 'rec-k', 'Record'));
-      empty.appendChild(el('span', 'rec-v', 'Nothing pulled yet — press Pull record.'));
-      list.appendChild(empty);
+      list.appendChild(el('div', 'led-empty', 'Nothing pulled yet \u2014 the record arrives from the assignment board.'));
       return;
     }
 
-    FIELDS.forEach(function (f) {
-      var row = el('div', 'rec-row');
-      var raw = sourceVal(job, f.k);
-      var clean = job[f.k];
-      var val, note = null, cls;
+    var head = el('div', 'led-cols led-head');
+    head.appendChild(el('span', null, 'Field'));
+    head.appendChild(el('span', null, 'As received'));
+    head.appendChild(el('span', 'to', 'Normalized'));
+    head.appendChild(el('span', null, ''));
+    list.appendChild(head);
 
-      if (state.step === 0) {
-        val = '"' + raw + '"';
-        cls = raw === clean ? 'is-clean' : 'is-dirty';
-        if (raw !== clean) note = 'inconsistent — as received from the assignment board';
+    FIELDS.forEach(function (f) {
+      var raw = sourceVal(job, f.k);
+      var out = normalized(job, f.k);
+      var pulledOnly = state.step === 0;
+      var bad = f.k === 'ser' && state.blocked && !pulledOnly;
+      var changed = String(raw) !== String(out);
+
+      var row = el('div', 'led-row led-cols' + (bad ? ' is-bad' : (!pulledOnly && changed ? ' is-norm' : '')));
+      row.appendChild(el('span', 'led-k', f.label));
+      row.appendChild(el('span', 'led-src', showWs(raw)));
+
+      if (pulledOnly) {
+        row.appendChild(el('span', 'led-out pending', 'awaiting normalize'));
+        row.appendChild(el('span', 'led-tag wait', changed ? 'Needs work' : 'Clean'));
       } else {
-        val = clean;
-        cls = 'is-clean';
-        if (f.k === 'ser' && state.blocked) {
-          val = raw.toUpperCase().replace(/\s+/g, '');
-          cls = 'is-bad';
-          note = 'fails serial format FJ + 10 digits — ' + (val.length - 2) + ' digits present';
-        } else if (state.step >= 3) {
-          cls = 'is-filled';
-        }
+        row.appendChild(el('span', 'led-out', out));
+        row.appendChild(el('span', 'led-tag ' + (bad ? 'bad' : changed ? 'norm' : 'same'),
+          bad ? 'Rejected' : changed ? 'Normalized' : 'Unchanged'));
       }
 
-      row.className = 'rec-row ' + cls;
-      row.appendChild(el('span', 'rec-k', f.label));
-      row.appendChild(el('span', 'rec-v', val));
-      if (note) row.appendChild(el('span', 'rec-note', note));
+      if (bad) {
+        row.appendChild(el('span', 'led-note',
+          'Fails the serial format FJ + 10 digits \u2014 ' + (out.length - 2) + ' digits present. No code is issued.'));
+      }
       list.appendChild(row);
     });
   }
+
+  var STEPS = [
+    { t: 'Pull',       d: 'Pull the assigned work from the system of record, exactly as the board holds it.' },
+    { t: 'Normalize',  d: 'Cleanse casing, spacing and separators, then validate against the field formats.' },
+    { t: 'Encode',     d: 'Commit the five fields to one scannable symbol \u2014 the record travels together.' },
+    { t: 'Scan',       d: 'One scan populates provisioning. No field is hand-keyed at this point.' },
+    { t: 'Write back', d: 'Write the result back so both systems agree, and stamp the completion.' }
+  ];
 
   function renderPipe() {
     document.querySelectorAll('.pipe-step').forEach(function (p) {
@@ -718,44 +823,68 @@
       p.classList.toggle('is-done', state.step > i);
       p.classList.toggle('is-active', state.step === i);
     });
+    var title = $('pipeTitle'), desc = $('pipeDesc');
+    if (state.blocked) {
+      title.textContent = 'Rejected at validation';
+      desc.textContent = 'The source record fails its format check, so no code is issued. Fix it at source and retry.';
+    } else if (state.step < 0) {
+      title.textContent = 'Not started';
+      desc.textContent = 'Pull the assigned work from the system of record to begin.';
+    } else if (state.step >= STEPS.length - 1) {
+      title.textContent = 'Complete';
+      desc.textContent = 'Both systems agree on this record. Pick another job to run it again.';
+    } else {
+      title.textContent = 'Step ' + (state.step + 2) + ' \u00b7 ' + STEPS[state.step + 1].t;
+      desc.textContent = STEPS[state.step + 1].d;
+    }
   }
 
-  function renderButtons() {
-    var blocked = state.blocked;
-    $('btnPull').disabled = state.step >= 0;
-    $('btnClean').disabled = state.step !== 0;
-    $('btnGen').disabled = state.step !== 1 || blocked;
-    $('btnScan').disabled = state.step !== 2;
-    $('btnWrite').disabled = state.step !== 3;
-    $('btnPull').classList.toggle('is-next', state.step < 0);
-    $('btnClean').classList.toggle('is-next', state.step === 0);
-    $('btnGen').classList.toggle('is-next', state.step === 1 && !blocked);
-    $('btnScan').classList.toggle('is-next', state.step === 2);
-    $('btnWrite').classList.toggle('is-next', state.step === 3);
+  /* One primary action that advances and relabels, rather than a row of
+     five buttons of which four are always disabled. */
+  var STEP_ACTIONS = [
+    { label: 'Pull record',   run: doPull },
+    { label: 'Normalize',     run: doClean },
+    { label: 'Generate code', run: doGen },
+    { label: 'Scan',          run: doScan },
+    { label: 'Write back',    run: doWrite }
+  ];
 
-    var fix = $('btnFix');
-    if (blocked && !fix) {
-      fix = el('button', 'stepbtn is-next', 'Fix at source &amp; retry');
-      fix.id = 'btnFix';
-      fix.addEventListener('click', function () {
-        state.fixed[state.job] = true;
-        state.blocked = false;
-        logEvent(state.job + ' · serial corrected at source, re-validated', 'ok');
-        renderAll();
-      });
-      $('btnGen').parentNode.insertBefore(fix, $('btnGen'));
-    } else if (!blocked && fix) {
-      fix.remove();
+  function renderButtons() {
+    var btn = $('btnStep'), label = $('btnStepLabel');
+    var next = state.step + 1;
+
+    if (state.blocked) {
+      label.textContent = 'Fix at source & retry';
+      btn.disabled = false;
+      btn.classList.add('is-fix');
+    } else if (next < STEP_ACTIONS.length) {
+      label.textContent = STEP_ACTIONS[next].label;
+      btn.disabled = false;
+      btn.classList.remove('is-fix');
+    } else {
+      label.textContent = 'Pipeline complete';
+      btn.disabled = true;
+      btn.classList.remove('is-fix');
     }
   }
 
   function renderQR() {
-    var canvas = $('qrCanvas'), empty = $('qrEmpty'), hint = $('qrHint');
+    var wrap = $('qrCanvasWrap'), canvas = $('qrCanvas'), empty = $('qrEmpty');
+    var hint = $('qrHint'), pay = $('qrPayload');
     var on = state.step >= 2;
-    canvas.hidden = !on;
+    wrap.hidden = !on;
     empty.hidden = on;
     hint.hidden = !on;
-    if (on) drawQR(canvas, QR_DATA[state.job]);
+    pay.hidden = !on;
+    if (on) {
+      drawQR(canvas, QR_DATA[state.job]);
+      /* Built from the same JOBS record the matrix encodes, so the readout
+         cannot drift from what a phone actually decodes. */
+      var j = byId[state.job];
+      $('qrPayloadText').textContent =
+        'NEXUS|JOB=' + j.id + '|ADDR=' + j.addr + '|COMM=' + j.comm +
+        '|CUST=' + j.cust + '|ONT=' + j.ont + '|SER=' + j.ser;
+    }
   }
 
   /* ---------------- provisioning ---------------- */
@@ -775,7 +904,7 @@
       st.textContent = 'Blocked — the source record failed validation before a code could be issued.';
     } else {
       st.className = 'prov-state waiting';
-      st.textContent = 'Waiting for a scan from the QR pipeline.';
+      st.textContent = 'Waiting for a scan from closeout.';
     }
 
     FIELDS.forEach(function (f) {
@@ -963,50 +1092,64 @@
     resetRace();
   }
 
-  $('btnPull').addEventListener('click', function () {
+  function doPull() {
     var job = byId[state.job];
     state.step = 0;
     var dirty = FIELDS.filter(function (f) { return sourceVal(job, f.k) !== job[f.k]; }).length;
-    logEvent(job.id + ' · pulled from the assignment board — ' + dirty + ' of 5 fields inconsistent', 'info');
+    logEvent(job.id + ' \u00b7 pulled from the assignment board \u2014 ' + dirty + ' of 5 fields inconsistent', 'info');
     renderAll();
-  });
+  }
 
-  $('btnClean').addEventListener('click', function () {
+  function doClean() {
     var job = byId[state.job];
     state.step = 1;
     var ser = sourceVal(job, 'ser').toUpperCase().replace(/\s+/g, '');
     var ont = sourceVal(job, 'ont').toUpperCase().replace(/\s+/g, '-');
     state.blocked = !SER_RE.test(ser) || !ONT_RE.test(ont);
     if (state.blocked) {
-      logEvent(job.id + ' · validation failed — serial does not match FJ + 10 digits', 'err');
+      logEvent(job.id + ' \u00b7 validation failed \u2014 serial does not match FJ + 10 digits', 'err');
     } else {
-      logEvent(job.id + ' · cleansed and validated — address, ONT and serial normalized', 'ok');
+      logEvent(job.id + ' \u00b7 normalized and validated \u2014 address, ONT and serial conformed', 'ok');
     }
     renderAll();
-  });
+  }
 
-  $('btnGen').addEventListener('click', function () {
+  function doGen() {
     state.step = 2;
-    logEvent(state.job + ' · scannable code issued — 5 fields in one symbol', 'ok');
+    logEvent(state.job + ' \u00b7 scannable code issued \u2014 5 fields in one symbol', 'ok');
     renderAll();
-  });
+  }
 
-  $('btnScan').addEventListener('click', function () {
+  function doScan() {
     state.step = 3;
     if (!state.scanned[state.job]) {
       state.scanned[state.job] = true;
       state.keysSaved += 28;
     }
-    logEvent(state.job + ' · scanned into provisioning — equipment associated to address', 'ok');
+    logEvent(state.job + ' \u00b7 scanned into provisioning \u2014 equipment associated to address', 'ok');
     renderAll();
-  });
+  }
 
-  $('btnWrite').addEventListener('click', function () {
+  function doWrite() {
     state.step = 4;
     state.written[state.job] = true;
-    logEvent(state.job + ' · written back, completion stamped, output dashboard updated', 'ok');
+    logEvent(state.job + ' \u00b7 written back, completion stamped, output dashboard updated', 'ok');
     renderAll();
+  }
+
+  function doFix() {
+    state.fixed[state.job] = true;
+    state.blocked = false;
+    logEvent(state.job + ' \u00b7 serial corrected at source, re-validated', 'ok');
+    renderAll();
+  }
+
+  $('btnStep').addEventListener('click', function () {
+    if (state.blocked) return doFix();
+    var next = state.step + 1;
+    if (next < STEP_ACTIONS.length) STEP_ACTIONS[next].run();
   });
+
 
   $('btnReset').addEventListener('click', function () {
     state.step = -1; state.blocked = false;

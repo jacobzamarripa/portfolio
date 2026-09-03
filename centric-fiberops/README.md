@@ -42,7 +42,7 @@ Additional locks:
 
 ## The QR codes are real
 
-The five codes rendered in the QR Pipeline workspace are genuine, scannable
+The five codes rendered in the Closeout workspace are genuine, scannable
 QR codes (41×41 modules, error correction level M). They were generated at
 build time with a reference encoder and embedded as packed bitmaps in
 `QR_DATA`, then verified pixel-for-pixel against that encoder's output by
@@ -60,9 +60,15 @@ bitmap. Keep `QR_DATA` and the `JOBS` registry in sync — a code that decodes
 to different values than the record beside it is the exact self-contradiction
 this project exists to avoid.
 
+The payload format is
+`NEXUS|JOB=…|ADDR=…|COMM=…|CUST=…|ONT=…|SER=…`. The **Encoded payload**
+readout under each code is built in `renderQR()` from the same `JOBS` entry
+the matrix encodes, so it cannot drift from what a phone actually decodes.
+Verified by decoding all five rendered matrices back to their strings.
+
 ## What the walkthrough demonstrates
 
-Six workspaces: Dashboard, My Jobs, Calendar, Map View, **QR Pipeline**, and
+Six workspaces: Dashboard, My Jobs, Calendar, Map View, **Closeout**, and
 Provisioning. The pipeline is the centerpiece because it is the piece that was
 real. Its five steps mirror the actual workflow: pull from the assignment
 board → cleanse and validate → generate the code → scan into provisioning →
