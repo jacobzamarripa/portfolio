@@ -201,10 +201,10 @@
   border-radius:14px;background:var(--surface);border:1px solid var(--slate-200)}
 .pipe-detail b{font-size:13px;color:var(--ink)}
 .pipe-detail span{font-size:12.5px;font-weight:600;color:var(--slate-500)}
-.qr-grid{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:18px;align-items:start}
-.qr-stage{display:grid;justify-items:center;gap:11px;padding:20px 18px;border-radius:24px;background:var(--surface);border:1px solid var(--slate-200);box-shadow:var(--shadow);text-align:center}
-.qr-size{width:clamp(168px,19vw,212px);aspect-ratio:1}
-.qr-canvas{width:100%;height:100%;image-rendering:pixelated;border-radius:8px;background:var(--surface)}
+.qr-grid{display:grid;grid-template-columns:minmax(0,1fr) 234px;gap:18px;align-items:start}
+.qr-stage{display:grid;justify-items:center;gap:11px;padding:20px 18px;border-radius:24px;background:var(--surface);border:1px solid var(--slate-200);box-shadow:var(--shadow);text-align:center;max-width:100%}
+.qr-size{width:196px;aspect-ratio:1}
+.qr-canvas{display:block;image-rendering:pixelated;border-radius:8px;background:#fff}
 .qr-empty{display:grid;place-items:center;border-radius:14px;border:2px dashed var(--slate-200);color:var(--slate-400);font-size:12px;font-weight:800;text-align:center;padding:18px;line-height:1.5}
 .qr-scanhint{font-size:12px;font-weight:700;color:var(--slate-500);max-width:28ch;line-height:1.5}
 .qr-scanhint b{color:var(--blue);font-weight:900}
@@ -257,21 +257,35 @@
 .led-row.is-norm .led-out{color:var(--ok-ink)}
 .led-row.is-bad{background:var(--bad-bg);border-color:var(--bad-rule)}
 .led-row.is-bad .led-out{color:var(--bad-ink)}
-/* Once a row is normalized it carries its own scannable code. */
+/* A normalized row carries its own scannable code. Left undecorated on
+   purpose: clicking the row pops it out, nothing advertises it. */
 .led-row.has-code{cursor:pointer}
-.led-row.has-code:hover,.led-row.has-code:focus-visible{border-color:var(--blue)}
+.led-row.has-code:hover{border-color:var(--info-rule)}
 .led-row.has-code:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.led-code{grid-column:1/-1;display:none;margin-top:11px;padding-top:11px;
-  border-top:1px dashed var(--slate-200);align-items:center;gap:14px}
-.led-row.show-code .led-code{display:flex}
-.led-code canvas{width:78px;height:78px;flex:none;image-rendering:pixelated;border-radius:6px;background:#fff}
-.led-code div{min-width:0}
-.led-code small{display:block;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--slate-400);margin-bottom:3px}
-.led-code b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--slate-700);
-  word-break:break-word;font-weight:600}
-.led-hint{font-size:10.5px;font-weight:800;color:var(--slate-400);margin-left:auto;white-space:nowrap}
-.led-row.show-code .led-hint{color:var(--blue)}
+.led-row.is-open{background:var(--info-bg);border-color:var(--info-rule)}
+
+.ledpop{position:fixed;z-index:90;display:flex;align-items:center;gap:12px;max-width:min(288px,calc(100vw - 30px));
+  padding:11px 13px;border-radius:16px;background:var(--surface);
+  border:1px solid var(--slate-200);box-shadow:0 20px 48px -18px rgba(15,23,42,.42);
+  opacity:0;transform:scale(.94);transform-origin:var(--pop-origin,left center);
+  transition:opacity .13s ease,transform .13s ease;pointer-events:none}
+.ledpop.is-open{opacity:1;transform:scale(1);pointer-events:auto}
+.ledpop canvas{flex:none;display:block;image-rendering:pixelated;border-radius:6px;background:#fff}
+.ledpop-txt{min-width:108px;flex:1 1 auto}
+.ledpop-txt small{display:block;font-size:10px;font-weight:900;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--slate-400);margin-bottom:3px}
+.ledpop-txt b{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12.5px;font-weight:600;color:var(--slate-700);word-break:break-word}
+.ledpop-txt em{display:block;font-style:normal;font-size:10.5px;font-weight:700;
+  color:var(--slate-400);margin-top:5px}
+/* the tail */
+.ledpop::before{content:'';position:absolute;width:11px;height:11px;background:var(--surface);
+  border-left:1px solid var(--slate-200);border-bottom:1px solid var(--slate-200);
+  transform:rotate(45deg)}
+.ledpop.tail-left::before{left:-6px;top:calc(50% - 5px)}
+.ledpop.tail-right::before{right:-6px;top:calc(50% - 5px);transform:rotate(225deg)}
+.ledpop.tail-top::before{top:-6px;left:26px;transform:rotate(135deg)}
+@media (prefers-reduced-motion: reduce){ .ledpop{transition:none} }
 .led-note{grid-column:2/-1;font-size:11.5px;font-weight:700;margin-top:5px;line-height:1.45}
 .led-row.is-bad .led-note{color:var(--bad-ink)}
 .led-empty{padding:16px 13px;border-radius:13px;background:var(--slate-50);
@@ -384,15 +398,14 @@
   .app{grid-template-columns:200px 1fr}
   .sidebar{padding:22px 14px}
   .surface{padding:26px}
-  .qr-grid{grid-template-columns:minmax(0,1fr) 216px;gap:14px}
+  .qr-grid{grid-template-columns:minmax(0,1fr) 234px;gap:14px}
   .led-cols{grid-template-columns:88px minmax(0,1fr) minmax(0,1fr) 86px;gap:10px}
 }
 @media(max-width:900px){
   .qr-grid,.prov{grid-template-columns:minmax(0,1fr)}
   .race-grid{grid-template-columns:minmax(0,1fr)}
   .app>*{min-width:0}
-  .qr-stage{justify-items:start;text-align:left}
-  .qr-size{width:min(212px,60vw)}
+  .qr-stage{justify-items:start;text-align:left;width:100%}
 }
 @media(max-width:700px){
   .pipe{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -536,7 +549,7 @@
 </div></div>
 <div class="qr-stage">
 <div class="qr-empty qr-size" id="qrEmpty">The code renders here once the record is normalized.</div>
-<div class="qr-size" id="qrCanvasWrap" hidden><canvas class="qr-canvas" id="qrCanvas" width="196" height="196"></canvas></div>
+<div id="qrCanvasWrap" hidden><canvas class="qr-canvas" id="qrCanvas" width="196" height="196"></canvas></div>
 <div class="qr-scanhint" id="qrHint" hidden><b>Scan it.</b> A real QR code carrying the whole fictional record.</div>
 <div class="qr-payload" id="qrPayload" hidden><small>Encoded payload</small><code id="qrPayloadText"></code></div>
 </div></div>
@@ -667,19 +680,33 @@
     return rows;
   }
 
-  function drawQR(canvas, b64, n) {
+  /* A QR only survives scaling at whole-module steps. Size the canvas from an
+     integer module width and set the CSS box to match exactly, so the bitmap is
+     never resampled — a fractional scale turns pixelated rendering into
+     uneven modules, which is what breaks a code at awkward widths. */
+  function drawQR(canvas, b64, n, maxCss) {
     n = n || QR_N;
-    var rows = unpack(b64, n), quiet = 4, total = n + quiet * 2;
-    var px = Math.floor(canvas.width / total);
+    var quiet = 4, total = n + quiet * 2;
+    var dpr = Math.max(1, Math.round(window.devicePixelRatio || 1));
+    var cssMod = Math.max(2, Math.min(Math.floor((maxCss || 212) / total), 7));
+    var size = cssMod * total;
+
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+
+    var mod = cssMod * dpr, rows = unpack(b64, n);
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#0f172a';
     for (var r = 0; r < n; r++) {
       for (var c = 0; c < n; c++) {
-        if (rows[r][c] === '1') ctx.fillRect((c + quiet) * px, (r + quiet) * px, px, px);
+        if (rows[r][c] === '1') ctx.fillRect((c + quiet) * mod, (r + quiet) * mod, mod, mod);
       }
     }
+    return size;
   }
 
   /* --------------------------------------------------------------------- */
@@ -749,6 +776,7 @@
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+    if (typeof closePop === 'function') closePop();
     revealNav(view);
   }
   tabs.forEach(function (t) {
@@ -839,6 +867,7 @@
   function renderRecord() {
     var job = byId[state.job];
     var list = $('recList');
+    closePop();               /* rows are about to be replaced */
     list.innerHTML = '';
     $('qrJobTag').textContent = job.id;
 
@@ -879,7 +908,8 @@
           'Fails the serial format FJ + 10 digits \u2014 ' + (out.length - 2) + ' digits present. No code is issued.'));
       }
 
-      /* A normalized field is a field that can travel on its own. */
+      /* A normalized field is a field that can travel on its own. Clicking the
+         row pops its code out; nothing on the row announces it. */
       var key = job.id + '.' + f.k;
       if (!pulledOnly && !bad && QR_FIELD[key]) {
         row.classList.add('has-code');
@@ -887,32 +917,9 @@
         row.setAttribute('role', 'button');
         row.setAttribute('aria-expanded', 'false');
         row.setAttribute('aria-label', f.label + ' ' + out + ' \u2014 show the code for this field');
-
-        var hint = el('span', 'led-hint', 'Scan this field');
-        row.insertBefore(hint, row.querySelector('.led-tag').nextSibling);
-
-        var code = el('div', 'led-code');
-        var cv = document.createElement('canvas');
-        cv.width = 132; cv.height = 132;
-        code.appendChild(cv);
-        var side = el('div');
-        side.appendChild(el('small', null, f.label + ' \u00b7 own code'));
-        side.appendChild(el('b', null, out));
-        code.appendChild(side);
-        row.appendChild(code);
-
-        var drawn = false;
-        var toggle = function () {
-          var open = row.classList.toggle('show-code');
-          row.setAttribute('aria-expanded', open ? 'true' : 'false');
-          if (open && !drawn) { drawQR(cv, QR_FIELD[key], QR_FIELD_N); drawn = true; }
-        };
-        row.addEventListener('click', toggle);
+        row.addEventListener('click', function () { togglePop(row, key, f.label, out); });
         row.addEventListener('keydown', function (ev) {
-          if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); }
-        });
-        row.addEventListener('mouseenter', function () {
-          if (!drawn) { drawQR(cv, QR_FIELD[key], QR_FIELD_N); drawn = true; }
+          if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); togglePop(row, key, f.label, out); }
         });
       }
       list.appendChild(row);
@@ -926,6 +933,99 @@
     { t: 'Scan',       d: 'One scan populates provisioning. No field is hand-keyed at this point.' },
     { t: 'Write back', d: 'Write the result back so both systems agree, and stamp the completion.' }
   ];
+
+  /* ---------------- field-code bubble ---------------- */
+  var pop = null, popRow = null;
+
+  function buildPop() {
+    if (pop) return pop;
+    pop = el('div', 'ledpop');
+    pop.appendChild(document.createElement('canvas'));
+    var t = el('div', 'ledpop-txt');
+    t.appendChild(el('small'));
+    t.appendChild(el('b'));
+    t.appendChild(el('em', null, 'Scannable \u00b7 carries this field only'));
+    pop.appendChild(t);
+    document.body.appendChild(pop);
+    return pop;
+  }
+
+  function closePop() {
+    if (!pop || !popRow) return;
+    pop.classList.remove('is-open');
+    popRow.classList.remove('is-open');
+    popRow.setAttribute('aria-expanded', 'false');
+    popRow = null;
+  }
+
+  function placePop(row) {
+    var r = row.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight, gap = 12, pad = 10;
+    pop.classList.remove('tail-left', 'tail-right', 'tail-top');
+    var left, top = Math.round(r.top + r.height / 2 - h / 2);
+
+    /* Prefer beside the row so it reads as coming out of it. Overlapping the
+       QR stage is fine - it is a floating layer. Only drop below when there is
+       genuinely no horizontal room. */
+    if (r.right + gap + w <= window.innerWidth - pad) {
+      left = Math.round(r.right + gap);
+      pop.classList.add('tail-left');
+      pop.style.setProperty('--pop-origin', 'left center');
+    } else if (r.left - gap - w >= pad) {
+      left = Math.round(r.left - gap - w);
+      pop.classList.add('tail-right');
+      pop.style.setProperty('--pop-origin', 'right center');
+    } else if (w + pad * 2 <= window.innerWidth) {
+      left = Math.round(window.innerWidth - w - pad);
+      pop.classList.add(left > r.left + r.width * 0.4 ? 'tail-left' : 'tail-top');
+      pop.style.setProperty('--pop-origin', 'right center');
+      if (pop.classList.contains('tail-top')) top = Math.round(r.bottom + gap);
+    } else {
+      left = pad;
+      top = Math.round(r.bottom + gap);
+      pop.classList.add('tail-top');
+      pop.style.setProperty('--pop-origin', 'left top');
+    }
+    top = Math.max(pad, Math.min(top, window.innerHeight - h - pad));
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+  }
+
+  function togglePop(row, key, label, value) {
+    if (popRow === row) { closePop(); return; }
+    closePop();
+    buildPop();
+    pop.querySelector('.ledpop-txt small').textContent = label;
+    pop.querySelector('.ledpop-txt b').textContent = value;
+    drawQR(pop.querySelector('canvas'), QR_FIELD[key], QR_FIELD_N, 112);
+    pop.classList.add('is-open');
+    popRow = row;
+    row.classList.add('is-open');
+    row.setAttribute('aria-expanded', 'true');
+    placePop(row);
+  }
+
+  document.addEventListener('click', function (ev) {
+    if (!popRow) return;
+    if (popRow.contains(ev.target) || (pop && pop.contains(ev.target))) return;
+    closePop();
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') closePop();
+  });
+  /* Follow the row while it is on screen; let go once it scrolls away, so the
+     bubble is never left floating with nothing to point at. Reposition rather
+     than close on resize: on a phone that event also fires when the browser
+     chrome collapses, and dropping the bubble there would feel broken. */
+  function trackPop() {
+    if (!popRow) return;
+    if (!document.body.contains(popRow)) { closePop(); return; }
+    var r = popRow.getBoundingClientRect();
+    if (r.bottom < 8 || r.top > window.innerHeight - 8) { closePop(); return; }
+    placePop(popRow);
+  }
+  window.addEventListener('resize', trackPop);
+  window.addEventListener('scroll', trackPop, { passive: true });
 
   function renderPipe() {
     document.querySelectorAll('.pipe-step').forEach(function (p) {
@@ -987,7 +1087,7 @@
     hint.hidden = !on;
     pay.hidden = !on;
     if (on) {
-      drawQR(canvas, QR_DATA[state.job]);
+      drawQR(canvas, QR_DATA[state.job], QR_N, 212);
       /* Built from the same JOBS record the matrix encodes, so the readout
          cannot drift from what a phone actually decodes. */
       var j = byId[state.job];
