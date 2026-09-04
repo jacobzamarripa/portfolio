@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128203;</text></svg>">
+<title>Period Review — Retail at Home | Jacob Zamarripa</title>
+<meta name="description" content="A retrospective on leading a distributed at-home technical support team: the diagnosis, the training built against it, and four periods of third-party-measured results. A personal retrospective by a former employee; not affiliated with or endorsed by Apple Inc.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Period Review — Retail at Home">
+<meta property="og:description" content="Diagnose, build, measure — with the measurement produced by someone else.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="og-period-review.png">
+<style>
+/* ============================================================
+   PERIOD REVIEW — its own identity: the operating document.
+   Warm paper plane, hairline rules, ink-forward, tabular figures.
+   Deliberately NOT the cool-slate + blue of the two sibling pages,
+   and deliberately not anyone else's brand.
+   Chart palette validated with the dataviz validator, --pairs all,
+   both modes. See .private/apple-rtl/CHART_DATA.md §5.
+   ============================================================ */
+
+:root{
+  --topbar-h:54px;
+  --plane:#f9f9f7;
+  --surface:#fcfcfb;
+  --sunken:#f2f1ec;
+  --ink:#0b0b0b;
+  --ink-2:#52514e;
+  --muted:#898781;
+  --rule:#e1e0d9;
+  --axis:#c3c2b7;
+  --accent:#4a3aa7;
+  --accent-wash:rgba(74,58,167,.09);
+  --accent-line:rgba(74,58,167,.28);
+  --flag:#eb6834;
+  --flag-wash:rgba(235,104,52,.13);
+  --ctx:#898781;
+  --good:#006300;
+  --ring:rgba(11,11,11,.10);
+  --shadow:0 1px 2px rgba(11,11,11,.05);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --plane:#0d0d0d;
+    --surface:#1a1a19;
+    --sunken:#141413;
+    --ink:#ffffff;
+    --ink-2:#c3c2b7;
+    --muted:#898781;
+    --rule:#2c2c2a;
+    --axis:#383835;
+    --accent:#9085e9;
+    --accent-wash:rgba(144,133,233,.13);
+    --accent-line:rgba(144,133,233,.34);
+    --flag:#d95926;
+    --flag-wash:rgba(217,89,38,.18);
+    --ctx:#898781;
+    --good:#0ca30c;
+    --ring:rgba(255,255,255,.10);
+    --shadow:none;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --plane:#0d0d0d;
+  --surface:#1a1a19;
+  --sunken:#141413;
+  --ink:#ffffff;
+  --ink-2:#c3c2b7;
+  --muted:#898781;
+  --rule:#2c2c2a;
+  --axis:#383835;
+  --accent:#9085e9;
+  --accent-wash:rgba(144,133,233,.13);
+  --accent-line:rgba(144,133,233,.34);
+  --flag:#d95926;
+  --flag-wash:rgba(217,89,38,.18);
+  --ctx:#898781;
+  --good:#0ca30c;
+  --ring:rgba(255,255,255,.10);
+  --shadow:none;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.62;
+  font-variant-numeric:tabular-nums;
+  transition:background-color .2s,color .2s;
+}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.22;letter-spacing:-.012em}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- topbar (shared chrome pattern) ---------- */
+.topbar{position:sticky;top:0;z-index:100;height:var(--topbar-h);
+  background:color-mix(in srgb,var(--plane) 88%,transparent);
+  backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--rule)}
+.topbar-inner{height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.topbar-left{display:flex;align-items:center;gap:11px;min-width:0}
+.topbar-right{display:flex;align-items:center;gap:9px}
+.mark{width:24px;height:24px;border-radius:5px;border:1px solid var(--accent-line);
+  background:var(--accent-wash);display:grid;place-items:center;flex:none}
+.mark i{display:block;width:9px;height:9px;border-radius:1px;
+  border-left:2px solid var(--accent);border-bottom:2px solid var(--accent)}
+.tb-name{font-size:13px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.tb-pill{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.tb-chip{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-wash);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink-2);font-size:13px;cursor:pointer;line-height:1;
+  transition:transform .18s,border-color .18s}
+.theme-btn:hover{transform:translateY(-1px);border-color:var(--axis)}
+.tb-link{font-size:12px;font-weight:800;text-decoration:none;color:var(--accent);white-space:nowrap}
+.tb-link:hover{text-decoration:underline}
+
+/* ---------- shell grid + rail ---------- */
+.shellgrid{display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;padding-top:26px;padding-bottom:60px}
+.railnav{position:sticky;top:calc(var(--topbar-h) + 20px);display:flex;flex-direction:column;gap:1px;align-self:start}
+.rail-label{padding:0 11px 8px;font-size:9px;font-weight:900;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+.railnav a{display:flex;align-items:baseline;gap:9px;padding:7px 11px;border-left:2px solid transparent;
+  color:var(--ink-2);text-decoration:none;font-size:12.5px;font-weight:700;transition:color .18s,background .18s}
+.railnav a:hover{color:var(--ink);background:var(--surface)}
+.railnav a.is-current{color:var(--ink);border-left-color:var(--accent);background:var(--surface)}
+.railnav a .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9.5px;font-weight:600;color:var(--muted)}
+.railnav a.is-current .n{color:var(--accent)}
+.railnav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.rail-meta{margin-top:22px;padding:0 11px;display:grid;gap:13px;border-top:1px solid var(--rule);padding-top:16px}
+.rail-meta small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+.rail-meta b{display:block;font-size:11px;font-weight:700;color:var(--ink-2);line-height:1.4;margin-top:3px}
+.content{min-width:0}
+
+/* ---------- document sections ---------- */
+.sec{margin-bottom:52px;scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:11px;margin-bottom:20px;border-bottom:2px solid var(--ink)}
+.sec-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--muted)}
+.sec-title{font-size:20px;font-weight:800}
+.sec-kicker{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.lede{font-size:16.5px;line-height:1.6;color:var(--ink-2);max-width:66ch}
+.body-copy{max-width:68ch}
+.body-copy h4{font-size:13.5px;font-weight:800;margin:22px 0 7px;letter-spacing:0}
+
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.note{background:var(--sunken);border:1px solid var(--rule);border-left:3px solid var(--axis);
+  border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px;color:var(--ink-2)}
+.pull{border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:18px 0;
+  font-size:16px;line-height:1.55;color:var(--ink)}
+.pull cite{display:block;margin-top:7px;font-style:normal;font-size:11.5px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+.nowrap{white-space:nowrap}
+
+/* ---------- hero: the review header block ---------- */
+.hero{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
+  padding:28px 30px 26px;box-shadow:var(--shadow);margin-bottom:34px}
+.hero-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.hero-stamp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+  border:1px solid var(--accent-line);background:var(--accent-wash);border-radius:4px;padding:3px 8px}
+.hero-dates{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--muted)}
+.hero h1{font-size:clamp(27px,4.1vw,40px);font-weight:800;letter-spacing:-.028em;max-width:19ch}
+.hero-sub{margin-top:13px;font-size:16.5px;line-height:1.55;color:var(--ink-2);max-width:60ch}
+.hero-role{margin-top:20px;padding-top:17px;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:16px}
+.hero-role div small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.hero-role div b{font-size:13px;font-weight:800;line-height:1.35;display:block}
+.disclaim{margin-top:19px;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
+  font-size:11.5px;line-height:1.5;color:var(--ink-2);background:var(--sunken)}
+
+/* ---------- three-tier truth boundary ---------- */
+.tiers{display:grid;gap:9px}
+.tier{display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;align-items:start;
+  padding:14px 16px;border:1px solid var(--rule);border-radius:11px;background:var(--surface)}
+.tier-mark{width:15px;height:15px;border-radius:50%;margin-top:4px;flex:none;border:2px solid var(--accent)}
+.tier-1 .tier-mark{background:var(--accent)}
+.tier-2 .tier-mark{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
+.tier-3 .tier-mark{background:transparent;border-color:var(--muted);border-style:dotted}
+.tier b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
+.tier p{font-size:13px;color:var(--ink-2);margin:0}
+.tier-tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:8px;
+  vertical-align:2px;border:1px solid var(--rule);color:var(--muted)}
+
+/* ---------- evidence tag used inline in copy ---------- */
+.ev{display:inline-flex;align-items:center;gap:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:1px 6px;border-radius:4px;border:1px solid var(--rule);color:var(--muted);
+  white-space:nowrap;vertical-align:1px}
+.ev::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--accent)}
+.ev-1::before{background:var(--accent)}
+.ev-2::before{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
+.ev-3::before{background:transparent;border-color:var(--muted);border-style:dotted}
+
+/* ---------- the loop: three steps ---------- */
+.loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:26px}
+.step{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:15px 17px;position:relative}
+.step-n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.step b{display:block;font-size:14.5px;font-weight:800;margin:5px 0 6px}
+.step p{font-size:12.5px;color:var(--ink-2);margin:0}
+.step.is-on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-wash)}
+
+/* ---------- figures / charts ---------- */
+.fig{background:var(--surface);border:1px solid var(--rule);border-radius:12px;
+  padding:17px 19px 15px;box-shadow:var(--shadow);margin-bottom:18px}
+.fig-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+.fig-title{font-size:14.5px;font-weight:800;letter-spacing:-.008em}
+.fig-sub{font-size:12.5px;color:var(--ink-2);margin:4px 0 13px;max-width:74ch}
+.fig-chip{margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;
+  border:1px solid var(--flag);color:var(--flag);background:var(--flag-wash);white-space:nowrap}
+.fig-plot{width:100%;overflow-x:auto}
+.fig-plot svg{display:block;max-width:100%;height:auto}
+.fig-foot{margin-top:11px;padding-top:10px;border-top:1px solid var(--rule);
+  font-size:11.5px;line-height:1.5;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:15px;margin:2px 0 12px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:block;width:11px;height:11px;border-radius:50%;flex:none}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+
+/* ---------- KPI / stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:18px}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:14px 16px}
+.tile small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tile b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.tile em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:5px;line-height:1.4}
+.tile-accent b{color:var(--accent)}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:420px}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  background:var(--sunken)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.tbl-note{font-size:11.5px;color:var(--muted);margin-top:8px}
+details{margin-top:11px}
+summary{font-size:11.5px;font-weight:800;color:var(--accent);cursor:pointer;
+  padding:5px 0;list-style:none;display:inline-flex;align-items:center;gap:6px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+details[open] summary::before{content:"\2212"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---------- chart tooltip ---------- */
+.tip{position:fixed;z-index:400;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s,transform .12s;background:var(--ink);color:var(--plane);
+  border-radius:8px;padding:8px 11px;font-size:11.5px;line-height:1.45;font-weight:700;
+  max-width:240px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip u{display:block;text-decoration:none;font-weight:800;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;opacity:.72;margin-bottom:3px}
+
+/* ---------- list of findings ---------- */
+.findings{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.findings li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;
+  padding:13px 15px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.findings b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
+.findings p{font-size:12.5px;color:var(--ink-2);margin:0}
+.findings .k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  color:var(--accent);padding-top:3px}
+
+/* ---------- footer ---------- */
+.foot{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
+  padding:26px 28px;box-shadow:var(--shadow);scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.foot h3{font-size:19px;font-weight:800;margin-bottom:9px}
+.foot p{font-size:14px;color:var(--ink-2);max-width:60ch}
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:15px;padding:10px 17px;
+  background:var(--accent);color:#fff;border-radius:9px;text-decoration:none;font-size:13.5px;font-weight:800;
+  transition:transform .18s,opacity .18s}
+.cta:hover{transform:translateY(-1px);opacity:.93}
+.foot-legal{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule);
+  font-size:11px;line-height:1.6;color:var(--muted);max-width:78ch}
+
+/* ---------- responsive ---------- */
+@media(max-width:1000px){
+  .shellgrid{grid-template-columns:minmax(0,1fr);gap:12px;padding-top:12px}
+  .railnav{position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;
+    gap:3px;min-width:0;padding:9px 0;background:var(--plane);border-bottom:1px solid var(--rule)}
+  .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;padding:6px 10px}
+  .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
+  .rail-label,.rail-meta{display:none}
+  .loop{grid-template-columns:minmax(0,1fr)}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 15px}
+  .hero{padding:21px 18px}
+  .fig{padding:14px 14px 12px}
+  .sec{margin-bottom:40px}
+  .tb-pill,.tb-chip{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+  .cta:hover,.theme-btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap topbar-inner">
+  <div class="topbar-left">
+    <span class="mark"><i></i></span>
+    <span class="tb-name">Period Review</span>
+    <span class="tb-pill">Retail at Home &middot; FY21</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-chip">Measured by a third party</span>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button>
+    <a class="tb-link" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn &rarr;</a>
+  </div>
+</div></div>
+
+<div class="wrap shellgrid">
+  <aside class="railnav" id="railnav" aria-label="Section navigation">
+    <div class="rail-label">Case study</div>
+    <a href="#intro"><span class="n">01</span>Summary</a>
+    <a href="#evidence"><span class="n">02</span>How to read</a>
+    <a href="#loop"><span class="n">03</span>Find it, fix it</a>
+    <a href="#system"><span class="n">04</span>Operating routine</a>
+    <a href="#winddown"><span class="n">05</span>Scale &amp; close</a>
+    <a href="#store"><span class="n">06</span>North Star</a>
+    <a href="#case"><span class="n">07</span>In my words</a>
+    <a href="#limits"><span class="n">08</span>Limits</a>
+    <a href="#contact"><span class="n">09</span>Contact</a>
+    <div class="rail-meta">
+      <div><small>Operating role</small><b>Retail Team Lead<br>(formal title: Lead Genius)</b></div>
+      <div><small>Period</small><b>Fall 2020 &ndash; Mar 2021<br>FY21 P01&ndash;P06</b></div>
+      <div><small>Span</small><b>29 advisors, largest<br>of 8 teams &middot; 7 sites</b></div>
+      <div><small>Built</small><b>2026 &middot; retrospective</b></div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+  <!-- ============ 01 HERO ============ -->
+  <section class="sec" id="intro">
+    <div class="hero">
+      <div class="hero-bar">
+        <span class="hero-stamp">Period review</span>
+        <span class="hero-dates">FY21 P01&ndash;P06 &middot; Sept 2020 &ndash; Mar 2021</span>
+      </div>
+      <h1>Someone else kept the score.</h1>
+      <p class="hero-sub">I spent six months running a distributed at-home technical support team.
+      Every performance figure on this page came out of my employer's own reporting, not mine &mdash;
+      which is the only reason it is worth showing you.</p>
+
+      <div class="hero-role">
+        <div><small>Operating role</small><b>Retail Team Lead</b></div>
+        <div><small>Formal title</small><b>Lead Genius</b></div>
+        <div><small>Span</small><b>29 advisors &mdash; the largest team in the org</b></div>
+        <div><small>Footprint</small><b>7 sites &middot; 6 markets &middot; 5 states</b></div>
+        <div><small>Measured on</small><b>4 KPIs &times; 4 periods</b></div>
+      </div>
+
+      <p class="disclaim"><b>Not affiliated with Apple.</b> This is a personal retrospective written by a
+      former employee. It is not affiliated with, endorsed by, sponsored by, or representative of Apple Inc.
+      No Apple branding, marks, product imagery or internal training material appears anywhere on this page.
+      Every colleague is unnamed and no individual's performance data is shown. The seven stores are named &mdash; they are public Apple retail locations &mdash; but how many advisors came from each one is not.</p>
+    </div>
+
+    <p class="lede">The two other case studies in this portfolio are systems I built, where I also
+    produced the measurement. This one is different, and the difference is the point: an outside party
+    graded the work, the grading survives in that party's own files, and I am reproducing it here
+    unchanged. What follows is a complete diagnose &rarr; build &rarr; measure loop &mdash; the thing an
+    interviewer is actually trying to detect, and the thing a portfolio almost never contains.</p>
+  </section>
+
+  <!-- ============ 02 TRUTH BOUNDARY ============ -->
+  <section class="sec" id="evidence">
+    <div class="sec-head">
+      <span class="sec-num">02</span><h2 class="sec-title">How to read this</h2>
+      <span class="sec-kicker">Read this before any number</span>
+    </div>
+    <p class="lede" style="margin-bottom:18px">Three kinds of claim appear on this page and they are not
+    worth the same. Every one is tagged where it is made, and the tags mean exactly this:</p>
+
+    <div class="tiers">
+      <div class="tier tier-1">
+        <span class="tier-mark" aria-hidden="true"></span>
+        <div><b>Apple&rsquo;s own reporting<span class="tier-tag">Measured</span></b>
+        <p>Third-party produced. These figures sit in my former employer's own performance trackers and
+        forensic files, where the team row and the site benchmark row were computed side by side by them,
+        not by me. I have not recalculated, rounded, or reframed them.</p></div>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-mark" aria-hidden="true"></span>
+        <div><b>My artifacts, kept at the time<span class="tier-tag">Recorded</span></b>
+        <p>Business plans, the curriculum I wrote, the roster tracker, notes kept while the work was
+        actually happening. Real, and mine, but self-produced &mdash; so I say so.
+        Where a Recorded figure is independently corroborated by a Measured one, I say so.</p></div>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-mark" aria-hidden="true"></span>
+        <div><b>My account, told now<span class="tier-tag">Recalled</span></b>
+        <p>Recollection. Chiefly the 2020 sequence and the reporting structure. I am the primary source
+        and I believe it, but nothing in the files corroborates it, so it is labelled as an account
+        rather than presented as fact.</p></div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:16px"><b>One deliberate exception.</b> The diagnosis chart in
+    section 03 plots individual advisors. Those dots are invented. The threshold lines, the size of the
+    problem group, and the finding itself are real and quoted; the dot positions are illustrative, because
+    publishing real per-person performance data would be indefensible. It is the only invented data on
+    this page and it is labelled again where it appears.</div>
+  </section>
+
+  <!-- ============ 03 THE LOOP ============ -->
+  <section class="sec" id="loop">
+    <div class="sec-head">
+      <span class="sec-num">03</span><h2 class="sec-title">Find it, fix it, prove it</h2>
+      <span class="sec-kicker">Diagnose &rarr; build &rarr; measure</span>
+    </div>
+    <p class="lede" style="margin-bottom:22px">Most management stories give you the result and ask you to
+    infer the method. This one has all three parts on file, in order, with dates.</p>
+
+    <div class="loop">
+      <div class="step is-on"><span class="step-n">Step 01 &middot; Diagnose</span>
+        <b>Find the driver</b>
+        <p>Customer satisfaction was the metric under pressure. It was not the problem. Every advisor
+        below 80% satisfaction was also below 72% issue resolution.</p></div>
+      <div class="step"><span class="step-n">Step 02 &middot; Build</span>
+        <b>Write the intervention</b>
+        <p>An original call-handling curriculum aimed at the specific behaviours that move both numbers,
+        taken through six revisions and delivered by me.</p></div>
+      <div class="step"><span class="step-n">Step 03 &middot; Measure</span>
+        <b>Let someone else score it</b>
+        <p>Four consecutive full periods, four tracked KPIs, team row against site benchmark row &mdash;
+        in their reporting, not mine.</p></div>
+    </div>
+
+    <!-- ---- CHART 1 : DIAGNOSIS ---- -->
+    <div class="fig">
+      <div class="fig-head">
+        <div>
+          <div class="fig-title">Step 01 &mdash; what the numbers actually said</div>
+        </div>
+        <span class="fig-chip">Dots illustrative &middot; not real advisors</span>
+      </div>
+      <p class="fig-sub">Satisfaction plotted against issue resolution. The finding was that the two moved
+      together: everyone in the low-satisfaction group was also failing to resolve issues on the call.
+      That reframes the problem from &ldquo;be warmer with customers&rdquo; to &ldquo;actually finish the
+      job,&rdquo; which is a coachable, teachable behaviour.</p>
+      <div class="legend">
+        <span><i style="background:var(--flag)"></i>Below both thresholds &mdash; the group I found</span>
+        <span><i style="background:var(--ctx)"></i>Everyone else</span>
+        <span><i style="width:16px;height:0;border-top:2px dashed var(--accent);border-radius:0"></i>Threshold</span>
+      </div>
+      <div class="fig-plot" id="fig1"></div>
+      <p class="fig-foot"><b>Real:</b> both threshold lines, the size of the flagged group, and the finding,
+      quoted from my own period business plan &mdash; <em>&ldquo;All low CSAT Advisors have sub-72% Issue
+      Resolution.&rdquo;</em> <b>Invented:</b> every dot position, and the spread of the rest of the team.
+      Per-advisor performance data is not mine to publish, so this figure shows the shape of the finding
+      rather than the people in it. <span class="ev ev-2">Recorded &middot; my business plan</span></p>
+      <details><summary>What was real, in numbers</summary>
+        <div class="tbl-wrap" style="margin-top:9px"><table>
+          <thead><tr><th>Quantity</th><th class="num">Value</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Satisfaction threshold</td><td class="num">80%</td><td>Real &mdash; quoted</td></tr>
+            <tr><td>Issue-resolution threshold</td><td class="num">72%</td><td>Real &mdash; quoted</td></tr>
+            <tr><td>Advisors below both</td><td class="num">5</td><td>Real &mdash; quoted</td></tr>
+            <tr><td>Individual dot positions</td><td class="num">&mdash;</td><td>Invented for this figure</td></tr>
+            <tr><td>Total dots plotted</td><td class="num">12</td><td>Illustrative &mdash; drawn from the actively-handling count</td></tr>
+          </tbody>
+        </table></div>
+      </details>
+    </div>
+
+    <!-- ---- CHART 2 : BENCHMARK ---- -->
+    <div class="fig">
+      <div class="fig-head">
+        <div><div class="fig-title">Step 03 &mdash; team against the site benchmark, four periods</div></div>
+        <span class="fig-chip" style="border-color:var(--accent);color:var(--accent);background:var(--accent-wash)">Measured &middot; their reporting</span>
+      </div>
+      <p class="fig-sub">Four panels, one per tracked KPI. Each pair is one fiscal period: the site
+      benchmark and my team's result, computed side by side in the employer's own tracker. Four metrics,
+      four periods, sixteen comparisons &mdash; the team is on the better side of every one of them.</p>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>My team</span>
+        <span><i style="background:var(--ctx)"></i>Site benchmark</span>
+      </div>
+      <div class="fig-plot" id="fig2"></div>
+      <p class="fig-foot">Source: the <span class="mono">Metric Data</span> sheet in each period's
+      performance tracker, comparing the team summary row with the site summary row. Handle time is
+      inverted &mdash; lower is better &mdash; and is plotted on its own scale in minutes, never mixed
+      onto the percentage axes. <span class="ev ev-1">Measured &middot; by Apple</span></p>
+      <details><summary>The full table, all sixteen comparisons</summary>
+        <div class="tbl-wrap" style="margin-top:9px"><table>
+          <thead><tr><th>Period</th><th class="num">Issue res.</th><th class="num">Satisfaction</th>
+            <th class="num">Customer-facing time</th><th class="num">Handle time (min)</th></tr></thead>
+          <tbody>
+            <tr><td>P02 &middot; Nov 2020</td><td class="num">72.14 vs 67.69</td><td class="num">83.64 vs 82.26</td><td class="num">87.06 vs 73.27</td><td class="num">15.09 vs 20.29</td></tr>
+            <tr><td>P03 &middot; Dec 2020</td><td class="num">79.31 vs 67.54</td><td class="num">88.95 vs 82.72</td><td class="num">85.49 vs 74.28</td><td class="num">18.07 vs 20.42</td></tr>
+            <tr><td>P04 &middot; Jan 2021</td><td class="num">74.49 vs 66.70</td><td class="num">87.85 vs 81.49</td><td class="num">86.31 vs 74.76</td><td class="num">19.54 vs 20.24</td></tr>
+            <tr><td>P05 &middot; Feb 2021</td><td class="num">73.49 vs 67.79</td><td class="num">85.41 vs 82.58</td><td class="num">81.34 vs 73.45</td><td class="num">19.01 vs 19.90</td></tr>
+            <tr><td><b>Average delta</b></td><td class="num"><b>+7.4 pts</b></td><td class="num"><b>+4.2 pts</b></td><td class="num"><b>+11.1 pts</b></td><td class="num"><b>2.3 min faster</b></td></tr>
+          </tbody>
+        </table></div>
+        <p class="tbl-note">Team result first, site benchmark second. Period rollups only &mdash; I do not
+        quote single weeks in either direction, and there was one week where team satisfaction fell below
+        the site.</p>
+      </details>
+    </div>
+
+    <div class="grid2">
+      <div class="tile tile-accent" style="grid-column:span 1">
+        <small>A second, wider benchmark</small>
+        <b>85.49%</b>
+        <em>My team's customer-facing time in P03, against a whole-organisation average of 79.98%
+        (iOS) and 81.06% (Mac+) across 82 advisors &mdash; not just the site.
+        <span class="ev ev-1">Measured</span></em>
+      </div>
+      <div class="tile">
+        <small>What the organisation was doing meanwhile</small>
+        <b>215 &rarr; 82</b>
+        <em>Advisors across the organisation, P01 to P03, under 8 team managers and then 7. The
+        contraction started months before the programme closed.
+        <span class="ev ev-1">Measured</span></em>
+      </div>
+    </div>
+
+    <div class="fig" style="margin-top:16px">
+      <div class="fig-head"><div><div class="fig-title">Two records, kept for different reasons, agreeing</div></div></div>
+      <p class="fig-sub">While all of this was happening I kept my own notes, including a summary I wrote
+      up for a development session. I found it years later, in a different place, kept for a different
+      purpose. The site figures I had written down by hand match the tracker rollups almost exactly.
+      That is not proof of anything on its own &mdash; but two independent records agreeing is the
+      strongest credibility argument available to a retrospective, and neither of my other case studies
+      can make it.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Metric</th><th class="num">My note at the time</th><th class="num">Site, per my note</th>
+          <th class="num">Site, per the tracker</th></tr></thead>
+        <tbody>
+          <tr><td>Satisfaction</td><td class="num">90%</td><td class="num">81%</td><td class="num">82.72 / 81.49</td></tr>
+          <tr><td>Issue resolution</td><td class="num">78%</td><td class="num">67%</td><td class="num">67.54 / 66.70</td></tr>
+          <tr><td>Customer-facing time</td><td class="num">86%</td><td class="num">75%</td><td class="num">74.28 / 74.76</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-foot">My own column is <span class="ev ev-2">Recorded</span> &mdash; self-reported, written
+      at the time. The tracker column is <span class="ev ev-1">Measured</span>, showing the P03 and P04
+      rollups. The rounding in my notes is mine.</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 THE SYSTEM ============ -->
+  <section class="sec" id="system">
+    <div class="sec-head">
+      <span class="sec-num">04</span><h2 class="sec-title">The operating routine</h2>
+      <span class="sec-kicker">Recorded &middot; my own artifacts</span>
+    </div>
+    <p class="lede" style="margin-bottom:20px">The results came out of an operating routine, not out of
+    effort. The centre of it was a roster tracker that people would call a spreadsheet and that was
+    functionally a small programme-management system.</p>
+
+    <div class="tiles">
+      <div class="tile"><small>Tracked per advisor</small><b>24</b>
+        <em>fields, spanning provisioning state, enablement sessions with dates, meeting cadence and
+        performance</em></div>
+      <div class="tile"><small>Onboarding</small><b>34</b>
+        <em>steps across roughly fifteen enterprise systems &mdash; a checklist I executed and tracked,
+        not one I wrote</em></div>
+      <div class="tile"><small>External stakeholders</small><b>14</b>
+        <em>a store leader and an experience manager at each of the seven sites</em></div>
+      <div class="tile"><small>Sites &middot; markets &middot; states</small><b>7 &middot; 6 &middot; 5</b>
+        <em>across two time zones; the team was never one store's staff</em></div>
+    </div>
+
+    <div class="fig" style="margin-bottom:22px">
+      <div class="fig-head"><div><div class="fig-title">The seven stores</div></div></div>
+      <p class="fig-sub">My advisors kept their home stores while they worked the phones. Each one came
+      with a store leader and an experience manager I coordinated with, in their time zone, on their
+      schedule. This is what &ldquo;distributed&rdquo; actually meant week to week.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Store</th><th>Location</th><th>Time zone</th></tr></thead>
+        <tbody>
+          <tr><td><b>North Star</b> &middot; R290 &mdash; my home store</td><td>San Antonio, Texas</td><td>Central</td></tr>
+          <tr><td>Highland Village</td><td>Houston, Texas</td><td>Central</td></tr>
+          <tr><td>Penn Square</td><td>Oklahoma City, Oklahoma</td><td>Central</td></tr>
+          <tr><td>Westfarms</td><td>Farmington, Connecticut</td><td>Eastern</td></tr>
+          <tr><td>Providence Place</td><td>Providence, Rhode Island</td><td>Eastern</td></tr>
+          <tr><td>Maine Mall</td><td>South Portland, Maine</td><td>Eastern</td></tr>
+          <tr><td>Cherry Hill</td><td>Cherry Hill, New Jersey</td><td>Eastern</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-foot">Seven stores, six markets, five states, two time zones, fourteen store-side
+      stakeholders. Store numbers are internal, so only my own is given. <b>How many of my advisors came
+      from which store is not published</b> &mdash; that is their information, not mine.
+      <span class="ev ev-2">Recorded &middot; my roster tracker</span></p>
+    </div>
+
+    <ul class="findings">
+      <li><span class="k">01</span><div><b>Every coaching goal was paired with how it would be verified</b>
+        <p>Not &ldquo;improve satisfaction&rdquo; but a specific behaviour, an owner, a verification
+        method, and a follow-up date. A quality review, an observed live call, a shadowing session. It is
+        the same structure as the business plan &mdash; cause, action, measure &mdash; applied to one
+        person instead of a team.</p></div></li>
+      <li><span class="k">02</span><div><b>I handed the enablement to the people who were already good at it</b>
+        <p>Two team members who were performing strongly led workshops on case logging and on compliance.
+        I set the targets in advance &mdash; logging from 66% to at least 80%, compliance from 87% to
+        above 90% &mdash; and then got out of the way. Logging finished at 88.7% and compliance at
+        98.11%, a 12.18-point gain. Naming an internal expert and setting their success criteria is a
+        different skill from doing the teaching yourself.</p></div></li>
+      <li><span class="k">03</span><div><b>The team was mid-transition, not junior</b>
+        <p>Of thirty advisors, nineteen came from sales-floor roles and had never supported the products
+        at this technical level; eleven came from technical backgrounds. That is a skills transition, not
+        an onboarding problem, and it is the context the benchmark numbers should be read in.</p></div></li>
+      <li><span class="k">04</span><div><b>I verified a stated reason against the system log</b>
+        <p>One attendance note records a lateness explained by a system update. The update had happened
+        four days earlier. I checked rather than accepting or rejecting it, and the note records the
+        check. Small, but it is what documentation is actually for.</p></div></li>
+    </ul>
+
+    <div class="note" style="margin-top:16px"><b>A framework I used, described rather than reproduced.</b>
+    My performance conversations followed a fixed written shape: what we discussed, the reason you shared
+    with me, the expectation, what you agreed to, and how we will know we were successful. I am describing
+    the structure and nothing else. The worked example concerns a real, identifiable person and includes
+    their performance data, so it stays private &mdash; as does every piece of my former employer's
+    internal training material.</div>
+  </section>
+
+  <!-- ============ 05 SCALE AND CLOSE ============ -->
+  <section class="sec" id="winddown">
+    <div class="sec-head">
+      <span class="sec-num">05</span><h2 class="sec-title">Scale and close-out</h2>
+      <span class="sec-kicker">Measured &middot; their forensics</span>
+    </div>
+    <p class="lede" style="margin-bottom:20px">Two things a hiring manager wants to know and a portfolio
+    almost never answers: how big was it really, and what happened when it stopped.</p>
+
+    <!-- ---- CHART 3 : TEAM SIZE vs PEERS ---- -->
+    <div class="fig">
+      <div class="fig-head">
+        <div><div class="fig-title">Every team in the organisation, by size</div></div>
+        <span class="fig-chip" style="border-color:var(--accent);color:var(--accent);background:var(--accent-wash)">Measured &middot; their forensics</span>
+      </div>
+      <p class="fig-sub">One bar per team manager, per fiscal period, counted from the organisation-wide
+      forensic files &mdash; the same files the benchmark comes from, which list every manager, every
+      advisor and every identifier side by side. Mine is the coloured bar. This is their count of my
+      team, not mine.</p>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>My team</span>
+        <span><i style="background:var(--ctx)"></i>The other team managers</span>
+      </div>
+      <div class="fig-plot" id="fig3"></div>
+      <p class="fig-foot"><b>I ran the largest team in the organisation in the first period</b> &mdash; 29
+      advisors across eight team managers &mdash; and stayed at or near the top as the whole organisation
+      contracted around me. By the third period every team had roughly halved and mine sat mid-pack at
+      eleven. Counted by distinct advisor identifier on the staffing records; the survey records count a
+      slightly different population and put my first period at 31.
+      <span class="ev ev-1">Measured &middot; their forensics</span></p>
+      <details><summary>The table, and why the number depends on what you count</summary>
+        <div class="tbl-wrap" style="margin-top:9px"><table>
+          <thead><tr><th>Period</th><th class="num">My team</th><th>Rank</th><th class="num">Largest</th><th class="num">Smallest</th><th class="num">Managers</th></tr></thead>
+          <tbody>
+            <tr><td>P01 &middot; Sept&ndash;Oct 2020</td><td class="num"><b>29</b></td><td>1st &mdash; largest</td><td class="num">29</td><td class="num">18</td><td class="num">8</td></tr>
+            <tr><td>P02 &middot; Nov 2020</td><td class="num"><b>17</b></td><td>joint 1st</td><td class="num">17</td><td class="num">11</td><td class="num">7</td></tr>
+            <tr><td>P03 &middot; Dec 2020</td><td class="num"><b>11</b></td><td>3rd</td><td class="num">13</td><td class="num">5</td><td class="num">7</td></tr>
+          </tbody>
+        </table></div>
+        <p class="tbl-note">Organisation-wide forensics exist for these three periods only. Headcount is
+        genuinely ambiguous in this kind of programme &mdash; the roster I actively managed, the advisors
+        logging staffed time, and the advisors receiving customer surveys are three overlapping but
+        different populations. I have used one basis throughout this figure rather than picking the
+        flattering number from each period, and the other managers are counted the same way. They are
+        unlabelled because their team sizes are not mine to publish.</p>
+      </details>
+    </div>
+
+    <h4 style="font-size:15px;font-weight:800;margin:26px 0 10px">Then it ended, and I had said so in advance</h4>
+
+    <div class="pull">&ldquo;I will have 5 advisors going into the next period but I expect to absorb more
+    as RTLs exit the programme &hellip; I do anticipate a drop in my CSAT because of higher performers
+    leaving, but would be happy to maintain an 80%, Issue Res. of 70%.&rdquo;
+    <cite>My period business plan, written before the period it describes</cite></div>
+
+    <div class="tiles">
+      <div class="tile"><small>What I forecast</small><b>5</b>
+        <em>advisors into the final period, with more expected as other leads exited
+        <span class="ev ev-2">Recorded</span></em></div>
+      <div class="tile tile-accent"><small>What I finished with</small><b>8</b>
+        <em>on the roster in the programme&rsquo;s final month, closed out in order
+        <span class="ev ev-1">Measured</span></em></div>
+      <div class="tile"><small>The floor I committed to</small><b>80 / 70</b>
+        <em>satisfaction and issue resolution, named in writing beforehand
+        <span class="ev ev-2">Recorded</span></em></div>
+    </div>
+
+    <p class="body-copy" style="margin-top:16px">Forecasting a decline, naming its cause, committing to a
+    floor in writing, absorbing another team&rsquo;s advisors on the way down, and then running the
+    close-out in order &mdash; that sequence is the part of this record that most resembles the job I am
+    applying for. Growth hides a lot of management problems. Contraction does not.</p>
+
+    <div class="note" style="margin-top:16px"><b>What I cannot show you.</b> Whether the floor held. The
+    full-period rollups end one period before the programme did, and no equivalent rollup exists for the
+    final period &mdash; so the commitment above is presented as what I put in writing beforehand, and
+    nothing more. If I showed you a final scorecard, I would be inventing it.</div>
+  </section>
+
+  <!-- ============ 06 THE STORE YEARS ============ -->
+  <section class="sec" id="store">
+    <div class="sec-head">
+      <span class="sec-num">06</span><h2 class="sec-title">Apple North Star &mdash; R290</h2>
+      <span class="sec-kicker">Recorded &middot; written at the time</span>
+    </div>
+    <p class="lede" style="margin-bottom:14px">North Star, in San Antonio, is where I started in October 2016 and where I stayed.
+    The at-home role was not a departure from it &mdash; I was still reporting to my managers there
+    throughout, a matrix rather than a handover, and presenting the two as a sequence would be wrong.
+    Four things from those years carry a number or a change I designed.</p>
+    <p class="body-copy" style="font-size:13.5px;color:var(--ink-2);margin-bottom:18px">These come from notes I wrote at
+    the time, not from anyone else's measurement &mdash; weaker than the benchmark figures earlier on
+    this page, stronger than memory, and labelled accordingly. It is the store I came up in, and the
+    one whose internal number I have given, because it is mine.</p>
+
+    <ul class="findings">
+      <li><span class="k">01</span><div><b>Repair volume kept in-house: below 60% &rarr; 70%</b>
+        <p>I disagreed with feedback telling me to push repairs off-site. Rather than ignoring it or
+        complying, I went and understood the reasoning first, then changed how the technical team worked:
+        lead with ownership on out-of-warranty work, refer single-part repairs to the sister store. We hit
+        the 60% goal inside a week and finished at 70%, the highest in the market team. I had no authority
+        over most of the people whose behaviour changed. <span class="ev ev-2">Recorded</span></p></div></li>
+      <li><span class="k">02</span><div><b>Business engagement past 50%, from a one-line reframe</b>
+        <p>The business-customer introduction was easy for a customer to decline, so it was rarely
+        attempted. I reframed it as an offer to connect by email and pointed the team at a field already
+        sitting on page one of their own workflow. Nothing was built, nothing was launched.
+        <span class="ev ev-2">Recorded</span></p></div></li>
+      <li><span class="k">03</span><div><b>I invented a role because the workflow was breaking</b>
+        <p>During the battery-replacement surge the volume overwhelmed how the repair room ran. I
+        reorganised the stations, posted the relevant tips at each one, and created an unofficial
+        &ldquo;repair room captain&rdquo; to hold workflow and accountability for a shift. It was not a
+        real job title and it worked. It is also the earliest version of the same instinct that later
+        produced the roster tracker. <span class="ev ev-2">Recorded</span></p></div></li>
+      <li><span class="k">04</span><div><b>A pilot that failed, and was right anyway</b>
+        <p>North Star piloted fifteen-minute express appointments. It was dropped after two weeks. I kept
+        running six to eight appointments an hour to show the model held. The company later made express
+        appointments official for cracked-display repairs. I include this because a portfolio of only
+        successes is not a record of judgement. <span class="ev ev-2">Recorded</span></p></div></li>
+    </ul>
+
+    <div class="note" style="margin-top:16px"><b>The seam between two organisations.</b> Through the
+    at-home period I worked directly with the store-side experience managers at all seven sites to
+    connect two parts of the business that were not natively joined up. That is stakeholder work across
+    an org boundary rather than management of my own team, and it is the part of this record that maps
+    most directly onto implementation and programme roles. <span class="ev ev-2">Recorded</span></div>
+  </section>
+
+  <!-- ============ 07 CASE STUDY ============ -->
+  <section class="sec" id="case">
+    <div class="sec-head">
+      <span class="sec-num">07</span><h2 class="sec-title">In my own words</h2>
+      <span class="sec-kicker">Each claim tagged</span>
+    </div>
+
+    <div class="body-copy">
+      <h4>How I got there</h4>
+      <p>In March 2020 the stores closed and I was sent home. By April or May I was doing remote
+      technical support alongside other technical staff and team leads while the company worked out
+      whether that was viable at all. When it proved out and the programme opened properly, I was
+      promoted to run a team of at-home technicians &mdash; while still reporting to my store managers.
+      <span class="ev ev-3">Recalled &middot; my account</span></p>
+      <p>I want to be careful with that paragraph, because it is the part of this page an ex-colleague
+      could most easily object to. I am describing what I did and when I did it. I am not making a claim
+      about the company's official programme history, I did not design the pilot, and I did not lead it.
+      What I can stand behind is that I was sent home in March, was doing the work by spring, and was
+      given a team when it scaled.</p>
+
+      <h4>What I found</h4>
+      <p>Satisfaction was the number under pressure, and the obvious move was to coach people to be
+      warmer. The data said otherwise. Every advisor sitting below 80% satisfaction was also below 72%
+      issue resolution &mdash; the dissatisfaction was not a tone problem, it was customers hanging up
+      with the thing still broken. <span class="ev ev-2">Recorded &middot; my business plan</span></p>
+      <p>That reframing is the whole reason the rest worked. &ldquo;Be nicer&rdquo; is not coachable.
+      &ldquo;Confirm the issue is resolved before you close, and get the customer to agree it is&rdquo;
+      is coachable, observable, and moves both numbers at once.</p>
+
+      <h4>What I built</h4>
+      <p>An original call-handling curriculum, taken through six revisions, structured around three
+      phases of a call and teaching each one twice &mdash; the principle first, then the actual words an
+      advisor could use that afternoon. I wrote it and I delivered it. It is my own material rather than
+      an adaptation of anyone's internal content, which is why I can describe it here at all.
+      <span class="ev ev-2">Recorded &middot; my curriculum</span></p>
+
+      <h4>What happened</h4>
+      <p>Across four consecutive full periods the team came out ahead of the site benchmark on all four
+      tracked KPIs &mdash; sixteen comparisons, sixteen wins &mdash; averaging 11.1 points better on
+      customer-facing time, 7.4 on issue resolution, 4.2 on satisfaction, and 2.3 minutes faster on
+      handle time. In one period the team's customer-facing time also came in above the whole
+      organisation's average across 82 advisors, not just the site's.
+      <span class="ev ev-1">Measured &middot; by Apple</span></p>
+      <p>And the team was not a small one. In the first period of the fiscal year I had 29 advisors &mdash;
+      the largest team of the eight in the organisation &mdash; and stayed at or near the top as every
+      team shrank around me. <span class="ev ev-1">Measured &middot; their forensics</span></p>
+      <p>The context that makes those figures mean something: nearly two-thirds of the team had come from
+      sales-floor roles and had never supported the products at this technical level, and the whole
+      operation was distributed across seven sites in five states and two time zones. There was no room
+      to build it on a tenured, co-located team, because I did not have one.</p>
+
+      <h4>What I would say about it in a room</h4>
+      <p>The part I am proudest of is not the benchmark row. It is that the loop is closed and dated:
+      a diagnosis that reframed the problem, an intervention built specifically against that diagnosis,
+      and a result measured by somebody with no stake in flattering me. I have run that same loop since,
+      on different problems, with the same three parts.</p>
+      <p>The part I would want to be asked about is the wind-down &mdash; because forecasting a decline,
+      naming its cause, committing to a floor in writing beforehand, and then running the close-out in
+      order is the piece of this that most resembles the actual job I am applying for.</p>
+    </div>
+  </section>
+
+  <!-- ============ 08 LIMITS ============ -->
+  <section class="sec" id="limits">
+    <div class="sec-head">
+      <span class="sec-num">08</span><h2 class="sec-title">Limits</h2>
+      <span class="sec-kicker">Stated, not omitted</span>
+    </div>
+    <ul class="findings">
+      <li><span class="k">&mdash;</span><div><b>No revenue claim, and no satisfaction-uplift percentage</b>
+        <p>I previously carried two figures of that kind in my own materials. I went looking for their
+        source, could not find one, and removed them. The benchmark tables on this page are what I can
+        actually stand behind.</p></div></li>
+      <li><span class="k">&mdash;</span><div><b>No final scorecard for the closing period</b>
+        <p>The full-period rollups end one period before the programme did. I have the commitment I made
+        in advance and the roster I finished with, and not the grade.</p></div></li>
+      <li><span class="k">&mdash;</span><div><b>No individual's data, and no one's name</b>
+        <p>The source files carry per-advisor metrics, internal identifiers, coaching plans and
+        attendance records for real people. None of that is here, in any form, including in the one
+        chart that shows dots.</p></div></li>
+      <li><span class="k">&mdash;</span><div><b>Nothing from the store years that carries an outside measurement</b>
+        <p>Section 06 is entirely my own contemporaneous record. There is no third-party tracker behind
+        it the way there is for section 03, and I have not dressed one up.</p></div></li>
+      <li><span class="k">&mdash;</span><div><b>No internal training material, in any amount</b>
+        <p>Some of what I learned there was internal content and stays internal. Where a framework I used
+        is publicly known, I have named it; where it was theirs, I have described what I did instead of
+        reproducing it.</p></div></li>
+    </ul>
+  </section>
+
+  <!-- ============ 09 FOOTER ============ -->
+  <footer class="foot" id="contact">
+    <h3>Jacob Zamarripa</h3>
+    <p>Technical support and service delivery management &mdash; distributed teams, operating cadence,
+    and the boring measurement work that makes the results defensible. This is the third of three case
+    studies; the other two are systems I designed and built.</p>
+    <a class="cta" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">
+      Get in touch on LinkedIn &rarr;</a>
+    <p class="foot-legal"><b>Not affiliated with Apple Inc.</b> This page is a personal retrospective
+    written by a former employee about their own work. It is not affiliated with, endorsed by, sponsored
+    by, or representative of Apple Inc., and it uses no Apple marks, logos, product imagery, or visual
+    identity. Colleagues are unnamed by deliberate choice. The seven store locations are named because they are public Apple retail locations; the only internal store number given is the author&rsquo;s own. No per-store advisor count is published. No individual
+    performance data, internal identifier, or internal training material appears here. Aggregate figures
+    are reproduced unchanged from the employer's own reporting of a team-level result; the one set of
+    invented data points on this page is labelled where it appears. Design, writing, and charts are my
+    own.</p>
+  </footer>
+
+  </main>
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------------------------------------------------
+     Chart layer. One system across all three figures:
+       accent  = my team / the actual        (violet)
+       flag    = the diagnosed group / forecast (orange)
+       ctx     = benchmark / everyone else   (grey, de-emphasis)
+     Palette validated with the dataviz validator, --pairs all,
+     light and dark. Marks are thin, grid is recessive, every
+     figure also exists as a table in the page.
+     --------------------------------------------------------- */
+
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var tip = document.getElementById('tip');
+
+  function el(name, attrs, text){
+    var n = document.createElementNS(SVGNS, name);
+    for (var k in attrs){ if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function svg(w, h, label){
+    var s = el('svg', { viewBox:'0 0 '+w+' '+h, width:'100%', role:'img' });
+    s.setAttribute('aria-label', label);
+    return s;
+  }
+  function showTip(evt, title, body){
+    tip.innerHTML = '<u>'+title+'</u>'+body;
+    tip.classList.add('on');
+    moveTip(evt);
+  }
+  function moveTip(evt){
+    var pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = evt.clientX + pad, y = evt.clientY - h - 10;
+    if (x + w > window.innerWidth - 8) x = evt.clientX - w - pad;
+    if (y < 8) y = evt.clientY + pad;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip(){ tip.classList.remove('on'); }
+  function hover(node, title, body){
+    node.addEventListener('mouseenter', function(e){ showTip(e, title, body); });
+    node.addEventListener('mousemove', moveTip);
+    node.addEventListener('mouseleave', hideTip);
+    node.style.cursor = 'default';
+  }
+
+  /* ============ FIGURE 1 — the diagnosis ============ */
+  function figure1(){
+    var host = document.getElementById('fig1'); if (!host) return;
+    var W = 660, H = 400, L = 58, R = 16, T = 18, B = 46;
+    var x0 = 55, x1 = 95, y0 = 62, y1 = 100;
+    var IR_T = 72, CS_T = 80;
+
+    /* Illustrative only. Five below both thresholds — the one real fact
+       about this group — and seven above, drawn to a plausible spread.
+       No relationship to any actual person. */
+    var pts = [
+      {ir:61, cs:71, f:1}, {ir:65, cs:74, f:1}, {ir:68, cs:77, f:1},
+      {ir:70, cs:73, f:1}, {ir:71, cs:78, f:1},
+      {ir:74, cs:84, f:0}, {ir:76, cs:82, f:0}, {ir:77, cs:88, f:0},
+      {ir:79, cs:86, f:0}, {ir:83, cs:91, f:0}, {ir:86, cs:89, f:0}, {ir:89, cs:93, f:0}
+    ];
+
+    var s = svg(W, H, 'Scatter plot of customer satisfaction against issue resolution. Twelve illustrative advisor points; five sit below both the 80 percent satisfaction and 72 percent issue-resolution thresholds.');
+    var X = function(v){ return L + (v - x0) / (x1 - x0) * (W - L - R); };
+    var Y = function(v){ return T + (y1 - v) / (y1 - y0) * (H - T - B); };
+
+    var defs = el('defs');
+    var pat = el('pattern', { id:'illus', width:8, height:8, patternUnits:'userSpaceOnUse', patternTransform:'rotate(45)' });
+    pat.appendChild(el('line', { x1:0, y1:0, x2:0, y2:8, stroke:'var(--muted)', 'stroke-width':1, opacity:.14 }));
+    defs.appendChild(pat); s.appendChild(defs);
+
+    /* plot field carries the "illustrative" texture — visible before a word is read */
+    s.appendChild(el('rect', { x:L, y:T, width:W-L-R, height:H-T-B, fill:'url(#illus)' }));
+
+    /* the quadrant that is the finding */
+    s.appendChild(el('rect', { x:L, y:Y(CS_T), width:X(IR_T)-L, height:Y(y0)-Y(CS_T), fill:'var(--flag-wash)' }));
+
+    var i, g;
+    for (i = 65; i <= 95; i += 5){
+      s.appendChild(el('line', { x1:X(i), y1:T, x2:X(i), y2:H-B, stroke:'var(--rule)', 'stroke-width':1 }));
+      s.appendChild(el('text', { x:X(i), y:H-B+19, 'text-anchor':'middle', 'font-size':11, fill:'var(--muted)' }, i+'%'));
+    }
+    for (i = 65; i <= 100; i += 5){
+      s.appendChild(el('line', { x1:L, y1:Y(i), x2:W-R, y2:Y(i), stroke:'var(--rule)', 'stroke-width':1 }));
+      s.appendChild(el('text', { x:L-9, y:Y(i)+4, 'text-anchor':'end', 'font-size':11, fill:'var(--muted)' }, i+'%'));
+    }
+
+    /* thresholds */
+    s.appendChild(el('line', { x1:X(IR_T), y1:T, x2:X(IR_T), y2:H-B, stroke:'var(--accent)', 'stroke-width':2, 'stroke-dasharray':'5 4' }));
+    s.appendChild(el('line', { x1:L, y1:Y(CS_T), x2:W-R, y2:Y(CS_T), stroke:'var(--accent)', 'stroke-width':2, 'stroke-dasharray':'5 4' }));
+    s.appendChild(el('text', { x:X(IR_T)+7, y:T+13, 'font-size':11, 'font-weight':800, fill:'var(--accent)' }, '72% issue resolution'));
+    s.appendChild(el('text', { x:W-R-4, y:Y(CS_T)-7, 'text-anchor':'end', 'font-size':11, 'font-weight':800, fill:'var(--accent)' }, '80% satisfaction'));
+
+    /* the callout on the quadrant */
+    s.appendChild(el('text', { x:L+12, y:Y(y0)-14, 'font-size':12, 'font-weight':800, fill:'var(--flag)' }, '5 advisors below both'));
+
+    for (i = 0; i < pts.length; i++){
+      var p = pts[i];
+      g = el('circle', { cx:X(p.ir), cy:Y(p.cs), r:6.5,
+        fill: p.f ? 'var(--flag)' : 'var(--ctx)',
+        stroke:'var(--surface)', 'stroke-width':2 });
+      hover(g, p.f ? 'Below both thresholds' : 'Above the thresholds',
+        'Illustrative point &mdash; not a real advisor.<br>Issue resolution ' + p.ir + '% &middot; satisfaction ' + p.cs + '%');
+      s.appendChild(g);
+    }
+
+    s.appendChild(el('text', { x:L+(W-L-R)/2, y:H-8, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':800, fill:'var(--ink-2)' }, 'Issue resolution →'));
+    var yl = el('text', { x:14, y:T+(H-T-B)/2, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':800, fill:'var(--ink-2)', transform:'rotate(-90 14 '+(T+(H-T-B)/2)+')' }, 'Customer satisfaction →');
+    s.appendChild(yl);
+
+    host.appendChild(s);
+  }
+
+  /* ============ FIGURE 2 — team vs site, four panels ============ */
+  var BENCH = [
+    { key:'Issue resolution', unit:'%', lo:62, hi:84, better:'up',
+      rows:[['P02',72.14,67.69],['P03',79.31,67.54],['P04',74.49,66.70],['P05',73.49,67.79]] },
+    { key:'Customer satisfaction', unit:'%', lo:78, hi:92, better:'up',
+      rows:[['P02',83.64,82.26],['P03',88.95,82.72],['P04',87.85,81.49],['P05',85.41,82.58]] },
+    { key:'Customer-facing time', unit:'%', lo:70, hi:90, better:'up',
+      rows:[['P02',87.06,73.27],['P03',85.49,74.28],['P04',86.31,74.76],['P05',81.34,73.45]] },
+    { key:'Handle time', unit:' min', lo:14, hi:22, better:'down',
+      rows:[['P02',15.09,20.29],['P03',18.07,20.42],['P04',19.54,20.24],['P05',19.01,19.90]] }
+  ];
+
+  function panel(spec){
+    var W = 330, H = 226, L = 40, R = 12, T = 34, B = 34;
+    var s = svg(W, H, spec.key + ': team result against site benchmark for four fiscal periods.');
+    var Y = function(v){ return T + (spec.hi - v) / (spec.hi - spec.lo) * (H - T - B); };
+    var step = (W - L - R) / spec.rows.length;
+
+    s.appendChild(el('text', { x:L-28, y:15, 'font-size':12, 'font-weight':800, fill:'var(--ink)' }, spec.key));
+    s.appendChild(el('text', { x:W-R, y:15, 'text-anchor':'end', 'font-size':9.5, 'font-weight':800,
+      fill:'var(--muted)', 'letter-spacing':'.08em' }, spec.better === 'up' ? 'HIGHER IS BETTER' : 'LOWER IS BETTER'));
+
+    var ticks = 4, i, v;
+    for (i = 0; i <= ticks; i++){
+      v = spec.lo + (spec.hi - spec.lo) * i / ticks;
+      s.appendChild(el('line', { x1:L, y1:Y(v), x2:W-R, y2:Y(v), stroke:'var(--rule)', 'stroke-width':1 }));
+      s.appendChild(el('text', { x:L-7, y:Y(v)+3.5, 'text-anchor':'end', 'font-size':9.5, fill:'var(--muted)' },
+        spec.unit === '%' ? Math.round(v) : v.toFixed(0)));
+    }
+
+    spec.rows.forEach(function(r, idx){
+      var cx = L + step * idx + step / 2;
+      var team = r[1], site = r[2];
+      var d = team - site;
+      var good = (spec.better === 'up') ? d > 0 : d < 0;
+
+      s.appendChild(el('line', { x1:cx, y1:Y(team), x2:cx, y2:Y(site),
+        stroke:'var(--axis)', 'stroke-width':2, 'stroke-linecap':'round' }));
+
+      var cSite = el('circle', { cx:cx, cy:Y(site), r:5.5, fill:'var(--ctx)', stroke:'var(--surface)', 'stroke-width':2 });
+      hover(cSite, r[0] + ' · site benchmark', spec.key + ': <b>' + site.toFixed(2) + spec.unit + '</b>');
+      var cTeam = el('circle', { cx:cx, cy:Y(team), r:6.5, fill:'var(--accent)', stroke:'var(--surface)', 'stroke-width':2 });
+      hover(cTeam, r[0] + ' · my team', spec.key + ': <b>' + team.toFixed(2) + spec.unit + '</b><br>Site benchmark ' + site.toFixed(2) + spec.unit);
+      s.appendChild(cSite); s.appendChild(cTeam);
+
+      var label = (d > 0 ? '+' : '−') + Math.abs(d).toFixed(1);
+      var ly = Math.min(Y(team), Y(site)) - 10;
+      s.appendChild(el('text', { x:cx, y:ly, 'text-anchor':'middle', 'font-size':10.5, 'font-weight':800,
+        fill: good ? 'var(--good)' : 'var(--flag)' }, label));
+      s.appendChild(el('text', { x:cx, y:H-12, 'text-anchor':'middle', 'font-size':10.5,
+        'font-weight':700, fill:'var(--muted)' }, r[0]));
+    });
+    return s;
+  }
+
+  function figure2(){
+    var host = document.getElementById('fig2'); if (!host) return;
+    var grid = document.createElement('div');
+    grid.className = 'grid2';
+    BENCH.forEach(function(spec){
+      var box = document.createElement('div');
+      box.appendChild(panel(spec));
+      grid.appendChild(box);
+    });
+    host.appendChild(grid);
+  }
+
+  /* ============ FIGURE 3 — team size against every peer team ============ */
+  /* Counted by distinct advisor identifier in the organisation-wide monthly
+     forensic files. Peer managers are deliberately unlabelled — their team
+     sizes are not ours to publish. Sorted descending within each period. */
+  var TEAMS = [
+    { period:'P01', when:'Sept–Oct 2020', sizes:[29,28,27,23,21,20,19,18], mine:0, rank:'largest of 8' },
+    { period:'P02', when:'Nov 2020',      sizes:[17,17,15,15,15,11,11],    mine:1, rank:'joint largest of 7' },
+    { period:'P03', when:'Dec 2020',      sizes:[13,13,11,10,10,9,5],      mine:2, rank:'3rd of 7' }
+  ];
+
+  function figure3(){
+    var host = document.getElementById('fig3'); if (!host) return;
+    var W = 680, H = 340, L = 40, R = 14, T = 34, B = 58;
+    var maxY = 30, gap = 30;
+    var s = svg(W, H, 'Bar chart of every team manager’s team size in three fiscal periods. My team is largest in the first period at 29 advisors, joint largest in the second at 17, and third in the third at 11.');
+    var Y = function(v){ return T + (maxY - v) / maxY * (H - T - B); };
+
+    var i, v;
+    for (i = 0; i <= 3; i++){
+      v = maxY * i / 3;
+      s.appendChild(el('line', { x1:L, y1:Y(v), x2:W-R, y2:Y(v), stroke:'var(--rule)', 'stroke-width':1 }));
+      s.appendChild(el('text', { x:L-9, y:Y(v)+4, 'text-anchor':'end', 'font-size':11, fill:'var(--muted)' }, Math.round(v)));
+    }
+
+    var totalBars = TEAMS.reduce(function(n,g){ return n + g.sizes.length; }, 0);
+    var usable = (W - L - R) - gap * (TEAMS.length - 1);
+    var bw = usable / totalBars;
+    var barW = Math.min(bw - 7, 19);   /* surface gap between adjacent bars */
+    var cursor = L;
+
+    TEAMS.forEach(function(g){
+      var gStart = cursor;
+      g.sizes.forEach(function(n, idx){
+        var isMine = idx === g.mine;
+        var x = cursor + (bw - barW) / 2;
+        var r = el('rect', { x:x, y:Y(n), width:barW, height:Y(0)-Y(n), rx:3,
+          fill: isMine ? 'var(--accent)' : 'var(--ctx)', opacity: isMine ? 1 : .55 });
+        hover(r, isMine ? (g.period + ' · my team') : (g.period + ' · another team'),
+          isMine ? '<b>' + n + ' advisors</b> — ' + g.rank
+                 : 'A peer team manager: <b>' + n + ' advisors</b>.<br>Unlabelled — not my data to publish.');
+        s.appendChild(r);
+        if (isMine){
+          s.appendChild(el('text', { x:x + barW/2, y:Y(n)-9, 'text-anchor':'middle',
+            'font-size':12.5, 'font-weight':800, fill:'var(--accent)' }, n));
+        }
+        cursor += bw;
+      });
+      var mid = (gStart + cursor) / 2;
+      s.appendChild(el('line', { x1:gStart, y1:Y(0), x2:cursor-4, y2:Y(0), stroke:'var(--axis)', 'stroke-width':1.5 }));
+      s.appendChild(el('text', { x:mid, y:H-34, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':800, fill:'var(--ink-2)' }, g.period));
+      s.appendChild(el('text', { x:mid, y:H-20, 'text-anchor':'middle', 'font-size':10, fill:'var(--muted)' }, g.when));
+      s.appendChild(el('text', { x:mid, y:H-6, 'text-anchor':'middle', 'font-size':10, 'font-weight':800, fill:'var(--accent)' }, g.rank));
+      cursor += gap;
+    });
+
+    s.appendChild(el('text', { x:14, y:T+(H-T-B)/2, 'text-anchor':'middle', 'font-size':11.5,
+      'font-weight':800, fill:'var(--ink-2)',
+      transform:'rotate(-90 14 '+(T+(H-T-B)/2)+')' }, 'Advisors →'));
+
+    host.appendChild(s);
+  }
+
+  figure1(); figure2(); figure3();
+  window.addEventListener('scroll', hideTip, { passive:true });
+
+  /* ---- Shared case-study chrome: section rail + theme toggle ---- */
+  (function(){
+    var rail = document.getElementById('railnav');
+    if (rail){
+      var links = Array.prototype.slice.call(rail.querySelectorAll('a'));
+      var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+      var syncRail = function(){
+        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h')) || 54;
+        var probe = window.scrollY + h + window.innerHeight * 0.22, current = 0;
+        targets.forEach(function(t,i){
+          if (!t) return;
+          if (t.getBoundingClientRect().top + window.scrollY <= probe) current = i;
+        });
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = links.length - 1;
+        links.forEach(function(a,i){ a.classList.toggle('is-current', i === current); });
+      };
+      links.forEach(function(a){ a.addEventListener('click', function(){ setTimeout(syncRail, 460); }); });
+      window.addEventListener('scroll', syncRail, { passive:true });
+      window.addEventListener('resize', syncRail);
+      requestAnimationFrame(syncRail);
+    }
+
+    /* Session-only override; every load follows the visitor's OS preference. */
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    if (!btn) return;
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    function effective(){ return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); }
+    function sync(){
+      var e = effective();
+      btn.textContent = e === 'dark' ? '☽' : '☀';
+      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
+      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
+    }
+    btn.addEventListener('click', function(){
+      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
+      sync();
+    });
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    sync();
+  })();
+
+})();
+</script>
+</body>
+</html>
