@@ -66,6 +66,15 @@ readout under each code is built in `renderQR()` from the same `JOBS` entry
 the matrix encodes, so it cannot drift from what a phone actually decodes.
 Verified by decoding all five rendered matrices back to their strings.
 
+`QR_FIELD` holds a second set of 25 matrices — one per job per field, version
+2 / ECC M so every one is 25×25 — generated the same way. A normalized row in
+the ledger reveals its own code carrying just that field's value, which is the
+point the pipeline makes: once a field is clean it can travel on its own. All
+25 were verified by decoding each rendered code back to the exact field value
+beside it. Regenerate them whenever `JOBS` changes; a field code that decodes
+to something other than the row it sits in is the same contradiction as a
+mismatched job code.
+
 ## What the walkthrough demonstrates
 
 Six workspaces: Dashboard, My Jobs, Calendar, Map View, **Closeout**, and
