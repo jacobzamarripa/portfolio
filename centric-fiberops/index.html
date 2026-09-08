@@ -462,16 +462,17 @@
 <main class="content">
 <header class="hero" id="intro"><div class="wrap"><div class="hero-bar"><div class="brand"><div class="bolt">&#991;</div><div><b>Nexus</b><span>FiberOps Unified</span></div></div><div class="proto">Retrospective portfolio prototype</div></div>
 <div class="hero-grid"><div><div class="eyebrow">Field experience &rarr; operating-system design</div>
-<h1>Four years of field work,<br><span>rebuilt as a product.</span></h1>
-<p class="hero-copy">I installed and repaired fiber for four years, then built the tools I kept wishing existed &mdash; a QR-driven data pipeline that cut manual entry out of closeout, and a lead's tracker for everything the schedule didn't capture. Nexus is those two tools rebuilt as one role-aware command center.</p></div>
+<h1>Four years in the field,<br><span>four tools that shipped.</span></h1>
+<p class="hero-copy">I installed and repaired fiber for four years and built tools the entire time, starting with spreadsheet formulas as a technician in 2022 and ending with a project tracker I demonstrated to the VP in 2025. Four of them were used for real work. Nexus, the application below, is the retrospective rebuild of that body of work into one role-aware system, and it is the only thing here that was never deployed.</p></div>
 <div><div class="truth"><strong>Truth boundary</strong>
-<p>Three different things live in this case study. They are not the same and I don't blend them.</p>
+<p>Several different things live in this case study. They are not the same and I don't blend them.</p>
 <div class="tiers">
-<div class="tier tier-real"><span class="tier-dot"></span><div><b>L-FIT tracker + QR pipeline<span class="tier-tag">Real</span></b><small>Built and used during my Centric employment. The barcode workflow remained in use after my departure.</small></div></div>
-<div class="tier tier-retro"><span class="tier-dot"></span><div><b>Nexus FiberOps Unified<span class="tier-tag">Retrospective</span></b><small>The unified application below. Built after I left Centric, as a portfolio prototype. Never deployed there, no production adoption.</small></div></div>
+<div class="tier tier-real"><span class="tier-dot"></span><div><b>QR pipeline, L-FIT tracker, field tooling<span class="tier-tag">Real</span></b><small>Built and used during my Centric employment, all of it in Sheets and formulas. The QR round trip remained in use after my departure.</small></div></div>
+<div class="tier tier-real"><span class="tier-dot"></span><div><b>CTX Master Project Tracker<span class="tier-tag">Real</span></b><small>Built December 2025. Demonstrated to the VP and upper management, and one team ran on it before I left.</small></div></div>
+<div class="tier tier-retro"><span class="tier-dot"></span><div><b>Nexus FiberOps Unified<span class="tier-tag">Retrospective</span></b><small>The unified application below. Built after I left Centric, as a portfolio prototype. Never deployed there, no production adoption. The API integration exists only here, as design.</small></div></div>
 <div class="tier tier-plan"><span class="tier-dot"></span><div><b>SOP library &amp; iPad rollout<span class="tier-tag">Planned</span></b><small>Intent only. Scoped, never built. Shown here as roadmap, never claimed as delivered.</small></div></div>
 </div></div>
-<div class="meta"><div><small>Formal roles</small><b>Installation Technician &rarr; Fiber Installation Lead</b></div><div><small>Prototype stack</small><b>Apps Script &middot; React &middot; Sheets</b></div></div></div></div></div></header>
+<div class="meta"><div><small>Formal roles</small><b>Installation Technician &rarr; Fiber Installation Lead</b></div><div><small>Shipped in / prototyped in</small><b>Sheets, formulas / React, Apps Script</b></div></div></div></div></div></header>
 
 <section class="section" id="walkthrough"><div class="wrap"><div class="section-head"><div><div class="eyebrow">01 / Interactive walkthrough</div><h2>Inside Nexus</h2></div><div class="section-note">All demo records are fictional</div></div>
 <div class="app">
@@ -532,19 +533,19 @@
 <div class="map-legend"><span><i class="map-key"></i>Stop</span><span><i class="map-key act"></i>Selected</span><span><i class="map-key exc"></i>Exception &mdash; needs rescheduling</span></div></div>
 
 <div class="surface-view" id="qr"><div class="surface-header"><div><div class="eyebrow">Field tools &middot; the workflow that outlived me</div><h3>Closeout Pipeline</h3></div><div class="count-note" id="qrJobTag">J-2291</div></div>
-<p class="demo-note"><b>Real workflow, invented records.</b> This is the pipeline I built and ran at Centric, reproduced step for step. Every address, customer initial, serial and ONT ID below is fictional &mdash; and the QR codes are genuinely scannable, so if you scan one with your phone you'll see exactly that fictional payload.</p>
+<p class="demo-note"><b>Real workflow, invented records.</b> This is the pipeline I built and ran at Centric, reproduced step for step. The original was entirely spreadsheet formulas. Every address, customer initial, serial and ONT ID below is fictional &mdash; and the QR codes are genuinely scannable, so if you scan one with your phone you'll see exactly that fictional payload.</p>
 <div class="pipe" id="pipe">
-<div class="pipe-step" data-step="0"><span class="tick">&#10003;</span><small>Step 1</small><b>Pull</b></div>
+<div class="pipe-step" data-step="0"><span class="tick">&#10003;</span><small>Step 1</small><b>Paste</b></div>
 <div class="pipe-step" data-step="1"><span class="tick">&#10003;</span><small>Step 2</small><b>Normalize</b></div>
 <div class="pipe-step" data-step="2"><span class="tick">&#10003;</span><small>Step 3</small><b>Encode</b></div>
 <div class="pipe-step" data-step="3"><span class="tick">&#10003;</span><small>Step 4</small><b>Scan</b></div>
-<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Write back</b></div>
+<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Scan back</b></div>
 </div>
 <div class="pipe-detail"><b id="pipeTitle">Not started</b><span id="pipeDesc">Pull the assigned work from the system of record to begin.</span></div>
 <div class="qr-grid">
 <div><div class="led" id="recList"></div>
 <div class="acts">
-<button class="acts-primary" id="btnStep"><span id="btnStepLabel">Pull record</span><span class="arrow" aria-hidden="true">&rarr;</span></button>
+<button class="acts-primary" id="btnStep"><span id="btnStepLabel">Paste record</span><span class="arrow" aria-hidden="true">&rarr;</span></button>
 <button class="stepbtn ghost" id="btnReset">Reset</button>
 </div></div>
 <div class="qr-stage">
@@ -575,7 +576,9 @@
 <p>Fiber work crosses several handoffs: scheduling, customer readiness, installation, splicing, provisioning, QA, transfer claims, and closeout. When those steps live in separate trackers, the technician reconstructs the day while dispatch and leadership reconstruct the portfolio. The expensive failure wasn't any single step &mdash; it was re-keying the same record into each one.</p>
 
 <h3>What I actually built, and where</h3>
-<p>Two tools, during the job. <strong>L-FIT</strong> &mdash; the Lead Fiber Installation Tech Tracker, a name my partner and I made up &mdash; held what the official schedule didn't. Alongside it I built a QR pipeline: pull the assigned work from the system of record through its API, cleanse it, generate a scannable code carrying the address, customer, serial and ONT ID together, scan that into the provisioning platform, then write back so both systems agreed. It recorded what was completed and when, which is what made a real technician-output dashboard possible for managers.</p>
+<p>I started in 2022 with a barcode app that was entirely spreadsheet formulas. The technician pasted the assigned work into the sheet, formulas corrected what they could, and the sheet generated a scannable code carrying the address, customer, serial and ONT ID together. That code went into the provisioning platform by scan. To move a record back the other way we generated a second code and scanned it where it needed to land. No integration, no API, just a symbol both systems could read. <strong>That round trip is the part that remained in use after I left.</strong></p>
+<p>On promotion to Fiber Installation Lead I built <strong>L-FIT</strong>, the Lead Fiber Installation Tech Tracker, a name my partner and I made up. It held what the official schedule didn't, and it did the real data cleansing the barcode sheet never could. It recorded what was completed and when, which is what made a technician-output dashboard possible. I sent that dashboard to my manager and the VP every month.</p>
+<p>At the end, a third. In December 2025 I built a project tracker for the Austin and San Antonio deployments: an eight-phase milestone model with slippage tracking, fuzzy matching so one community couldn't quietly become two, and an executive dashboard grouped by market. I demonstrated it to the VP and upper management, one team ran on it, and I wrote the adoption guide for the manager who would keep it after I left.</p>
 <p>The point was never the codes. It was that the association between an address and the equipment installed at it stopped depending on somebody typing fourteen characters correctly at the end of a long day.</p>
 <div class="race">
 <h5>Why it stuck: keying vs scanning</h5>
@@ -872,7 +875,7 @@
     $('qrJobTag').textContent = job.id;
 
     if (state.step < 0) {
-      list.appendChild(el('div', 'led-empty', 'Nothing pulled yet \u2014 the record arrives from the assignment board.'));
+      list.appendChild(el('div', 'led-empty', 'Nothing pasted yet \u2014 the technician copies the record in from the assignment board.'));
       return;
     }
 
@@ -927,11 +930,11 @@
   }
 
   var STEPS = [
-    { t: 'Pull',       d: 'Pull the assigned work from the system of record, exactly as the board holds it.' },
-    { t: 'Normalize',  d: 'Cleanse casing, spacing and separators, then validate against the field formats.' },
+    { t: 'Paste',      d: 'The technician pastes the assigned work into the sheet, exactly as the board holds it.' },
+    { t: 'Normalize',  d: 'Formulas correct casing and spacing and validate the field formats. Anything they cannot fix, the technician completes.' },
     { t: 'Encode',     d: 'Commit the five fields to one scannable symbol \u2014 the record travels together.' },
     { t: 'Scan',       d: 'One scan populates provisioning. No field is hand-keyed at this point.' },
-    { t: 'Write back', d: 'Write the result back so both systems agree, and stamp the completion.' }
+    { t: 'Scan back',  d: 'Generate a second code and scan the record back to where it needs to land, then stamp the completion.' }
   ];
 
   /* ---------------- field-code bubble ---------------- */
@@ -1052,11 +1055,11 @@
   /* One primary action that advances and relabels, rather than a row of
      five buttons of which four are always disabled. */
   var STEP_ACTIONS = [
-    { label: 'Pull record',   run: doPull },
+    { label: 'Paste record',  run: doPull },
     { label: 'Normalize',     run: doClean },
     { label: 'Generate code', run: doGen },
     { label: 'Scan',          run: doScan },
-    { label: 'Write back',    run: doWrite }
+    { label: 'Scan back',     run: doWrite }
   ];
 
   function renderButtons() {
@@ -1312,7 +1315,7 @@
     var job = byId[state.job];
     state.step = 0;
     var dirty = FIELDS.filter(function (f) { return sourceVal(job, f.k) !== job[f.k]; }).length;
-    logEvent(job.id + ' \u00b7 pulled from the assignment board \u2014 ' + dirty + ' of 5 fields inconsistent', 'info');
+    logEvent(job.id + ' \u00b7 pasted in from the assignment board \u2014 ' + dirty + ' of 5 fields inconsistent', 'info');
     renderAll();
   }
 

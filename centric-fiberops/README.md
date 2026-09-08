@@ -13,8 +13,9 @@ The page states these separately and so must any edit to it.
 
 | Tier | What | Status |
 |---|---|---|
-| **Real** | The L-FIT tracker (Lead Fiber Installation Tech Tracker) and the QR/barcode pipeline | Built and used during the Centric employment. The barcode workflow **remained in use after his departure**. |
-| **Retrospective** | Nexus FiberOps Unified — the unified role-aware application in the walkthrough | Built after leaving Centric, as a portfolio prototype. Never deployed there. No production adoption. |
+| **Real** | The barcode/QR pipeline (created 2022, developed through 2024), the L-FIT tracker / Master_Tracker (from the Jan 2025 promotion), and the Sheets + Form field tooling with EOD reporting | Built and used during the Centric employment, all of it in Sheets and formulas. The **QR round trip remained in use after his departure**. |
+| **Real** | The CTX Master Project Tracker | Built December 2025. **Demonstrated to the VP and upper management; one team ran on it.** |
+| **Retrospective** | Nexus FiberOps Unified — the unified role-aware application in the walkthrough | Built after leaving Centric, as a portfolio prototype. Never deployed there. No production adoption. **The API integration exists only here, as design.** |
 | **Planned** | In-app SOP library; iPad rollout | Intent only, never built. Shown as roadmap, never as delivery. |
 
 Additional locks:
@@ -27,14 +28,22 @@ Additional locks:
   use after my departure" with no count. An earlier version of this page
   claimed "2 technicians"; that over-claimed against the lock and was removed
   on 2026-09-01.
-- Verified field evidence here is eight employees trained, plus the barcode
-  workflow's survival after departure.
+- Verified field evidence here is eight employees trained, plus the QR round
+  trip's survival after departure, plus the CTX tracker's demonstration to the
+  VP and upper management and its pilot with one team.
 - **Third-party systems stay generic in public.** The real stack (the
   assignment board, the CRM of record, the provisioning platform) is named
   only in the private lineage note. Decision recorded 2026-09-01.
-- No CRM integration was ever planned *inside* Nexus. `PRD.md` in the source
-  repo lists a HubSpot "Integration Target"; Jacob has corrected that. The
-  API work belongs to the earlier QR pipeline, where it was real.
+- **The API belongs to Nexus, as design, and never existed in the deployed
+  tool.** Corrected 2026-09-08, reversing an earlier note in this file. The
+  deployed barcode pipeline was **entirely formula driven**, with the technician
+  moving data in by copy and paste. `PRD.md` in the source repo lists a CRM
+  "Integration Target (In preparation)", which is Nexus design intent. Never
+  describe an API pull or an automated write-back as delivered work.
+- **The real return path was a second QR code**, generated and scanned back to
+  wherever the record needed to land. That round trip is what remained in use.
+- Do not upgrade the "formula driven" language. It is the point: a working
+  pipeline built out of spreadsheet formulas by an installation technician.
 - Every person, community, address, schedule, job, equipment identifier and
   operating metric in the interactive demo is invented from scratch and has
   no one-to-one mapping to employer data. New identifiers are recorded in
@@ -85,9 +94,10 @@ mismatched job code.
 
 Six workspaces: Dashboard, My Jobs, Calendar, Map View, **Closeout**, and
 Provisioning. The pipeline is the centerpiece because it is the piece that was
-real. Its five steps mirror the actual workflow: pull from the assignment
-board → cleanse and validate → generate the code → scan into provisioning →
-write back and log output.
+real. Its five steps mirror the actual workflow: the technician **pastes** the record
+in from the assignment board → formulas normalize what they can and the
+technician completes the rest → generate the code → scan into provisioning →
+**generate a second code and scan the record back**, then log completion.
 
 Two states worth exercising:
 
