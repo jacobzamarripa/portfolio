@@ -467,7 +467,7 @@
 <div><div class="truth"><strong>Truth boundary</strong>
 <p>Several different things live in this case study. They are not the same and I don't blend them.</p>
 <div class="tiers">
-<div class="tier tier-real"><span class="tier-dot"></span><div><b>QR pipeline, L-FIT tracker, field tooling<span class="tier-tag">Real</span></b><small>Built and used during my Centric employment, all of it in Sheets and formulas. The QR round trip remained in use after my departure.</small></div></div>
+<div class="tier tier-real"><span class="tier-dot"></span><div><b>QR pipeline, L-FIT tracker, field tooling<span class="tier-tag">Real</span></b><small>Built and used during my Centric employment, all of it in Sheets and formulas. The QR pipeline remained in use after my departure.</small></div></div>
 <div class="tier tier-real"><span class="tier-dot"></span><div><b>CTX Master Project Tracker<span class="tier-tag">Real</span></b><small>Built December 2025. Demonstrated to the VP and upper management, and one team ran on it before I left.</small></div></div>
 <div class="tier tier-retro"><span class="tier-dot"></span><div><b>Nexus FiberOps Unified<span class="tier-tag">Retrospective</span></b><small>The unified application below. Built after I left Centric, as a portfolio prototype. Never deployed there, no production adoption. The API integration exists only here, as design.</small></div></div>
 <div class="tier tier-plan"><span class="tier-dot"></span><div><b>SOP library &amp; iPad rollout<span class="tier-tag">Planned</span></b><small>Intent only. Scoped, never built. Shown here as roadmap, never claimed as delivered.</small></div></div>
@@ -539,9 +539,9 @@
 <div class="pipe-step" data-step="1"><span class="tick">&#10003;</span><small>Step 2</small><b>Normalize</b></div>
 <div class="pipe-step" data-step="2"><span class="tick">&#10003;</span><small>Step 3</small><b>Encode</b></div>
 <div class="pipe-step" data-step="3"><span class="tick">&#10003;</span><small>Step 4</small><b>Scan</b></div>
-<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Scan back</b></div>
+<div class="pipe-step" data-step="4"><span class="tick">&#10003;</span><small>Step 5</small><b>Distribute</b></div>
 </div>
-<div class="pipe-detail"><b id="pipeTitle">Not started</b><span id="pipeDesc">Pull the assigned work from the system of record to begin.</span></div>
+<div class="pipe-detail"><b id="pipeTitle">Not started</b><span id="pipeDesc">Paste the assigned work into the sheet to begin.</span></div>
 <div class="qr-grid">
 <div><div class="led" id="recList"></div>
 <div class="acts">
@@ -576,7 +576,7 @@
 <p>Fiber work crosses several handoffs: scheduling, customer readiness, installation, splicing, provisioning, QA, transfer claims, and closeout. When those steps live in separate trackers, the technician reconstructs the day while dispatch and leadership reconstruct the portfolio. The expensive failure wasn't any single step &mdash; it was re-keying the same record into each one.</p>
 
 <h3>What I actually built, and where</h3>
-<p>I started in 2022 with a barcode app that was entirely spreadsheet formulas. The technician pasted the assigned work into the sheet, formulas corrected what they could, and the sheet generated a scannable code carrying the address, customer, serial and ONT ID together. That code went into the provisioning platform by scan. To move a record back the other way we generated a second code and scanned it where it needed to land. No integration, no API, just a symbol both systems could read. <strong>That round trip is the part that remained in use after I left.</strong></p>
+<p>I started in 2022 with a barcode app that was entirely spreadsheet formulas. The technician pasted the assigned work into the sheet, formulas corrected what they could, and the sheet generated groups of scannable codes, one group per system, each carrying the address, customer, serial and ONT ID together. The technician scanned the matching group into every system that held the record, so all of them ended up saying the same thing. No integration, no API, just a common symbol that systems never designed to talk to each other could all read. <strong>That pipeline is the part that remained in use after I left.</strong></p>
 <p>On promotion to Fiber Installation Lead I built <strong>L-FIT</strong>, the Lead Fiber Installation Tech Tracker, a name my partner and I made up. It held what the official schedule didn't, and it did the real data cleansing the barcode sheet never could. It recorded what was completed and when, which is what made a technician-output dashboard possible. I sent that dashboard to my manager and the VP every month.</p>
 <p>At the end, a third. In December 2025 I built a project tracker for the Austin and San Antonio deployments: an eight-phase milestone model with slippage tracking, fuzzy matching so one community couldn't quietly become two, and an executive dashboard grouped by market. I demonstrated it to the VP and upper management, one team ran on it, and I wrote the adoption guide for the manager who would keep it after I left.</p>
 <p>The point was never the codes. It was that the association between an address and the equipment installed at it stopped depending on somebody typing fourteen characters correctly at the end of a long day.</p>
@@ -934,7 +934,7 @@
     { t: 'Normalize',  d: 'Formulas correct casing and spacing and validate the field formats. Anything they cannot fix, the technician completes.' },
     { t: 'Encode',     d: 'Commit the five fields to one scannable symbol \u2014 the record travels together.' },
     { t: 'Scan',       d: 'One scan populates provisioning. No field is hand-keyed at this point.' },
-    { t: 'Scan back',  d: 'Generate a second code and scan the record back to where it needs to land, then stamp the completion.' }
+    { t: 'Distribute', d: 'Generate the matching group for every other system that holds the record and scan each one in, then stamp the completion.' }
   ];
 
   /* ---------------- field-code bubble ---------------- */
@@ -1042,7 +1042,7 @@
       desc.textContent = 'The source record fails its format check, so no code is issued. Fix it at source and retry.';
     } else if (state.step < 0) {
       title.textContent = 'Not started';
-      desc.textContent = 'Pull the assigned work from the system of record to begin.';
+      desc.textContent = 'Paste the assigned work into the sheet to begin.';
     } else if (state.step >= STEPS.length - 1) {
       title.textContent = 'Complete';
       desc.textContent = 'Both systems agree on this record. Pick another job to run it again.';
@@ -1059,7 +1059,7 @@
     { label: 'Normalize',     run: doClean },
     { label: 'Generate code', run: doGen },
     { label: 'Scan',          run: doScan },
-    { label: 'Scan back',     run: doWrite }
+    { label: 'Distribute',    run: doWrite }
   ];
 
   function renderButtons() {

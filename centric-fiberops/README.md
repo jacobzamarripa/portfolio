@@ -13,7 +13,7 @@ The page states these separately and so must any edit to it.
 
 | Tier | What | Status |
 |---|---|---|
-| **Real** | The barcode/QR pipeline (created 2022, developed through 2024), the L-FIT tracker / Master_Tracker (from the Jan 2025 promotion), and the Sheets + Form field tooling with EOD reporting | Built and used during the Centric employment, all of it in Sheets and formulas. The **QR round trip remained in use after his departure**. |
+| **Real** | The barcode/QR pipeline (created 2022, developed through 2024), the L-FIT tracker / Master_Tracker (from the Jan 2025 promotion), and the Sheets + Form field tooling with EOD reporting | Built and used during the Centric employment, all of it in Sheets and formulas. The **QR pipeline remained in use after his departure**. |
 | **Real** | The CTX Master Project Tracker | Built December 2025. **Demonstrated to the VP and upper management; one team ran on it.** |
 | **Retrospective** | Nexus FiberOps Unified — the unified role-aware application in the walkthrough | Built after leaving Centric, as a portfolio prototype. Never deployed there. No production adoption. **The API integration exists only here, as design.** |
 | **Planned** | In-app SOP library; iPad rollout | Intent only, never built. Shown as roadmap, never as delivery. |
@@ -40,8 +40,9 @@ Additional locks:
   moving data in by copy and paste. `PRD.md` in the source repo lists a CRM
   "Integration Target (In preparation)", which is Nexus design intent. Never
   describe an API pull or an automated write-back as delivered work.
-- **The real return path was a second QR code**, generated and scanned back to
-  wherever the record needed to land. That round trip is what remained in use.
+- **The real mechanism was groups of QR codes, one group per system**, so the same
+  record could be scanned into every system that held it without retyping. That
+  pipeline is what remained in use.
 - Do not upgrade the "formula driven" language. It is the point: a working
   pipeline built out of spreadsheet formulas by an installation technician.
 - Every person, community, address, schedule, job, equipment identifier and
@@ -96,8 +97,8 @@ Six workspaces: Dashboard, My Jobs, Calendar, Map View, **Closeout**, and
 Provisioning. The pipeline is the centerpiece because it is the piece that was
 real. Its five steps mirror the actual workflow: the technician **pastes** the record
 in from the assignment board → formulas normalize what they can and the
-technician completes the rest → generate the code → scan into provisioning →
-**generate a second code and scan the record back**, then log completion.
+technician completes the rest → generate the code groups → scan into provisioning →
+**scan the matching group into every other system that holds the record**, then log completion.
 
 Two states worth exercising:
 
