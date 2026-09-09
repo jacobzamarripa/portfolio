@@ -750,7 +750,7 @@
     blocked: false,    // validation failure
     fixed: {},         // jobs whose source record was corrected
     scanned: {},       // jobs scanned
-    written: {},       // jobs written back
+    written: {},       // jobs distributed to every system
     dayFilter: null,
     events: [],
     keysSaved: 0
@@ -1045,7 +1045,7 @@
       desc.textContent = 'Paste the assigned work into the sheet to begin.';
     } else if (state.step >= STEPS.length - 1) {
       title.textContent = 'Complete';
-      desc.textContent = 'Both systems agree on this record. Pick another job to run it again.';
+      desc.textContent = 'Every system now holds the same record. Pick another job to run it again.';
     } else {
       title.textContent = 'Step ' + (state.step + 2) + ' \u00b7 ' + STEPS[state.step + 1].t;
       desc.textContent = STEPS[state.step + 1].d;
@@ -1137,7 +1137,7 @@
     var wf = $('wbFeed');
     wf.innerHTML = '';
     if (written) {
-      [['Record written back to the system of record', 'both sides now equivalent'],
+      [['Record scanned into every system that holds it', 'all of them now equivalent'],
        ['Completion event stamped', job.id + ' · ' + clock()],
        ['Output dashboard updated', 'technician throughput recalculated']].forEach(function (p) {
         var d = el('div');
@@ -1352,7 +1352,7 @@
   function doWrite() {
     state.step = 4;
     state.written[state.job] = true;
-    logEvent(state.job + ' \u00b7 written back, completion stamped, output dashboard updated', 'ok');
+    logEvent(state.job + ' \u00b7 distributed to every system, completion stamped, output dashboard updated', 'ok');
     renderAll();
   }
 
