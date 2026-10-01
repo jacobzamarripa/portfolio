@@ -42,7 +42,7 @@ CareerOS for anyone/anything working on his job search materials.
 
 ## Hosting
 
-Both case studies are served publicly by GitHub Pages from the `portfolio`
+The original two case studies are served publicly by GitHub Pages from the `portfolio`
 repository — no login, no permission wall, stable URLs suitable for a LinkedIn
 Featured link. Edit the HTML and push to update.
 
@@ -136,3 +136,10 @@ OS preference; the button is a session-only override. Do not add
 animation frames later — returns a mid-transition colour, not the final one.
 Wait ~300ms before asserting on a theme switch, or you will chase bugs that
 are not there.
+
+## Apple and Continual Improvement expansion — 2026-10-01
+
+- `apple-rtl/index.html`: existing retrospective reconciled to approved chronology, technical-support ramp wording and aggregate-only scope. Peer headcounts removed.
+- `ci-fleet/index.html`: de-identified decision proposal and retrospective. Historical costs are estimates; operational savings and final upfit deployment are not verified.
+- Homepage now links all four studies. Local preparation does not establish public deployment.
+- Release QA and advisory review are recorded privately in CareerOS, not shipped as portfolio content.

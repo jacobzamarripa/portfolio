@@ -1,0 +1,375 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Continual Improvement Challenge | Jacob Zamarripa</title><meta name="description" content="An authored fleet right-sizing proposal: field requirements, specification, selection and an honest retrospective."><meta property="og:title" content="Turning field friction into a decision"><meta property="og:description" content="Continual Improvement Challenge: requirements, a selected proposal and what I would validate differently."><meta property="og:type" content="article"><meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/ci-fleet/og-ci-fleet.png"><link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/ci-fleet/"><style>
+/* ============================================================
+   PERIOD REVIEW — its own identity: the operating document.
+   Warm paper plane, hairline rules, ink-forward, tabular figures.
+   Deliberately NOT the cool-slate + blue of the two sibling pages,
+   and deliberately not anyone else's brand.
+   Chart palette validated with the dataviz validator, --pairs all,
+   both modes. See .private/apple-rtl/CHART_DATA.md §5.
+   ============================================================ */
+
+:root{
+  --topbar-h:54px;
+  --plane:#f9f9f7;
+  --surface:#fcfcfb;
+  --sunken:#f2f1ec;
+  --ink:#0b0b0b;
+  --ink-2:#52514e;
+  --muted:#898781;
+  --rule:#e1e0d9;
+  --axis:#c3c2b7;
+  --accent:#4a3aa7;
+  --accent-wash:rgba(74,58,167,.09);
+  --accent-line:rgba(74,58,167,.28);
+  --flag:#eb6834;
+  --flag-wash:rgba(235,104,52,.13);
+  --ctx:#898781;
+  --good:#006300;
+  --ring:rgba(11,11,11,.10);
+  --shadow:0 1px 2px rgba(11,11,11,.05);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --plane:#0d0d0d;
+    --surface:#1a1a19;
+    --sunken:#141413;
+    --ink:#ffffff;
+    --ink-2:#c3c2b7;
+    --muted:#898781;
+    --rule:#2c2c2a;
+    --axis:#383835;
+    --accent:#9085e9;
+    --accent-wash:rgba(144,133,233,.13);
+    --accent-line:rgba(144,133,233,.34);
+    --flag:#d95926;
+    --flag-wash:rgba(217,89,38,.18);
+    --ctx:#898781;
+    --good:#0ca30c;
+    --ring:rgba(255,255,255,.10);
+    --shadow:none;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --plane:#0d0d0d;
+  --surface:#1a1a19;
+  --sunken:#141413;
+  --ink:#ffffff;
+  --ink-2:#c3c2b7;
+  --muted:#898781;
+  --rule:#2c2c2a;
+  --axis:#383835;
+  --accent:#9085e9;
+  --accent-wash:rgba(144,133,233,.13);
+  --accent-line:rgba(144,133,233,.34);
+  --flag:#d95926;
+  --flag-wash:rgba(217,89,38,.18);
+  --ctx:#898781;
+  --good:#0ca30c;
+  --ring:rgba(255,255,255,.10);
+  --shadow:none;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.62;
+  font-variant-numeric:tabular-nums;
+  transition:background-color .2s,color .2s;
+}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.22;letter-spacing:-.012em}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- topbar (shared chrome pattern) ---------- */
+.topbar{position:sticky;top:0;z-index:100;height:var(--topbar-h);
+  background:color-mix(in srgb,var(--plane) 88%,transparent);
+  backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--rule)}
+.topbar-inner{height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.topbar-left{display:flex;align-items:center;gap:11px;min-width:0}
+.topbar-right{display:flex;align-items:center;gap:9px}
+.mark{width:24px;height:24px;border-radius:5px;border:1px solid var(--accent-line);
+  background:var(--accent-wash);display:grid;place-items:center;flex:none}
+.mark i{display:block;width:9px;height:9px;border-radius:1px;
+  border-left:2px solid var(--accent);border-bottom:2px solid var(--accent)}
+.tb-name{font-size:13px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.tb-pill{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.tb-chip{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-wash);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink-2);font-size:13px;cursor:pointer;line-height:1;
+  transition:transform .18s,border-color .18s}
+.theme-btn:hover{transform:translateY(-1px);border-color:var(--axis)}
+.tb-link{font-size:12px;font-weight:800;text-decoration:none;color:var(--accent);white-space:nowrap}
+.tb-link:hover{text-decoration:underline}
+
+/* ---------- shell grid + rail ---------- */
+.shellgrid{display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;padding-top:26px;padding-bottom:60px}
+.railnav{position:sticky;top:calc(var(--topbar-h) + 20px);display:flex;flex-direction:column;gap:1px;align-self:start}
+.rail-label{padding:0 11px 8px;font-size:9px;font-weight:900;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+.railnav a{display:flex;align-items:baseline;gap:9px;padding:7px 11px;border-left:2px solid transparent;
+  color:var(--ink-2);text-decoration:none;font-size:12.5px;font-weight:700;transition:color .18s,background .18s}
+.railnav a:hover{color:var(--ink);background:var(--surface)}
+.railnav a.is-current{color:var(--ink);border-left-color:var(--accent);background:var(--surface)}
+.railnav a .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9.5px;font-weight:600;color:var(--muted)}
+.railnav a.is-current .n{color:var(--accent)}
+.railnav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.rail-meta{margin-top:22px;padding:0 11px;display:grid;gap:13px;border-top:1px solid var(--rule);padding-top:16px}
+.rail-meta small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+.rail-meta b{display:block;font-size:11px;font-weight:700;color:var(--ink-2);line-height:1.4;margin-top:3px}
+.content{min-width:0}
+
+/* ---------- document sections ---------- */
+.sec{margin-bottom:52px;scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:11px;margin-bottom:20px;border-bottom:2px solid var(--ink)}
+.sec-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--muted)}
+.sec-title{font-size:20px;font-weight:800}
+.sec-kicker{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.lede{font-size:16.5px;line-height:1.6;color:var(--ink-2);max-width:66ch}
+.body-copy{max-width:68ch}
+.body-copy h4{font-size:13.5px;font-weight:800;margin:22px 0 7px;letter-spacing:0}
+
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.note{background:var(--sunken);border:1px solid var(--rule);border-left:3px solid var(--axis);
+  border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px;color:var(--ink-2)}
+.pull{border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:18px 0;
+  font-size:16px;line-height:1.55;color:var(--ink)}
+.pull cite{display:block;margin-top:7px;font-style:normal;font-size:11.5px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+.nowrap{white-space:nowrap}
+
+/* ---------- hero: the review header block ---------- */
+.hero{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
+  padding:28px 30px 26px;box-shadow:var(--shadow);margin-bottom:34px}
+.hero-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.hero-stamp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+  border:1px solid var(--accent-line);background:var(--accent-wash);border-radius:4px;padding:3px 8px}
+.hero-dates{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--muted)}
+.hero h1{font-size:clamp(27px,4.1vw,40px);font-weight:800;letter-spacing:-.028em;max-width:19ch}
+.hero-sub{margin-top:13px;font-size:16.5px;line-height:1.55;color:var(--ink-2);max-width:60ch}
+.hero-role{margin-top:20px;padding-top:17px;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:16px}
+.hero-role div small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.hero-role div b{font-size:13px;font-weight:800;line-height:1.35;display:block}
+.disclaim{margin-top:19px;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
+  font-size:11.5px;line-height:1.5;color:var(--ink-2);background:var(--sunken)}
+
+/* ---------- three-tier truth boundary ---------- */
+.tiers{display:grid;gap:9px}
+.tier{display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;align-items:start;
+  padding:14px 16px;border:1px solid var(--rule);border-radius:11px;background:var(--surface)}
+.tier-mark{width:15px;height:15px;border-radius:50%;margin-top:4px;flex:none;border:2px solid var(--accent)}
+.tier-1 .tier-mark{background:var(--accent)}
+.tier-2 .tier-mark{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
+.tier-3 .tier-mark{background:transparent;border-color:var(--muted);border-style:dotted}
+.tier b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
+.tier p{font-size:13px;color:var(--ink-2);margin:0}
+.tier-tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:8px;
+  vertical-align:2px;border:1px solid var(--rule);color:var(--muted)}
+
+/* ---------- evidence tag used inline in copy ---------- */
+.ev{display:inline-flex;align-items:center;gap:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:1px 6px;border-radius:4px;border:1px solid var(--rule);color:var(--muted);
+  white-space:nowrap;vertical-align:1px}
+.ev::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--accent)}
+.ev-1::before{background:var(--accent)}
+.ev-2::before{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
+.ev-3::before{background:transparent;border-color:var(--muted);border-style:dotted}
+
+/* ---------- the loop: three steps ---------- */
+.loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:26px}
+.step{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:15px 17px;position:relative}
+.step-n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.step b{display:block;font-size:14.5px;font-weight:800;margin:5px 0 6px}
+.step p{font-size:12.5px;color:var(--ink-2);margin:0}
+.step.is-on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-wash)}
+
+/* ---------- figures / charts ---------- */
+.fig{background:var(--surface);border:1px solid var(--rule);border-radius:12px;
+  padding:17px 19px 15px;box-shadow:var(--shadow);margin-bottom:18px}
+.fig-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+.fig-title{font-size:14.5px;font-weight:800;letter-spacing:-.008em}
+.fig-sub{font-size:12.5px;color:var(--ink-2);margin:4px 0 13px;max-width:74ch}
+.fig-chip{margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;
+  border:1px solid var(--flag);color:var(--flag);background:var(--flag-wash);white-space:nowrap}
+.fig-plot{width:100%;overflow-x:auto}
+.fig-plot svg{display:block;max-width:100%;height:auto}
+.fig-foot{margin-top:11px;padding-top:10px;border-top:1px solid var(--rule);
+  font-size:11.5px;line-height:1.5;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:15px;margin:2px 0 12px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:block;width:11px;height:11px;border-radius:50%;flex:none}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+
+/* ---------- KPI / stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:18px}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:14px 16px}
+.tile small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tile b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.tile em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:5px;line-height:1.4}
+.tile-accent b{color:var(--accent)}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:420px}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  background:var(--sunken)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.tbl-note{font-size:11.5px;color:var(--muted);margin-top:8px}
+details{margin-top:11px}
+summary{font-size:11.5px;font-weight:800;color:var(--accent);cursor:pointer;
+  padding:5px 0;list-style:none;display:inline-flex;align-items:center;gap:6px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+details[open] summary::before{content:"\2212"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---------- chart tooltip ---------- */
+.tip{position:fixed;z-index:400;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s,transform .12s;background:var(--ink);color:var(--plane);
+  border-radius:8px;padding:8px 11px;font-size:11.5px;line-height:1.45;font-weight:700;
+  max-width:240px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip u{display:block;text-decoration:none;font-weight:800;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;opacity:.72;margin-bottom:3px}
+
+/* ---------- list of findings ---------- */
+.findings{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.findings li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;
+  padding:13px 15px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.findings b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
+.findings p{font-size:12.5px;color:var(--ink-2);margin:0}
+.findings .k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
+  color:var(--accent);padding-top:3px}
+
+/* ---------- footer ---------- */
+.foot{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
+  padding:26px 28px;box-shadow:var(--shadow);scroll-margin-top:calc(var(--topbar-h) + 18px)}
+.foot h3{font-size:19px;font-weight:800;margin-bottom:9px}
+.foot p{font-size:14px;color:var(--ink-2);max-width:60ch}
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:15px;padding:10px 17px;
+  background:var(--accent);color:#fff;border-radius:9px;text-decoration:none;font-size:13.5px;font-weight:800;
+  transition:transform .18s,opacity .18s}
+.cta:hover{transform:translateY(-1px);opacity:.93}
+.foot-legal{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule);
+  font-size:11px;line-height:1.6;color:var(--muted);max-width:78ch}
+
+/* ---------- responsive ---------- */
+@media(max-width:1000px){
+  .shellgrid{grid-template-columns:minmax(0,1fr);gap:12px;padding-top:12px}
+  .railnav{position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;
+    gap:3px;min-width:0;padding:9px 0;background:var(--plane);border-bottom:1px solid var(--rule)}
+  .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;padding:6px 10px}
+  .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
+  .rail-label,.rail-meta{display:none}
+  .loop{grid-template-columns:minmax(0,1fr)}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 15px}
+  .hero{padding:21px 18px}
+  .fig{padding:14px 14px 12px}
+  .sec{margin-bottom:40px}
+  .tb-pill,.tb-chip{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+  .cta:hover,.theme-btn:hover{transform:none}
+}
+</style></head><body><div class="topbar"><div class="wrap topbar-inner"><div class="topbar-left"><a class="tb-name" href="../" style="color:inherit;text-decoration:none">Portfolio / Field Decision</a></div><div class="topbar-right"><span class="tb-chip">Proposal retrospective</span><button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button><a class="tb-link" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn &rarr;</a></div></div></div><div class="wrap shellgrid"><aside class="railnav" id="railnav" aria-label="Section navigation"><div class="rail-label">Case study</div><a href="#intro"><span class="n">01</span>Overview</a><a href="#reframe"><span class="n">02</span>Requirements</a><a href="#spec"><span class="n">03</span>Specification</a><a href="#handoff"><span class="n">04</span>Decision rights</a><a href="#outcome"><span class="n">05</span>Outcome</a><a href="#retrospective"><span class="n">06</span>Retrospective</a><a href="#validation"><span class="n">07</span>Validation</a><a href="#contact"><span class="n">08</span>Contact</a><div class="rail-meta"><div><small>Role</small><b>Proposal author, joint entry</b></div><div><small>Period</small><b>Jan &ndash; Feb 2026</b></div><div><small>Built</small><b>2026 retrospective</b></div></div></aside><main class="content">
+<section class="sec" id="intro"><div class="hero"><div class="hero-bar"><span class="hero-stamp">Continual Improvement Challenge</span><span class="hero-dates">Jan &ndash; Feb 2026</span></div>
+<h1>Turning field friction into a decision.</h1><p class="hero-sub">I authored an 11-page fleet right-sizing proposal for a joint challenge entry with a field lead at a regional fiber contractor. The proposal was selected as the winning submission.</p>
+<div class="hero-role"><div><small>My contribution</small><b>Proposal author</b></div><div><small>Scope</small><b>Requirements, sourcing &amp; specification</b></div><div><small>Document</small><b>11 pages</b></div><div><small>Decision rights</small><b>Fleet Operations</b></div></div>
+<p class="disclaim"><b>Proposal author, joint entry.</b> I had already left the contractor. My partner entered and submitted the joint entry under their name; I authored the document. Their first-person field experience in the submission belongs to them. This retrospective describes my contribution without publishing the original proposal, company photographs or personal details.</p></div>
+<p class="lede">The company had already decided to replace its service vans. The question was which replacement and upfit would fit the technician’s daily work. I translated a field lead’s loadout into a decision document, then made the recommendation specific enough for fleet reviewers to evaluate.</p></section>
+<section class="sec" id="reframe"><div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Start with the work</h2></div>
+<p class="lede">The field lead described tools and customer equipment spread through a cargo van, repeated searching at service stops, and parking friction. The proposal treated tool access and inventory organization as design requirements.</p>
+<div class="pull">Design storage around the daily loadout: tools, equipment and access patterns.</div>
+<div class="grid2"><div class="note"><b>What I did</b><p>Elicited the daily inventory from the field lead: equipment dimensions, quantities, weights, restocking needs and tool access. Converted that information into storage zones, a workflow comparison and an itemized upfit.</p></div><div class="note"><b>What that demonstrates</b><p>Requirements elicitation, translating user needs into a specification, writing for a decision-maker and influencing a function I did not manage.</p></div></div></section>
+<section class="sec" id="spec"><div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">A specification reviewers could examine</h2></div>
+<p class="lede">The proposed configuration paired a compact pickup with enclosed storage, a drawer system and a mounted tube. This diagram recreates the storage logic; it is not an engineering drawing or a verified fitment.</p>
+<div class="fig"><svg viewBox="0 0 700 220" role="img" aria-label="Conceptual storage zones: cab for daily essentials, enclosed bed for equipment, drawer for tools, rack tube for approximately five-foot items" style="width:100%;height:auto"><rect x="12" y="22" width="180" height="178" rx="16" fill="var(--accent-wash)" stroke="var(--accent)"/><rect x="204" y="22" width="484" height="82" rx="16" fill="var(--surface)" stroke="var(--rule)"/><rect x="204" y="116" width="300" height="84" rx="16" fill="var(--accent-wash)" stroke="var(--accent)"/><rect x="516" y="116" width="172" height="84" rx="16" fill="var(--surface)" stroke="var(--rule)"/><g fill="var(--ink)" font-family="system-ui" font-size="17"><text x="30" y="63">Cab</text><text x="30" y="96">Daily essentials</text><text x="224" y="55">Enclosed bed</text><text x="224" y="82">Equipment &amp; customer hardware</text><text x="224" y="151">Drawer</text><text x="224" y="179">Tools &amp; consumables</text><text x="532" y="151">Rack tube</text><text x="532" y="179">~5 ft items</text></g></svg><p class="fig-foot">Concept recreated for this retrospective using the actual ~5 ft inventory. The submitted document stated an erroneous 8–12 ft requirement, discussed in section 06. Physical clearances, mounting and product compatibility still require validation.</p></div>
+<details open><summary>The original seven-line upfit budget</summary><div class="tbl-wrap"><table><thead><tr><th>Component</th><th class="num">Proposal estimate</th></tr></thead><tbody>
+<tr><td>Commercial truck cap</td><td class="num">$2,000.00</td></tr><tr><td>Drawer system</td><td class="num">$1,699.99</td></tr><tr><td>Bed rack</td><td class="num">$600.00</td></tr><tr><td>Locking tube kit</td><td class="num">$120.00</td></tr><tr><td>Approximately 5 ft PVC pipe</td><td class="num">$20.00</td></tr><tr><td>Cab organization</td><td class="num">$80.00</td></tr><tr><td>Tailgate tote</td><td class="num">$40.00</td></tr><tr><td><b>Total</b></td><td class="num"><b>$4,559.99</b></td></tr></tbody></table></div><p class="tbl-note">The original budget already specified a 5 ft tube and pipe; the error was in the stated carry requirement. Historical proposal estimates, not current quotes or incurred spend. The truck, installation and a complete ownership-cost model were outside this total.</p></details>
+<p class="body-copy" style="margin-top:18px">The proposal included vendor references and alternatives, a seven-factor workflow comparison, a payload budget and a three-phase implementation framework. These gave reviewers concrete assumptions to challenge. The payload budget remained incomplete because it omitted occupants.</p></section>
+<section class="sec" id="handoff"><div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Hand the decision to its owner</h2></div>
+<div class="loop"><div class="step"><span class="step-n">Proposed phase 01</span><b>Pilot validation</b><p>Test one upfit with an active technician and collect workflow feedback.</p></div><div class="step"><span class="step-n">Proposed phase 02</span><b>Procurement setup</b><p>Fleet reviewers confirm fitment, suppliers, sourcing and installation.</p></div><div class="step"><span class="step-n">Proposed phase 03</span><b>Phased deployment</b><p>Fleet Operations determines timing and coordinates onboarding.</p></div></div>
+<p class="body-copy" style="margin-top:18px">I proposed the framework. Fleet Operations retained authority over timing, vendors and execution. The proposal’s pilot plan is not evidence that those stages were carried out.</p></section>
+<section class="sec" id="outcome"><div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">What happened</h2></div>
+<ul class="findings"><li><span class="k">01</span><div><b>The authored proposal was selected</b><p>The joint submission won the challenge. Selection is my first-hand account and is not independently documented here. The private proposal preserves the document content; my authorship is confirmed by my account and my partner’s acknowledgment.</p></div></li><li><span class="k">02</span><div><b>I participated in outfitter specification meetings</b><p>My partner and I attended meetings with vehicle outfitters to discuss the customizations. This is my first-hand account, recorded after the submission.</p></div></li><li><span class="k">03</span><div><b>Rollout was reported, with a narrower evidence boundary</b><p>The contractor had begun introducing replacement trucks. The vehicles were not yet outfitted to the proposal’s specifications when I recorded the update. I have no current verification of the final configuration or operational results.</p></div></li></ul>
+<div class="note"><b>Outcome boundary.</b> Selection and participation in specification discussions are supported. Cost savings, time savings, safety improvements and fleet-wide implementation to my exact specification have not been measured or verified.</div></section>
+<section class="sec" id="retrospective"><div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">What I would change now</h2></div>
+<p class="lede">A selected proposal can still contain weak requirements and incomplete analysis. These are retrospective improvements, not methods I claim to have completed during the challenge.</p>
+<ul class="findings"><li><span class="k">01</span><div><b>Validate the requirement before defending the solution</b><p>The submitted document repeatedly stated an 8–12 ft carry requirement. That was an error: the glow rods and PVC risers were approximately 5 ft. The 5 ft tube matched the actual inventory. Today I would check every dimension against the physical item and trace each requirement to its source.</p></div></li>
+<li><span class="k">02</span><div><b>Reconcile fit and payload before procurement</b><p>The document used conflicting drum dimensions and omitted occupants from its payload calculation. I would measure the actual drums, test clearances and include the driver, passengers and every installed component before accepting a configuration.</p></div></li>
+<li><span class="k">03</span><div><b>Compare the full cost of replacement options</b><p>The upfit budget did not establish total cost of ownership or payback. I would compare suitable replacement vans and trucks using vehicle acquisition, installation, maintenance, fuel and downtime assumptions with fleet reviewers.</p></div></li>
+<li><span class="k">04</span><div><b>Account for the vehicle as a workspace</b><p>An enclosed van can provide a sheltered standing workspace. I would test whether the pickup configuration supports weather-sensitive work, including splicing, before treating storage access as the complete decision.</p></div></li></ul></section>
+<section class="sec" id="validation"><div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title">How I would validate the recommendation</h2></div>
+<p class="lede">The original 5–10 minutes saved per day was an estimate without a time study. I would replace it with a baseline and a matched pilot that tests the same kind of service work.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Question</th><th>Measure I would collect</th></tr></thead><tbody><tr><td>Are tools faster to access?</td><td>Park-to-first-tool time and retrieval time at comparable stops.</td></tr><tr><td>Does the daily inventory fit?</td><td>Loadout checks, clearances and warehouse trips per week.</td></tr><tr><td>Does the configuration support the work?</td><td>Weather interruptions, splicing setup and technician feedback.</td></tr><tr><td>Does the economic case hold?</td><td>Fuel per mile, mileage, installation, maintenance and downtime costs.</td></tr></tbody></table></div>
+<div class="note"><b>What this says about how I work.</b> I can turn field observations into a buildable recommendation and make its assumptions visible. My next step is to strengthen that recommendation with measured validation and a complete comparison of alternatives.</div></section>
+<footer class="foot" id="contact"><h3>Jacob Zamarripa</h3><p>Operations, implementation and service delivery: requirements, decision documents, stakeholder alignment and practical improvement.</p><a class="cta" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a><p><a href="../" style="color:inherit">All case studies &rarr;</a></p><p class="disclaim">Personal retrospective. The contractor and partner are unnamed. No affiliation or endorsement is implied. The original document remains private.</p></footer>
+</main></div><script>  (function(){
+    var rail = document.getElementById('railnav');
+    if (rail){
+      var links = Array.prototype.slice.call(rail.querySelectorAll('a'));
+      var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+      var syncRail = function(){
+        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h')) || 54;
+        var probe = window.scrollY + h + window.innerHeight * 0.22, current = 0;
+        targets.forEach(function(t,i){
+          if (!t) return;
+          if (t.getBoundingClientRect().top + window.scrollY <= probe) current = i;
+        });
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = links.length - 1;
+        links.forEach(function(a,i){ a.classList.toggle('is-current', i === current); });
+      };
+      links.forEach(function(a){ a.addEventListener('click', function(){ setTimeout(syncRail, 460); }); });
+      window.addEventListener('scroll', syncRail, { passive:true });
+      window.addEventListener('resize', syncRail);
+      requestAnimationFrame(syncRail);
+    }
+
+    /* Session-only override; every load follows the visitor's OS preference. */
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    if (!btn) return;
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    function effective(){ return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); }
+    function sync(){
+      var e = effective();
+      btn.textContent = e === 'dark' ? '☽' : '☀';
+      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
+      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
+    }
+    btn.addEventListener('click', function(){
+      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
+      sync();
+    });
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    sync();
+  })();
+
+</script></body></html>
