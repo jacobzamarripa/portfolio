@@ -7,3 +7,5 @@ test('every evidence link resolves to a real local anchor',()=>{const root=path.
 test('job-title aliases and employer names reach the relevant evidence',()=>{assert.deepEqual(E.search('Project Manager').map(e=>e.id),E.search('PM').map(e=>e.id));assert.ok(E.search('Centric Fiber').some(e=>e.case==='fleet'));assert.ok(E.search('Omni Fiber').some(e=>e.id==='omni-engineering'));assert.ok(E.search('onboarding').some(e=>e.case==='apple'));});
 
 test('unrecognized and inherited role names cannot become routes',()=>{for(const k of ['constructor','__proto__','unknown',null]){assert.equal(E.hasRole(k),false);assert.deepEqual(E.routeFor(k),[]);}});
+
+test('every role has a short chip label for narrow screens',()=>{for(const k of Object.keys(E.roles))assert.ok(E.roles[k].chip,k);});

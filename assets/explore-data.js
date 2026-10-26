@@ -23,11 +23,11 @@
     {id:'omni-handover',case:'omni',title:'Before anyone else runs it',path:'omni-pmo/#handover',source:'Recorded / Recalled',text:'Document the rules, pin down constraints, make thresholds configurable and test failure states.',tags:'handover documentation operations readiness maintainability rollout implementation',roles:['pm','tpm','ops','implementation','productops']}
   ];
   var roles={
-    pm:{label:'Project management',short:'PM',intro:'Scope, decisions, delivery and evidence of results.',route:['fleet-scope','fleet-decision','omni-forecast','apple-results']},
-    tpm:{label:'Technical program management',short:'TPM',intro:'Data contracts, dependencies, validation and technical judgment.',route:['omni-engineering','nexus-validation','omni-forecast','omni-handover']},
-    ops:{label:'Operations management',short:'Operations',intro:'People, repeatable work, field constraints and operating performance.',route:['apple-coaching','nexus-tools','fleet-storage','omni-walkthrough']},
-    implementation:{label:'Technical implementation',short:'Implementation',intro:'Validation, adoption, rollout readiness and handover.',route:['nexus-validation','nexus-rollout','apple-coaching','omni-handover']},
-    productops:{label:'Product operations',short:'Product operations',intro:'Workflow discovery, information design, feedback and measurement.',route:['nexus-tools','omni-design','fleet-revisions','apple-results']}
+    pm:{label:'Project management',short:'PM',chip:'Project',intro:'Scope, decisions, delivery and evidence of results.',route:['fleet-scope','fleet-decision','omni-forecast','apple-results']},
+    tpm:{label:'Technical program management',short:'TPM',chip:'Technical program',intro:'Data contracts, dependencies, validation and technical judgment.',route:['omni-engineering','nexus-validation','omni-forecast','omni-handover']},
+    ops:{label:'Operations management',short:'Operations',chip:'Operations',intro:'People, repeatable work, field constraints and operating performance.',route:['apple-coaching','nexus-tools','fleet-storage','omni-walkthrough']},
+    implementation:{label:'Technical implementation',short:'Implementation',chip:'Implementation',intro:'Validation, adoption, rollout readiness and handover.',route:['nexus-validation','nexus-rollout','apple-coaching','omni-handover']},
+    productops:{label:'Product operations',short:'Product operations',chip:'Product ops',intro:'Workflow discovery, information design, feedback and measurement.',route:['nexus-tools','omni-design','fleet-revisions','apple-results']}
   };
   function normalize(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
   function hasRole(k){return Object.prototype.hasOwnProperty.call(roles,k);}
