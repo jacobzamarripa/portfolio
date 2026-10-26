@@ -3,898 +3,685 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128203;</text></svg>">
-<title>Period Review — Retail at Home | Jacob Zamarripa</title>
-<meta name="description" content="A retrospective on leading a distributed at-home technical support team: the diagnosis, the training built against it, and four periods of employer-reported results. A personal retrospective by a former employee; not affiliated with or endorsed by Apple Inc.">
+<title>Apple: Period Review | Jacob Zamarripa</title>
+<meta name="description" content="Jacob Zamarripa's review of the distributed support team he led at Apple in 2020 and 2021: what was holding it back, what he taught, and four periods of results against the site benchmark.">
 <meta name="robots" content="index,follow">
-<meta property="og:title" content="Period Review — Retail at Home">
-<meta property="og:description" content="Diagnose, build, measure — with the measurement produced by someone else.">
+<meta property="og:title" content="Apple: Period Review">
+<meta property="og:description" content="A distributed support team, the problem I found, what I taught, and four periods of results against the site benchmark.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/apple-rtl/og-period-review.png">
-<link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/apple-rtl/">
 <meta property="og:url" content="https://jacobzamarripa.github.io/portfolio/apple-rtl/">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Period Review, case 1 of 4 by Jacob Zamarripa: a printed-report title page for a distributed support team review.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jacobzamarripa.github.io/portfolio/apple-rtl/og-period-review.png">
+<link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/apple-rtl/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap">
+<link rel="stylesheet" href="../assets/frame.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script src="../assets/frame.js" defer></script>
+<link rel="stylesheet" href="../assets/portfolio-explore.css">
+<script src="../assets/explore-data.js" defer></script>
+<script src="../assets/portfolio-explore.js" defer></script>
+<script src="figures.js" defer></script>
 <style>
-/* ============================================================
-   PERIOD REVIEW — its own identity: the operating document.
-   Warm paper plane, hairline rules, ink-forward, tabular figures.
-   Deliberately NOT the cool-slate + blue of the two sibling pages,
-   and deliberately not anyone else's brand.
-   Chart palette validated with the dataviz validator, --pairs all,
-   both modes. See .private/apple-rtl/CHART_DATA.md §5.
-   ============================================================ */
-
+/* =====================================================================
+   Period Review: the operating review. A printed period report: serif
+   headings, a margin column for section numbers and side notes, figures
+   with numbers and captions, generous white space. Body text uses the
+   visitor's system face. Chart palette (violet / orange / grey) validated
+   with the dataviz validator against both page colours.
+   Figures are drawn by figures.js; their JS-off copies are written in by
+   node .private/redesign-2026-10/apple-figs-sync.js apple-rtl/index.html
+   ===================================================================== */
 :root{
-  --topbar-h:54px;
-  --plane:#f9f9f7;
-  --surface:#fcfcfb;
-  --sunken:#f2f1ec;
-  --ink:#0b0b0b;
-  --ink-2:#52514e;
-  --muted:#898781;
-  --rule:#e1e0d9;
-  --axis:#c3c2b7;
-  --accent:#4a3aa7;
-  --accent-wash:rgba(74,58,167,.09);
-  --accent-line:rgba(74,58,167,.28);
-  --flag:#eb6834;
-  --flag-wash:rgba(235,104,52,.13);
-  --ctx:#898781;
-  --good:#006300;
-  --ring:rgba(11,11,11,.10);
-  --shadow:0 1px 2px rgba(11,11,11,.05);
+  --rv-bg:#fcfcfb;
+  --rv-ink:#1a1a19;
+  --rv-ink2:#4d4c48;
+  --rv-muted:#6f6d67;
+  --rv-rule:#e2e1db;
+  --rv-grid:#ebeae5;
+  --rv-shade:#f4f3ef;
+  --rv-team:#4a3aa7;
+  --rv-team-wash:rgba(74,58,167,.16);
+  --rv-flag:#eb6834;
+  --rv-flag-wash:rgba(235,104,52,.11);
+  --rv-ctx:#898781;
+  --rv-serif:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --rv-sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --rv-gutter:clamp(16px,4.2vw,56px);
+
+  --fr-bg:var(--rv-bg);
+  --fr-surface:var(--rv-shade);
+  --fr-ink:var(--rv-ink);
+  --fr-ink-2:var(--rv-ink2);
+  --fr-muted:var(--rv-muted);
+  --fr-rule:var(--rv-rule);
+  --fr-mark:var(--rv-team);
+  --fr-mark-ink:var(--rv-team);
+  --fr-sans:var(--rv-sans);
+  --fr-serif:var(--rv-serif);
+  --fr-max:1180px;
+  --fr-gutter:var(--rv-gutter);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --plane:#0d0d0d;
-    --surface:#1a1a19;
-    --sunken:#141413;
-    --ink:#ffffff;
-    --ink-2:#c3c2b7;
-    --muted:#898781;
-    --rule:#2c2c2a;
-    --axis:#383835;
-    --accent:#9085e9;
-    --accent-wash:rgba(144,133,233,.13);
-    --accent-line:rgba(144,133,233,.34);
-    --flag:#d95926;
-    --flag-wash:rgba(217,89,38,.18);
-    --ctx:#898781;
-    --good:#0ca30c;
-    --ring:rgba(255,255,255,.10);
-    --shadow:none;
+@media (prefers-color-scheme:dark){
+  :root{
+    --rv-bg:#1a1a19;
+    --rv-ink:#f1f0eb;
+    --rv-ink2:#c9c8c0;
+    --rv-muted:#a09e96;
+    --rv-rule:#363632;
+    --rv-grid:#2a2a28;
+    --rv-shade:#222220;
+    --rv-team:#9085e9;
+    --rv-team-wash:rgba(144,133,233,.2);
+    --rv-flag:#d95926;
+    --rv-flag-wash:rgba(217,89,38,.16);
+    --rv-ctx:#898781;
+    --fr-mark-ink:#b3abf2;
     color-scheme:dark;
   }
 }
-:root[data-theme="dark"]{
-  --plane:#0d0d0d;
-  --surface:#1a1a19;
-  --sunken:#141413;
-  --ink:#ffffff;
-  --ink-2:#c3c2b7;
-  --muted:#898781;
-  --rule:#2c2c2a;
-  --axis:#383835;
-  --accent:#9085e9;
-  --accent-wash:rgba(144,133,233,.13);
-  --accent-line:rgba(144,133,233,.34);
-  --flag:#d95926;
-  --flag-wash:rgba(217,89,38,.18);
-  --ctx:#898781;
-  --good:#0ca30c;
-  --ring:rgba(255,255,255,.10);
-  --shadow:none;
-  color-scheme:dark;
-}
 
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
-  margin:0;background:var(--plane);color:var(--ink);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:15px;line-height:1.62;
-  font-variant-numeric:tabular-nums;
-  transition:background-color .2s,color .2s;
+  margin:0;background:var(--rv-bg);color:var(--rv-ink);
+  font:400 1.0625rem/1.6 var(--rv-sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
 a{color:inherit}
-h1,h2,h3,h4{margin:0;line-height:1.22;letter-spacing:-.012em}
 p{margin:0 0 1em}
-p:last-child{margin-bottom:0}
+h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink)}
+.rv-lines li.is-note{font:400 1rem/1.55 var(--rv-sans);color:var(--rv-ink2)}
+.rv-wrap{width:min(1180px,100% - 2*var(--rv-gutter));margin-inline:auto}
 
-.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+/* ---------- frame touches ---------- */
+.fr-head .fr-title{font-family:var(--rv-serif);font-weight:500;font-size:.9375rem}
+.fr-pager b{font-family:var(--rv-serif);font-weight:400;letter-spacing:-.01em}
+.fr-pager a{border-top-width:1px}
+.fr-pager a:hover{border-top-color:var(--rv-team)}
+.fr-key{border-top:1px solid var(--rv-ink);border-bottom:1px solid var(--rv-rule);padding:16px 0 18px}
+.fr-key-title{font-weight:600}
 
-/* ---------- topbar (shared chrome pattern) ---------- */
-.topbar{position:sticky;top:0;z-index:100;height:var(--topbar-h);
-  background:color-mix(in srgb,var(--plane) 88%,transparent);
-  backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--rule)}
-.topbar-inner{height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;gap:14px}
-.topbar-left{display:flex;align-items:center;gap:11px;min-width:0}
-.topbar-right{display:flex;align-items:center;gap:9px}
-.mark{width:24px;height:24px;border-radius:5px;border:1px solid var(--accent-line);
-  background:var(--accent-wash);display:grid;place-items:center;flex:none}
-.mark i{display:block;width:9px;height:9px;border-radius:1px;
-  border-left:2px solid var(--accent);border-bottom:2px solid var(--accent)}
-.tb-name{font-size:13px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
-.tb-pill{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:3px 9px;white-space:nowrap}
-.tb-chip{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-wash);border-radius:999px;padding:3px 9px;white-space:nowrap}
-.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);
-  background:var(--surface);color:var(--ink-2);font-size:13px;cursor:pointer;line-height:1;
-  transition:transform .18s,border-color .18s}
-.theme-btn:hover{transform:translateY(-1px);border-color:var(--axis)}
-.tb-link{font-size:12px;font-weight:800;text-decoration:none;color:var(--accent);white-space:nowrap}
-.tb-link:hover{text-decoration:underline}
+/* ---------- cover ---------- */
+.rv-cover{padding:clamp(56px,9vw,120px) 0 clamp(40px,6vw,72px)}
+.rv-org{margin:0 0 18px;font-size:.9375rem;color:var(--rv-ink2)}
+.rv-cover h1{
+  font-size:clamp(3.4rem,10.5vw,8.5rem);line-height:.92;font-weight:300;
+  font-variation-settings:"opsz" 60;letter-spacing:-.035em;
+}
+.rv-cover h1::after{content:"";display:block;width:72px;height:3px;background:var(--rv-team);margin-top:clamp(26px,3.4vw,40px)}
+.rv-stand{
+  margin:clamp(22px,3vw,34px) 0 0;max-width:31em;
+  font:400 clamp(1.25rem,2.1vw,1.625rem)/1.42 var(--rv-serif);color:var(--rv-ink);
+}
+.rv-colophon{
+  margin:clamp(40px,5vw,64px) 0 0;padding-top:16px;border-top:1px solid var(--rv-rule);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 28px;
+}
+.rv-colophon div{min-width:0}
+.rv-colophon dt{font-size:.8125rem;color:var(--rv-muted);margin-bottom:3px}
+.rv-colophon dd{margin:0;font-size:.9375rem;line-height:1.4;font-weight:550}
+.rv-aff{margin:22px 0 0;font-size:.8125rem;color:var(--rv-muted);max-width:60em}
 
-/* ---------- shell grid + rail ---------- */
-.shellgrid{display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;padding-top:26px;padding-bottom:60px}
-.railnav{position:sticky;top:calc(var(--topbar-h) + 20px);display:flex;flex-direction:column;gap:1px;align-self:start}
-.rail-label{padding:0 11px 8px;font-size:9px;font-weight:900;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted)}
-.railnav a{display:flex;align-items:baseline;gap:9px;padding:7px 11px;border-left:2px solid transparent;
-  color:var(--ink-2);text-decoration:none;font-size:12.5px;font-weight:700;transition:color .18s,background .18s}
-.railnav a:hover{color:var(--ink);background:var(--surface)}
-.railnav a.is-current{color:var(--ink);border-left-color:var(--accent);background:var(--surface)}
-.railnav a .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9.5px;font-weight:600;color:var(--muted)}
-.railnav a.is-current .n{color:var(--accent)}
-.railnav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.rail-meta{margin-top:22px;padding:0 11px;display:grid;gap:13px;border-top:1px solid var(--rule);padding-top:16px}
-.rail-meta small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted)}
-.rail-meta b{display:block;font-size:11px;font-weight:700;color:var(--ink-2);line-height:1.4;margin-top:3px}
-.content{min-width:0}
+/* ---------- report grid: margin column + main column ---------- */
+.rv-sec{
+  display:grid;grid-template-columns:200px minmax(0,1fr);gap:0 56px;
+  padding:clamp(48px,6vw,80px) 0 0;
+}
+.rv-margin{grid-column:1;padding-top:6px}
+.rv-main{grid-column:2;min-width:0}
+.rv-num{
+  display:block;font:300 clamp(3rem,5vw,4.25rem)/.8 var(--rv-serif);
+  font-variation-settings:"opsz" 60;color:var(--rv-team);font-variant-numeric:lining-nums;
+}
+.rv-sec h2{
+  font-size:clamp(1.875rem,3.4vw,2.625rem);line-height:1.08;letter-spacing:-.018em;
+  padding-bottom:18px;margin-bottom:26px;border-bottom:1px solid var(--rv-ink);
+}
+.rv-main>p,.rv-prose p{max-width:38em}
+.rv-lede{font:400 clamp(1.1875rem,1.7vw,1.375rem)/1.5 var(--rv-serif);color:var(--rv-ink)}
+.rv-main h3{
+  font-size:1.4375rem;line-height:1.2;letter-spacing:-.01em;margin:44px 0 12px;
+}
+.rv-side{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:14px}
+.rv-side li{font-size:.875rem;line-height:1.4;color:var(--rv-ink2);padding-top:10px;border-top:1px solid var(--rv-rule)}
+.rv-side b{display:block;font:400 1.75rem/1.05 var(--rv-serif);color:var(--rv-ink);margin-bottom:3px;font-variant-numeric:lining-nums}
+.rv-side .fr-ev{margin-top:6px}
 
-/* ---------- document sections ---------- */
-.sec{margin-bottom:52px;scroll-margin-top:calc(var(--topbar-h) + 18px)}
-.sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:11px;margin-bottom:20px;border-bottom:2px solid var(--ink)}
-.sec-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--muted)}
-.sec-title{font-size:20px;font-weight:800}
-.sec-kicker{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.lede{font-size:16.5px;line-height:1.6;color:var(--ink-2);max-width:66ch}
-.body-copy{max-width:68ch}
-.body-copy h4{font-size:13.5px;font-weight:800;margin:22px 0 7px;letter-spacing:0}
+.rv-nw{white-space:nowrap}
+.rv-lines{margin:0 0 1.1em;padding:0;list-style:none;display:grid;gap:10px;max-width:38em}
+.rv-lines li{padding-left:18px;border-left:2px solid var(--rv-team);font:italic 400 1.0625rem/1.5 var(--rv-serif);color:var(--rv-ink)}
 
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
-.note{background:var(--sunken);border:1px solid var(--rule);border-left:3px solid var(--axis);
-  border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px;color:var(--ink-2)}
-.pull{border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:18px 0;
-  font-size:16px;line-height:1.55;color:var(--ink)}
-.pull cite{display:block;margin-top:7px;font-style:normal;font-size:11.5px;font-weight:700;
-  letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
-.nowrap{white-space:nowrap}
+/* ---------- glance table ---------- */
+.rv-table{width:100%;border-collapse:collapse;font-size:.9375rem;font-variant-numeric:tabular-nums}
+.rv-table caption{caption-side:bottom;text-align:left;padding-top:12px;font-size:.8125rem;color:var(--rv-muted);line-height:1.5}
+.rv-table th,.rv-table td{padding:12px 14px 12px 0;text-align:left;border-bottom:1px solid var(--rv-rule);vertical-align:baseline}
+.rv-table thead th{font-size:.8125rem;font-weight:600;color:var(--rv-muted);border-bottom:1px solid var(--rv-ink);padding-top:0}
+.rv-table td.num,.rv-table th.num{text-align:right;padding-right:0}
+.rv-table tbody th{font-weight:550}
+.rv-big{font:400 1.5rem/1 var(--rv-serif);font-variant-numeric:lining-nums tabular-nums;color:var(--rv-ink)}
+.rv-glance td.num:last-child{color:var(--rv-ink2)}
 
-/* ---------- hero: the review header block ---------- */
-.hero{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
-  padding:28px 30px 26px;box-shadow:var(--shadow);margin-bottom:34px}
-.hero-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.hero-stamp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
-  border:1px solid var(--accent-line);background:var(--accent-wash);border-radius:4px;padding:3px 8px}
-.hero-dates{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--muted)}
-.hero h1{font-size:clamp(27px,4.1vw,40px);font-weight:800;letter-spacing:-.028em;max-width:19ch}
-.hero-sub{margin-top:13px;font-size:16.5px;line-height:1.55;color:var(--ink-2);max-width:60ch}
-.hero-role{margin-top:20px;padding-top:17px;border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:16px}
-.hero-role div small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.hero-role div b{font-size:13px;font-weight:800;line-height:1.35;display:block}
-.disclaim{margin-top:19px;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
-  font-size:11.5px;line-height:1.5;color:var(--ink-2);background:var(--sunken)}
+/* ---------- figures ---------- */
+.rv-fig{margin:40px 0 0;padding-top:14px;border-top:1px solid var(--rv-rule)}
+.rv-fig-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;margin-bottom:14px}
+.rv-fig-title{margin:0;font:500 1.1875rem/1.25 var(--rv-serif)}
+.rv-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;list-style:none;font-size:.8125rem;color:var(--rv-ink2)}
+.rv-legend li{display:inline-flex;align-items:center;gap:7px}
+.rv-legend i{display:block;flex:none;width:10px;height:10px;border-radius:50%}
+.rv-legend .k-team{background:var(--rv-team)}
+.rv-legend .k-bar{background:var(--rv-team);border-radius:2px}
+.rv-legend .k-ctx{background:var(--rv-ctx)}
+.rv-legend .k-flag{background:var(--rv-flag)}
+.rv-legend .k-thr{width:18px;height:0;border-radius:0;border-top:1.5px dashed var(--rv-ink2)}
+.rv-legend .k-sq{border-radius:1.5px;width:12px;height:12px;background:var(--rv-shade);box-shadow:inset 0 0 0 1.5px var(--rv-ink2)}
+.rv-legend .k-dot{width:8px;height:8px;background:var(--rv-ink2)}
+.rv-legend .k-fc{width:18px;height:2px;border-radius:0;background:var(--rv-flag)}
+.rv-plot svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}
+.rv-cap{margin:14px 0 0;max-width:46em;font-size:.875rem;line-height:1.55;color:var(--rv-ink2)}
+.rv-cap b{color:var(--rv-ink);font-weight:600}
+.rv-cap .fr-ev{margin-left:4px}
 
-/* ---------- three-tier truth boundary ---------- */
-.tiers{display:grid;gap:9px}
-.tier{display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;align-items:start;
-  padding:14px 16px;border:1px solid var(--rule);border-radius:11px;background:var(--surface)}
-.tier-mark{width:15px;height:15px;border-radius:50%;margin-top:4px;flex:none;border:2px solid var(--accent)}
-.tier-1 .tier-mark{background:var(--accent)}
-.tier-2 .tier-mark{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
-.tier-3 .tier-mark{background:transparent;border-color:var(--muted);border-style:dotted}
-.tier b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
-.tier p{font-size:13px;color:var(--ink-2);margin:0}
-.tier-tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:8px;
-  vertical-align:2px;border:1px solid var(--rule);color:var(--muted)}
+/* small multiples */
+.rv-multiples{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 26px}
+.rv-panel{min-width:0}
+.rv-panel h4{margin:0 0 2px;font:600 .9375rem/1.3 var(--rv-sans)}
+.rv-panel p{margin:0 0 6px;font-size:.8125rem;color:var(--rv-muted)}
 
-/* ---------- evidence tag used inline in copy ---------- */
-.ev{display:inline-flex;align-items:center;gap:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  padding:1px 6px;border-radius:4px;border:1px solid var(--rule);color:var(--muted);
-  white-space:nowrap;vertical-align:1px}
-.ev::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--accent)}
-.ev-1::before{background:var(--accent)}
-.ev-2::before{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
-.ev-3::before{background:transparent;border-color:var(--muted);border-style:dotted}
+/* SVG marks */
+.rv-svg{font-family:var(--rv-sans)}
+.rv-grid{stroke:var(--rv-grid);stroke-width:1}
+.rv-base{stroke:var(--rv-ink2);stroke-width:1}
+.rv-track{stroke:var(--rv-rule);stroke-width:1}
+.rv-sep{stroke:var(--rv-rule);stroke-width:1}
+.rv-hatch{stroke:var(--rv-muted);stroke-width:1;opacity:.16}
+.rv-wash{fill:var(--rv-flag-wash)}
+.rv-thresh{stroke:var(--rv-ink2);stroke-width:1.5;stroke-dasharray:5 4}
+.rv-tick{fill:var(--rv-muted);font-size:12px;font-variant-numeric:tabular-nums}
+.rv-tick--x{fill:var(--rv-ink2);font-weight:500}
+.rv-lab{fill:var(--rv-ink2);font-size:12.5px;font-weight:500}
+.rv-lab--strong{fill:var(--rv-ink);font-weight:650}
+.rv-note{fill:var(--rv-muted);font-size:12px;font-style:italic}
+.rv-axis{fill:var(--rv-ink2);font-size:12.5px;font-weight:600}
+.rv-delta{fill:var(--rv-ink);font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums}
+.rv-val{fill:var(--rv-ink);font-size:13px;font-weight:650;font-variant-numeric:tabular-nums}
+.rv-dot{stroke:var(--rv-bg);stroke-width:2}
+.rv-dot--team{fill:var(--rv-team)}
+.rv-dot--flag{fill:var(--rv-flag)}
+.rv-dot--ctx{fill:var(--rv-ctx)}
+.rv-link{stroke:var(--rv-rule);stroke-width:2;stroke-linecap:round}
+.rv-sq--team{fill:var(--rv-team-wash);stroke:var(--rv-team);stroke-width:1.5}
+.rv-sq--ctx{fill:rgba(137,135,129,.18);stroke:var(--rv-ctx);stroke-width:1.5}
+.rv-bar{fill:var(--rv-team)}
+.rv-fc{stroke:var(--rv-flag);stroke-width:2.5;stroke-linecap:round}
+.rv-fc-ring{stroke:var(--rv-bg);stroke-width:6.5;stroke-linecap:round}
+.rv-leader{stroke:var(--rv-muted);stroke-width:1}
+.rv-target{fill:transparent}
+.rv-hit{cursor:default}
+.rv-hit:hover .rv-dot,.rv-hit.is-tip .rv-dot{stroke:var(--rv-ink);stroke-width:1.5}
+.rv-hit:hover .rv-bar,.rv-hit.is-tip .rv-bar{opacity:.86}
 
-/* ---------- the loop: three steps ---------- */
-.loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:26px}
-.step{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:15px 17px;position:relative}
-.step-n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
-.step b{display:block;font-size:14.5px;font-weight:800;margin:5px 0 6px}
-.step p{font-size:12.5px;color:var(--ink-2);margin:0}
-.step.is-on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-wash)}
+/* The one orchestrated moment: when the benchmark figure scrolls into
+   view, each team dot rises from the site value to its own. The resting
+   state is the true chart, so JS-off, reduced motion and full-page
+   captures always show the real values. */
+@keyframes rv-rise{from{transform:translateY(var(--rv-d))}to{transform:none}}
+@keyframes rv-fade{from{opacity:0}to{opacity:1}}
+.fr-motion .rv-bench.is-in .rv-team{animation:rv-rise .9s cubic-bezier(.2,.75,.2,1) both}
+.fr-motion .rv-bench.is-in .rv-link,.fr-motion .rv-bench.is-in .rv-delta{animation:rv-fade .5s ease-out .65s both}
+.fr-motion .rv-bench.is-in .rv-panel:nth-child(2) .rv-team{animation-delay:.12s}
+.fr-motion .rv-bench.is-in .rv-panel:nth-child(3) .rv-team{animation-delay:.24s}
+.fr-motion .rv-bench.is-in .rv-panel:nth-child(4) .rv-team{animation-delay:.36s}
 
-/* ---------- figures / charts ---------- */
-.fig{background:var(--surface);border:1px solid var(--rule);border-radius:12px;
-  padding:17px 19px 15px;box-shadow:var(--shadow);margin-bottom:18px}
-.fig-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:3px}
-.fig-title{font-size:14.5px;font-weight:800;letter-spacing:-.008em}
-.fig-sub{font-size:12.5px;color:var(--ink-2);margin:4px 0 13px;max-width:74ch}
-.fig-chip{margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;
-  font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;
-  border:1px solid var(--flag);color:var(--flag);background:var(--flag-wash);white-space:nowrap}
-.fig-plot{width:100%;overflow-x:auto}
-.fig-plot svg{display:block;max-width:100%;height:auto}
-.fig-foot{margin-top:11px;padding-top:10px;border-top:1px solid var(--rule);
-  font-size:11.5px;line-height:1.5;color:var(--muted)}
-.legend{display:flex;flex-wrap:wrap;gap:15px;margin:2px 0 12px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.legend i{display:block;width:11px;height:11px;border-radius:50%;flex:none}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+/* data tables behind each figure */
+.rv-data{margin-top:14px}
+.rv-data summary{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;
+  font-size:.875rem;font-weight:600;color:var(--rv-ink);
+}
+.rv-data summary span{text-decoration:underline;text-decoration-color:var(--rv-team);text-decoration-thickness:1.5px;text-underline-offset:4px}
+.rv-data summary::-webkit-details-marker{display:none}
+.rv-data summary::before{content:"+";font-weight:400;width:1ch}
+.rv-data[open] summary::before{content:"\2212"}
+.rv-data summary:focus-visible{outline:2px solid var(--rv-team);outline-offset:4px;border-radius:2px}
+.rv-scroll{overflow-x:auto;margin-top:12px}
+.rv-scroll .rv-table{min-width:520px;font-size:.875rem}
 
-/* ---------- KPI / stat tiles ---------- */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:18px}
-.tile{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:14px 16px}
-.tile small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.tile b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
-.tile em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:5px;line-height:1.4}
-.tile-accent b{color:var(--accent)}
+/* pull quote */
+.rv-quote{margin:30px 0;padding:0 0 0 22px;border-left:3px solid var(--rv-team);max-width:36em}
+.rv-quote p{margin:0;font:italic 400 clamp(1.1875rem,1.9vw,1.4375rem)/1.45 var(--rv-serif)}
+.rv-quote footer{margin-top:12px;font-size:.8125rem;color:var(--rv-muted)}
 
-/* ---------- tables ---------- */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:420px}
-th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
-th{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-  background:var(--sunken)}
-td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0}
-.tbl-note{font-size:11.5px;color:var(--muted);margin-top:8px}
-details{margin-top:11px}
-summary{font-size:11.5px;font-weight:800;color:var(--accent);cursor:pointer;
-  padding:5px 0;list-style:none;display:inline-flex;align-items:center;gap:6px}
-summary::-webkit-details-marker{display:none}
-summary::before{content:"+";font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
-details[open] summary::before{content:"\2212"}
-summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* roles timeline */
+.rv-roles{margin:0;padding:0;list-style:none}
+.rv-role{display:grid;grid-template-columns:230px minmax(0,1fr);gap:6px 20px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rv-grid)}
+.rv-role-name{font-size:.9375rem;font-weight:550;line-height:1.25}
+.rv-role-name small{display:block;font-size:.8125rem;font-weight:400;color:var(--rv-muted);margin-top:2px}
+.rv-track-row{position:relative;height:12px}
+.rv-span{position:absolute;top:0;height:12px;border-radius:2px;background:var(--rv-ctx);left:calc(var(--a) / 54 * 100%);width:calc((var(--b) - var(--a)) / 54 * 100%)}
+.rv-role--lead .rv-span{background:var(--rv-ink2)}
+.rv-role--rtl .rv-span{background:var(--rv-team)}
+.rv-years{display:grid;grid-template-columns:230px minmax(0,1fr);gap:0 20px;margin-top:14px}
+.rv-years-in{position:relative;height:18px}
+.rv-years-in span{position:absolute;top:0;transform:translateX(-50%);font-size:.75rem;color:var(--rv-muted);font-variant-numeric:tabular-nums}
 
-/* ---------- chart tooltip ---------- */
-.tip{position:fixed;z-index:400;pointer-events:none;opacity:0;transform:translateY(3px);
-  transition:opacity .12s,transform .12s;background:var(--ink);color:var(--plane);
-  border-radius:8px;padding:8px 11px;font-size:11.5px;line-height:1.45;font-weight:700;
-  max-width:240px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
-.tip.on{opacity:1;transform:translateY(0)}
-.tip u{display:block;text-decoration:none;font-weight:800;font-size:10px;letter-spacing:.08em;
-  text-transform:uppercase;opacity:.72;margin-bottom:3px}
+/* in-store moments */
+.rv-moments{margin:36px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+.rv-moments li{padding-top:12px;border-top:1px solid var(--rv-rule)}
+.rv-moments h3{margin:0 0 8px;font-size:1.1875rem}
+.rv-moments p{margin:0;font-size:.96875rem;color:var(--rv-ink2)}
 
-/* ---------- list of findings ---------- */
-.findings{list-style:none;margin:0;padding:0;display:grid;gap:11px}
-.findings li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;
-  padding:13px 15px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
-.findings b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
-.findings p{font-size:12.5px;color:var(--ink-2);margin:0}
-.findings .k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  color:var(--accent);padding-top:3px}
+/* notes to the review */
+.rv-notes{margin:0;padding:0;list-style:none;counter-reset:note;display:grid;gap:18px;max-width:44em}
+.rv-notes li{counter-increment:note;display:grid;grid-template-columns:2.2em minmax(0,1fr);font-size:.9375rem;color:var(--rv-ink2)}
+.rv-notes li::before{content:counter(note);font:400 1.125rem/1.35 var(--rv-serif);color:var(--rv-team);font-variant-numeric:lining-nums}
+.rv-notes b{color:var(--rv-ink);font-weight:600}
+.rv-end{padding-bottom:clamp(64px,8vw,104px)}
 
-/* ---------- footer ---------- */
-.foot{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
-  padding:26px 28px;box-shadow:var(--shadow);scroll-margin-top:calc(var(--topbar-h) + 18px)}
-.foot h3{font-size:19px;font-weight:800;margin-bottom:9px}
-.foot p{font-size:14px;color:var(--ink-2);max-width:60ch}
-.cta{display:inline-flex;align-items:center;gap:8px;margin-top:15px;padding:10px 17px;
-  background:var(--accent);color:#fff;border-radius:9px;text-decoration:none;font-size:13.5px;font-weight:800;
-  transition:transform .18s,opacity .18s}
-.cta:hover{transform:translateY(-1px);opacity:.93}
-.foot-legal{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule);
-  font-size:11px;line-height:1.6;color:var(--muted);max-width:78ch}
+/* tooltip */
+.rv-tip{
+  position:fixed;z-index:60;left:0;top:0;pointer-events:none;max-width:250px;
+  padding:8px 11px;border-radius:6px;background:var(--rv-ink);color:var(--rv-bg);
+  font:500 .8125rem/1.4 var(--rv-sans);opacity:0;transition:opacity .12s;
+}
+.rv-tip.on{opacity:1}
+.rv-tip b{display:block;font-weight:650;margin-bottom:2px}
 
 /* ---------- responsive ---------- */
-@media(max-width:1000px){
-  .shellgrid{grid-template-columns:minmax(0,1fr);gap:12px;padding-top:12px}
-  .railnav{position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;
-    gap:3px;min-width:0;padding:9px 0;background:var(--plane);border-bottom:1px solid var(--rule)}
-  .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;padding:6px 10px}
-  .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
-  .rail-label,.rail-meta{display:none}
-  .loop{grid-template-columns:minmax(0,1fr)}
-  .grid2{grid-template-columns:minmax(0,1fr)}
+@media (max-width:1100px){
+  .rv-sec{grid-template-columns:150px minmax(0,1fr);gap:0 36px}
+  .rv-multiples{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:620px){
-  body{font-size:14.5px}
-  .wrap{padding:0 15px}
-  .hero{padding:21px 18px}
-  .fig{padding:14px 14px 12px}
-  .sec{margin-bottom:40px}
-  .tb-pill,.tb-chip{display:none}
+@media (max-width:860px){
+  .rv-sec{grid-template-columns:minmax(0,1fr)}
+  .rv-margin{display:contents}
+  .rv-num,.rv-main,.rv-side{grid-column:1}
+  .rv-num{order:0;font-size:2.75rem;margin-bottom:14px}
+  .rv-main{order:1}
+  .rv-side{order:2;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 22px;margin:30px 0 0}
+  .rv-colophon{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rv-role,.rv-years{grid-template-columns:160px minmax(0,1fr)}
 }
-@media (prefers-reduced-motion: reduce){
-  *{transition:none!important;animation:none!important}
-  .cta:hover,.theme-btn:hover{transform:none}
+@media (max-width:600px){
+  body{font-size:1rem}
+  .rv-multiples{grid-template-columns:minmax(0,1fr)}
+  .rv-moments{grid-template-columns:minmax(0,1fr)}
+  .rv-role{grid-template-columns:minmax(0,1fr)}
+  .rv-years{grid-template-columns:minmax(0,1fr)}
+  .rv-years>span{display:none}
+  .rv-glance thead th:nth-child(2),.rv-glance tbody td:nth-child(2){display:none}
+  .rv-big{font-size:1.25rem}
+  .rv-table th,.rv-table td{padding-right:10px}
+}
+@media print{
+  .rv-data{display:none}
 }
 </style>
 </head>
 <body>
+<a class="fr-skip" href="#main">Skip to content</a>
+<header class="fr-head" data-frame-case="1" data-frame-static><div class="fr-head-in"><a class="fr-name" href="../" aria-label="Jacob Zamarripa, home"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M12.5 6.5v12.2a4.6 4.6 0 0 1-9.2 0" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><path d="M16.6 6.5h11L16.6 22.6h11" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><rect x="3" y="26.4" width="26" height="2.6" fill="var(--fr-mark)"/></svg><span>Jacob Zamarripa</span></a><div class="fr-where"><span class="fr-pos">Case 1 of 4</span><span class="fr-title">Apple: Period Review</span></div></div></header>
 
-<div class="topbar"><div class="wrap topbar-inner">
-  <div class="topbar-left">
-    <span class="mark"><i></i></span>
-    <a class="tb-name" href="../" style="color:inherit;text-decoration:none">Portfolio / Period Review</a>
-    <span class="tb-pill">Retail at Home &middot; FY21</span>
-  </div>
-  <div class="topbar-right">
-    <span class="tb-chip">Employer-reported results</span>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button>
-    <a class="tb-link" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn &rarr;</a>
-  </div>
-</div></div>
+<main id="main">
 
-<div class="wrap shellgrid">
-  <aside class="railnav" id="railnav" aria-label="Section navigation">
-    <div class="rail-label">Case study</div>
-    <a href="#intro"><span class="n">01</span>Summary</a>
-    <a href="#evidence"><span class="n">02</span>How to read</a>
-    <a href="#loop"><span class="n">03</span>Find it, fix it</a>
-    <a href="#system"><span class="n">04</span>Operating routine</a>
-    <a href="#winddown"><span class="n">05</span>Scale &amp; close</a>
-    <a href="#store"><span class="n">06</span>Career progression</a>
-    <a href="#case"><span class="n">07</span>In my words</a>
-    <a href="#limits"><span class="n">08</span>Limits</a>
-    <a href="#contact"><span class="n">09</span>Contact</a>
-    <div class="rail-meta">
-      <div><small>Operating role</small><b>Retail Team Lead<br>(formal title: Lead Genius)</b></div>
-      <div><small>Period</small><b>Aug 2020 &ndash; Mar 2021<br>Rollups: FY21 P02&ndash;P05</b></div>
-      <div><small>Span</small><b>29-advisor roster<br>7 stores &middot; 2 time zones</b></div>
-      <div><small>Built</small><b>2026 &middot; retrospective</b></div>
+<div class="rv-wrap">
+  <header class="rv-cover">
+    <p class="rv-org">Apple, Retail at Home</p>
+    <h1>Period Review</h1>
+    <p class="rv-stand">In 2020 I was handed a team of support advisors working from their homes, most of them from the sales floor. This is my review of that team: what was holding it back, what I taught, and what my employer’s numbers showed afterward.</p>
+    <dl class="rv-colophon">
+      <div><dt>Formal title</dt><dd>Lead Genius</dd></div>
+      <div><dt>Assignment</dt><dd>Retail Team Lead, temporary</dd></div>
+      <div><dt>Period</dt><dd>August 2020 to March 2021</dd></div>
+      <div><dt>Team</dt><dd>Up to 29 advisors in seven stores</dd></div>
+    </dl>
+    <p class="rv-aff">Apple is named as my employer at the time. This is my own retrospective, and Apple has not reviewed or endorsed it.</p>
+  </header>
+
+  <div class="fr-key" data-frame-key data-frame-static><p class="fr-key-title">How each claim is sourced</p><dl><div><dt><span class="fr-ev" data-ev="measured">Measured</span></dt><dd>Produced by an employer’s system or the live platform, not by me.</dd></div><div><dt><span class="fr-ev" data-ev="recorded">Recorded</span></dt><dd>My own artifacts, written at the time: plans, trackers, curriculum.</dd></div><div><dt><span class="fr-ev" data-ev="recalled">Recalled</span></dt><dd>My account, told now.</dd></div><div><dt><span class="fr-ev" data-ev="illustrative">Illustrative</span></dt><dd>Invented demo data or a recreation, shown to explain how something works.</dd></div></dl></div>
+
+  <!-- ============ At a glance ============ -->
+  <section class="rv-sec" aria-labelledby="glance-h">
+    <div class="rv-margin"></div>
+    <div class="rv-main">
+      <h2 id="glance-h">The period at a glance</h2>
+      <table class="rv-table rv-glance">
+        <caption>Period rollups for the four full periods I led the team, November 2020 to February 2021, from my employer’s performance trackers. The averages are mine, rounded to one decimal. <span class="fr-ev" data-ev="measured">Measured</span></caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col">Better when</th><th scope="col" class="num">Team against site, average</th><th scope="col" class="num">Periods ahead</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Customer-facing time</th><td>Higher</td><td class="num"><span class="rv-big">+11.1</span> points</td><td class="num">4 of 4</td></tr>
+          <tr><th scope="row">Issue resolution</th><td>Higher</td><td class="num"><span class="rv-big">+7.4</span> points</td><td class="num">4 of 4</td></tr>
+          <tr><th scope="row">Customer satisfaction</th><td>Higher</td><td class="num"><span class="rv-big">+4.2</span> points</td><td class="num">4 of 4</td></tr>
+          <tr><th scope="row">Handle time</th><td>Lower</td><td class="num"><span class="rv-big">2.3</span> min faster</td><td class="num">4 of 4</td></tr>
+        </tbody>
+      </table>
     </div>
-  </aside>
-
-  <main class="content">
-
-  <!-- ============ 01 HERO ============ -->
-  <section class="sec" id="intro">
-    <div class="hero">
-      <div class="hero-bar">
-        <span class="hero-stamp">Period review</span>
-        <span class="hero-dates">Assignment: Aug 2020 &ndash; Mar 2021</span>
-      </div>
-      <h1>Someone else kept the score.</h1>
-      <p class="hero-sub">As a Lead Genius, I took a temporary Retail Team Lead assignment from August 2020 to March 2021, running a distributed at-home technical support team.
-      The benchmark results came from my employer’s reporting.
-      The record shows how I connected coaching, enablement and performance management across seven stores.</p>
-
-      <div class="hero-role">
-        <div><small>Operating role</small><b>Retail Team Lead</b></div>
-        <div><small>Formal title</small><b>Lead Genius</b></div>
-        <div><small>Span</small><b>29-advisor distributed roster</b></div>
-        <div><small>Footprint</small><b>7 stores &middot; 2 time zones</b></div>
-        <div><small>Measured on</small><b>4 KPIs &times; 4 periods</b></div>
-      </div>
-
-      <p class="disclaim"><b>Not affiliated with Apple.</b> This is a personal retrospective written by a
-      former employee. It is not affiliated with, endorsed by, sponsored by, or representative of Apple Inc.
-      No Apple logos, product imagery or internal training material appears here. The company name identifies where the work happened.
-      No individual performance records are reproduced.</p>
-    </div>
-
-    <p class="lede">I used performance analysis to identify a coaching need, built and delivered training, and tracked the team against the site benchmark. This retrospective connects the observed results to the work I led while keeping the limits of that evidence visible.</p>
   </section>
 
-  <!-- ============ 02 TRUTH BOUNDARY ============ -->
-  <section class="sec" id="evidence">
-    <div class="sec-head">
-      <span class="sec-num">02</span><h2 class="sec-title">How to read this</h2>
-      <span class="sec-kicker">Read this before any number</span>
+  <!-- ============ 1 The team ============ -->
+  <section class="rv-sec" id="team" aria-labelledby="team-h">
+    <div class="rv-margin">
+      <span class="rv-num" aria-hidden="true">1</span>
+      <ul class="rv-side">
+        <li><b>29</b>advisors on my roster at its largest</li>
+        <li><b>7</b>stores, in two time zones</li>
+        <li><b>14</b>store leaders and experience managers to keep informed</li>
+        <li><b>34</b>onboarding steps across about fifteen systems, which I ran but didn’t write <span class="fr-ev" data-ev="recorded">Recorded</span></li>
+      </ul>
     </div>
-    <p class="lede" style="margin-bottom:18px">The page separates employer-reported results from my own artifacts and confirmed account. These labels describe the source of a claim:</p>
-
-    <div class="tiers">
-      <div class="tier tier-1">
-        <span class="tier-mark" aria-hidden="true"></span>
-        <div><b>Apple&rsquo;s own reporting<span class="tier-tag">Measured</span></b>
-        <p>Employer-produced. These figures sit in my former employer's own performance trackers and
-        performance files, where the team row and the site benchmark row were computed side by side by them,
-        not by me. The period results are transcribed from those files; the average deltas are calculated and rounded to one decimal place.</p></div>
-      </div>
-      <div class="tier tier-2">
-        <span class="tier-mark" aria-hidden="true"></span>
-        <div><b>My artifacts, kept at the time<span class="tier-tag">Recorded</span></b>
-        <p>Business plans, the curriculum I wrote, the roster tracker, notes kept while the work was
-        actually happening. Real, and mine, but self-produced &mdash; so I say so.
-        Where a Recorded figure is independently corroborated by a Measured one, I say so.</p></div>
-      </div>
-
+    <div class="rv-main">
+      <h2 id="team-h">The team</h2>
+      <p class="rv-lede">When stores closed in March 2020, I was sent home like everyone else. By April and May I was taking technical support calls from home, alongside other Geniuses and Lead Geniuses. When the at-home program opened up, I was given a team of my <span class="rv-nw">own. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      <p>Most of my advisors came from the sales floor. Nearly two-thirds had never supported the products at this technical <span class="rv-nw">level. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span> They knew customers and they knew the stores. What they needed was a way to diagnose a problem over the phone and finish the call with it solved.</p>
+      <p>They were spread across seven stores and two time zones, and every store still had a leader and an experience manager who wanted to know how their people were doing. I kept reporting to my own store managers the whole time, while remote managers watched and coached the team too. For eight months I answered to <span class="rv-nw">both. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
     </div>
-
-    <div class="note" style="margin-top:16px"><b>One deliberate exception.</b> The diagnosis chart in
-    section 03 plots individual advisors. Those dots are invented. The threshold lines, the size of the
-    problem group, and the finding itself are real and quoted; the dot positions are illustrative, because
-    publishing real per-person performance data would be indefensible. It is the only invented data on
-    this page and it is labelled again where it appears.</div>
   </section>
 
-  <!-- ============ 03 THE LOOP ============ -->
-  <section class="sec" id="loop">
-    <div class="sec-head">
-      <span class="sec-num">03</span><h2 class="sec-title">Find it, fix it, prove it</h2>
-      <span class="sec-kicker">Diagnose &rarr; build &rarr; measure</span>
-    </div>
-    <p class="lede" style="margin-bottom:22px">Most management stories give you the result and ask you to
-    infer the method. This one has all three parts on file, in order, with dates.</p>
+  <!-- ============ 2 The diagnosis ============ -->
+  <section class="rv-sec" id="diagnosis" aria-labelledby="diag-h">
+    <div class="rv-margin"><span class="rv-num" aria-hidden="true">2</span></div>
+    <div class="rv-main">
+      <h2 id="diag-h">What was holding the team back</h2>
+      <p class="rv-lede">Satisfaction was the number everyone watched, and on my team a handful of advisors were pulling it down. When I lined satisfaction up against issue resolution, the pattern was plain. Every advisor below 80% satisfaction was also below 72% issue resolution. There were five of <span class="rv-nw">them. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+      <p>That changed the coaching conversation. Telling someone to be friendlier on the phone doesn’t help much. Teaching them to finish the job on the call does, and it can be practiced.</p>
 
-    <div class="loop">
-      <div class="step is-on"><span class="step-n">Step 01 &middot; Diagnose</span>
-        <b>Find the driver</b>
-        <p>Customer satisfaction was the metric under pressure. It was not the problem. Every advisor
-        below 80% satisfaction was also below 72% issue resolution.</p></div>
-      <div class="step"><span class="step-n">Step 02 &middot; Build</span>
-        <b>Write the intervention</b>
-        <p>An original call-handling curriculum aimed at the specific behaviours that move both numbers,
-        taken through six revisions and delivered by me.</p></div>
-      <div class="step"><span class="step-n">Step 03 &middot; Measure</span>
-        <b>Let someone else score it</b>
-        <p>Four consecutive full periods, four tracked KPIs, team row against site benchmark row &mdash;
-        in their reporting, not mine.</p></div>
-    </div>
-
-    <!-- ---- CHART 1 : DIAGNOSIS ---- -->
-    <div class="fig">
-      <div class="fig-head">
-        <div>
-          <div class="fig-title">Step 01 &mdash; what the numbers actually said</div>
+      <figure class="rv-fig" id="fig-1">
+        <div class="rv-fig-head">
+          <h3 class="rv-fig-title">Figure 1. Satisfaction against issue resolution</h3>
+          <ul class="rv-legend">
+            <li><i class="k-flag"></i>Below both</li>
+            <li><i class="k-ctx"></i>Everyone else</li>
+            <li><i class="k-thr"></i>Threshold</li>
+          </ul>
         </div>
-        <span class="fig-chip">Dots illustrative &middot; not real advisors</span>
-      </div>
-      <p class="fig-sub">Satisfaction plotted against issue resolution. The finding was that the two moved
-      together: everyone in the low-satisfaction group was also failing to resolve issues on the call.
-      That reframes the problem from &ldquo;be warmer with customers&rdquo; to &ldquo;actually finish the
-      job,&rdquo; which is a coachable, teachable behaviour.</p>
-      <div class="legend">
-        <span><i style="background:var(--flag)"></i>Below both thresholds &mdash; the group I found</span>
-        <span><i style="background:var(--ctx)"></i>Everyone else</span>
-        <span><i style="width:16px;height:0;border-top:2px dashed var(--accent);border-radius:0"></i>Threshold</span>
-      </div>
-      <div class="fig-plot" id="fig1"></div>
-      <p class="fig-foot"><b>Real:</b> both threshold lines, the size of the flagged group, and the finding,
-      quoted from my own period business plan &mdash; <em>&ldquo;All low CSAT Advisors have sub-72% Issue
-      Resolution.&rdquo;</em> <b>Invented:</b> every dot position, and the spread of the rest of the team.
-      Per-advisor performance data is not mine to publish, so this figure shows the shape of the finding
-      rather than the people in it. <span class="ev ev-2">Recorded &middot; my business plan</span></p>
-      <details><summary>What was real, in numbers</summary>
-        <div class="tbl-wrap" style="margin-top:9px"><table>
-          <thead><tr><th>Quantity</th><th class="num">Value</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>Satisfaction threshold</td><td class="num">80%</td><td>Real &mdash; quoted</td></tr>
-            <tr><td>Issue-resolution threshold</td><td class="num">72%</td><td>Real &mdash; quoted</td></tr>
-            <tr><td>Advisors below both</td><td class="num">5</td><td>Real &mdash; quoted</td></tr>
-            <tr><td>Individual dot positions</td><td class="num">&mdash;</td><td>Invented for this figure</td></tr>
-            <tr><td>Total dots plotted</td><td class="num">12</td><td>Illustrative only &mdash; not an actual team size</td></tr>
-          </tbody>
-        </table></div>
-      </details>
+        <div class="rv-plot" data-fig="diagnosis" data-fig-static><svg class="rv-svg rv-svg--scatter" viewBox="0 0 900 430" width="900" height="430" role="img" aria-label="Scatter plot of customer satisfaction against issue resolution. Twelve illustrative points. Five sit below both the 80 percent satisfaction and the 72 percent issue resolution thresholds."><defs><pattern id="rv-ill" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" class="rv-hatch"/></pattern></defs><rect x="48" y="34" width="834" height="350" fill="url(#rv-ill)"/><rect x="48" y="218.2" width="354.4" height="165.8" class="rv-wash"/><line x1="152.3" y1="34" x2="152.3" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="152.3" y="402">60%</text><line x1="256.5" y1="34" x2="256.5" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="256.5" y="402">65%</text><line x1="360.8" y1="34" x2="360.8" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="360.8" y="402">70%</text><line x1="465" y1="34" x2="465" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="465" y="402">75%</text><line x1="569.3" y1="34" x2="569.3" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="569.3" y="402">80%</text><line x1="673.5" y1="34" x2="673.5" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="673.5" y="402">85%</text><line x1="777.8" y1="34" x2="777.8" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="777.8" y="402">90%</text><line x1="882" y1="34" x2="882" y2="384" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="882" y="402">95%</text><line x1="48" y1="356.4" x2="882" y2="356.4" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="360.4">65%</text><line x1="48" y1="310.3" x2="882" y2="310.3" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="314.3">70%</text><line x1="48" y1="264.3" x2="882" y2="264.3" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="268.3">75%</text><line x1="48" y1="218.2" x2="882" y2="218.2" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="222.2">80%</text><line x1="48" y1="172.2" x2="882" y2="172.2" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="176.2">85%</text><line x1="48" y1="126.1" x2="882" y2="126.1" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="130.1">90%</text><line x1="48" y1="80.1" x2="882" y2="80.1" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="84.1">95%</text><line x1="48" y1="34" x2="882" y2="34" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="40" y="38">100%</text><line x1="402.4" y1="26" x2="402.4" y2="384" class="rv-thresh"/><line x1="48" y1="218.2" x2="882" y2="218.2" class="rv-thresh"/><text class="rv-lab" x="409.4" y="48">72% issue resolution</text><text class="rv-lab" text-anchor="end" x="878" y="236.2">80% satisfaction</text><text class="rv-lab rv-lab--strong" x="58" y="372">The five below both</text><text class="rv-note" text-anchor="end" x="874" y="372">Dot positions are invented</text><g class="rv-hit" data-tip-title="Below both thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="173.1" cy="301.1" r="13" class="rv-target"/><circle cx="173.1" cy="301.1" r="6" class="rv-dot rv-dot--flag"/></g><g class="rv-hit" data-tip-title="Below both thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="256.5" cy="273.5" r="13" class="rv-target"/><circle cx="256.5" cy="273.5" r="6" class="rv-dot rv-dot--flag"/></g><g class="rv-hit" data-tip-title="Below both thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="319.1" cy="245.8" r="13" class="rv-target"/><circle cx="319.1" cy="245.8" r="6" class="rv-dot rv-dot--flag"/></g><g class="rv-hit" data-tip-title="Below both thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="360.8" cy="282.7" r="13" class="rv-target"/><circle cx="360.8" cy="282.7" r="6" class="rv-dot rv-dot--flag"/></g><g class="rv-hit" data-tip-title="Below both thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="381.6" cy="236.6" r="13" class="rv-target"/><circle cx="381.6" cy="236.6" r="6" class="rv-dot rv-dot--flag"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="444.1" cy="181.4" r="13" class="rv-target"/><circle cx="444.1" cy="181.4" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="485.9" cy="199.8" r="13" class="rv-target"/><circle cx="485.9" cy="199.8" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="506.7" cy="144.5" r="13" class="rv-target"/><circle cx="506.7" cy="144.5" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="548.4" cy="162.9" r="13" class="rv-target"/><circle cx="548.4" cy="162.9" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="631.8" cy="116.9" r="13" class="rv-target"/><circle cx="631.8" cy="116.9" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="694.4" cy="135.3" r="13" class="rv-target"/><circle cx="694.4" cy="135.3" r="6" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Above the thresholds" data-tip="Illustrative point, not a real advisor."><circle cx="756.9" cy="98.5" r="13" class="rv-target"/><circle cx="756.9" cy="98.5" r="6" class="rv-dot rv-dot--ctx"/></g><text class="rv-axis" text-anchor="end" x="882" y="424">Issue resolution</text><text class="rv-axis" x="0" y="14">Customer satisfaction</text></svg></div>
+        <figcaption class="rv-cap"><b>The thresholds, the group of five and the finding are real</b>, from my period business plan: “All low CSAT Advisors have sub-72% Issue Resolution.” Every dot position is invented, because individual results aren’t mine to publish. <span class="fr-ev" data-ev="illustrative">Illustrative</span></figcaption>
+        <details class="rv-data">
+          <summary><span>What is real in this figure</span></summary>
+          <div class="rv-scroll"><table class="rv-table">
+            <thead><tr><th scope="col">Quantity</th><th scope="col" class="num">Value</th><th scope="col">Source</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Satisfaction threshold</th><td class="num">80%</td><td>My business plan</td></tr>
+              <tr><th scope="row">Issue resolution threshold</th><td class="num">72%</td><td>My business plan</td></tr>
+              <tr><th scope="row">Advisors below both</th><td class="num">5</td><td>My business plan</td></tr>
+              <tr><th scope="row">Dot positions and the other seven dots</th><td class="num">None</td><td>Invented for this figure</td></tr>
+            </tbody>
+          </table></div>
+        </details>
+      </figure>
     </div>
-
-    <!-- ---- CHART 2 : BENCHMARK ---- -->
-    <div class="fig">
-      <div class="fig-head">
-        <div><div class="fig-title">Step 03 &mdash; team against the site benchmark, four periods</div></div>
-        <span class="fig-chip" style="border-color:var(--accent);color:var(--accent);background:var(--accent-wash)">Measured &middot; employer reporting</span>
-      </div>
-      <p class="fig-sub">Four panels, one per tracked KPI. Each pair is one fiscal period: the site
-      benchmark and my team's result, computed side by side in the employer's own tracker. Four metrics,
-      four periods, sixteen comparisons &mdash; the team is on the better side of every one of them.</p>
-      <div class="legend">
-        <span><i style="background:var(--accent)"></i>My team</span>
-        <span><i style="background:var(--ctx)"></i>Site benchmark</span>
-      </div>
-      <div class="fig-plot" id="fig2"></div>
-      <p class="fig-foot">Source: the <span class="mono">Metric Data</span> sheet in each period's
-      performance tracker, comparing the team summary row with the site summary row. Handle time is
-      inverted &mdash; lower is better &mdash; and is plotted on its own scale in minutes, never mixed
-      onto the percentage axes. <span class="ev ev-1">Measured &middot; by Apple</span></p>
-      <details><summary>The full table, all sixteen comparisons</summary>
-        <div class="tbl-wrap" style="margin-top:9px"><table>
-          <thead><tr><th>Period</th><th class="num">Issue res.</th><th class="num">Satisfaction</th>
-            <th class="num">Customer-facing time</th><th class="num">Handle time (min)</th></tr></thead>
-          <tbody>
-            <tr><td>P02 &middot; Nov 2020</td><td class="num">72.14 vs 67.69</td><td class="num">83.64 vs 82.26</td><td class="num">87.06 vs 73.27</td><td class="num">15.09 vs 20.29</td></tr>
-            <tr><td>P03 &middot; Dec 2020</td><td class="num">79.31 vs 67.54</td><td class="num">88.95 vs 82.72</td><td class="num">85.49 vs 74.28</td><td class="num">18.07 vs 20.42</td></tr>
-            <tr><td>P04 &middot; Jan 2021</td><td class="num">74.49 vs 66.70</td><td class="num">87.85 vs 81.49</td><td class="num">86.31 vs 74.76</td><td class="num">19.54 vs 20.24</td></tr>
-            <tr><td>P05 &middot; Feb 2021</td><td class="num">73.49 vs 67.79</td><td class="num">85.41 vs 82.58</td><td class="num">81.34 vs 73.45</td><td class="num">19.01 vs 19.90</td></tr>
-            <tr><td><b>Average delta (calculated)</b></td><td class="num"><b>+7.4 pts</b></td><td class="num"><b>+4.2 pts</b></td><td class="num"><b>+11.1 pts</b></td><td class="num"><b>2.3 min faster</b></td></tr>
-          </tbody>
-        </table></div>
-        <p class="tbl-note">Team result first, site benchmark second. Period rollups only &mdash; I do not
-        quote single weeks in either direction, and weekly results did not always beat the site benchmark.</p>
-      </details>
-    </div>
-
   </section>
 
-  <!-- ============ 04 THE SYSTEM ============ -->
-  <section class="sec" id="system">
-    <div class="sec-head">
-      <span class="sec-num">04</span><h2 class="sec-title">The operating routine</h2>
-      <span class="sec-kicker">Recorded &middot; my own artifacts</span>
+  <!-- ============ 3 What I taught ============ -->
+  <section class="rv-sec" id="taught" aria-labelledby="taught-h">
+    <div class="rv-margin">
+      <span class="rv-num" aria-hidden="true">3</span>
+      <ul class="rv-side">
+        <li><b>6</b>versions of the call-handling course</li>
+        <li><b>24</b>fields tracked for every advisor</li>
+      </ul>
     </div>
-    <p class="lede" style="margin-bottom:20px">The results came out of an operating routine, not out of
-    effort. The centre of it was a roster tracker that people would call a spreadsheet and that was
-    functionally a small programme-management system.</p>
+    <div class="rv-main rv-prose">
+      <h2 id="taught-h">What I taught</h2>
+      <p class="rv-lede">The fix had to work for people who had been selling products a few months earlier. I wrote it down, taught it, checked it advisor by advisor, and handed parts of it to the team.</p>
 
-    <div class="tiles">
-      <div class="tile"><small>Tracked per advisor</small><b>24</b>
-        <em>fields, spanning provisioning state, enablement sessions with dates, meeting cadence and
-        performance</em></div>
-      <div class="tile"><small>Onboarding</small><b>34</b>
-        <em>steps across roughly fifteen enterprise systems &mdash; a checklist I executed and tracked,
-        not one I wrote</em></div>
-      <div class="tile"><small>External stakeholders</small><b>14</b>
-        <em>a store leader and an experience manager at each of the seven sites</em></div>
-      <div class="tile"><small>Distributed footprint</small><b>7 stores</b>
-        <em>across two time zones; the team was never one store's staff</em></div>
+      <h3>A course, six drafts deep</h3>
+      <p>I wrote a call-handling course aimed at the behaviors behind both numbers. The version I kept is the sixth. It follows a call through three stages: the start of the call, the first round of troubleshooting, and the deeper probing when the first answer doesn’t solve it. Each stage is taught twice, first as a principle, why the step matters, and then as behaviors, the actual words an advisor can use on their next call. Every behavior is tied to the number it <span class="rv-nw">moves. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+      <p>A few of the lines I wrote for advisors to use:</p>
+      <ul class="rv-lines">
+        <li>“Outside of contacting me today, what have you already tried to resolve this?”</li>
+        <li>“Ok so you stated that ____, can you take me a little further into that?”</li>
+        <li class="is-note">Summarize the fix before the call ends. It reminds the customer what was solved, and it sets up the survey question they get afterward: was your issue resolved?</li>
+      </ul>
+      <p>The course opened by looking again at one word. Resolving an issue sounds like fixing it. It can also mean reaching a firm decision, and on a support call that is the part an advisor can control every time: agreeing with the customer on what happens next.</p>
+      <p>The course came with a plan around it. My business plan named the behavior to coach, gaining the customer’s agreement on the resolution before the call ends, and set goals on product knowledge and case logging. I checked progress by observing calls for every advisor who had a goal. Each week I recognized the top three on the team and showed how we compared with the other teams in the <span class="rv-nw">organization. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+
+      <h3>Coaching I could check</h3>
+      <p>My roster tracker held 24 fields for each advisor: access and equipment, training sessions with dates, one-on-ones, and a coaching goal in plain language. Every goal came with how I would check it, whether that was a quality review, a live call I sat in on, or a session shadowing someone stronger. It was the same shape as my business plan, cause then action then measure, applied to one person at a <span class="rv-nw">time. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+
+      <h3>Handing the teaching to the team</h3>
+      <p>When case logging and compliance needed work, I didn’t run those sessions myself. Two advisors who were among my strongest on issue resolution and satisfaction led the workshops. I set the targets in advance: logging from 66% to at least 80%, and compliance from 87% to above 90%. Logging finished at 88.7% and compliance at <span class="rv-nw">98.11%. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span> Other things changed over the same stretch, so I don’t give the workshops all the credit.</p>
+
+      <h3>Getting my replacement ready</h3>
+      <p>Our store wanted more women in leadership, and the road there ran through the Genius role. Late in 2019 I took on four Technical Experts preparing for their Genius interviews, three women and one man. They had the skills. What they needed was a way to show how they think.</p>
+      <p>So we started with them as people. The interview cared less about how a story ended than about how someone worked through it and what they learned from it. We found those stories first, then ran mock interviews and refined them until each person could tell theirs in their own voice. They were promoted.</p>
+      <p>A month or two later I was promoted to Lead Genius. My manager told me that when the Genius interview asked who had inspired them to become a Genius, mine was the name that came up most. It taught me the rule I have worked by since: the way up is to have someone ready to take your <span class="rv-nw">place. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      <p>The workshops on the remote team were the same habit at a different scale. Find the person who is already good at something, give them room to teach it, and the team keeps running without <span class="rv-nw">you. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
     </div>
-
-    <p class="body-copy" style="margin-bottom:22px">I used weekly and monthly performance trackers alongside roster, training and access-readiness records. The routine linked team-versus-site review to coaching and follow-through with store stakeholders across two time zones.</p>
-    <ul class="findings">
-      <li><span class="k">01</span><div><b>Every coaching goal was paired with how it would be verified</b>
-        <p>Not &ldquo;improve satisfaction&rdquo; but a specific behaviour, an owner, a verification
-        method, and a follow-up date. A quality review, an observed live call, a shadowing session. It is
-        the same structure as the business plan &mdash; cause, action, measure &mdash; applied to one
-        person instead of a team.</p></div></li>
-      <li><span class="k">02</span><div><b>I handed the enablement to the people who were already good at it</b>
-        <p>Two team members who were performing strongly led workshops on case logging and on compliance.
-        I set the targets in advance &mdash; logging from 66% to at least 80%, compliance from 87% to
-        above 90% &mdash; and then got out of the way. Logging finished at 88.7% and compliance at
-        98.11%. These later results do not isolate the effect of the workshops from other changes. <span class="ev ev-2">Recorded &middot; business plans</span> Naming an internal expert and setting their success criteria is a
-        different skill from doing the teaching yourself.</p></div></li>
-      <li><span class="k">03</span><div><b>The team was mid-transition, not junior</b>
-        <p>The business plan described nineteen of thirty advisors as new to technical support at this level,
-        with eleven seasoned advisors. That is a different population from the 29-advisor roster snapshot. That is a skills transition, not
-        an onboarding problem, and it is the context the benchmark numbers should be read in.</p></div></li>
-
-    </ul>
-
   </section>
 
-  <!-- ============ 05 SCALE AND CLOSE ============ -->
-  <section class="sec" id="winddown">
-    <div class="sec-head">
-      <span class="sec-num">05</span><h2 class="sec-title">Scale and close-out</h2>
-      <span class="sec-kicker">Recorded &middot; roster and business plan</span>
+  <!-- ============ 4 Results ============ -->
+  <section class="rv-sec" id="results" aria-labelledby="results-h">
+    <div class="rv-margin">
+      <span class="rv-num" aria-hidden="true">4</span>
+      <ul class="rv-side">
+        <li><b>85.49%</b>team customer-facing time in December, against an organization average of 79.98% for iOS and 81.06% for Mac across 82 advisors <span class="fr-ev" data-ev="measured">Measured</span></li>
+      </ul>
     </div>
-    <p class="lede" style="margin-bottom:20px">Two things a hiring manager wants to know and a portfolio
-    almost never answers: how big was it really, and what happened when it stopped.</p>
+    <div class="rv-main">
+      <h2 id="results-h">What the scorecard said</h2>
+      <p class="rv-lede">My employer’s trackers set the team’s results for each fiscal period beside the site benchmark. In each of the four full periods I led the team, November through February, the team was ahead on all four <span class="rv-nw">measures. <span class="fr-ev fr-ev--mark" data-ev="measured">Measured</span></span></p>
+      <p>The widest gap was customer-facing time, the share of a shift spent actually helping customers. Weekly results didn’t always beat the site. I show the period rollups because that is how the results were reported.</p>
 
-    <div class="fig"><div class="fig-head"><div class="fig-title">Managing the wind-down</div></div>
-    <div class="tiles"><div class="tile"><small>Distributed roster</small><b>29</b><em>advisors across seven stores</em></div>
-    <div class="tile"><small>Closing roster</small><b>8</b><em>advisors as the program wound down</em></div></div>
-    <p class="fig-foot">These are roster snapshots, not a claim that the same 29 people handled calls in every period. Coaching and capacity planning had to account for staged returns to stores.</p></div>
-    <h4 style="font-size:15px;font-weight:800;margin:26px 0 10px">Then it ended, and I had said so in advance</h4>
+      <figure class="rv-fig rv-bench" id="fig-2" data-fr-reveal>
+        <div class="rv-fig-head">
+          <h3 class="rv-fig-title">Figure 2. My team against the site benchmark</h3>
+          <ul class="rv-legend">
+            <li><i class="k-team"></i>My team</li>
+            <li><i class="k-ctx"></i>Site benchmark</li>
+          </ul>
+        </div>
+        <div class="rv-multiples">
+          <div class="rv-panel"><h4>Customer-facing time</h4><p>Percent of shift, higher is better</p><div class="rv-plot" data-fig="bench-cft" data-fig-static><svg class="rv-svg rv-svg--panel" viewBox="0 0 220 214" width="220" height="214" role="img" aria-label="Customer-facing time: my team against the site benchmark, November 2020 to February 2021. Nov team 87.06, site 73.27; Dec team 85.49, site 74.28; Jan team 86.31, site 74.76; Feb team 81.34, site 73.45."><line x1="34" y1="186" x2="212" y2="186" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="190">70</text><line x1="34" y1="145.5" x2="212" y2="145.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="149.5">75</text><line x1="34" y1="105" x2="212" y2="105" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="109">80</text><line x1="34" y1="64.5" x2="212" y2="64.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="68.5">85</text><line x1="34" y1="24" x2="212" y2="24" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="28">90</text><g class="rv-pair" style="--rv-d:111.7px"><line x1="56.3" y1="47.8" x2="56.3" y2="159.5" class="rv-link"/><g class="rv-hit" data-tip-title="Nov, site benchmark" data-tip="Customer-facing time 73.27%"><circle cx="56.3" cy="159.5" r="12" class="rv-target"/><circle cx="56.3" cy="159.5" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Nov, my team" data-tip="Customer-facing time 87.06% against the site's 73.27%"><circle cx="56.3" cy="47.8" r="12" class="rv-target"/><circle cx="56.3" cy="47.8" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="56.3" y="36.8">+13.8</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="56.3" y="206">Nov</text><g class="rv-pair" style="--rv-d:90.8px"><line x1="100.8" y1="60.5" x2="100.8" y2="151.3" class="rv-link"/><g class="rv-hit" data-tip-title="Dec, site benchmark" data-tip="Customer-facing time 74.28%"><circle cx="100.8" cy="151.3" r="12" class="rv-target"/><circle cx="100.8" cy="151.3" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Dec, my team" data-tip="Customer-facing time 85.49% against the site's 74.28%"><circle cx="100.8" cy="60.5" r="12" class="rv-target"/><circle cx="100.8" cy="60.5" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="100.8" y="49.5">+11.2</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="100.8" y="206">Dec</text><g class="rv-pair" style="--rv-d:93.6px"><line x1="145.3" y1="53.9" x2="145.3" y2="147.4" class="rv-link"/><g class="rv-hit" data-tip-title="Jan, site benchmark" data-tip="Customer-facing time 74.76%"><circle cx="145.3" cy="147.4" r="12" class="rv-target"/><circle cx="145.3" cy="147.4" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Jan, my team" data-tip="Customer-facing time 86.31% against the site's 74.76%"><circle cx="145.3" cy="53.9" r="12" class="rv-target"/><circle cx="145.3" cy="53.9" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="145.3" y="42.9">+11.5</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="145.3" y="206">Jan</text><g class="rv-pair" style="--rv-d:63.9px"><line x1="189.8" y1="94.1" x2="189.8" y2="158.1" class="rv-link"/><g class="rv-hit" data-tip-title="Feb, site benchmark" data-tip="Customer-facing time 73.45%"><circle cx="189.8" cy="158.1" r="12" class="rv-target"/><circle cx="189.8" cy="158.1" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Feb, my team" data-tip="Customer-facing time 81.34% against the site's 73.45%"><circle cx="189.8" cy="94.1" r="12" class="rv-target"/><circle cx="189.8" cy="94.1" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="189.8" y="83.1">+7.9</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="189.8" y="206">Feb</text></svg></div></div>
+          <div class="rv-panel"><h4>Issue resolution</h4><p>Percent, higher is better</p><div class="rv-plot" data-fig="bench-ir" data-fig-static><svg class="rv-svg rv-svg--panel" viewBox="0 0 220 214" width="220" height="214" role="img" aria-label="Issue resolution: my team against the site benchmark, November 2020 to February 2021. Nov team 72.14, site 67.69; Dec team 79.31, site 67.54; Jan team 74.49, site 66.7; Feb team 73.49, site 67.79."><line x1="34" y1="186" x2="212" y2="186" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="190">60</text><line x1="34" y1="153.6" x2="212" y2="153.6" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="157.6">65</text><line x1="34" y1="121.2" x2="212" y2="121.2" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="125.2">70</text><line x1="34" y1="88.8" x2="212" y2="88.8" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="92.8">75</text><line x1="34" y1="56.4" x2="212" y2="56.4" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="60.4">80</text><line x1="34" y1="24" x2="212" y2="24" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="28">85</text><g class="rv-pair" style="--rv-d:28.8px"><line x1="56.3" y1="107.3" x2="56.3" y2="136.2" class="rv-link"/><g class="rv-hit" data-tip-title="Nov, site benchmark" data-tip="Issue resolution 67.69%"><circle cx="56.3" cy="136.2" r="12" class="rv-target"/><circle cx="56.3" cy="136.2" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Nov, my team" data-tip="Issue resolution 72.14% against the site's 67.69%"><circle cx="56.3" cy="107.3" r="12" class="rv-target"/><circle cx="56.3" cy="107.3" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="56.3" y="96.3">+4.5</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="56.3" y="206">Nov</text><g class="rv-pair" style="--rv-d:76.3px"><line x1="100.8" y1="60.9" x2="100.8" y2="137.1" class="rv-link"/><g class="rv-hit" data-tip-title="Dec, site benchmark" data-tip="Issue resolution 67.54%"><circle cx="100.8" cy="137.1" r="12" class="rv-target"/><circle cx="100.8" cy="137.1" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Dec, my team" data-tip="Issue resolution 79.31% against the site's 67.54%"><circle cx="100.8" cy="60.9" r="12" class="rv-target"/><circle cx="100.8" cy="60.9" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="100.8" y="49.9">+11.8</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="100.8" y="206">Dec</text><g class="rv-pair" style="--rv-d:50.5px"><line x1="145.3" y1="92.1" x2="145.3" y2="142.6" class="rv-link"/><g class="rv-hit" data-tip-title="Jan, site benchmark" data-tip="Issue resolution 66.70%"><circle cx="145.3" cy="142.6" r="12" class="rv-target"/><circle cx="145.3" cy="142.6" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Jan, my team" data-tip="Issue resolution 74.49% against the site's 66.70%"><circle cx="145.3" cy="92.1" r="12" class="rv-target"/><circle cx="145.3" cy="92.1" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="145.3" y="81.1">+7.8</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="145.3" y="206">Jan</text><g class="rv-pair" style="--rv-d:36.9px"><line x1="189.8" y1="98.6" x2="189.8" y2="135.5" class="rv-link"/><g class="rv-hit" data-tip-title="Feb, site benchmark" data-tip="Issue resolution 67.79%"><circle cx="189.8" cy="135.5" r="12" class="rv-target"/><circle cx="189.8" cy="135.5" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Feb, my team" data-tip="Issue resolution 73.49% against the site's 67.79%"><circle cx="189.8" cy="98.6" r="12" class="rv-target"/><circle cx="189.8" cy="98.6" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="189.8" y="87.6">+5.7</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="189.8" y="206">Feb</text></svg></div></div>
+          <div class="rv-panel"><h4>Customer satisfaction</h4><p>Percent, higher is better</p><div class="rv-plot" data-fig="bench-csat" data-fig-static><svg class="rv-svg rv-svg--panel" viewBox="0 0 220 214" width="220" height="214" role="img" aria-label="Customer satisfaction: my team against the site benchmark, November 2020 to February 2021. Nov team 83.64, site 82.26; Dec team 88.95, site 82.72; Jan team 87.85, site 81.49; Feb team 85.41, site 82.58."><line x1="34" y1="186" x2="212" y2="186" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="190">76</text><line x1="34" y1="145.5" x2="212" y2="145.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="149.5">80</text><line x1="34" y1="105" x2="212" y2="105" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="109">84</text><line x1="34" y1="64.5" x2="212" y2="64.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="68.5">88</text><line x1="34" y1="24" x2="212" y2="24" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="28">92</text><g class="rv-pair" style="--rv-d:14px"><line x1="56.3" y1="108.6" x2="56.3" y2="122.6" class="rv-link"/><g class="rv-hit" data-tip-title="Nov, site benchmark" data-tip="Customer satisfaction 82.26%"><circle cx="56.3" cy="122.6" r="12" class="rv-target"/><circle cx="56.3" cy="122.6" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Nov, my team" data-tip="Customer satisfaction 83.64% against the site's 82.26%"><circle cx="56.3" cy="108.6" r="12" class="rv-target"/><circle cx="56.3" cy="108.6" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="56.3" y="97.6">+1.4</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="56.3" y="206">Nov</text><g class="rv-pair" style="--rv-d:63.1px"><line x1="100.8" y1="54.9" x2="100.8" y2="118" class="rv-link"/><g class="rv-hit" data-tip-title="Dec, site benchmark" data-tip="Customer satisfaction 82.72%"><circle cx="100.8" cy="118" r="12" class="rv-target"/><circle cx="100.8" cy="118" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Dec, my team" data-tip="Customer satisfaction 88.95% against the site's 82.72%"><circle cx="100.8" cy="54.9" r="12" class="rv-target"/><circle cx="100.8" cy="54.9" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="100.8" y="43.9">+6.2</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="100.8" y="206">Dec</text><g class="rv-pair" style="--rv-d:64.4px"><line x1="145.3" y1="66" x2="145.3" y2="130.4" class="rv-link"/><g class="rv-hit" data-tip-title="Jan, site benchmark" data-tip="Customer satisfaction 81.49%"><circle cx="145.3" cy="130.4" r="12" class="rv-target"/><circle cx="145.3" cy="130.4" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Jan, my team" data-tip="Customer satisfaction 87.85% against the site's 81.49%"><circle cx="145.3" cy="66" r="12" class="rv-target"/><circle cx="145.3" cy="66" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="145.3" y="55">+6.4</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="145.3" y="206">Jan</text><g class="rv-pair" style="--rv-d:28.7px"><line x1="189.8" y1="90.7" x2="189.8" y2="119.4" class="rv-link"/><g class="rv-hit" data-tip-title="Feb, site benchmark" data-tip="Customer satisfaction 82.58%"><circle cx="189.8" cy="119.4" r="12" class="rv-target"/><circle cx="189.8" cy="119.4" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Feb, my team" data-tip="Customer satisfaction 85.41% against the site's 82.58%"><circle cx="189.8" cy="90.7" r="12" class="rv-target"/><circle cx="189.8" cy="90.7" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="189.8" y="79.7">+2.8</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="189.8" y="206">Feb</text></svg></div></div>
+          <div class="rv-panel"><h4>Handle time</h4><p>Minutes per call, lower is better</p><div class="rv-plot" data-fig="bench-aht" data-fig-static><svg class="rv-svg rv-svg--panel" viewBox="0 0 220 214" width="220" height="214" role="img" aria-label="Handle time: my team against the site benchmark, November 2020 to February 2021. Nov team 15.09, site 20.29; Dec team 18.07, site 20.42; Jan team 19.54, site 20.24; Feb team 19.01, site 19.9."><line x1="34" y1="186" x2="212" y2="186" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="190">14</text><line x1="34" y1="145.5" x2="212" y2="145.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="149.5">16</text><line x1="34" y1="105" x2="212" y2="105" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="109">18</text><line x1="34" y1="64.5" x2="212" y2="64.5" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="68.5">20</text><line x1="34" y1="24" x2="212" y2="24" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="28">22</text><g class="rv-pair" style="--rv-d:-105.3px"><line x1="56.3" y1="163.9" x2="56.3" y2="58.6" class="rv-link"/><g class="rv-hit" data-tip-title="Nov, site benchmark" data-tip="Handle time 20.29 min"><circle cx="56.3" cy="58.6" r="12" class="rv-target"/><circle cx="56.3" cy="58.6" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Nov, my team" data-tip="Handle time 15.09 min against the site's 20.29 min"><circle cx="56.3" cy="163.9" r="12" class="rv-target"/><circle cx="56.3" cy="163.9" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="56.3" y="47.6">−5.2</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="56.3" y="206">Nov</text><g class="rv-pair" style="--rv-d:-47.6px"><line x1="100.8" y1="103.6" x2="100.8" y2="56" class="rv-link"/><g class="rv-hit" data-tip-title="Dec, site benchmark" data-tip="Handle time 20.42 min"><circle cx="100.8" cy="56" r="12" class="rv-target"/><circle cx="100.8" cy="56" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Dec, my team" data-tip="Handle time 18.07 min against the site's 20.42 min"><circle cx="100.8" cy="103.6" r="12" class="rv-target"/><circle cx="100.8" cy="103.6" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="100.8" y="45">−2.4</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="100.8" y="206">Dec</text><g class="rv-pair" style="--rv-d:-14.2px"><line x1="145.3" y1="73.8" x2="145.3" y2="59.6" class="rv-link"/><g class="rv-hit" data-tip-title="Jan, site benchmark" data-tip="Handle time 20.24 min"><circle cx="145.3" cy="59.6" r="12" class="rv-target"/><circle cx="145.3" cy="59.6" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Jan, my team" data-tip="Handle time 19.54 min against the site's 20.24 min"><circle cx="145.3" cy="73.8" r="12" class="rv-target"/><circle cx="145.3" cy="73.8" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="145.3" y="48.6">−0.7</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="145.3" y="206">Jan</text><g class="rv-pair" style="--rv-d:-18px"><line x1="189.8" y1="84.5" x2="189.8" y2="66.5" class="rv-link"/><g class="rv-hit" data-tip-title="Feb, site benchmark" data-tip="Handle time 19.90 min"><circle cx="189.8" cy="66.5" r="12" class="rv-target"/><circle cx="189.8" cy="66.5" r="5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit rv-team" data-tip-title="Feb, my team" data-tip="Handle time 19.01 min against the site's 19.90 min"><circle cx="189.8" cy="84.5" r="12" class="rv-target"/><circle cx="189.8" cy="84.5" r="6" class="rv-dot rv-dot--team"/></g><text class="rv-delta" text-anchor="middle" x="189.8" y="55.5">−0.9</text></g><text class="rv-tick rv-tick--x" text-anchor="middle" x="189.8" y="206">Feb</text></svg></div></div>
+        </div>
+        <figcaption class="rv-cap"><b>November 2020 to February 2021.</b> Each pair is one fiscal period, labelled by its month and read from the team and site summary rows of that period’s tracker. The number above each pair is the gap in points, or in minutes for handle time. Each panel has its own scale. <span class="fr-ev" data-ev="measured">Measured</span></figcaption>
+        <details class="rv-data">
+          <summary><span>All sixteen comparisons</span></summary>
+          <div class="rv-scroll"><table class="rv-table">
+            <thead><tr><th scope="col">Period</th><th scope="col" class="num">Customer-facing time</th><th scope="col" class="num">Issue resolution</th><th scope="col" class="num">Satisfaction</th><th scope="col" class="num">Handle time (min)</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Nov 2020</th><td class="num">87.06 / 73.27</td><td class="num">72.14 / 67.69</td><td class="num">83.64 / 82.26</td><td class="num">15.09 / 20.29</td></tr>
+              <tr><th scope="row">Dec 2020</th><td class="num">85.49 / 74.28</td><td class="num">79.31 / 67.54</td><td class="num">88.95 / 82.72</td><td class="num">18.07 / 20.42</td></tr>
+              <tr><th scope="row">Jan 2021</th><td class="num">86.31 / 74.76</td><td class="num">74.49 / 66.70</td><td class="num">87.85 / 81.49</td><td class="num">19.54 / 20.24</td></tr>
+              <tr><th scope="row">Feb 2021</th><td class="num">81.34 / 73.45</td><td class="num">73.49 / 67.79</td><td class="num">85.41 / 82.58</td><td class="num">19.01 / 19.90</td></tr>
+              <tr><th scope="row">Average gap</th><td class="num">+11.1 points</td><td class="num">+7.4 points</td><td class="num">+4.2 points</td><td class="num">2.3 min faster</td></tr>
+            </tbody>
+          </table></div>
+          <p class="rv-cap">Team first, site second.</p>
+        </details>
+      </figure>
 
-    <div class="pull">&ldquo;I will have 5 advisors going into the next period but I expect to absorb more
-    as RTLs exit the programme &hellip; I do anticipate a drop in my CSAT because of higher performers
-    leaving, but would be happy to maintain an 80%, Issue Res. of 70%.&rdquo;
-    <cite>My period business plan, written before the period it describes</cite></div>
+      <h3>Two records that agree</h3>
+      <p>During the assignment I prepared notes for a development day, with my own summary of team against site. I wrote it for a different purpose, apart from the trackers. Set side by side now, the site figures in my note sit within two points of the tracker’s December and January rollups, and my team figures land inside or just above the tracker’s <span class="rv-nw">range. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span> <span class="fr-ev fr-ev--mark" data-ev="measured">Measured</span></span> Two records, kept for different reasons, telling the same story.</p>
 
-    <div class="tiles">
-      <div class="tile"><small>What I forecast</small><b>5</b>
-        <em>advisors into the final period, with more expected as other leads exited
-        <span class="ev ev-2">Recorded</span></em></div>
-      <div class="tile tile-accent"><small>What I finished with</small><b>8</b>
-        <em>on the roster in the programme&rsquo;s final month
-        <span class="ev ev-2">Recorded</span></em></div>
-      <div class="tile"><small>The floor I committed to</small><b>80 / 70</b>
-        <em>satisfaction and issue resolution, named in writing beforehand
-        <span class="ev ev-2">Recorded</span></em></div>
+      <figure class="rv-fig" id="fig-3">
+        <div class="rv-fig-head">
+          <h3 class="rv-fig-title">Figure 3. My note against the tracker</h3>
+          <ul class="rv-legend">
+            <li><i class="k-sq"></i>My note</li>
+            <li><i class="k-dot"></i>Tracker, December and January</li>
+            <li><i class="k-team"></i>Team</li>
+            <li><i class="k-ctx"></i>Site</li>
+          </ul>
+        </div>
+        <div class="rv-plot" data-fig="agreement" data-fig-static><svg class="rv-svg rv-svg--agree" viewBox="0 0 900 270" width="900" height="270" role="img" aria-label="For three measures, the team and site figures in my own notes compared with the employer tracker's December and January rollups. The site figures agree within two points."><line x1="234.1" y1="8" x2="234.1" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="234.1" y="256">65%</text><line x1="354.9" y1="8" x2="354.9" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="354.9" y="256">70%</text><line x1="475.6" y1="8" x2="475.6" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="475.6" y="256">75%</text><line x1="596.3" y1="8" x2="596.3" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="596.3" y="256">80%</text><line x1="717" y1="8" x2="717" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="717" y="256">85%</text><line x1="837.7" y1="8" x2="837.7" y2="236" class="rv-grid"/><text class="rv-tick" text-anchor="middle" x="837.7" y="256">90%</text><text class="rv-lab rv-lab--strong" x="0" y="50">Customer satisfaction</text><text class="rv-tick" text-anchor="end" x="198" y="36">Team</text><line x1="210" y1="32" x2="886" y2="32" class="rv-track"/><g class="rv-hit" data-tip-title="Customer satisfaction, team, my note" data-tip="Written in my own notes: 90%"><rect x="829.7" y="24" width="16" height="16" rx="1.5" class="rv-sq rv-sq--team"/></g><g class="rv-hit" data-tip-title="Customer satisfaction, team, tracker" data-tip="December rollup: 88.95%"><circle cx="812.4" cy="32" r="11" class="rv-target"/><circle cx="812.4" cy="32" r="4.5" class="rv-dot rv-dot--team"/></g><g class="rv-hit" data-tip-title="Customer satisfaction, team, tracker" data-tip="January rollup: 87.85%"><circle cx="785.8" cy="32" r="11" class="rv-target"/><circle cx="785.8" cy="32" r="4.5" class="rv-dot rv-dot--team"/></g><text class="rv-tick" text-anchor="end" x="198" y="62">Site</text><line x1="210" y1="58" x2="886" y2="58" class="rv-track"/><g class="rv-hit" data-tip-title="Customer satisfaction, site, my note" data-tip="Written in my own notes: 81%"><rect x="612.4" y="50" width="16" height="16" rx="1.5" class="rv-sq rv-sq--ctx"/></g><g class="rv-hit" data-tip-title="Customer satisfaction, site, tracker" data-tip="December rollup: 82.72%"><circle cx="662" cy="58" r="11" class="rv-target"/><circle cx="662" cy="58" r="4.5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Customer satisfaction, site, tracker" data-tip="January rollup: 81.49%"><circle cx="632.3" cy="58" r="11" class="rv-target"/><circle cx="632.3" cy="58" r="4.5" class="rv-dot rv-dot--ctx"/></g><line x1="0" y1="84" x2="900" y2="84" class="rv-sep"/><text class="rv-lab rv-lab--strong" x="0" y="126">Issue resolution</text><text class="rv-tick" text-anchor="end" x="198" y="112">Team</text><line x1="210" y1="108" x2="886" y2="108" class="rv-track"/><g class="rv-hit" data-tip-title="Issue resolution, team, my note" data-tip="Written in my own notes: 78%"><rect x="540" y="100" width="16" height="16" rx="1.5" class="rv-sq rv-sq--team"/></g><g class="rv-hit" data-tip-title="Issue resolution, team, tracker" data-tip="December rollup: 79.31%"><circle cx="579.6" cy="108" r="11" class="rv-target"/><circle cx="579.6" cy="108" r="4.5" class="rv-dot rv-dot--team"/></g><g class="rv-hit" data-tip-title="Issue resolution, team, tracker" data-tip="January rollup: 74.49%"><circle cx="463.3" cy="108" r="11" class="rv-target"/><circle cx="463.3" cy="108" r="4.5" class="rv-dot rv-dot--team"/></g><text class="rv-tick" text-anchor="end" x="198" y="138">Site</text><line x1="210" y1="134" x2="886" y2="134" class="rv-track"/><g class="rv-hit" data-tip-title="Issue resolution, site, my note" data-tip="Written in my own notes: 67%"><rect x="274.4" y="126" width="16" height="16" rx="1.5" class="rv-sq rv-sq--ctx"/></g><g class="rv-hit" data-tip-title="Issue resolution, site, tracker" data-tip="December rollup: 67.54%"><circle cx="295.5" cy="134" r="11" class="rv-target"/><circle cx="295.5" cy="134" r="4.5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Issue resolution, site, tracker" data-tip="January rollup: 66.70%"><circle cx="275.2" cy="134" r="11" class="rv-target"/><circle cx="275.2" cy="134" r="4.5" class="rv-dot rv-dot--ctx"/></g><line x1="0" y1="160" x2="900" y2="160" class="rv-sep"/><text class="rv-lab rv-lab--strong" x="0" y="202">Customer-facing time</text><text class="rv-tick" text-anchor="end" x="198" y="188">Team</text><line x1="210" y1="184" x2="886" y2="184" class="rv-track"/><g class="rv-hit" data-tip-title="Customer-facing time, team, my note" data-tip="Written in my own notes: 86%"><rect x="733.1" y="176" width="16" height="16" rx="1.5" class="rv-sq rv-sq--team"/></g><g class="rv-hit" data-tip-title="Customer-facing time, team, tracker" data-tip="December rollup: 85.49%"><circle cx="728.8" cy="184" r="11" class="rv-target"/><circle cx="728.8" cy="184" r="4.5" class="rv-dot rv-dot--team"/></g><g class="rv-hit" data-tip-title="Customer-facing time, team, tracker" data-tip="January rollup: 86.31%"><circle cx="748.6" cy="184" r="11" class="rv-target"/><circle cx="748.6" cy="184" r="4.5" class="rv-dot rv-dot--team"/></g><text class="rv-tick" text-anchor="end" x="198" y="214">Site</text><line x1="210" y1="210" x2="886" y2="210" class="rv-track"/><g class="rv-hit" data-tip-title="Customer-facing time, site, my note" data-tip="Written in my own notes: 75%"><rect x="467.6" y="202" width="16" height="16" rx="1.5" class="rv-sq rv-sq--ctx"/></g><g class="rv-hit" data-tip-title="Customer-facing time, site, tracker" data-tip="December rollup: 74.28%"><circle cx="458.2" cy="210" r="11" class="rv-target"/><circle cx="458.2" cy="210" r="4.5" class="rv-dot rv-dot--ctx"/></g><g class="rv-hit" data-tip-title="Customer-facing time, site, tracker" data-tip="January rollup: 74.76%"><circle cx="469.8" cy="210" r="11" class="rv-target"/><circle cx="469.8" cy="210" r="4.5" class="rv-dot rv-dot--ctx"/></g></svg></div>
+        <figcaption class="rv-cap"><b>Squares are my note, dots are the tracker</b>, the same shapes as the key: a square for my own record, a dot for my employer’s measurement. Where a square sits on its dots, the two records agree.</figcaption>
+        <details class="rv-data">
+          <summary><span>The figures behind it</span></summary>
+          <div class="rv-scroll"><table class="rv-table">
+            <thead><tr><th scope="col">Measure</th><th scope="col" class="num">My note, team / site</th><th scope="col" class="num">Tracker, Dec, team / site</th><th scope="col" class="num">Tracker, Jan, team / site</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Customer satisfaction</th><td class="num">90 / 81</td><td class="num">88.95 / 82.72</td><td class="num">87.85 / 81.49</td></tr>
+              <tr><th scope="row">Issue resolution</th><td class="num">78 / 67</td><td class="num">79.31 / 67.54</td><td class="num">74.49 / 66.70</td></tr>
+              <tr><th scope="row">Customer-facing time</th><td class="num">86 / 75</td><td class="num">85.49 / 74.28</td><td class="num">86.31 / 74.76</td></tr>
+            </tbody>
+          </table></div>
+        </details>
+      </figure>
     </div>
-
-    <p class="body-copy" style="margin-top:16px">Forecasting a decline, naming its cause, committing to a
-    floor in writing, absorbing another team&rsquo;s advisors on the way down, and then running the
-    close-out in order &mdash; that sequence is the part of this record that most resembles the job I am
-    applying for. Growth hides a lot of management problems. Contraction does not.</p>
-
-    <div class="note" style="margin-top:16px"><b>What I cannot show you.</b> Whether the floor held. The
-    full-period rollups end one period before the programme did, and no equivalent rollup exists for the
-    final period &mdash; so the commitment above is presented as what I put in writing beforehand, and
-    nothing more. If I showed you a final scorecard, I would be inventing it.</div>
   </section>
 
-  <!-- ============ 06 THE STORE YEARS ============ -->
-  <section class="sec" id="store">
-    <div class="sec-head">
-      <span class="sec-num">06</span><h2 class="sec-title">From retail support to distributed leadership</h2>
-      <span class="sec-kicker">Confirmed chronology</span>
+  <!-- ============ 5 Wind-down ============ -->
+  <section class="rv-sec" id="winddown" aria-labelledby="wind-h">
+    <div class="rv-margin"><span class="rv-num" aria-hidden="true">5</span></div>
+    <div class="rv-main">
+      <h2 id="wind-h">Closing it down</h2>
+      <p class="rv-lede">By early 2021 the program was winding down and advisors were heading back to their stores. In my business plan for the final period, written before it began, I said what I expected.</p>
+
+      <blockquote class="rv-quote">
+        <p>“I will have 5 advisors going into the next period but I expect to absorb more as RTLs exit the program … I do anticipate to see a drop in my CSAT because of higher performers leaving the program, but would be happy to maintain an 80%, Issue Res. of 70%.”</p>
+        <footer>My business plan for the final period</footer>
+      </blockquote>
+
+      <p>I finished with 8. The period before, my roster had peaked at 29 when I took on another team’s <span class="rv-nw">advisors. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span> Planning for a smaller team, saying in writing what I expected to lose, and setting a floor before anyone asked for one was a different kind of work from growing the team, and I learned as much from it.</p>
+
+      <figure class="rv-fig" id="fig-4">
+        <div class="rv-fig-head">
+          <h3 class="rv-fig-title">Figure 4. Advisors on my roster, and my forecast</h3>
+          <ul class="rv-legend">
+            <li><i class="k-bar"></i>Advisors on my roster</li>
+            <li><i class="k-fc"></i>My forecast</li>
+          </ul>
+        </div>
+        <div class="rv-plot" data-fig="roster" data-fig-static><svg class="rv-svg rv-svg--roster" viewBox="0 0 900 250" width="900" height="250" role="img" aria-label="Column chart of my managed roster: November 14, December 9, January 9, February 29, March 8. My written forecast for the final period was 5."><line x1="34" y1="220" x2="892" y2="220" class="rv-base"/><text class="rv-tick" text-anchor="end" x="27" y="224">0</text><line x1="34" y1="154" x2="892" y2="154" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="158">10</text><line x1="34" y1="88" x2="892" y2="88" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="92">20</text><line x1="34" y1="22" x2="892" y2="22" class="rv-grid"/><text class="rv-tick" text-anchor="end" x="27" y="26">30</text><g class="rv-hit" data-tip-title="Nov" data-tip="14 advisors on my roster"><rect x="36" y="22" width="150" height="198" class="rv-target"/><path d="M99 220V131.6Q99 127.6 103 127.6H119Q123 127.6 123 131.6V220Z" class="rv-bar"/></g><text class="rv-val" text-anchor="middle" x="111" y="119.6">14</text><text class="rv-tick rv-tick--x" text-anchor="middle" x="111" y="242">Nov</text><g class="rv-hit" data-tip-title="Dec" data-tip="9 advisors on my roster"><rect x="190" y="22" width="150" height="198" class="rv-target"/><path d="M253 220V164.6Q253 160.6 257 160.6H273Q277 160.6 277 164.6V220Z" class="rv-bar"/></g><text class="rv-val" text-anchor="middle" x="265" y="152.6">9</text><text class="rv-tick rv-tick--x" text-anchor="middle" x="265" y="242">Dec</text><g class="rv-hit" data-tip-title="Jan" data-tip="9 advisors on my roster"><rect x="344" y="22" width="150" height="198" class="rv-target"/><path d="M407 220V164.6Q407 160.6 411 160.6H427Q431 160.6 431 164.6V220Z" class="rv-bar"/></g><text class="rv-val" text-anchor="middle" x="419" y="152.6">9</text><text class="rv-tick rv-tick--x" text-anchor="middle" x="419" y="242">Jan</text><g class="rv-hit" data-tip-title="Feb" data-tip="29 advisors on my roster"><rect x="498" y="22" width="150" height="198" class="rv-target"/><path d="M561 220V32.6Q561 28.6 565 28.6H581Q585 28.6 585 32.6V220Z" class="rv-bar"/></g><text class="rv-val" text-anchor="middle" x="573" y="20.6">29</text><text class="rv-tick rv-tick--x" text-anchor="middle" x="573" y="242">Feb</text><g class="rv-hit" data-tip-title="March, final period" data-tip="8 advisors on my roster"><rect x="652" y="22" width="150" height="198" class="rv-target"/><path d="M715 220V171.2Q715 167.2 719 167.2H735Q739 167.2 739 171.2V220Z" class="rv-bar"/></g><text class="rv-val" text-anchor="middle" x="727" y="159.2">8</text><text class="rv-tick rv-tick--x" text-anchor="middle" x="727" y="242">Mar</text><g class="rv-hit" data-tip-title="My forecast" data-tip="Written before the period: 5 advisors, with more expected"><line x1="706" y1="187" x2="748" y2="187" class="rv-fc-ring"/><line x1="706" y1="187" x2="748" y2="187" class="rv-fc"/></g><line x1="752" y1="187" x2="760" y2="187" class="rv-leader"/><text class="rv-lab" x="764" y="191">Forecast: 5</text></svg></div>
+        <figcaption class="rv-cap"><b>November 2020 to the first week of March 2021</b>, from my own team tracker. This roster counts the people I was onboarding and coaching. My employer counted headcount other ways, so those counts aren’t mixed in here. <span class="fr-ev" data-ev="recorded">Recorded</span></figcaption>
+      </figure>
+
+      <p style="margin-top:32px">What I can’t show is whether the 80 and 70 floor held. The full-period rollups stop one period before the program did, so the floor stays what it was: a commitment I put in writing.</p>
     </div>
-    <p class="lede">I progressed through Apple retail technical roles before taking the temporary remote leadership assignment.</p>
-    <div class="tbl-wrap"><table><thead><tr><th>Formal role</th><th>Dates</th></tr></thead><tbody>
-    <tr><td>Specialist</td><td>Oct 2016 &ndash; Apr 2017</td></tr><tr><td>Technical Specialist</td><td>Apr &ndash; Oct 2017</td></tr>
-    <tr><td>Technical Expert</td><td>Oct 2017 &ndash; Mar 2018</td></tr><tr><td>Genius</td><td>Mar 2018 &ndash; Feb 2020</td></tr>
-    <tr><td>Lead Genius</td><td>Feb 2020 &ndash; Apr 2021</td></tr></tbody></table></div>
-    <p class="body-copy" style="margin-top:18px">Retail Team Lead was an operating assignment within that history, from Aug 2020 to Mar 2021. It gave me a distributed team to support while I coordinated with store and market stakeholders.</p>
-    <div class="note"><b>What this brings to a new role.</b> Technical support operations: diagnosis, coaching and KPI reviews. Service delivery: a recurring operating cadence and escalation follow-through. Implementation and learning operations: access readiness, onboarding and training. Program operations: stakeholder coordination and planning through a wind-down.</div>
   </section>
 
-  <!-- ============ 07 CASE STUDY ============ -->
-  <section class="sec" id="case">
-    <div class="sec-head">
-      <span class="sec-num">07</span><h2 class="sec-title">In my own words</h2>
-      <span class="sec-kicker">Each claim tagged</span>
-    </div>
+  <!-- ============ 6 Before the team ============ -->
+  <section class="rv-sec" id="store" aria-labelledby="store-h">
+    <div class="rv-margin"><span class="rv-num" aria-hidden="true">6</span></div>
+    <div class="rv-main">
+      <h2 id="store-h">Before the team</h2>
+      <p class="rv-lede">I joined Apple in October 2016 as a part-time Specialist in sales and worked my way through the store’s technical roles. The remote team was a temporary assignment on top of my role as a Lead Genius, and I stayed part of my store the whole time.</p>
 
-    <div class="body-copy"><h4>What I would emphasize in an interview</h4>
-    <p>I connected a specific service problem to a coaching intervention and tracked results against an existing benchmark. Leading that work across stores required training, access follow-through, stakeholder coordination and a recurring operating cadence.</p>
-    <p>The wind-down required a different kind of judgment: forecast how returning advisors would change the performance mix, name the risk and set planning floors in advance. The final-period results against those floors are not verified.</p></div>
-    <div class="note"><b>Attribution.</b> Training, coaching and peer workshops were interventions I led. The records do not isolate their causal effects from staffing, call mix or other changes. Benchmark outperformance is an observed outcome. P05W4 customer satisfaction fell below the site benchmark; the four full-period comparisons still hold.</div>
+      <figure class="rv-fig" id="fig-5">
+        <div class="rv-fig-head"><h3 class="rv-fig-title">Figure 5. Roles held, October 2016 to April 2021</h3></div>
+        <ol class="rv-roles">
+          <li class="rv-role"><span class="rv-role-name">Specialist<small>Sales, part-time. Oct 2016</small></span><span class="rv-track-row"><span class="rv-span" style="--a:0;--b:6"></span></span></li>
+          <li class="rv-role"><span class="rv-role-name">Technical Specialist<small>Floor technical support. Apr 2017</small></span><span class="rv-track-row"><span class="rv-span" style="--a:6;--b:12"></span></span></li>
+          <li class="rv-role"><span class="rv-role-name">Technical Expert<small>Adds iPhone repair. Oct 2017</small></span><span class="rv-track-row"><span class="rv-span" style="--a:12;--b:17"></span></span></li>
+          <li class="rv-role"><span class="rv-role-name">Genius<small>Adds Mac repair. Mar 2018</small></span><span class="rv-track-row"><span class="rv-span" style="--a:17;--b:40"></span></span></li>
+          <li class="rv-role rv-role--lead"><span class="rv-role-name">Lead Genius<small>Leads floor technical support. Feb 2020</small></span><span class="rv-track-row"><span class="rv-span" style="--a:40;--b:54"></span></span></li>
+          <li class="rv-role rv-role--rtl"><span class="rv-role-name">Retail Team Lead<small>Temporary assignment. Aug 2020 to Mar 2021</small></span><span class="rv-track-row"><span class="rv-span" style="--a:46;--b:53"></span></span></li>
+        </ol>
+        <div class="rv-years" aria-hidden="true"><span></span><div class="rv-years-in">
+          <span style="left:calc(3 / 54 * 100%)">2017</span><span style="left:calc(15 / 54 * 100%)">2018</span><span style="left:calc(27 / 54 * 100%)">2019</span><span style="left:calc(39 / 54 * 100%)">2020</span><span style="left:calc(51 / 54 * 100%)">2021</span>
+        </div></div>
+        <figcaption class="rv-cap"><b>Lead Genius was my formal title to the end.</b> The Retail Team Lead assignment overlapped it, and I kept working with my store throughout.</figcaption>
+      </figure>
+
+      <ul class="rv-moments">
+        <li>
+          <h3>A repair room captain</h3>
+          <p>When the iPhone battery replacement program hit, repair volume outgrew the way our repair room worked. I reorganized the repair stations and posted tips and reminders at each one. Then I created an unofficial role, Repair Room Captain, to own the workflow and keep everyone accountable through the surge. The program ran well, and it established me as a leader among my <span class="rv-nw">peers. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+        </li>
+        <li>
+          <h3>Disagree, then commit</h3>
+          <p>Our depot utilization was below the 60% goal, and I was told we needed to send more repairs off-site. I disagreed. I took the feedback anyway, worked to understand why it mattered, and came around. I had no authority over the other Geniuses, so I changed the workflow through the trust I had with them: lead with ownership on out-of-warranty repairs, and refer single-part repairs to our sister store. We hit 60% within a week and finished at 70%, the highest in our market <span class="rv-nw">team. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+        </li>
+        <li>
+          <h3>Reframing one question</h3>
+          <p>Customers could easily say no to an offer to meet our business team. I changed the ask to connecting them by email, and pointed the team to the field for it that was already on the first page of our repair workflow. A one-line change, and the team reached over 50% business <span class="rv-nw">engagement. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+        </li>
+        <li>
+          <h3>A pilot that didn’t last</h3>
+          <p>My store piloted 15-minute express appointments. I took six to eight an hour to show the pace could work. The pilot was dropped after two weeks, but it helped set the multitasking rhythm the store kept <span class="rv-nw">using. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span>
+          <p>The company later rolled express appointments out more widely. I can’t say how much our pilot had to do with that, but I was there for the early <span class="rv-nw">test. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+        </li>
+      </ul>
+    </div>
   </section>
 
-  <!-- ============ 08 LIMITS ============ -->
-  <section class="sec" id="limits">
-    <div class="sec-head">
-      <span class="sec-num">08</span><h2 class="sec-title">Limits</h2>
-      <span class="sec-kicker">Stated, not omitted</span>
+  <!-- ============ Notes ============ -->
+  <section class="rv-sec rv-end" id="notes" aria-labelledby="notes-h">
+    <div class="rv-margin"></div>
+    <div class="rv-main">
+      <h2 id="notes-h">Notes to the review</h2>
+      <ol class="rv-notes">
+        <li><span><b>Sources.</b> Period figures are copied from my employer’s performance trackers, which compared my team with the site. The averages are my arithmetic. The business plans, the course, the roster tracker and the development-day note are my own files from the time.</span></li>
+        <li><span><b>Cause and effect.</b> The course, the coaching and the workshops were things I led. The records can’t separate their effect from staffing, call mix or anything else that changed, so the results show what happened, not proof of why.</span></li>
+        <li><span><b>Headcount.</b> Team size depends on which record you count. I quote my own roster and don’t mix it with other counts.</span></li>
+        <li><span><b>What isn’t here.</b> No one’s individual results, no names, no internal identifiers and no internal training material. Where I used a public coaching model such as GROW or SMART goals, I name it; anything that was my employer’s, I describe in my own words.</span></li>
+        <li><span><b>Figures I retired.</b> I used to carry a satisfaction-uplift percentage and a revenue figure in my own materials. I couldn’t find a source for either, so they’re gone.</span></li>
+      </ol>
     </div>
-    <ul class="findings">
-      <li><span class="k">&mdash;</span><div><b>No revenue claim, and no satisfaction-uplift percentage</b>
-        <p>I previously carried two figures of that kind in my own materials. I went looking for their
-        source, could not find one, and removed them. The benchmark tables on this page are what I can
-        actually stand behind.</p></div></li>
-      <li><span class="k">&mdash;</span><div><b>No final scorecard for the closing period</b>
-        <p>The full-period rollups end one period before the programme did. I have the commitment I made
-        in advance and the roster I finished with, and not the grade.</p></div></li>
-      <li><span class="k">&mdash;</span><div><b>No individual's data, and no one's name</b>
-        <p>The source files carry per-advisor metrics, internal identifiers, coaching plans and
-        attendance records for real people. None of that is here, in any form, including in the one
-        chart that shows dots.</p></div></li>
-
-      <li><span class="k">&mdash;</span><div><b>No internal training material, in any amount</b>
-        <p>Some of what I learned there was internal content and stays internal. Where a framework I used
-        is publicly known, I have named it; where it was theirs, I have described what I did instead of
-        reproducing it.</p></div></li>
-    </ul>
   </section>
-
-  <!-- ============ 09 FOOTER ============ -->
-  <footer class="foot" id="contact">
-    <h3>Jacob Zamarripa</h3>
-    <p>Technical support and service delivery management &mdash; distributed teams, operating cadence,
-    and the boring measurement work that makes the results defensible. Explore the other case studies for delivery systems and an operational decision proposal.</p>
-    <a class="cta" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">
-      Get in touch on LinkedIn &rarr;</a>
-    <p class="foot-legal">Personal retrospective, not affiliated with or endorsed by Apple Inc. The company name identifies the work context; no logos, product imagery, internal identifiers, individual performance records or internal training are reproduced. Period figures are transcribed from employer reporting, and average deltas are calculated and rounded. Diagnosis dots are illustrative.</p>
-  </footer>
-
-  </main>
 </div>
 
-<div class="tip" id="tip" role="status" aria-live="polite"></div>
+</main>
+
+<footer class="fr-foot" data-frame-case="1" data-frame-static><div class="fr-foot-in"><nav class="fr-pager" aria-label="Case studies"><a rel="prev" href="../"><small>All four cases</small><b>Jacob Zamarripa</b></a><a rel="next" href="../centric-fiberops/"><small>Next: case 2 of 4</small><b>Nexus FiberOps Unified</b></a></nav><div class="fr-foot-meta"><a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Jacob Zamarripa on LinkedIn</a><p class="fr-prov">A personal portfolio. Not affiliated with or endorsed by any former employer.</p></div></div></footer>
+
+<div class="rv-tip" id="rv-tip" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
-  'use strict';
+  "use strict";
+  var tip = document.getElementById("rv-tip");
 
-  /* ---------------------------------------------------------
-     Chart layer. One system across all three figures:
-       accent  = my team / the actual        (violet)
-       flag    = the diagnosed group / forecast (orange)
-       ctx     = benchmark / everyone else   (grey, de-emphasis)
-     Palette validated with the dataviz validator, --pairs all,
-     light and dark. Marks are thin, grid is recessive, every
-     figure also exists as a table in the page.
-     --------------------------------------------------------- */
-
-  var SVGNS = 'http://www.w3.org/2000/svg';
-  var tip = document.getElementById('tip');
-
-  function el(name, attrs, text){
-    var n = document.createElementNS(SVGNS, name);
-    for (var k in attrs){ if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
-    if (text !== undefined) n.textContent = text;
-    return n;
+  function draw(){
+    if (!window.ReviewFigures) return;
+    window.ReviewFigures.renderAll(document, function(el){ return el.clientWidth || el.getBoundingClientRect().width || 600; });
   }
-  function svg(w, h, label){
-    var s = el('svg', { viewBox:'0 0 '+w+' '+h, width:'100%', role:'img' });
-    s.setAttribute('aria-label', label);
-    return s;
-  }
-  function showTip(evt, title, body){
-    tip.innerHTML = '<u>'+title+'</u>'+body;
-    tip.classList.add('on');
-    moveTip(evt);
-  }
-  function moveTip(evt){
-    var pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
-    var x = evt.clientX + pad, y = evt.clientY - h - 10;
-    if (x + w > window.innerWidth - 8) x = evt.clientX - w - pad;
-    if (y < 8) y = evt.clientY + pad;
-    tip.style.left = x + 'px'; tip.style.top = y + 'px';
-  }
-  function hideTip(){ tip.classList.remove('on'); }
-  function hover(node, title, body){
-    node.addEventListener('mouseenter', function(e){ showTip(e, title, body); });
-    node.addEventListener('mousemove', moveTip);
-    node.addEventListener('mouseleave', hideTip);
-    node.style.cursor = 'default';
-  }
-
-  /* ============ FIGURE 1 — the diagnosis ============ */
-  function figure1(){
-    var host = document.getElementById('fig1'); if (!host) return;
-    var W = 660, H = 400, L = 58, R = 16, T = 18, B = 46;
-    var x0 = 55, x1 = 95, y0 = 62, y1 = 100;
-    var IR_T = 72, CS_T = 80;
-
-    /* Illustrative only. Five below both thresholds — the one real fact
-       about this group — and seven above, drawn to a plausible spread.
-       No relationship to any actual person. */
-    var pts = [
-      {ir:61, cs:71, f:1}, {ir:65, cs:74, f:1}, {ir:68, cs:77, f:1},
-      {ir:70, cs:73, f:1}, {ir:71, cs:78, f:1},
-      {ir:74, cs:84, f:0}, {ir:76, cs:82, f:0}, {ir:77, cs:88, f:0},
-      {ir:79, cs:86, f:0}, {ir:83, cs:91, f:0}, {ir:86, cs:89, f:0}, {ir:89, cs:93, f:0}
-    ];
-
-    var s = svg(W, H, 'Scatter plot of customer satisfaction against issue resolution. Twelve illustrative advisor points; five sit below both the 80 percent satisfaction and 72 percent issue-resolution thresholds.');
-    var X = function(v){ return L + (v - x0) / (x1 - x0) * (W - L - R); };
-    var Y = function(v){ return T + (y1 - v) / (y1 - y0) * (H - T - B); };
-
-    var defs = el('defs');
-    var pat = el('pattern', { id:'illus', width:8, height:8, patternUnits:'userSpaceOnUse', patternTransform:'rotate(45)' });
-    pat.appendChild(el('line', { x1:0, y1:0, x2:0, y2:8, stroke:'var(--muted)', 'stroke-width':1, opacity:.14 }));
-    defs.appendChild(pat); s.appendChild(defs);
-
-    /* plot field carries the "illustrative" texture — visible before a word is read */
-    s.appendChild(el('rect', { x:L, y:T, width:W-L-R, height:H-T-B, fill:'url(#illus)' }));
-
-    /* the quadrant that is the finding */
-    s.appendChild(el('rect', { x:L, y:Y(CS_T), width:X(IR_T)-L, height:Y(y0)-Y(CS_T), fill:'var(--flag-wash)' }));
-
-    var i, g;
-    for (i = 65; i <= 95; i += 5){
-      s.appendChild(el('line', { x1:X(i), y1:T, x2:X(i), y2:H-B, stroke:'var(--rule)', 'stroke-width':1 }));
-      s.appendChild(el('text', { x:X(i), y:H-B+19, 'text-anchor':'middle', 'font-size':11, fill:'var(--muted)' }, i+'%'));
-    }
-    for (i = 65; i <= 100; i += 5){
-      s.appendChild(el('line', { x1:L, y1:Y(i), x2:W-R, y2:Y(i), stroke:'var(--rule)', 'stroke-width':1 }));
-      s.appendChild(el('text', { x:L-9, y:Y(i)+4, 'text-anchor':'end', 'font-size':11, fill:'var(--muted)' }, i+'%'));
-    }
-
-    /* thresholds */
-    s.appendChild(el('line', { x1:X(IR_T), y1:T, x2:X(IR_T), y2:H-B, stroke:'var(--accent)', 'stroke-width':2, 'stroke-dasharray':'5 4' }));
-    s.appendChild(el('line', { x1:L, y1:Y(CS_T), x2:W-R, y2:Y(CS_T), stroke:'var(--accent)', 'stroke-width':2, 'stroke-dasharray':'5 4' }));
-    s.appendChild(el('text', { x:X(IR_T)+7, y:T+13, 'font-size':11, 'font-weight':800, fill:'var(--accent)' }, '72% issue resolution'));
-    s.appendChild(el('text', { x:W-R-4, y:Y(CS_T)-7, 'text-anchor':'end', 'font-size':11, 'font-weight':800, fill:'var(--accent)' }, '80% satisfaction'));
-
-    /* the callout on the quadrant */
-    s.appendChild(el('text', { x:L+12, y:Y(y0)-14, 'font-size':12, 'font-weight':800, fill:'var(--flag)' }, '5 advisors below both'));
-
-    for (i = 0; i < pts.length; i++){
-      var p = pts[i];
-      g = el('circle', { cx:X(p.ir), cy:Y(p.cs), r:6.5,
-        fill: p.f ? 'var(--flag)' : 'var(--ctx)',
-        stroke:'var(--surface)', 'stroke-width':2 });
-      hover(g, p.f ? 'Below both thresholds' : 'Above the thresholds',
-        'Illustrative point &mdash; not a real advisor.<br>Issue resolution ' + p.ir + '% &middot; satisfaction ' + p.cs + '%');
-      s.appendChild(g);
-    }
-
-    s.appendChild(el('text', { x:L+(W-L-R)/2, y:H-8, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':800, fill:'var(--ink-2)' }, 'Issue resolution →'));
-    var yl = el('text', { x:14, y:T+(H-T-B)/2, 'text-anchor':'middle', 'font-size':11.5, 'font-weight':800, fill:'var(--ink-2)', transform:'rotate(-90 14 '+(T+(H-T-B)/2)+')' }, 'Customer satisfaction →');
-    s.appendChild(yl);
-
-    host.appendChild(s);
-  }
-
-  /* ============ FIGURE 2 — team vs site, four panels ============ */
-  var BENCH = [
-    { key:'Issue resolution', unit:'%', lo:62, hi:84, better:'up',
-      rows:[['P02',72.14,67.69],['P03',79.31,67.54],['P04',74.49,66.70],['P05',73.49,67.79]] },
-    { key:'Customer satisfaction', unit:'%', lo:78, hi:92, better:'up',
-      rows:[['P02',83.64,82.26],['P03',88.95,82.72],['P04',87.85,81.49],['P05',85.41,82.58]] },
-    { key:'Customer-facing time', unit:'%', lo:70, hi:90, better:'up',
-      rows:[['P02',87.06,73.27],['P03',85.49,74.28],['P04',86.31,74.76],['P05',81.34,73.45]] },
-    { key:'Handle time', unit:' min', lo:14, hi:22, better:'down',
-      rows:[['P02',15.09,20.29],['P03',18.07,20.42],['P04',19.54,20.24],['P05',19.01,19.90]] }
-  ];
-
-  function panel(spec){
-    var W = 330, H = 226, L = 40, R = 12, T = 34, B = 34;
-    var s = svg(W, H, spec.key + ': team result against site benchmark for four fiscal periods.');
-    var Y = function(v){ return T + (spec.hi - v) / (spec.hi - spec.lo) * (H - T - B); };
-    var step = (W - L - R) / spec.rows.length;
-
-    s.appendChild(el('text', { x:L-28, y:15, 'font-size':12, 'font-weight':800, fill:'var(--ink)' }, spec.key));
-    s.appendChild(el('text', { x:W-R, y:15, 'text-anchor':'end', 'font-size':9.5, 'font-weight':800,
-      fill:'var(--muted)', 'letter-spacing':'.08em' }, spec.better === 'up' ? 'HIGHER IS BETTER' : 'LOWER IS BETTER'));
-
-    var ticks = 4, i, v;
-    for (i = 0; i <= ticks; i++){
-      v = spec.lo + (spec.hi - spec.lo) * i / ticks;
-      s.appendChild(el('line', { x1:L, y1:Y(v), x2:W-R, y2:Y(v), stroke:'var(--rule)', 'stroke-width':1 }));
-      s.appendChild(el('text', { x:L-7, y:Y(v)+3.5, 'text-anchor':'end', 'font-size':9.5, fill:'var(--muted)' },
-        spec.unit === '%' ? Math.round(v) : v.toFixed(0)));
-    }
-
-    spec.rows.forEach(function(r, idx){
-      var cx = L + step * idx + step / 2;
-      var team = r[1], site = r[2];
-      var d = team - site;
-      var good = (spec.better === 'up') ? d > 0 : d < 0;
-
-      s.appendChild(el('line', { x1:cx, y1:Y(team), x2:cx, y2:Y(site),
-        stroke:'var(--axis)', 'stroke-width':2, 'stroke-linecap':'round' }));
-
-      var cSite = el('circle', { cx:cx, cy:Y(site), r:5.5, fill:'var(--ctx)', stroke:'var(--surface)', 'stroke-width':2 });
-      hover(cSite, r[0] + ' · site benchmark', spec.key + ': <b>' + site.toFixed(2) + spec.unit + '</b>');
-      var cTeam = el('circle', { cx:cx, cy:Y(team), r:6.5, fill:'var(--accent)', stroke:'var(--surface)', 'stroke-width':2 });
-      hover(cTeam, r[0] + ' · my team', spec.key + ': <b>' + team.toFixed(2) + spec.unit + '</b><br>Site benchmark ' + site.toFixed(2) + spec.unit);
-      s.appendChild(cSite); s.appendChild(cTeam);
-
-      var label = (d > 0 ? '+' : '−') + Math.abs(d).toFixed(1);
-      var ly = Math.min(Y(team), Y(site)) - 10;
-      s.appendChild(el('text', { x:cx, y:ly, 'text-anchor':'middle', 'font-size':10.5, 'font-weight':800,
-        fill: good ? 'var(--good)' : 'var(--flag)' }, label));
-      s.appendChild(el('text', { x:cx, y:H-12, 'text-anchor':'middle', 'font-size':10.5,
-        'font-weight':700, fill:'var(--muted)' }, r[0]));
+  function start(){
+    draw();
+    var last = window.innerWidth, t;
+    window.addEventListener("resize", function(){
+      clearTimeout(t);
+      t = setTimeout(function(){ if (window.innerWidth !== last){ last = window.innerWidth; draw(); } }, 120);
     });
-    return s;
   }
 
-  function figure2(){
-    var host = document.getElementById('fig2'); if (!host) return;
-    var grid = document.createElement('div');
-    grid.className = 'grid2';
-    BENCH.forEach(function(spec){
-      var box = document.createElement('div');
-      box.appendChild(panel(spec));
-      grid.appendChild(box);
-    });
-    host.appendChild(grid);
+  /* Tooltips: one delegated handler for every figure, mouse and touch. */
+  var current = null;
+  function place(x, y){
+    var w = tip.offsetWidth, h = tip.offsetHeight, px = x + 14, py = y - h - 12;
+    if (px + w > window.innerWidth - 8) px = x - w - 14;
+    if (px < 8) px = 8;
+    if (py < 8) py = y + 16;
+    tip.style.transform = "translate(" + Math.round(px) + "px," + Math.round(py) + "px)";
   }
+  function show(g, x, y){
+    if (current && current !== g) current.classList.remove("is-tip");
+    current = g; g.classList.add("is-tip");
+    tip.textContent = "";
+    var b = document.createElement("b"); b.textContent = g.getAttribute("data-tip-title");
+    tip.appendChild(b); tip.appendChild(document.createTextNode(g.getAttribute("data-tip")));
+    tip.classList.add("on"); place(x, y);
+  }
+  function hide(){
+    if (current) current.classList.remove("is-tip");
+    current = null; tip.classList.remove("on");
+  }
+  document.addEventListener("pointermove", function(e){
+    if (e.pointerType === "touch") return;
+    var g = e.target.closest && e.target.closest(".rv-hit");
+    if (g) show(g, e.clientX, e.clientY); else if (current) hide();
+  });
+  document.addEventListener("click", function(e){
+    var g = e.target.closest && e.target.closest(".rv-hit");
+    if (g){ var r = g.getBoundingClientRect(); show(g, r.left + r.width / 2, r.top); }
+    else hide();
+  });
+  window.addEventListener("scroll", function(){ if (current) hide(); }, { passive:true });
 
-  figure1(); figure2();
-
-  (function(){
-    var rail = document.getElementById('railnav');
-    if (rail){
-      var links = Array.prototype.slice.call(rail.querySelectorAll('a'));
-      var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
-      var syncRail = function(){
-        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h')) || 54;
-        var probe = window.scrollY + h + window.innerHeight * 0.22, current = 0;
-        targets.forEach(function(t,i){
-          if (!t) return;
-          if (t.getBoundingClientRect().top + window.scrollY <= probe) current = i;
-        });
-        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = links.length - 1;
-        links.forEach(function(a,i){ a.classList.toggle('is-current', i === current); });
-      };
-      links.forEach(function(a){ a.addEventListener('click', function(){ setTimeout(syncRail, 460); }); });
-      window.addEventListener('scroll', syncRail, { passive:true });
-      window.addEventListener('resize', syncRail);
-      requestAnimationFrame(syncRail);
-    }
-
-    /* Session-only override; every load follows the visitor's OS preference. */
-    var root = document.documentElement, btn = document.getElementById('themeBtn');
-    if (!btn) return;
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    function effective(){ return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); }
-    function sync(){
-      var e = effective();
-      btn.textContent = e === 'dark' ? '☽' : '☀';
-      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
-      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
-    }
-    btn.addEventListener('click', function(){
-      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
-      sync();
-    });
-    if (mq.addEventListener) mq.addEventListener('change', sync);
-    else if (mq.addListener) mq.addListener(sync);
-    sync();
-  })();
-
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+  window.addEventListener("load", draw);
 })();
 </script>
 </body>

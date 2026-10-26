@@ -3,92 +3,622 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Case studies from Jacob Zamarripa — project delivery, service delivery and technical operations across infrastructure, distributed support and operational improvement.">
+<title>Jacob Zamarripa | Project manager who builds the systems he runs</title>
+<meta name="description" content="Jacob Zamarripa, project manager and operator. Four case studies from 2016 to 2026: distributed technical support at Apple, field tools from fiber installation, a fleet proposal that was selected and is now in service, and OmniSight, the AI-assisted PMO platform he conceived and ran.">
 <meta name="author" content="Jacob Zamarripa">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Jacob Zamarripa — Case Studies">
-<meta property="og:description" content="Four case studies: fiber delivery, field workflows, distributed technical support and an operational decision proposal.">
+<meta property="og:title" content="Jacob Zamarripa: technician, lead, project manager">
+<meta property="og:description" content="Four case studies, in career order: Apple Period Review, Nexus FiberOps Unified, a fleet proposal now in service, and OmniSight.">
 <meta property="og:url" content="https://jacobzamarripa.github.io/portfolio/">
+<meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/og-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jacob Zamarripa: technician, lead, project manager. Four case studies, 2016 to 2026.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jacobzamarripa.github.io/portfolio/og-home.png">
 <link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128225;</text></svg>">
-<title>Jacob Zamarripa — Case Studies</title>
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="./assets/frame.css">
+<script src="./assets/frame.js" defer></script>
+<link rel="stylesheet" href="./assets/portfolio-explore.css">
+<script src="./assets/explore-data.js" defer></script>
+<script src="./assets/portfolio-explore.js" defer></script>
 <style>
-:root{
-  --bg:#f1f5f9; --card:#ffffff; --border:#e2e8f0;
-  --ink:#0f172a; --muted:#64748b; --accent:#2563eb; --accent-deep:#1d4ed8;
+/* ---- home: layout tokens ---- */
+.h{--rail:132px;--line-x:112px;--node:14px}
+@media (max-width:760px){.h{--rail:0px;--line-x:7px;--node:12px}}
+
+.h-main{padding-bottom:clamp(56px,8vw,112px)}
+
+/* ---- hero ---- */
+.h-hero{position:relative;padding:clamp(40px,7vw,96px) 0 0}
+.h-name{
+  margin:0;
+  font:800 clamp(3.1rem,12.2vw,11.25rem)/.84 var(--fr-sans);
+  font-stretch:125%;letter-spacing:-.035em;
+  color:var(--fr-ink);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0b0f19; --card:#141a26; --border:#1e293b;
-    --ink:#f1f5f9; --muted:#94a3b8; --accent:#60a5fa; --accent-deep:#93c5fd;
-  }
+.h-name span{display:block}
+.h-name span+span{margin-top:.04em}
+.h-intro-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(28px,5vw,72px);align-items:start}
+.h-intro-text{min-width:0;grid-column:1;grid-row:1}
+.h-portrait{
+  grid-column:2;grid-row:1;position:relative;
+  width:clamp(150px,17vw,236px);aspect-ratio:4/5;margin:0;
+  background:var(--fr-surface);overflow:hidden;
+  border-bottom:6px solid var(--fr-mark);
 }
-:root[data-theme="dark"]{
-  --bg:#0b0f19; --card:#141a26; --border:#1e293b;
-  --ink:#f1f5f9; --muted:#94a3b8; --accent:#60a5fa; --accent-deep:#93c5fd;
+.h-portrait-mono{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font:800 clamp(2.4rem,5vw,4.4rem)/1 var(--fr-sans);font-stretch:125%;letter-spacing:-.04em;
+  color:var(--fr-ink-2);
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased}
-.wrap{width:min(940px,100% - 40px);margin-inline:auto}
-header{padding:86px 0 42px}
-.eyebrow{font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
-h1{font-size:clamp(2.3rem,5.4vw,3.6rem);letter-spacing:-.045em;line-height:1.04;margin:14px 0 18px;font-weight:900}
-.lede{max-width:62ch;color:var(--muted);font-weight:500;margin:0}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;padding-bottom:26px}
-a.card{display:block;padding:28px;border-radius:22px;background:var(--card);border:1px solid var(--border);
-  text-decoration:none;color:inherit;transition:.2s;box-shadow:0 8px 32px rgba(15,23,42,.05)}
-a.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 14px 40px rgba(15,23,42,.1)}
-a.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.kicker{font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.card h2{font-size:23px;letter-spacing:-.03em;margin:9px 0 10px;font-weight:900}
-.card p{margin:0 0 16px;color:var(--muted);font-size:14px}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
-  padding:4px 9px;border-radius:5px;background:var(--bg);border:1px solid var(--border);color:var(--muted)}
-.go{display:inline-block;margin-top:16px;font-size:11px;font-weight:900;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--accent)}
-.note{margin:8px 0 60px;padding:16px 18px;border-radius:16px;background:var(--card);
-  border:1px solid var(--border);color:var(--muted);font-size:12.5px;max-width:74ch}
-footer{padding:0 0 80px}
-footer a{color:var(--accent);font-weight:700}
+@media (max-width:640px){
+  .h-intro-grid{grid-template-columns:1fr;gap:22px}
+  .h-portrait{grid-column:1;grid-row:1;width:112px}
+  .h-portrait-mono{font-size:2rem}
+  .h-intro-text{grid-row:2}
+}
+.h-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---- body grid shared by intro and timeline ---- */
+.h-body{position:relative;margin-top:clamp(22px,3vw,40px)}
+.h-body::before{
+  content:"";position:absolute;left:var(--line-x);top:0;bottom:0;width:2px;margin-left:-1px;
+  background:var(--fr-rule);
+}
+.h-route{
+  position:absolute;left:var(--line-x);top:0;width:4px;margin-left:-2px;
+  height:100%;background:var(--fr-mark);
+}
+.fr-motion .h-route{height:var(--drawn,100%)}
+.h-locate{
+  position:absolute;left:var(--line-x);top:0;margin-left:-2px;
+  width:min(46%,560px);height:4px;background:var(--fr-mark);
+  transform-origin:left center;
+}
+.fr-motion .h-locate{animation:h-draw .9s cubic-bezier(.6,0,.2,1) .15s both}
+@keyframes h-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.h-row{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);position:relative}
+.h-row>.h-col{grid-column:2;padding-left:clamp(20px,3vw,44px);min-width:0}
+@media (max-width:760px){.h-row>.h-col{padding-left:28px}}
+
+/* ---- intro ---- */
+.h-intro{padding:clamp(34px,5vw,64px) 0 clamp(48px,7vw,96px)}
+.h-bio{max-width:34em;font-size:clamp(1.2rem,1.9vw,1.5rem);line-height:1.5;color:var(--fr-ink)}
+.h-bio p{margin:0 0 .85em}
+.h-bio p:first-child{font-weight:500}
+.h-open{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 32px;align-items:end;
+  max-width:52rem;margin-top:30px;padding-top:18px;border-top:1px solid var(--fr-rule);
+  font:400 .9375rem/1.5 var(--fr-sans);color:var(--fr-ink-2);
+}
+.h-open p{margin:0}
+.h-open a{color:var(--fr-ink);font-weight:650;text-decoration:underline;text-decoration-color:var(--fr-mark);text-decoration-thickness:2px;text-underline-offset:4px;white-space:nowrap}
+.h-open a:hover{color:var(--fr-mark-ink)}
+.h-open a.h-latest{display:block;margin-top:6px;white-space:normal}
+@media (max-width:640px){.h-open{grid-template-columns:1fr}}
+/* Phone order: identity statement, portrait, role targets and the latest
+   case, then the rest of the bio. Desktop keeps the source order. */
+@media (max-width:640px){
+  .h-intro-text,.h-bio{display:contents}
+  .h-bio p{margin:0}
+  .h-bio p:first-child{order:1}
+  .h-portrait{grid-row:auto;order:2}
+  .h-open{order:3;margin-top:0}
+  .h-bio p+p{order:4}
+}
+
+/* ---- work heading + key ---- */
+.h-work-head{padding-bottom:clamp(30px,4vw,48px)}
+.h-work-head h2{
+  margin:0 0 6px;font:750 clamp(1.75rem,3.6vw,2.75rem)/1.05 var(--fr-sans);
+  font-stretch:110%;letter-spacing:-.02em;
+}
+.h-work-head p{margin:0 0 22px;color:var(--fr-ink-2);max-width:40em}
+.h-work-head .fr-key{max-width:60rem}
+
+/* ---- timeline ---- */
+.h-tl{list-style:none;margin:0;padding:0}
+.h-stop{padding:0 0 clamp(36px,5vw,64px)}
+.h-node{
+  position:absolute;left:var(--line-x);top:.42em;
+  width:var(--node);height:var(--node);margin-left:calc(var(--node) / -2);
+  background:var(--fr-mark);border:2px solid var(--fr-mark);
+  transition:background-color .35s ease;
+}
+.h-stop--job .h-node{border-radius:0}
+.h-stop--event .h-node{--node:10px;top:.5em;border-radius:50%}
+.h-stop--case .h-node{
+  --node:30px;top:0;border-radius:50%;
+  display:grid;place-items:center;
+  font:750 .8125rem/1 var(--fr-sans);color:#141619;font-variant-numeric:tabular-nums;
+  box-shadow:0 0 0 5px var(--fr-bg);
+}
+.fr-motion .h-node:not(.is-past){background:var(--fr-bg)}
+.fr-motion .h-stop--case .h-node:not(.is-past){color:var(--fr-mark-ink)}
+@media (max-width:760px){.h-stop--case .h-node{--node:24px;font-size:.75rem;box-shadow:0 0 0 4px var(--fr-bg)}}
+
+.h-when{
+  grid-column:1;grid-row:1;
+  padding-right:calc(var(--rail) - var(--line-x) + 22px);
+  text-align:right;
+  font:700 1.375rem/1.2 var(--fr-sans);font-stretch:72%;font-variant-numeric:tabular-nums;
+  color:var(--fr-ink);white-space:nowrap;
+}
+.h-stop--event .h-when,.h-when--minor{font-size:.9375rem;font-weight:600;color:var(--fr-muted);padding-top:.2em}
+@media (max-width:760px){
+  .h-when{grid-column:2;grid-row:1;text-align:left;padding:0 0 4px 28px;font-size:1.125rem}
+  .h-stop--event .h-when,.h-when--minor{padding-top:0}
+  .h-row>.h-col{grid-row:2}
+}
+
+.h-stop h3{
+  margin:0;font:750 clamp(1.375rem,2.4vw,1.875rem)/1.1 var(--fr-sans);
+  font-stretch:108%;letter-spacing:-.015em;
+}
+.h-dates{margin:4px 0 12px;font:500 .9375rem/1.4 var(--fr-sans);color:var(--fr-muted);font-variant-numeric:tabular-nums}
+.h-stop p{max-width:36em}
+.h-note{margin:0;color:var(--fr-ink-2)}
+.h-stop--event h3{font-size:1.125rem;font-stretch:100%;font-weight:700;letter-spacing:0}
+.h-stop--event .h-note{margin-top:4px}
+
+/* Apple ladder: a real sequence, so it steps */
+.h-ladder{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column-reverse;gap:0;max-width:26rem}
+.h-ladder li{
+  font:500 .875rem/1 var(--fr-sans);color:var(--fr-ink-2);
+  padding:8px 0 8px 10px;border-left:2px solid var(--fr-rule);border-bottom:2px solid var(--fr-rule);
+  margin-left:calc(var(--step) * 1.6rem);
+}
+.h-ladder li:first-child{color:var(--fr-ink);font-weight:700;border-color:var(--fr-ink)}
+
+/* ---- case blocks ---- */
+.h-case{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,56px);align-items:start;
+  padding:clamp(4px,1vw,10px) 0 0;
+}
+.h-case-pos{margin:0 0 6px;font:600 .875rem/1 var(--fr-sans);color:var(--fr-mark-ink);font-variant-numeric:tabular-nums}
+.h-case h3{font-size:clamp(1.625rem,3vw,2.375rem);line-height:1.04}
+.h-case .h-note{margin:0 0 16px}
+.h-go{
+  display:inline-block;font:700 1rem/1.3 var(--fr-sans);color:var(--fr-ink);
+  text-decoration:underline;text-decoration-color:var(--fr-mark);text-decoration-thickness:2px;text-underline-offset:5px;
+}
+.h-go:hover{color:var(--fr-mark-ink);text-decoration-thickness:3px}
+.h-go:focus-visible,.h-pv:focus-visible{outline:2px solid var(--fr-mark);outline-offset:4px}
+.h-pv{display:block;text-decoration:none;color:inherit}
+@media (max-width:900px){.h-case{grid-template-columns:1fr}.pv-apple,.pv-nexus,.pv-fleet{margin-left:0}}
+
+/* ===== Preview: Apple period review (printed operating review) ===== */
+.pv-apple{position:relative;max-width:470px;margin-left:auto;padding:0 14px 14px 0}
+.pv-apple::before{content:"";position:absolute;right:0;bottom:0;left:14px;top:14px;background:#ecebe6;border:1px solid #d8d7cf}
+.pv-a-page{
+  position:relative;background:#fcfcfb;color:#141413;border:1px solid #d8d7cf;
+  padding:22px 24px 20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.pv-a-top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #141413;padding-bottom:8px}
+.pv-a-top b{font-size:1.125rem;font-weight:700;letter-spacing:-.02em}
+.pv-a-top span{font-size:.6875rem;color:#6b6a65}
+.pv-a-cap{margin:10px 0 12px;font-size:.75rem;color:#52514e}
+.pv-a-grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:6px 8px;align-items:center;font-size:.6875rem;color:#6b6a65}
+.pv-a-grid em{font-style:normal;text-align:center}
+.pv-a-cell{height:22px;border:1px solid #c9c4ef;background:#4a3aa7;position:relative}
+.pv-a-cell::after{content:"";position:absolute;left:50%;top:50%;width:7px;height:4px;border:solid #fff;border-width:0 0 2px 2px;transform:translate(-50%,-70%) rotate(-45deg)}
+.fr-motion .pv-apple .pv-a-cell{transition:background-color .3s ease calc(var(--i) * 70ms)}
+.fr-motion .pv-apple:not(.is-in) .pv-a-cell{background:#efedfa}
+.fr-motion .pv-apple:not(.is-in) .pv-a-cell::after{opacity:0}
+.pv-a-cell::after{transition:opacity .3s ease calc(var(--i) * 70ms + 120ms)}
+.pv-a-foot{margin:12px 0 0;padding-top:8px;border-top:1px solid #e1e0d9;font-size:.6875rem;color:#6b6a65;display:flex;justify-content:space-between}
+@media (prefers-color-scheme:dark){
+  .pv-apple::before{background:#232321;border-color:#3a3a37}
+  .pv-a-page{background:#1a1a19;color:#f4f4f2;border-color:#3a3a37}
+  .pv-a-top{border-bottom-color:#f4f4f2}
+  .pv-a-top span,.pv-a-grid,.pv-a-foot{color:#a3a29b}
+  .pv-a-cap{color:#c3c2b7}
+  .pv-a-cell{background:#9085e9;border-color:#5b52a8}
+  .fr-motion .pv-apple:not(.is-in) .pv-a-cell{background:#26243a}
+  .pv-a-foot{border-top-color:#2c2c2a}
+}
+
+/* ===== Preview: Nexus (rugged field tool, iPad first, phone second) ===== */
+.pv-nexus{position:relative;max-width:540px;margin-left:auto;padding:0 0 34px}
+.pv-n-ipad{
+  background:#0a0f1a;border-radius:22px;padding:12px;
+  box-shadow:inset 0 0 0 2px #2a3242;
+}
+.pv-n-screen{background:#0f172a;border-radius:10px;overflow:hidden;aspect-ratio:4/3;display:grid;grid-template-rows:auto 1fr;color:#e2e8f0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.pv-n-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #1e293b;font-size:.8125rem;font-weight:700}
+.pv-n-bolt{width:20px;height:20px;border-radius:6px;background:#020617;box-shadow:inset 0 0 0 1px #334155;display:grid;place-items:center}
+.pv-n-bar small{margin-left:auto;font-size:.625rem;font-weight:700;color:#94a3b8}
+.pv-n-body{display:grid;grid-template-columns:1.3fr 1fr;gap:10px;padding:12px}
+.pv-n-list{display:grid;gap:7px;align-content:start}
+.pv-n-item{display:grid;grid-template-columns:8px 1fr 34px;gap:8px;align-items:center;background:#1e293b;border-radius:7px;padding:8px}
+.pv-n-item i{width:8px;height:8px;border-radius:50%}
+.pv-n-item b{height:6px;border-radius:3px;background:#334155}
+.pv-n-item s{height:6px;border-radius:3px;background:#475569;text-decoration:none}
+.pv-n-side{background:#1e293b;border-radius:8px;padding:10px;display:grid;align-content:space-between}
+.pv-n-side b{font-size:1.75rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.pv-n-side span{font-size:.625rem;color:#94a3b8;font-weight:600}
+.pv-n-gauge{height:8px;border-radius:4px;background:#334155;overflow:hidden}
+.pv-n-gauge i{display:block;height:100%;width:72%;background:#059669}
+.pv-n-phone{
+  position:absolute;right:-6px;bottom:0;width:31%;
+  background:#0a0f1a;border-radius:20px;padding:7px;box-shadow:inset 0 0 0 2px #2a3242,0 0 0 6px var(--fr-bg);
+}
+.pv-n-pscreen{background:#f8fafc;border-radius:14px;aspect-ratio:9/17;display:grid;align-content:center;justify-items:center;gap:8px;padding:10px}
+.pv-n-pscreen svg{width:78%;height:auto;display:block}
+.pv-n-pscreen span{font:700 .5625rem/1 system-ui,sans-serif;background:#2563eb;color:#fff;border-radius:6px;padding:6px 8px}
+.fr-motion .pv-nexus .pv-n-phone{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.fr-motion .pv-nexus:not(.is-in) .pv-n-phone{transform:translateY(18px)}
+
+/* ===== Preview: Fleet (spec drawing becoming a finished truck) ===== */
+.pv-fleet{
+  position:relative;max-width:540px;margin-left:auto;
+  background-color:#1d3e6b;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:18px 18px;
+  padding:18px 18px 40px;color:#dbe7f5;
+}
+.pv-f-tag{display:flex;justify-content:space-between;font:600 .6875rem/1 var(--fr-sans);color:#b9cde6;margin-bottom:6px}
+.pv-fleet svg{display:block;width:100%;height:auto}
+.pv-f-line{fill:none;stroke:#e6eef8;stroke-width:1.4;stroke-linejoin:round}
+.pv-f-thin{stroke-width:.8}
+.pv-f-dim{fill:none;stroke:#9fb9da;stroke-width:1}
+.pv-f-dimtext{fill:#b9cde6;font:600 10px var(--fr-sans,sans-serif)}
+.pv-f-built{clip-path:inset(0 0 0 0)}
+.fr-motion .pv-fleet .pv-f-built{transition:clip-path 1.6s cubic-bezier(.65,0,.35,1) .2s}
+.fr-motion .pv-fleet:not(.is-in) .pv-f-built{clip-path:inset(0 100% 0 0)}
+.pv-f-stamp{position:absolute;right:16px;bottom:10px;font:700 .6875rem/1 var(--fr-sans);color:#fff;border:1.5px solid #fff;padding:5px 7px}
+.fr-motion .pv-fleet .pv-f-stamp{transition:opacity .4s ease 1.6s}
+.fr-motion .pv-fleet:not(.is-in) .pv-f-stamp{opacity:0}
+
+/* ===== OmniSight: the most prominent stop ===== */
+.h-stop--omni{padding-bottom:0}
+.h-omni-text{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:end;margin-bottom:28px}
+.h-omni-text h3{font:900 clamp(2.75rem,6.4vw,5.5rem)/.9 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;letter-spacing:-.055em}
+.h-omni-text .h-note{margin:0 0 14px}
+@media (max-width:900px){.h-omni-text{grid-template-columns:1fr;align-items:start}}
+
+.pv-omni{
+  --o-bg:#f1f5f9;--o-card:#ffffff;--o-border:#e2e8f0;--o-ink:#0f172a;--o-muted:#5e6b7f;--o-accent:#3b82f6;--o-accent-text:#1d4ed8;
+  background:var(--o-bg);color:var(--o-ink);border:1px solid var(--o-border);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:clamp(14px,2.2vw,26px);
+}
+@media (prefers-color-scheme:dark){
+  .pv-omni{--o-bg:#0b0f19;--o-card:#141a26;--o-border:#1e293b;--o-ink:#f1f5f9;--o-muted:#94a3b8;--o-accent:#60a5fa;--o-accent-text:#60a5fa}
+}
+.pv-o-top{display:flex;align-items:center;gap:12px;margin-bottom:clamp(14px,2vw,22px);flex-wrap:wrap}
+.pv-o-logo{font-weight:900;letter-spacing:-.06em;font-size:1.375rem;line-height:1}
+.pv-o-logo span{color:var(--o-accent)}
+.pv-o-chip{font-size:.6875rem;font-weight:700;color:var(--o-accent-text);background:color-mix(in srgb,var(--o-accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--o-accent) 30%,transparent);border-radius:999px;padding:4px 10px}
+.pv-o-top small{margin-left:auto;font-size:.6875rem;font-weight:700;color:var(--o-muted)}
+.pv-o-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(10px,1.6vw,18px)}
+.pv-o-card{background:var(--o-card);border:1px solid var(--o-border);border-radius:16px;padding:clamp(12px,1.8vw,20px);min-width:0}
+.pv-o-card h4{margin:0 0 12px;font-size:.75rem;font-weight:800;color:var(--o-muted);letter-spacing:-.005em}
+.pv-o-strip{display:flex;align-items:flex-end;gap:3px;height:clamp(110px,14vw,170px)}
+.pv-o-bar{flex:1 1 0;min-width:0;height:var(--h);border-radius:3px 3px 0 0;display:block}
+.pv-o-ug{background:#f97316}
+.pv-o-ae{background:repeating-linear-gradient(115deg,#94a3b8,#94a3b8 3px,#e2e8f0 3px,#e2e8f0 6px)}
+.pv-o-fib{background:linear-gradient(to bottom,#64748b 0%,#171717 25%,#171717 75%,#000 100%)}
+.pv-o-nap{background:linear-gradient(180deg,#22d3ee 0%,#6366f1 30%,#4338ca 100%)}
+.pv-o-done{background:#22c55e}
+@media (prefers-color-scheme:dark){.pv-o-fib{background:linear-gradient(to bottom,#94a3b8 0%,#e2e8f0 30%,#e2e8f0 100%)}}
+.fr-motion .pv-omni .pv-o-bar{transition:height .7s cubic-bezier(.2,.8,.2,1) calc(var(--i) * 18ms)}
+.fr-motion .pv-omni:not(.is-in) .pv-o-bar{height:4%}
+.pv-o-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:.6875rem;font-weight:700;color:var(--o-muted)}
+.pv-o-legend span{display:inline-flex;align-items:center;gap:6px}
+.pv-o-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.pv-o-stats{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,16px) 14px;align-content:start}
+.pv-o-stat b{display:block;font-weight:900;letter-spacing:-.05em;font-size:clamp(1.75rem,3.4vw,2.75rem);line-height:1}
+.pv-o-stat span{display:block;margin-top:4px;font-size:.75rem;font-weight:700;color:var(--o-muted);line-height:1.3}
+.pv-o-stat--lead{grid-column:1/-1}
+.pv-o-stat--wide{grid-column:1/-1;padding-top:12px;border-top:1px solid var(--o-border)}
+.pv-o-stat--wide b{color:var(--o-accent)}
+.pv-o-cap{margin:12px 0 0;font:500 .8125rem/1.4 var(--fr-sans);color:var(--fr-muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media (max-width:760px){.pv-o-grid{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){
+  .h-locate,.h-route,.h-node{animation:none!important;transition:none!important}
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-<header>
-  <div class="eyebrow">Jacob Zamarripa</div>
-  <h1>Project delivery, service delivery &amp; technical operations.</h1>
-  <p class="lede">Four case studies from project delivery, field operations, distributed technical support and continual improvement. Explore the systems I built, the team I led and the decision document I authored.</p>
+<body class="fr-page h">
+<a class="fr-skip" href="#main">Skip to content</a>
+
+<header class="fr-head" data-frame-case="home">
+  <div class="fr-head-in">
+    <a class="fr-name" href="./" aria-label="Jacob Zamarripa, home"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M12.5 6.5v12.2a4.6 4.6 0 0 1-9.2 0" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><path d="M16.6 6.5h11L16.6 22.6h11" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><rect x="3" y="26.4" width="26" height="2.6" fill="var(--fr-mark)"/></svg><span>Jacob Zamarripa</span></a>
+    <p class="fr-head-aside" style="margin:0 0 0 auto"><a href="#work">Four case studies, 2016 to 2026</a></p>
+  </div>
 </header>
 
-<div class="cards">
-  <a class="card" href="./omni-pmo/">
-    <div class="kicker">Case study 01 &middot; Program delivery</div>
-    <h2>OmniSight</h2>
-    <p>The delivery-intelligence platform I conceived, specified and ran as Construction Project Manager — coordinating roughly 40 concurrent FTTH builds across nine municipalities and four vendors.</p>
-    <div class="tags"><span class="tag">PMO</span><span class="tag">Vendor governance</span><span class="tag">Dashboards</span><span class="tag">Apps Script</span></div>
-    <span class="go">Open the walkthrough &rarr;</span>
-  </a>
+<main id="main" class="h-main fr-wrap">
+  <section class="h-hero" aria-labelledby="who">
+    <h1 class="h-name" id="who"><span>Jacob</span><span>Zamarripa</span></h1>
+  </section>
 
-  <a class="card" href="./centric-fiberops/">
-    <div class="kicker">Case study 02 &middot; Field operations</div>
-    <h2>Nexus FiberOps Unified</h2>
-    <p>Four tools I built on the job across four years, from a barcode pipeline made of spreadsheet formulas to a project tracker I demonstrated to the VP. The QR pipeline remained in use after my departure.</p>
-    <div class="tags"><span class="tag">Workflow design</span><span class="tag">Data quality</span><span class="tag">Field ops</span><span class="tag">Integrations</span></div>
-    <span class="go">Open the walkthrough &rarr;</span>
-  </a>
-  <a class="card" href="./apple-rtl/"><div class="kicker">Case study 03 &middot; Technical support operations</div><h2>Apple: Period Review</h2><p>How I led a distributed 29-advisor roster through a temporary Retail Team Lead assignment, connected diagnosis to coaching, and exceeded the site benchmark across four full periods.</p><div class="tags"><span class="tag">Distributed leadership</span><span class="tag">KPI analysis</span><span class="tag">Training</span></div><span class="go">Open the case study &rarr;</span></a>
-  <a class="card" href="./ci-fleet/"><div class="kicker">Case study 04 &middot; Continual improvement</div><h2>From Field Friction to Fleet Proposal</h2><p>The winning joint entry whose proposal I authored: user requirements, an itemized upfit and a phased implementation proposal, followed by what I would validate differently today.</p><div class="tags"><span class="tag">Requirements</span><span class="tag">Decision writing</span><span class="tag">Retrospective</span></div><span class="go">Open the retrospective &rarr;</span></a>
-</div>
+  <div class="h-body" id="route">
+    <span class="h-locate" aria-hidden="true"></span>
+    <span class="h-route" aria-hidden="true"></span>
 
-<p class="note"><strong>On the data.</strong> OmniSight and Nexus use invented demo records. Apple uses aggregate historical performance results and a labelled illustrative diagnosis chart. The challenge page recreates the proposal’s reasoning and separates reported outcomes from retrospective recommendations. Each page explains its evidence. These case studies are not affiliated with or endorsed by former employers.</p>
+    <div class="h-row h-intro">
+      <div class="h-col h-intro-grid">
+          <figure class="h-portrait">
+      <span class="h-portrait-mono" aria-hidden="true">JZ</span>
+      <img src="./assets/headshot.jpg" alt="Jacob Zamarripa" width="480" height="600" onerror="this.remove()">
+    </figure>
+        <div class="h-intro-text">
+        <div class="h-bio">
+          <p>I manage projects, people and AI, and I build the systems that connect them. I find where the work breaks down, design the tool that fixes it, direct how it gets built, and run it every day until the results show up in the numbers.</p>
+          <p>AI made me faster at work I was already doing. At Apple I went from the sales floor to leading a distributed support team. In fiber I went from installer to installation lead to project manager over forty concurrent builds. In every role, people did the work. My job was to give them tools built to outlast me: processes a team can run on its own, whether I’m online or not, and in one case, still in use after I left.</p>
+        </div>
+        <div class="h-open">
+          <p>Open to product operations, technical program, implementation and operations manager roles. Based in the San Antonio, Texas area.
+            <a class="h-latest" href="./omni-pmo/">Most recent: OmniSight, the PMO platform I ran as a project manager</a></p>
+          <a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Contact me on LinkedIn</a>
+        </div>
+        </div>
+      </div>
+    </div>
 
-<footer>
-  <a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a>
+    <div class="h-row"><div class="h-col"><section id="explore" aria-label="Explore the evidence" hidden></section></div></div>
+
+    <section id="work" aria-labelledby="work-title">
+      <div class="h-row h-work-head">
+        <div class="h-col">
+          <h2 id="work-title">Technician, lead, project manager</h2>
+          <p>Four case studies, placed where they happened.</p>
+          <div class="fr-key">
+            <p class="fr-key-title">How each claim is sourced</p>
+            <dl>
+              <div><dt><span class="fr-ev" data-ev="measured">Measured</span></dt><dd>Produced by an employer’s system or the live platform, not by me.</dd></div>
+              <div><dt><span class="fr-ev" data-ev="recorded">Recorded</span></dt><dd>My own artifacts, written at the time: plans, trackers, curriculum.</dd></div>
+              <div><dt><span class="fr-ev" data-ev="recalled">Recalled</span></dt><dd>My account, told now.</dd></div>
+              <div><dt><span class="fr-ev" data-ev="illustrative">Illustrative</span></dt><dd>Invented demo data or a recreation, shown to explain how something works.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <ol class="h-tl">
+        <!-- Apple -->
+        <li class="h-row h-stop h-stop--job">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">2016</span>
+          <div class="h-col">
+            <h3>Apple</h3>
+            <p class="h-dates">Oct 2016 – Apr 2021</p>
+            <p class="h-note">Apple is where I found my voice. I started part-time in sales and left leading a distributed support team. Along the way I learned I could see where a system was breaking and bring people along to fix it. I coached teammates into their own promotions, and learned that moving up meant having my replacement ready.</p>
+            <ol class="h-ladder" aria-label="Titles held, first to last">
+              <li style="--step:0">Specialist</li>
+              <li style="--step:1">Technical Specialist</li>
+              <li style="--step:2">Technical Expert</li>
+              <li style="--step:3">Genius</li>
+              <li style="--step:4">Lead Genius</li>
+            </ol>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--case">
+          <span class="h-node" aria-hidden="true">1</span>
+          <span class="h-when">2020</span>
+          <div class="h-col">
+            <div class="h-case">
+              <div>
+                <p class="h-case-pos">Case 1 of 4</p>
+                <h3>Apple: Period Review</h3>
+                <p class="h-dates">Aug 2020 – Mar 2021</p>
+                <p class="h-note">In 2020 I took a temporary Retail Team Lead assignment: 29 advisors working from home across seven stores and two time zones. The team beat the site benchmark on all four KPIs, four periods in a row. <span class="fr-ev" data-ev="measured">Measured</span></p>
+                <a class="h-go" href="./apple-rtl/">Read the period review</a>
+              </div>
+              <a class="h-pv" href="./apple-rtl/" tabindex="-1" aria-hidden="true">
+                <div class="pv-apple" data-fr-reveal>
+                  <div class="pv-a-page">
+                    <div class="pv-a-top"><b>Period review</b><span>FY21 P02–P05</span></div>
+                    <p class="pv-a-cap">Team against site benchmark, four KPIs</p>
+                    <div class="pv-a-grid">
+                      <span></span><em>P02</em><em>P03</em><em>P04</em><em>P05</em>
+                      <span>KPI 1</span><i class="pv-a-cell" style="--i:0"></i><i class="pv-a-cell" style="--i:1"></i><i class="pv-a-cell" style="--i:2"></i><i class="pv-a-cell" style="--i:3"></i>
+                      <span>KPI 2</span><i class="pv-a-cell" style="--i:4"></i><i class="pv-a-cell" style="--i:5"></i><i class="pv-a-cell" style="--i:6"></i><i class="pv-a-cell" style="--i:7"></i>
+                      <span>KPI 3</span><i class="pv-a-cell" style="--i:8"></i><i class="pv-a-cell" style="--i:9"></i><i class="pv-a-cell" style="--i:10"></i><i class="pv-a-cell" style="--i:11"></i>
+                      <span>KPI 4</span><i class="pv-a-cell" style="--i:12"></i><i class="pv-a-cell" style="--i:13"></i><i class="pv-a-cell" style="--i:14"></i><i class="pv-a-cell" style="--i:15"></i>
+                    </div>
+                    <p class="pv-a-foot"><span>Above benchmark</span><span>16 of 16</span></p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Centric -->
+        <li class="h-row h-stop h-stop--job">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">2022</span>
+          <div class="h-col">
+            <h3>Centric Fiber</h3>
+            <p class="h-dates">Oct 2022 – Jan 2026</p>
+            <p class="h-note">In-Home Installation Technician, Oct 2022 to Dec 2024. Every install meant typing the same equipment IDs into several systems by hand, so I built a QR workflow out of spreadsheet formulas that let technicians scan them instead. It is still in use, and the technicians on it timed closeout at about 2 minutes, down from 10. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--event">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">2025</span>
+          <div class="h-col">
+            <h3>Fiber Installation Lead</h3>
+            <p class="h-note">Jan 2025 to Jan 2026. I lead with data, especially where no one expects it. The official schedule didn’t show what was actually being installed, so I built the L-FIT tracker to record it, then a monthly dashboard of technician output for my manager and the VP. 2025 was also the year AI caught up with my ideas, and what used to stay a spreadsheet started becoming an application.</p>
+          </div>
+        </li>
+
+        <!-- The hinge -->
+        <li class="h-row h-stop h-stop--event">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">Nov 2025</span>
+          <div class="h-col">
+            <h3>The dashboard that got noticed</h3>
+            <p class="h-note">A former director who had followed those monthly reports offered me my first Project Manager role.</p>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--event">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">Dec 2025</span>
+          <div class="h-col">
+            <h3>A project tracker in front of the VP</h3>
+            <p class="h-note">Once leadership saw the results, they wanted more of it. I was asked to build a tracker for the Austin and San Antonio builds, demonstrated it to the VP and upper management before I left, and wrote the handoff guide for the manager who kept it.</p>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--case">
+          <span class="h-node" aria-hidden="true">2</span>
+          <span class="h-when h-when--minor">Rebuilt 2026</span>
+          <div class="h-col">
+            <div class="h-case">
+              <div>
+                <p class="h-case-pos">Case 2 of 4</p>
+                <h3>Nexus FiberOps Unified</h3>
+                <p class="h-dates">Built in 2026, never deployed</p>
+                <p class="h-note">After I left, I rebuilt the Centric tools as one field app to see how they would work designed together: built for the iPad, mobile-first throughout. It was never deployed, and the records inside are invented. <span class="fr-ev" data-ev="illustrative">Illustrative</span></p>
+                <a class="h-go" href="./centric-fiberops/">Try the Nexus prototype</a>
+              </div>
+              <a class="h-pv" href="./centric-fiberops/" tabindex="-1" aria-hidden="true">
+                <div class="pv-nexus" data-fr-reveal>
+                  <div class="pv-n-ipad">
+                    <div class="pv-n-screen">
+                      <div class="pv-n-bar"><span class="pv-n-bolt"><svg width="10" height="12" viewBox="0 0 10 12"><path d="M6 0 0 7h4l-1 5 7-7.5H6z" fill="#fff"/></svg></span>Nexus<small>Field lead</small></div>
+                      <div class="pv-n-body">
+                        <div class="pv-n-list">
+                          <div class="pv-n-item"><i style="background:#059669"></i><b></b><s></s></div>
+                          <div class="pv-n-item"><i style="background:#059669"></i><b style="width:80%"></b><s></s></div>
+                          <div class="pv-n-item"><i style="background:#f59e0b"></i><b style="width:64%"></b><s></s></div>
+                          <div class="pv-n-item"><i style="background:#059669"></i><b style="width:88%"></b><s></s></div>
+                          <div class="pv-n-item"><i style="background:#f43f5e"></i><b style="width:56%"></b><s></s></div>
+                        </div>
+                        <div class="pv-n-side"><span>Today’s installs</span><div class="pv-n-gauge"><i></i></div><div class="pv-n-gauge"><i style="width:46%;background:#f59e0b"></i></div><span>Drops scanned</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pv-n-phone"><div class="pv-n-pscreen"><svg viewBox="-1 -1 23 23" shape-rendering="crispEdges"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM16 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM20 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM10 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM11 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM13 8h1v1h-1zM14 8h1v1h-1zM17 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM10 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM6 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM17 11h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM3 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM10 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM9 13h1v1h-1zM14 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM9 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM0 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM11 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM19 15h1v1h-1zM20 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM16 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM10 18h1v1h-1zM14 18h1v1h-1zM18 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM13 19h1v1h-1zM14 19h1v1h-1zM15 19h1v1h-1zM19 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1z" fill="#0f172a"/></svg><span>Scan drop</span></div></div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Omni -->
+        <li class="h-row h-stop h-stop--job">
+          <span class="h-node" aria-hidden="true"></span>
+          <span class="h-when">Jan 2026</span>
+          <div class="h-col">
+            <h3>Omni Fiber</h3>
+            <p class="h-dates">Jan – Aug 2026</p>
+            <p class="h-note">Construction Project Manager. Roughly 40 fiber-to-the-home builds running at once across nine municipalities, delivered through four construction vendors.</p>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--case">
+          <span class="h-node" aria-hidden="true">3</span>
+          <span class="h-when">Feb 2026</span>
+          <div class="h-col">
+            <div class="h-case">
+              <div>
+                <p class="h-case-pos">Case 3 of 4</p>
+                <h3>Right-Sizing the Fleet</h3>
+                <p class="h-dates">Jan – Feb 2026</p>
+                <p class="h-note">Weeks after leaving Centric, I authored the proposal for a former teammate’s entry in the company’s continual-improvement challenge. It turned a technician’s daily loadout into a vehicle specification and was selected as the winning submission. The trucks are now in service, built to its main components.</p>
+                <a class="h-go" href="./ci-fleet/">See how it went from proposal to fleet</a>
+              </div>
+              <a class="h-pv" href="./ci-fleet/" tabindex="-1" aria-hidden="true">
+                <div class="pv-fleet" data-fr-reveal>
+                  <div class="pv-f-tag"><span>Upfit specification</span><span>Side elevation</span></div>
+                  <svg viewBox="0 0 360 168" role="presentation">
+                    <g class="pv-f-spec"><g transform="translate(-14.7 -1) scale(.38)"><path class="pv-f-line pv-f-thin" d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 Q 212.27 220.17 279.38 217.98 Q 347.36 217.10 351.75 299.56 L 385.96 299.56 Z"/><path class="pv-f-line pv-f-thin" d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 Q 857.89 225.00 787.28 216.67 Q 718.42 210.53 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path class="pv-f-line pv-f-thin" d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path class="pv-f-line pv-f-thin" d="M 345.61 92.98 L 164.90 93.86 Q 152.18 93.86 148.68 105.70 L 136.83 129.82 Q 133.32 142.10 145.61 143.42 L 339.90 143.42 Q 348.24 142.54 349.12 134.21 L 352.19 106.58 Q 353.50 94.73 345.61 92.98 Z"/><rect class="pv-f-line pv-f-thin" x="231" y="114" width="22" height="15" rx="2"/><path class="pv-f-line pv-f-thin" d="M 373.68 146.93 Q 370.17 155.70 359.64 156.14 L 112.71 152.63 M 374.12 151.31 Q 370.17 160.96 359.64 161.84 L 110.52 157.89"/><path class="pv-f-line pv-f-thin" d="M 508.77 101.31 L 411.40 100.88 Q 403.50 101.31 403.06 109.65 L 404.82 152.19 Q 407.01 159.21 414.91 160.09 L 515.35 165.35 Z"/><path class="pv-f-line pv-f-thin" d="M 532.01 103.07 Q 592.10 102.63 615.35 111.84 L 669.73 155.26 L 664.91 171.05 L 526.31 165.79 L 521.49 101.75 Z"/><path class="pv-f-line pv-f-thin" d="M 515.35 93.86 L 526.31 165.35 L 532.89 281.14 L 527.19 299.56 M 381.57 104.38 L 385.96 286.84 M 694.29 176.31 L 698.24 284.65 L 694.73 300.44 M 707.45 155.70 L 692.98 174.56 M 692.98 280.70 L 533.33 280.70 L 386.84 274.12"/><path class="pv-f-line pv-f-thin" d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><path class="pv-f-line pv-f-thin" d="M 690.35 213.16 L 388.59 208.77 M 376.31 209.65 L 153.94 203.51"/><rect class="pv-f-line pv-f-thin" x="484" y="185" width="40" height="9" rx="1.5"/><rect class="pv-f-line pv-f-thin" x="625" y="190" width="40" height="9" rx="1.5"/><path class="pv-f-line pv-f-thin" d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path class="pv-f-line pv-f-thin" d="M 886.40 189.03 Q 878.94 182.89 869.73 187.28 L 860.52 194.30 L 860.52 215.35 L 885.08 219.74 Z"/><path class="pv-f-line pv-f-thin" d="M 112.27 173.68 Q 135.52 171.05 143.85 178.95 L 141.66 212.72 Q 127.62 223.24 110.08 218.86 Z"/><path class="pv-f-line pv-f-thin" d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path class="pv-f-line pv-f-thin" d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path class="pv-f-line pv-f-thin" d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path class="pv-f-line pv-f-thin" d="M 322.36 75.88 L 169.29 76.75"/><rect class="pv-f-line pv-f-thin" x="301" y="61" width="29" height="4" rx="1"/><rect class="pv-f-line pv-f-thin" x="168" y="61" width="45" height="4" rx="1"/><rect class="pv-f-line pv-f-thin" x="112" y="37" width="240" height="24" rx="2"/><rect class="pv-f-line pv-f-thin" x="102" y="40" width="12" height="18" rx="2"/><circle class="pv-f-line pv-f-thin" cx="282" cy="288" r="62"/><circle class="pv-f-line pv-f-thin" cx="282" cy="288" r="37"/><path class="pv-f-line pv-f-thin" d="M283.9 298.8L291.6 319.6L280.3 321.0L278.8 298.5ZM273.6 295.1L259.5 312.1L252.6 303.0L271.3 290.5ZM271.7 284.2L249.8 280.6L254.3 270.0L274.5 280.0ZM280.1 277.2L272.4 256.4L283.7 255.0L285.2 277.5ZM290.4 280.9L304.5 263.9L311.4 273.0L292.7 285.5ZM292.3 291.8L314.2 295.4L309.7 306.0L289.5 296.0Z"/><circle class="pv-f-line pv-f-thin" cx="282" cy="288" r="8"/><circle class="pv-f-line pv-f-thin" cx="782" cy="288" r="62"/><circle class="pv-f-line pv-f-thin" cx="782" cy="288" r="37"/><path class="pv-f-line pv-f-thin" d="M783.9 298.8L791.6 319.6L780.3 321.0L778.8 298.5ZM773.6 295.1L759.5 312.1L752.6 303.0L771.3 290.5ZM771.7 284.2L749.8 280.6L754.3 270.0L774.5 280.0ZM780.1 277.2L772.4 256.4L783.7 255.0L785.2 277.5ZM790.4 280.9L804.5 263.9L811.4 273.0L792.7 285.5ZM792.3 291.8L814.2 295.4L809.7 306.0L789.5 296.0Z"/><circle class="pv-f-line pv-f-thin" cx="782" cy="288" r="8"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="118" y="180.0" width="246" height="48.0" rx="2"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="121" y="196" width="4" height="16" rx="1"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="132" y="190.0" width="62" height="26" rx="2"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="198" y="190.0" width="62" height="26" rx="2"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="300" y="108.0" width="68" height="72" rx="8"/><rect class="pv-f-line pv-f-thin" stroke-dasharray="3 2" x="224" y="116.0" width="68" height="64" rx="3"/></g><path class="pv-f-dim" d="M23 150h304M23 144v12M327 144v12M344 8v124M338 8h12M338 132h12"/><text class="pv-f-dimtext" x="178" y="164" text-anchor="middle">L</text><text class="pv-f-dimtext" x="358" y="72" text-anchor="end">H</text></g>
+                    <g class="pv-f-built"><g transform="translate(-14.7 -1) scale(.38)"><defs><clipPath id="vehicle-home"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-home" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-home)"><image href="ci-fleet/artwork/pickup-cutaway-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g><rect x="112" y="37" width="240" height="24" rx="2" fill="#eceeec" stroke="#293039" stroke-width="1.5"/></g></g>
+                  </svg>
+                  <span class="pv-f-stamp">In service</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="h-row h-stop h-stop--case h-stop--omni">
+          <span class="h-node" aria-hidden="true">4</span>
+          <span class="h-when">2026</span>
+          <div class="h-col">
+            <div class="h-omni-text">
+              <div>
+                <p class="h-case-pos">Case 4 of 4</p>
+                <h3>OmniSight</h3>
+              </div>
+              <div>
+                <p class="h-note">Forty builds produced a constant stream of vendor reports that never matched the system of record. Everyone treated the mismatch as part of the job. I treated it as a problem to solve: I designed OmniSight to pull everything into one place and flag where the sources disagreed, directed its AI-assisted build, and ran it every day on my own initiative.</p>
+                <a class="h-go" href="./omni-pmo/">Walk through OmniSight</a>
+              </div>
+            </div>
+            <a class="h-pv" href="./omni-pmo/" tabindex="-1" aria-hidden="true">
+              <div class="pv-omni" data-fr-reveal>
+                <div class="pv-o-top"><span class="pv-o-logo">OMNI<span>SIGHT</span></span><span class="pv-o-chip">PMO Operating System</span><small>Portfolio view</small></div>
+                <div class="pv-o-grid">
+                  <div class="pv-o-card">
+                    <h4>Every active build, by construction stage</h4>
+                    <div class="pv-o-strip"><i class="pv-o-bar pv-o-done" style="--h:100%;--i:0"></i><i class="pv-o-bar pv-o-done" style="--h:94%;--i:1"></i><i class="pv-o-bar pv-o-done" style="--h:100%;--i:2"></i><i class="pv-o-bar pv-o-done" style="--h:94%;--i:3"></i><i class="pv-o-bar pv-o-done" style="--h:100%;--i:4"></i><i class="pv-o-bar pv-o-done" style="--h:94%;--i:5"></i><i class="pv-o-bar pv-o-done" style="--h:100%;--i:6"></i><i class="pv-o-bar pv-o-done" style="--h:100%;--i:7"></i><i class="pv-o-bar pv-o-nap" style="--h:78%;--i:8"></i><i class="pv-o-bar pv-o-nap" style="--h:84%;--i:9"></i><i class="pv-o-bar pv-o-nap" style="--h:83%;--i:10"></i><i class="pv-o-bar pv-o-nap" style="--h:82%;--i:11"></i><i class="pv-o-bar pv-o-nap" style="--h:83%;--i:12"></i><i class="pv-o-bar pv-o-nap" style="--h:90%;--i:13"></i><i class="pv-o-bar pv-o-nap" style="--h:91%;--i:14"></i><i class="pv-o-bar pv-o-fib" style="--h:70%;--i:15"></i><i class="pv-o-bar pv-o-fib" style="--h:60%;--i:16"></i><i class="pv-o-bar pv-o-fib" style="--h:73%;--i:17"></i><i class="pv-o-bar pv-o-fib" style="--h:67%;--i:18"></i><i class="pv-o-bar pv-o-fib" style="--h:59%;--i:19"></i><i class="pv-o-bar pv-o-fib" style="--h:64%;--i:20"></i><i class="pv-o-bar pv-o-fib" style="--h:60%;--i:21"></i><i class="pv-o-bar pv-o-fib" style="--h:62%;--i:22"></i><i class="pv-o-bar pv-o-fib" style="--h:68%;--i:23"></i><i class="pv-o-bar pv-o-fib" style="--h:66%;--i:24"></i><i class="pv-o-bar pv-o-ae" style="--h:47%;--i:25"></i><i class="pv-o-bar pv-o-ae" style="--h:42%;--i:26"></i><i class="pv-o-bar pv-o-ae" style="--h:38%;--i:27"></i><i class="pv-o-bar pv-o-ae" style="--h:53%;--i:28"></i><i class="pv-o-bar pv-o-ae" style="--h:39%;--i:29"></i><i class="pv-o-bar pv-o-ae" style="--h:53%;--i:30"></i><i class="pv-o-bar pv-o-ug" style="--h:30%;--i:31"></i><i class="pv-o-bar pv-o-ug" style="--h:25%;--i:32"></i><i class="pv-o-bar pv-o-ug" style="--h:28%;--i:33"></i><i class="pv-o-bar pv-o-ug" style="--h:37%;--i:34"></i><i class="pv-o-bar pv-o-ug" style="--h:31%;--i:35"></i><i class="pv-o-bar pv-o-ug" style="--h:38%;--i:36"></i><i class="pv-o-bar pv-o-ug" style="--h:31%;--i:37"></i><i class="pv-o-bar pv-o-ug" style="--h:36%;--i:38"></i><i class="pv-o-bar pv-o-ug" style="--h:36%;--i:39"></i></div>
+                    <div class="pv-o-legend"><span><i class="pv-o-ug"></i>Underground</span><span><i class="pv-o-ae"></i>Aerial</span><span><i class="pv-o-fib"></i>Fiber</span><span><i class="pv-o-nap"></i>NAP</span><span><i class="pv-o-done"></i>Done</span></div>
+                  </div>
+                  <div class="pv-o-card pv-o-stats">
+                    <div class="pv-o-stat pv-o-stat--lead"><b>~40</b><span>concurrent builds</span></div>
+                    <div class="pv-o-stat"><b>9</b><span>municipalities</span></div>
+                    <div class="pv-o-stat"><b>4</b><span>construction vendors</span></div>
+                                        <div class="pv-o-stat pv-o-stat--wide"><b>6–8 h → ~2 h</b><span>weekly meeting prep <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <p class="pv-o-cap"><span class="fr-ev" data-ev="illustrative">Illustrative</span> The stage chart uses invented builds. The counts and the prep time are from the real role.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer class="fr-foot" data-frame-case="home">
+  <div class="fr-foot-in">
+    <div class="fr-foot-meta">
+      <a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Jacob Zamarripa on LinkedIn</a>
+      <p class="fr-prov">A personal portfolio. Not affiliated with or endorsed by any former employer.</p>
+    </div>
+  </div>
 </footer>
-</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var root = document.documentElement;
+  var body = document.getElementById("route");
+  if (!body || !root.classList.contains("fr-motion")) return;
+  var nodes = Array.prototype.slice.call(body.querySelectorAll(".h-node"));
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var r = body.getBoundingClientRect();
+    var drawn = Math.max(0, Math.min(r.height, window.innerHeight * 0.62 - r.top));
+    body.style.setProperty("--drawn", drawn + "px");
+    nodes.forEach(function (n) {
+      var y = n.getBoundingClientRect().top - r.top;
+      n.classList.toggle("is-past", y <= drawn);
+    });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+});
+</script>
 </body>
 </html>

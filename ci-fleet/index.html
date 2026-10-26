@@ -1,375 +1,848 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Continual Improvement Challenge | Jacob Zamarripa</title><meta name="description" content="An authored fleet right-sizing proposal: field requirements, specification, selection and an honest retrospective."><meta property="og:title" content="Turning field friction into a decision"><meta property="og:description" content="Continual Improvement Challenge: requirements, a selected proposal and what I would validate differently."><meta property="og:type" content="article"><meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/ci-fleet/og-ci-fleet.png"><link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/ci-fleet/"><style>
-/* ============================================================
-   PERIOD REVIEW — its own identity: the operating document.
-   Warm paper plane, hairline rules, ink-forward, tabular figures.
-   Deliberately NOT the cool-slate + blue of the two sibling pages,
-   and deliberately not anyone else's brand.
-   Chart palette validated with the dataviz validator, --pairs all,
-   both modes. See .private/apple-rtl/CHART_DATA.md §5.
-   ============================================================ */
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Right-Sizing the Fleet | Jacob Zamarripa</title>
+<meta name="description" content="The proposal Jacob Zamarripa authored for a Centric Fiber continual-improvement challenge: a technician’s daily loadout turned into a truck specification, selected as the winning submission and now in service.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Right-Sizing the Fleet">
+<meta property="og:description" content="A technician’s daily loadout, turned into a truck specification. Selected as the winning submission, and now in service.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/ci-fleet/og-ci-fleet.png">
+<meta property="og:url" content="https://jacobzamarripa.github.io/portfolio/ci-fleet/">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Right-Sizing the Fleet, case 3 of 4 by Jacob Zamarripa: a blueprint line drawing of a compact pickup that turns into the finished truck.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jacobzamarripa.github.io/portfolio/ci-fleet/og-ci-fleet.png">
+<link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/ci-fleet/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=B612+Mono:wght@400;700&family=Saira:wdth,wght@100..125,300..800&display=swap">
+<link rel="stylesheet" href="../assets/frame.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script src="../assets/frame.js" defer></script>
+<link rel="stylesheet" href="../assets/portfolio-explore.css">
+<script src="../assets/explore-data.js" defer></script>
+<script src="../assets/portfolio-explore.js" defer></script>
+<style>
+/* =====================================================================
+   Right-Sizing the Fleet: the drafting set. The page starts as a blueprint
+   and finishes as a truck in service. Grounds move from cyanotype blue to
+   drafting vellum (grid fading section by section) to clean paper, and the
+   drawings move from line, to marked-up zones, to a tonal rendering, to
+   colour. Saira (wide) for lettering, IBM Plex Sans for reading,
+   B612 Mono only for drawing callouts and figures.
+   Scroll motion only wipes the next drawing stage in. With JS off, reduced
+   motion, or once scrolled past, every figure shows its own finished stage.
+   Zone palette (blue / orange / violet / green) validated with the dataviz
+   validator against both page grounds.
+   ===================================================================== */
 :root{
-  --topbar-h:54px;
-  --plane:#f9f9f7;
-  --surface:#fcfcfb;
-  --sunken:#f2f1ec;
-  --ink:#0b0b0b;
-  --ink-2:#52514e;
-  --muted:#898781;
-  --rule:#e1e0d9;
-  --axis:#c3c2b7;
-  --accent:#4a3aa7;
-  --accent-wash:rgba(74,58,167,.09);
-  --accent-line:rgba(74,58,167,.28);
-  --flag:#eb6834;
-  --flag-wash:rgba(235,104,52,.13);
-  --ctx:#898781;
-  --good:#006300;
-  --ring:rgba(11,11,11,.10);
-  --shadow:0 1px 2px rgba(11,11,11,.05);
+  --bp:#1d4f86;
+  --bp-line:#eef5fc;
+  --bp-dim:#acc8e8;
+  --bp-grid:rgba(255,255,255,.075);
+  --bp-grid2:rgba(255,255,255,.15);
+  --paper:#eef2f4;
+  --paper-2:#e2e8ec;
+  --finish:#ffffff;
+  --ink:#192028;
+  --ink-2:#3c4650;
+  --muted:#5b6771;
+  --rule:#c6d0d8;
+  --gridc:29,79,134;
+  --pencil:#28303a;
+  --pencil-2:#56616c;
+  --red:#c42f27;
+  --red-ink:#ad251d;
+  --za:#2c6fbb;
+  --zb:#d07316;
+  --zc:#7a4fc4;
+  --zd:#1d9a6c;
+  --disp:"Saira","Bahnschrift","DIN Alternate","Arial Narrow",system-ui,sans-serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"B612 Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gut:clamp(16px,4vw,48px);
+
+  --fr-bg:var(--paper);
+  --fr-surface:var(--paper-2);
+  --fr-ink:var(--ink);
+  --fr-ink-2:var(--ink-2);
+  --fr-muted:var(--muted);
+  --fr-rule:var(--rule);
+  --fr-mark:var(--bp);
+  --fr-mark-ink:var(--bp);
+  --fr-sans:var(--sans);
+  --fr-serif:var(--sans);
+  --fr-max:1180px;
+  --fr-gutter:var(--gut);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --plane:#0d0d0d;
-    --surface:#1a1a19;
-    --sunken:#141413;
-    --ink:#ffffff;
-    --ink-2:#c3c2b7;
-    --muted:#898781;
-    --rule:#2c2c2a;
-    --axis:#383835;
-    --accent:#9085e9;
-    --accent-wash:rgba(144,133,233,.13);
-    --accent-line:rgba(144,133,233,.34);
-    --flag:#d95926;
-    --flag-wash:rgba(217,89,38,.18);
-    --ctx:#898781;
-    --good:#0ca30c;
-    --ring:rgba(255,255,255,.10);
-    --shadow:none;
+@media (prefers-color-scheme:dark){
+  :root{
+    --bp:#0f2949;
+    --bp-line:#dbe9f8;
+    --bp-dim:#89acd4;
+    --bp-grid:rgba(160,200,245,.06);
+    --bp-grid2:rgba(160,200,245,.12);
+    --paper:#11171d;
+    --paper-2:#19212a;
+    --finish:#0c1117;
+    --ink:#e4eaef;
+    --ink-2:#bcc6cf;
+    --muted:#909ca7;
+    --rule:#2b3640;
+    --gridc:120,170,232;
+    --pencil:#c9d3dc;
+    --pencil-2:#8d99a5;
+    --red:#ff6b5d;
+    --red-ink:#ff8e83;
+    --fr-mark:#79aee8;
+    --fr-mark-ink:#9cc4f0;
     color-scheme:dark;
   }
 }
-:root[data-theme="dark"]{
-  --plane:#0d0d0d;
-  --surface:#1a1a19;
-  --sunken:#141413;
-  --ink:#ffffff;
-  --ink-2:#c3c2b7;
-  --muted:#898781;
-  --rule:#2c2c2a;
-  --axis:#383835;
-  --accent:#9085e9;
-  --accent-wash:rgba(144,133,233,.13);
-  --accent-line:rgba(144,133,233,.34);
-  --flag:#d95926;
-  --flag-wash:rgba(217,89,38,.18);
-  --ctx:#898781;
-  --good:#0ca30c;
-  --ring:rgba(255,255,255,.10);
-  --shadow:none;
-  color-scheme:dark;
-}
 
-*{box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
-  margin:0;background:var(--plane);color:var(--ink);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:15px;line-height:1.62;
-  font-variant-numeric:tabular-nums;
-  transition:background-color .2s,color .2s;
+  margin:0;background:var(--paper);color:var(--ink);
+  font:400 1.0625rem/1.62 var(--sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
 a{color:inherit}
-h1,h2,h3,h4{margin:0;line-height:1.22;letter-spacing:-.012em}
 p{margin:0 0 1em}
-p:last-child{margin-bottom:0}
+h1,h2,h3{margin:0;font-weight:600}
+figure{margin:0}
+.wrap{width:min(1180px,100% - 2*var(--gut));margin-inline:auto}
+.wrap.wide{width:min(1280px,100% - 2*var(--gut))}
+.nw{white-space:nowrap}
 
-.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+/* ---------- frame touches ---------- */
+.fr-head .fr-title{font-family:var(--disp);font-stretch:112%;font-weight:600;letter-spacing:.01em}
+.fr-pager b{font-family:var(--disp);font-stretch:112%;font-weight:600;letter-spacing:0}
+.fr-pager a{border-top-width:2px}
+.fr-key{border-top:1px solid var(--ink)}
 
-/* ---------- topbar (shared chrome pattern) ---------- */
-.topbar{position:sticky;top:0;z-index:100;height:var(--topbar-h);
-  background:color-mix(in srgb,var(--plane) 88%,transparent);
-  backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--rule)}
-.topbar-inner{height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;gap:14px}
-.topbar-left{display:flex;align-items:center;gap:11px;min-width:0}
-.topbar-right{display:flex;align-items:center;gap:9px}
-.mark{width:24px;height:24px;border-radius:5px;border:1px solid var(--accent-line);
-  background:var(--accent-wash);display:grid;place-items:center;flex:none}
-.mark i{display:block;width:9px;height:9px;border-radius:1px;
-  border-left:2px solid var(--accent);border-bottom:2px solid var(--accent)}
-.tb-name{font-size:13px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
-.tb-pill{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:3px 9px;white-space:nowrap}
-.tb-chip{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-wash);border-radius:999px;padding:3px 9px;white-space:nowrap}
-.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);
-  background:var(--surface);color:var(--ink-2);font-size:13px;cursor:pointer;line-height:1;
-  transition:transform .18s,border-color .18s}
-.theme-btn:hover{transform:translateY(-1px);border-color:var(--axis)}
-.tb-link{font-size:12px;font-weight:800;text-decoration:none;color:var(--accent);white-space:nowrap}
-.tb-link:hover{text-decoration:underline}
+/* ---------- stage indicator ---------- */
+.stage{white-space:nowrap;display:flex;align-items:center;gap:10px;margin:0;font:400 .8125rem/1.2 var(--mono);color:var(--muted)}
+.pips{display:inline-flex;gap:4px}
+.pips i{width:16px;height:6px;border:1px solid currentColor;display:block}
+.pips i.on{background:currentColor}
 
-/* ---------- shell grid + rail ---------- */
-.shellgrid{display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;padding-top:26px;padding-bottom:60px}
-.railnav{position:sticky;top:calc(var(--topbar-h) + 20px);display:flex;flex-direction:column;gap:1px;align-self:start}
-.rail-label{padding:0 11px 8px;font-size:9px;font-weight:900;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted)}
-.railnav a{display:flex;align-items:baseline;gap:9px;padding:7px 11px;border-left:2px solid transparent;
-  color:var(--ink-2);text-decoration:none;font-size:12.5px;font-weight:700;transition:color .18s,background .18s}
-.railnav a:hover{color:var(--ink);background:var(--surface)}
-.railnav a.is-current{color:var(--ink);border-left-color:var(--accent);background:var(--surface)}
-.railnav a .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9.5px;font-weight:600;color:var(--muted)}
-.railnav a.is-current .n{color:var(--accent)}
-.railnav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.rail-meta{margin-top:22px;padding:0 11px;display:grid;gap:13px;border-top:1px solid var(--rule);padding-top:16px}
-.rail-meta small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted)}
-.rail-meta b{display:block;font-size:11px;font-weight:700;color:var(--ink-2);line-height:1.4;margin-top:3px}
-.content{min-width:0}
+/* ---------- hero: the blueprint sheet ---------- */
+.hero{
+  background-color:var(--bp);color:var(--bp-line);
+  background-image:
+    linear-gradient(var(--bp-grid2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bp-grid2) 1px,transparent 1px),
+    linear-gradient(var(--bp-grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bp-grid) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  background-position:-1px -1px;
+  padding:clamp(18px,3vw,36px) 0 clamp(28px,4vw,48px);
+}
+.sheet{
+  position:relative;border:1.5px solid var(--bp-line);
+  padding:clamp(20px,3.4vw,44px) clamp(16px,3vw,40px) clamp(18px,2.6vw,32px);
+}
+.sheet::before{
+  content:"";position:absolute;inset:6px;border:1px solid var(--bp-dim);opacity:.55;pointer-events:none;
+}
+.hero .stage{color:var(--bp-dim)}
+.org{margin:22px 0 10px;font:500 1rem/1.3 var(--disp);font-stretch:110%;color:var(--bp-dim);letter-spacing:.01em}
+.hero-title{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(18px,2.4vw,28px)}
+.hero h1{
+  font:600 clamp(2.75rem,8.2vw,7.2rem)/.9 var(--disp);font-stretch:118%;letter-spacing:-.012em;
+  color:var(--bp);-webkit-text-stroke:3.2px var(--bp-line);paint-order:stroke fill;
+  max-width:none;text-wrap:balance;
+}
+@supports not (-webkit-text-stroke:1px black){.hero h1{color:var(--bp-line)}}
+.subtitle{margin:clamp(-8px,-.6vw,-4px) 0 0;font:500 clamp(1.25rem,2.4vw,1.875rem)/1.2 var(--disp);font-stretch:112%;color:var(--bp-line);letter-spacing:0}
+.stand{margin:0;max-width:40em;font-size:clamp(1.0625rem,1.4vw,1.1875rem);line-height:1.55;color:var(--bp-line)}
+.hero-head{position:relative;z-index:1}
+.hero-fig{margin:clamp(18px,3vw,36px) 0 0}
+.hero-fig svg{display:block;width:100%;height:auto}
+.hero-foot{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(300px,420px);gap:20px 28px;align-items:end;
+  margin-top:clamp(10px,2vw,20px);
+}
+.parts-mini{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:3px 16px;font:400 .8125rem/1.4 var(--mono);color:var(--bp-line)}
+.parts-mini b{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--bp-line);border-radius:50%;font-weight:700;font-size:.6875rem;margin-right:6px;vertical-align:-1px}
+.hero-cap{margin:0;font-size:.875rem;line-height:1.5;color:var(--bp-dim);max-width:34em}
+.hero .fr-ev{color:var(--bp-line)}
+.tblock{
+  margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  border:1.5px solid var(--bp-line);
+}
+.tblock>div{padding:7px 10px;border-right:1px solid var(--bp-dim);border-bottom:1px solid var(--bp-dim);min-width:0}
+.tblock>div:nth-child(2n+1):not(.tb-wide){border-right:1px solid var(--bp-dim)}
+.tblock .tb-wide{grid-column:1/-1;border-right:0}
+.tblock>div:nth-child(odd):not(.tb-wide){}
+.tblock>div:last-child{border-bottom:0}
+.tblock dt{font:400 .6875rem/1.2 var(--mono);color:var(--bp-dim);margin-bottom:2px}
+.tblock dd{margin:0;font:600 .9375rem/1.3 var(--disp);font-stretch:108%;color:var(--bp-line)}
+.tb-status dd{font-weight:700}
 
-/* ---------- document sections ---------- */
-.sec{margin-bottom:52px;scroll-margin-top:calc(var(--topbar-h) + 18px)}
-.sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:11px;margin-bottom:20px;border-bottom:2px solid var(--ink)}
-.sec-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--muted)}
-.sec-title{font-size:20px;font-weight:800}
-.sec-kicker{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.lede{font-size:16.5px;line-height:1.6;color:var(--ink-2);max-width:66ch}
-.body-copy{max-width:68ch}
-.body-copy h4{font-size:13.5px;font-weight:800;margin:22px 0 7px;letter-spacing:0}
+/* ---------- blueprint & paper drawings ---------- */
+.tr{display:block;width:100%;height:auto;overflow:visible}
+.tr .l,.tr .lt,.tr .lh,.tr .gh,.tr .dim,.tr .lead,.tr .rl,.tr .rn,.tr .z,.tr .s-outline,.tr .s-line,.tr .s-glass,.tr .s-tube,.tr .s-spoke,.tr .f-outline,.tr .f-seam,.tr .f-glass,.tr .f-tube,.tr .f-panel,.tr .f-spoke,.tr .f-rim,.tr .f-metal,.tr .f-lane,.tr .f-wire,.tr .edge,.tr .bal circle{vector-effect:non-scaling-stroke}
+.tr .l{fill:none;stroke:var(--ln);stroke-width:1.5px;stroke-linejoin:round;stroke-linecap:round}
+.tr .lt{fill:none;stroke:var(--ln);stroke-width:.9px;stroke-linejoin:round;stroke-linecap:round}
+.tr .lh{fill:none;stroke:var(--ln);stroke-width:1px;stroke-dasharray:6 4;opacity:.85}
+.tr .sk{stroke:var(--ln2)}
+.tr .gh{fill:none;stroke:var(--dim);stroke-width:1.1px;stroke-dasharray:9 6}
+.tr .dim{fill:none;stroke:var(--dim);stroke-width:.9px}
+.tr .dima{fill:var(--dim)}
+.tr .dimbg{fill:var(--sheetbg)}
+.tr .dimt{fill:var(--dim);font:400 19px var(--mono);text-anchor:middle;dominant-baseline:central}
+.tr .bal .lead{fill:none;stroke:var(--ln);stroke-width:.8px}
+.tr .bal .dot{fill:var(--ln)}
+.tr .bal circle:not(.dot){fill:var(--sheetbg);stroke:var(--ln);stroke-width:1.2px}
+.tr .bal text{fill:var(--ln);font:700 17px var(--mono);text-anchor:middle;dominant-baseline:central}
+.tr-bp{--ln:var(--bp-line);--ln2:var(--bp-dim);--dim:var(--bp-dim);--sheetbg:var(--bp)}
+.tr-paper,.tr-fin{--ln:var(--pencil);--ln2:var(--pencil-2);--dim:var(--pencil-2);--sheetbg:var(--paper)}
+.tr .red .rl{fill:none;stroke:var(--red);stroke-width:1.8px;stroke-linecap:round;stroke-linejoin:round}
+.tr .red .rn{fill:var(--paper);stroke:var(--red);stroke-width:1.6px}
+.tr-van .l{stroke-width:1.6px}
+.tr-van .lt{stroke-width:1px}
+.tr .red .rt{fill:var(--red);font:700 22px var(--mono);text-anchor:middle;dominant-baseline:central}
 
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
-.note{background:var(--sunken);border:1px solid var(--rule);border-left:3px solid var(--axis);
-  border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px;color:var(--ink-2)}
-.pull{border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:18px 0;
-  font-size:16px;line-height:1.55;color:var(--ink)}
-.pull cite{display:block;margin-top:7px;font-style:normal;font-size:11.5px;font-weight:700;
-  letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
-.nowrap{white-space:nowrap}
+/* zones */
+.tr .z{stroke-width:1.2px;fill-opacity:.15;stroke-opacity:.9}
+.tr .z-a{fill:var(--za);stroke:var(--za)}
+.tr .z-b{fill:var(--zb);stroke:var(--zb)}
+.tr .z-c{fill:var(--zc);stroke:var(--zc)}
+.tr .z-d{fill:var(--zd);stroke:var(--zd)}
+.tr .zl text{fill:#fff;font:700 15px var(--mono);text-anchor:middle;dominant-baseline:central}
+.tr .zl-a circle{fill:var(--za)}
+.tr .zl-b circle{fill:var(--zb)}
+.tr .zl-c circle{fill:var(--zc)}
+.tr .zl-d circle{fill:var(--zd)}
 
-/* ---------- hero: the review header block ---------- */
-.hero{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
-  padding:28px 30px 26px;box-shadow:var(--shadow);margin-bottom:34px}
-.hero-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.hero-stamp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
-  border:1px solid var(--accent-line);background:var(--accent-wash);border-radius:4px;padding:3px 8px}
-.hero-dates{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--muted)}
-.hero h1{font-size:clamp(27px,4.1vw,40px);font-weight:800;letter-spacing:-.028em;max-width:19ch}
-.hero-sub{margin-top:13px;font-size:16.5px;line-height:1.55;color:var(--ink-2);max-width:60ch}
-.hero-role{margin-top:20px;padding-top:17px;border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:16px}
-.hero-role div small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.hero-role div b{font-size:13px;font-weight:800;line-height:1.35;display:block}
-.disclaim{margin-top:19px;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
-  font-size:11.5px;line-height:1.5;color:var(--ink-2);background:var(--sunken)}
+/* tonal rendering (grey pencil) */
+.sg-hi{stop-color:#f2f3f4}.sg-lo{stop-color:#a9b1b9}
+.sg-g1{stop-color:#7d8893}.sg-g2{stop-color:#3c444d}
+.tr .s-shadow{fill:#000;opacity:.16}
+.tr .s-body{stroke:none}
+.tr .s-clad{fill:#6e7780}
+.tr .s-soft{fill:#000;opacity:.05;stroke:#000;stroke-opacity:.18;stroke-width:1}
+.tr .s-line{fill:none;stroke:#3a424a;stroke-width:.8px;opacity:.6}
+.tr .s-glass{stroke:#2b3138;stroke-width:.8px}
+.tr .s-glint{fill:#fff;opacity:.22}
+.tr .s-dark{fill:#363d45}
+.tr .s-lamp{fill:#e6e9ec;stroke:#3a424a;stroke-width:1}
+.tr .s-tail{fill:#585f67}
+.tr .s-tube{fill:#d7dbdf;stroke:#3a424a;stroke-width:.8px}
+.tr .s-spoke{fill:none;stroke:#8e979f;stroke-width:3px;stroke-linecap:round}
+.tr .s-tubehi{stroke:#fff;stroke-width:2;opacity:.6;fill:none}
+.tr .s-metal{fill:#9aa2aa}
+.tr .s-tire{fill:#2a2f35}
+.tr .s-rim{fill:#c3c8cd}
+.tr .s-outline{fill:none;stroke:#252b31;stroke-width:1.1px;stroke-linejoin:round}
 
-/* ---------- three-tier truth boundary ---------- */
-.tiers{display:grid;gap:9px}
-.tier{display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;align-items:start;
-  padding:14px 16px;border:1px solid var(--rule);border-radius:11px;background:var(--surface)}
-.tier-mark{width:15px;height:15px;border-radius:50%;margin-top:4px;flex:none;border:2px solid var(--accent)}
-.tier-1 .tier-mark{background:var(--accent)}
-.tier-2 .tier-mark{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
-.tier-3 .tier-mark{background:transparent;border-color:var(--muted);border-style:dotted}
-.tier b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
-.tier p{font-size:13px;color:var(--ink-2);margin:0}
-.tier-tag{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:8px;
-  vertical-align:2px;border:1px solid var(--rule);color:var(--muted)}
+/* finished, in colour */
+.fg-hi{stop-color:#ffffff}.fg-mid{stop-color:#eef0f1}.fg-lo{stop-color:#c4cbd1}
+.fg-g1{stop-color:#8fb0cd}.fg-g2{stop-color:#1f3348}
+.fg-sky1{stop-color:#bcd7ee}.fg-sky2{stop-color:#eef4f8}
+.fg-rim1{stop-color:#e4e8eb}.fg-rim2{stop-color:#8d969e}
+.fg-beam1{stop-color:#fff6cf;stop-opacity:0}.fg-beam2{stop-color:#fff6cf;stop-opacity:0}
+.fg-glow1{stop-color:#e0413a;stop-opacity:0}.fg-glow2{stop-color:#e0413a;stop-opacity:0}
+.tr .f-far{fill:#a9c2b4}
+.tr .f-near{fill:#86a596}
+.tr .f-curb{fill:#c9cdd0}
+.tr .f-pole{fill:#8a7a68}
+.tr .f-wire{fill:none;stroke:#3d4650;stroke-width:1.6;opacity:.7}
+.tr .f-road{fill:#41474e}
+.tr .f-lane{stroke:#f2f2ee;stroke-width:5;stroke-dasharray:60 46;fill:none}
+.tr .f-shadow{fill:#000;opacity:.35}
+.tr .f-well{fill:#15191d}
+.tr .s-well{fill:#30363d}
+.tr .f-body{stroke:none}
+.tr .f-clad{fill:#2b3138}
+.tr .f-panel{fill:none;stroke:#b7bec4;stroke-width:.8px}
+.tr .f-trim{fill:#2b3138}
+.tr .f-glass{stroke:#1d242b;stroke-width:.9px}
+.tr .f-glint{fill:#fff;opacity:.28}
+.tr .f-seam{fill:none;stroke:#9aa3aa;stroke-width:.8px}
+.tr .f-dark{fill:#22282e}
+.tr .f-lamp{fill:#fbf6df;stroke:#3a424a;stroke-width:1}
+.tr .f-tail{fill:#c8312b}
+.tr .f-rack{fill:#1e2328}
+.tr .f-railline{fill:none;stroke:#1e2328;stroke-width:1.2px;vector-effect:non-scaling-stroke}
+.tr .f-tube{fill:#f2f3f1;stroke:#5c656d;stroke-width:.8px}
+.tr .f-tubehi{stroke:#fff;stroke-width:2;fill:none}
+.tr .f-metal{fill:#a8b0b7;stroke:#4a525a;stroke-width:.8px}
+.tr .f-tire{fill:#1b1f23}
+.tr .f-rim{stroke:#4a525a;stroke-width:.8px}
+.tr .f-spoke{fill:none;stroke:#59626b;stroke-width:3.4px;stroke-linecap:round}
+.tr .f-hub{fill:#4e565e}
+.tr .f-outline{fill:none;stroke:#1d2329;stroke-width:1px;stroke-linejoin:round}
+@media (prefers-color-scheme:dark){
+  .sg-hi{stop-color:#c9cfd5}.sg-lo{stop-color:#6c757e}
+  .tr .s-shadow{opacity:.45}
+  .tr .s-outline{stroke:#0d1115}
+  .fg-sky1{stop-color:#07111e}.fg-sky2{stop-color:#1c3048}
+  .fg-hi{stop-color:#e9edf0}.fg-mid{stop-color:#c9d0d6}.fg-lo{stop-color:#7d8891}
+  .fg-g1{stop-color:#3c5772}.fg-g2{stop-color:#0c1621}
+  .fg-beam1{stop-color:#fff1bd;stop-opacity:.42}.fg-beam2{stop-color:#fff1bd;stop-opacity:0}
+  .fg-glow1{stop-color:#ff4a3d;stop-opacity:.55}.fg-glow2{stop-color:#ff4a3d;stop-opacity:0}
+  .tr .f-far{fill:#16263a}
+  .tr .f-near{fill:#1b2c3f}
+  .tr .f-curb{fill:#3a434c}
+  .tr .f-pole{fill:#24303d}
+  .tr .f-wire{stroke:#5a6c80}
+  .tr .f-road{fill:#171b20}
+  .tr .f-lane{stroke:#b9b48a}
+  .tr .f-shadow{opacity:.6}
+  .tr .f-lamp{fill:#fff7cf}
+  .tr .f-tail{fill:#ff4a3d}
+  .tr .f-glint{opacity:.12}
+  .tr .f-rack{fill:#3a434d}
+  .tr .f-tube{fill:#d5d9dc}
+}
 
-/* ---------- evidence tag used inline in copy ---------- */
-.ev{display:inline-flex;align-items:center;gap:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  padding:1px 6px;border-radius:4px;border:1px solid var(--rule);color:var(--muted);
-  white-space:nowrap;vertical-align:1px}
-.ev::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--accent)}
-.ev-1::before{background:var(--accent)}
-.ev-2::before{background:linear-gradient(90deg,var(--accent) 0 50%,transparent 50% 100%)}
-.ev-3::before{background:transparent;border-color:var(--muted);border-style:dotted}
+/* wipe edge: only while a stage is being drawn in */
+.tr .edge{display:none;stroke:var(--red);stroke-width:1.5px;stroke-dasharray:4 6}
+.fl-scroll [data-build].is-drawing .tr .edge{display:inline}
 
-/* ---------- the loop: three steps ---------- */
-.loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:26px}
-.step{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:15px 17px;position:relative}
-.step-n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
-.step b{display:block;font-size:14.5px;font-weight:800;margin:5px 0 6px}
-.step p{font-size:12.5px;color:var(--ink-2);margin:0}
-.step.is-on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-wash)}
+/* ---------- vellum sections ---------- */
+.sh{
+  --ga:.12;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(rgba(var(--gridc),var(--ga)) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(var(--gridc),var(--ga)) 1px,transparent 1px);
+  background-size:24px 24px;
+  padding:clamp(56px,7vw,96px) 0 0;
+}
+.sh-1{--ga:.13}
+.sh-2{--ga:.11}
+.sh-3{--ga:.09;padding-bottom:clamp(8px,2vw,16px)}
+.sh-4{--ga:.06}
+.sh-5{--ga:.035;padding-bottom:clamp(40px,6vw,72px)}
+.sh-6{--ga:0;background-image:none;background-color:var(--finish);padding-bottom:clamp(56px,7vw,96px)}
+.keywrap{padding-top:clamp(28px,4vw,44px)}
+.cols{display:grid;grid-template-columns:170px minmax(0,1fr);gap:0 clamp(24px,4vw,56px)}
+.side{padding-top:10px}
+.main{min-width:0}
+.sh h2,.done h2{
+  font:600 clamp(2rem,4.6vw,3.5rem)/1 var(--disp);font-stretch:114%;letter-spacing:-.01em;
+  margin-bottom:clamp(18px,2.4vw,28px);max-width:18ch;
+}
+.lede{font-size:clamp(1.125rem,1.7vw,1.375rem);line-height:1.5;max-width:34em;color:var(--ink)}
+.prose p,.prose-p{max-width:38em}
+.prose-p{color:var(--ink-2)}
+.small{font-size:.875rem;line-height:1.5;color:var(--muted)}
+.h3{font:600 1.375rem/1.15 var(--disp);font-stretch:110%;margin:0 0 14px}
 
-/* ---------- figures / charts ---------- */
-.fig{background:var(--surface);border:1px solid var(--rule);border-radius:12px;
-  padding:17px 19px 15px;box-shadow:var(--shadow);margin-bottom:18px}
-.fig-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:3px}
-.fig-title{font-size:14.5px;font-weight:800;letter-spacing:-.008em}
-.fig-sub{font-size:12.5px;color:var(--ink-2);margin:4px 0 13px;max-width:74ch}
-.fig-chip{margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;
-  font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;
-  border:1px solid var(--flag);color:var(--flag);background:var(--flag-wash);white-space:nowrap}
-.fig-plot{width:100%;overflow-x:auto}
-.fig-plot svg{display:block;max-width:100%;height:auto}
-.fig-foot{margin-top:11px;padding-top:10px;border-top:1px solid var(--rule);
-  font-size:11.5px;line-height:1.5;color:var(--muted)}
-.legend{display:flex;flex-wrap:wrap;gap:15px;margin:2px 0 12px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.legend i{display:block;width:11px;height:11px;border-radius:50%;flex:none}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+/* the question */
+.two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px);align-items:start}
+.van svg{max-width:560px}
+.redlist{list-style:none;margin:12px 0 10px;padding:0;display:grid;gap:5px;font-size:.9375rem;line-height:1.4;color:var(--ink-2)}
+.redlist b{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border:1.6px solid var(--red);border-radius:50%;color:var(--red);font:700 .75rem/1 var(--mono);vertical-align:1px}
+figcaption,.van figcaption{font-size:.8125rem;line-height:1.45;color:var(--muted)}
+.pull{margin:clamp(28px,4vw,48px) 0 0;padding:0 0 0 clamp(16px,2vw,24px);border-left:4px solid var(--bp)}
+.pull p{margin:0 0 10px;font:500 clamp(1.5rem,3.1vw,2.375rem)/1.15 var(--disp);font-stretch:108%;letter-spacing:-.005em;max-width:24em}
+.pull footer{font-size:.875rem;color:var(--muted);display:flex;gap:10px;align-items:center}
+.pull-quiet p{font:400 clamp(1.125rem,1.8vw,1.375rem)/1.45 var(--sans);font-style:italic;max-width:36em}
+@media (prefers-color-scheme:dark){.pull{border-left-color:#4f86c6}}
 
-/* ---------- KPI / stat tiles ---------- */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:18px}
-.tile{background:var(--surface);border:1px solid var(--rule);border-radius:11px;padding:14px 16px}
-.tile small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.tile b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
-.tile em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:5px;line-height:1.4}
-.tile-accent b{color:var(--accent)}
+/* the loadout schedule */
+.sched{
+  margin:clamp(20px,3vw,32px) 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;
+  border-top:2px solid var(--pencil);border-bottom:1px solid var(--pencil);padding:6px 0 14px;
+  font-family:var(--sans);font-size:.875rem;line-height:1.4;font-variant-numeric:tabular-nums;
+}
+.sg{min-width:0}
+.sg-h{font:700 .9375rem/1.2 var(--disp);font-stretch:108%;margin:14px 0 4px;color:var(--ink)}
+.sr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 3.4em;gap:8px;padding:5px 0;border-bottom:1px solid var(--rule);color:var(--ink-2)}
+.sr span:last-child{text-align:right}
+.sr span:empty{display:block}
+.sr-red s{text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--muted)}
+.pencil{font-style:normal;color:var(--red);font-weight:700;display:inline-block;transform:rotate(-2deg)}
+.note-red{margin:6px 0 0;padding:4px 0 4px 10px;border-left:2px solid var(--red);color:var(--red-ink);font-size:.875rem;line-height:1.45}
+.margin-note{margin:14px 0 0;font:italic 400 .9375rem/1.4 var(--sans);color:var(--ink-2)}
+.margin-note::before{content:"";display:inline-block;width:22px;height:1px;background:currentColor;vertical-align:4px;margin-right:10px}
 
-/* ---------- tables ---------- */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:420px}
-th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
-th{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-  background:var(--sunken)}
-td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0}
-.tbl-note{font-size:11.5px;color:var(--muted);margin-top:8px}
-details{margin-top:11px}
-summary{font-size:11.5px;font-weight:800;color:var(--accent);cursor:pointer;
-  padding:5px 0;list-style:none;display:inline-flex;align-items:center;gap:6px}
-summary::-webkit-details-marker{display:none}
-summary::before{content:"+";font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
-details[open] summary::before{content:"\2212"}
-summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* the spec */
+.zones,.render{margin-top:clamp(18px,3vw,32px);position:relative}
+.zones svg,.render svg{max-width:1100px;margin-inline:auto}
+.zones figcaption,.render figcaption{text-align:center;margin-top:6px}
+.zlegend{margin:clamp(16px,2.6vw,28px) 0 clamp(36px,5vw,64px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 24px}
+.zlegend>div{border-top:3px solid var(--zc);padding-top:10px;min-width:0}
+.zlegend .zk-a{border-top-color:var(--za)}
+.zlegend .zk-b{border-top-color:var(--zb)}
+.zlegend .zk-c{border-top-color:var(--zc)}
+.zlegend .zk-d{border-top-color:var(--zd)}
+.zlegend dt{font:600 1.0625rem/1.2 var(--disp);font-stretch:108%;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.zlegend dt b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;font:700 .75rem/1 var(--mono);background:var(--zc)}
+.zk-a dt b{background:var(--za)}.zk-b dt b{background:var(--zb)}.zk-d dt b{background:var(--zd)}
+.zk-b dt b,.zk-d dt b{color:#141619}
+.zlegend dd{margin:0;font-size:.9375rem;line-height:1.45;color:var(--ink-2)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start;padding-bottom:clamp(48px,6vw,80px)}
+.bom{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;border:1.5px solid var(--pencil);margin-bottom:10px}
+.bom th,.bom td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:middle}
+.bom thead th{font:400 .75rem/1.2 var(--mono);color:var(--muted);border-bottom:1.5px solid var(--pencil)}
+.bom td:first-child,.bom th:first-child{width:3.2em;border-right:1px solid var(--rule)}
+.bom .num{text-align:right;font-family:var(--disp);font-stretch:100%;font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}
+.bom tfoot th,.bom tfoot td{border-top:1.5px solid var(--pencil);border-bottom:0;font-weight:700;color:var(--ink);font-size:.9375rem}
+.bom tfoot th{font-family:var(--disp);font-stretch:108%}
+.bn{font-family:var(--mono);display:inline-grid;place-items:center;width:22px;height:22px;border:1.4px solid var(--pencil);border-radius:50%;font-size:.6875rem;font-weight:700}
 
-/* ---------- chart tooltip ---------- */
-.tip{position:fixed;z-index:400;pointer-events:none;opacity:0;transform:translateY(3px);
-  transition:opacity .12s,transform .12s;background:var(--ink);color:var(--plane);
-  border-radius:8px;padding:8px 11px;font-size:11.5px;line-height:1.45;font-weight:700;
-  max-width:240px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
-.tip.on{opacity:1;transform:translateY(0)}
-.tip u{display:block;text-decoration:none;font-weight:800;font-size:10px;letter-spacing:.08em;
-  text-transform:uppercase;opacity:.72;margin-bottom:3px}
+/* payload bar */
+.pl{margin-top:18px}
+.pl-red{margin:0 0 8px;display:flex;justify-content:flex-end}
+.pl-red span{
+  width:58%;padding:0 10px 8px 0;border-right:2px solid var(--red);border-bottom:2px solid var(--red);text-align:right;
+  font:italic 400 .875rem/1.4 var(--sans);color:var(--red-ink);
+}
+.pl-bar{display:flex;height:34px;gap:2px}
+.pl-s{display:block;flex-grow:0;flex-shrink:0;min-width:0}
+.pl-up{background:var(--pencil)}
+.pl-hv{background:var(--pencil-2)}
+.pl-tl{background:color-mix(in srgb,var(--pencil-2) 55%,var(--paper))}
+.pl-rg{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--pencil-2) 55%,var(--paper)) 0 3px,transparent 3px 7px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pencil-2) 55%,var(--paper))}
+.pl-mg{background:transparent;box-shadow:inset 0 0 0 1.5px var(--pencil);background-image:repeating-linear-gradient(90deg,transparent 0 10px,transparent 10px)}
+.pl-bar .pl-mg{outline:1.5px dashed var(--pencil);outline-offset:-1.5px;box-shadow:none}
+.pl-scale{display:flex;justify-content:space-between;margin-top:6px;font:400 .8125rem/1 var(--disp);font-variant-numeric:tabular-nums;color:var(--muted);border-top:1px solid var(--pencil);padding-top:6px}
+.pl-key{margin:16px 0 0;display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+.pl-key>div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:5px;font-size:.9375rem}
+.pl-key dt{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
+.pl-key dd{margin:0;font:600 1rem/1.4 var(--disp);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.pl-key i{width:14px;height:14px;display:block;flex:none}
+.pl-key i.pl-mg{outline:1.5px dashed var(--pencil);outline-offset:-1.5px}
 
-/* ---------- list of findings ---------- */
-.findings{list-style:none;margin:0;padding:0;display:grid;gap:11px}
-.findings li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;
-  padding:13px 15px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
-.findings b{display:block;font-size:13.5px;font-weight:800;margin-bottom:3px}
-.findings p{font-size:12.5px;color:var(--ink-2);margin:0}
-.findings .k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;font-weight:600;
-  color:var(--accent);padding-top:3px}
+/* decision rights */
+.approve{margin-top:clamp(28px,4vw,44px);border:1.5px solid var(--pencil)}
+.phases{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.phases li{padding:16px 18px 18px;border-right:1px solid var(--rule);min-width:0}
+.phases li:last-child{border-right:0}
+.ph-n{display:block;font:400 .75rem/1.2 var(--mono);color:var(--muted);margin-bottom:6px}
+.phases b{display:block;font:600 1.1875rem/1.2 var(--disp);font-stretch:108%;margin-bottom:8px}
+.phases p{margin:0;font-size:.9375rem;line-height:1.5;color:var(--ink-2)}
+.signoff{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--pencil)}
+.signoff>div{padding:10px 18px 12px;display:flex;flex-direction:column;gap:2px}
+.signoff>div+div{border-left:1px solid var(--rule)}
+.signoff span{font:400 .75rem/1.2 var(--mono);color:var(--muted)}
+.signoff b{font:600 1.125rem/1.3 var(--disp);font-stretch:108%}
 
-/* ---------- footer ---------- */
-.foot{background:var(--surface);border:1px solid var(--rule);border-radius:14px;
-  padding:26px 28px;box-shadow:var(--shadow);scroll-margin-top:calc(var(--topbar-h) + 18px)}
-.foot h3{font-size:19px;font-weight:800;margin-bottom:9px}
-.foot p{font-size:14px;color:var(--ink-2);max-width:60ch}
-.cta{display:inline-flex;align-items:center;gap:8px;margin-top:15px;padding:10px 17px;
-  background:var(--accent);color:#fff;border-radius:9px;text-decoration:none;font-size:13.5px;font-weight:800;
-  transition:transform .18s,opacity .18s}
-.cta:hover{transform:translateY(-1px);opacity:.93}
-.foot-legal{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule);
-  font-size:11px;line-height:1.6;color:var(--muted);max-width:78ch}
+/* selected */
+.stamp{
+  position:absolute;right:clamp(8px,6vw,90px);top:clamp(0px,2vw,24px);
+  font:700 clamp(.875rem,1.8vw,1.375rem)/1 var(--disp);font-stretch:118%;letter-spacing:.04em;
+  color:var(--red);border:3px solid var(--red);padding:.45em .7em;transform:rotate(-6deg);
+  background:color-mix(in srgb,var(--paper) 70%,transparent);
+}
+
+/* revisions */
+.revs{width:100%;border-collapse:collapse;border:1.5px solid var(--pencil)}
+.revs th,.revs td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+.revs thead th{font:400 .75rem/1.2 var(--mono);color:var(--muted);border-bottom:1.5px solid var(--pencil)}
+.revs tbody td:first-child{font:700 1rem/1.4 var(--mono);color:var(--red);width:3.5em;border-right:1px solid var(--rule)}
+.revs tbody th{font:600 1.0625rem/1.3 var(--disp);font-stretch:106%;width:34%}
+.revs tbody td:last-child{color:var(--ink-2);font-size:.9688rem;line-height:1.5}
+.revs tr:last-child>*{border-bottom:0}
+
+/* in service */
+.done{background:var(--finish);padding:0 0 clamp(56px,7vw,96px)}
+.fin{display:block;overflow:hidden}
+.fin svg{width:100%;max-height:none}
+.done .cols{padding-top:clamp(36px,5vw,64px)}
+.done h2{font-size:clamp(2.75rem,8vw,6.5rem);line-height:.92;font-weight:700;font-stretch:118%;max-width:none}
+.done .lede{max-width:36em}
+.fin-cap{margin-top:18px}
 
 /* ---------- responsive ---------- */
-@media(max-width:1000px){
-  .shellgrid{grid-template-columns:minmax(0,1fr);gap:12px;padding-top:12px}
-  .railnav{position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;
-    gap:3px;min-width:0;padding:9px 0;background:var(--plane);border-bottom:1px solid var(--rule)}
-  .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;padding:6px 10px}
-  .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
-  .rail-label,.rail-meta{display:none}
-  .loop{grid-template-columns:minmax(0,1fr)}
-  .grid2{grid-template-columns:minmax(0,1fr)}
+@media (max-width:1100px){
+  .hero-foot{grid-template-columns:minmax(0,1fr) minmax(280px,380px)}
+  .parts-mini{grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .zlegend{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:620px){
-  body{font-size:14.5px}
-  .wrap{padding:0 15px}
-  .hero{padding:21px 18px}
-  .fig{padding:14px 14px 12px}
-  .sec{margin-bottom:40px}
-  .tb-pill,.tb-chip{display:none}
+@media (max-width:900px){
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .side{padding:0 0 14px}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .hero-title{grid-template-columns:minmax(0,1fr)}
+  .sched{grid-template-columns:minmax(0,1fr)}
+  .split{grid-template-columns:minmax(0,1fr)}
+  .hero-foot{grid-template-columns:minmax(0,1fr)}
+  .parts-mini{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tblock{max-width:460px}
 }
-@media (prefers-reduced-motion: reduce){
-  *{transition:none!important;animation:none!important}
-  .cta:hover,.theme-btn:hover{transform:none}
+@media (max-width:640px){
+  .phases{grid-template-columns:minmax(0,1fr)}
+  .phases li{border-right:0;border-bottom:1px solid var(--rule)}
+  .phases li:last-child{border-bottom:0}
+  .zlegend{grid-template-columns:minmax(0,1fr)}
+  .pl-key{grid-template-columns:minmax(0,1fr)}
+  .pl-red span{width:auto;min-width:0;max-width:70%}
+  .revs thead{display:none}
+  .revs,.revs tbody,.revs tr,.revs th,.revs td{display:block;width:auto}
+  .revs tr{display:grid;grid-template-columns:2.6em minmax(0,1fr);border-bottom:1px solid var(--rule)}
+  .revs tr:last-child{border-bottom:0}
+  .revs tbody td:first-child{grid-row:1/3;border-right:0;width:auto}
+  .revs tbody th{width:auto;border-bottom:0;padding-bottom:2px}
+  .revs tbody td:last-child{border-bottom:0;padding-top:0;grid-column:2}
+  .sheet::before{inset:4px}
+  .hero h1{-webkit-text-stroke-width:2.4px}
+  .fin{margin-inline:0}
+  .bom{font-size:.8125rem}
+  .bom th,.bom td{padding:7px 8px}
 }
-</style></head><body><div class="topbar"><div class="wrap topbar-inner"><div class="topbar-left"><a class="tb-name" href="../" style="color:inherit;text-decoration:none">Portfolio / Field Decision</a></div><div class="topbar-right"><span class="tb-chip">Proposal retrospective</span><button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button><a class="tb-link" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn &rarr;</a></div></div></div><div class="wrap shellgrid"><aside class="railnav" id="railnav" aria-label="Section navigation"><div class="rail-label">Case study</div><a href="#intro"><span class="n">01</span>Overview</a><a href="#reframe"><span class="n">02</span>Requirements</a><a href="#spec"><span class="n">03</span>Specification</a><a href="#handoff"><span class="n">04</span>Decision rights</a><a href="#outcome"><span class="n">05</span>Outcome</a><a href="#retrospective"><span class="n">06</span>Retrospective</a><a href="#validation"><span class="n">07</span>Validation</a><a href="#contact"><span class="n">08</span>Contact</a><div class="rail-meta"><div><small>Role</small><b>Proposal author, joint entry</b></div><div><small>Period</small><b>Jan &ndash; Feb 2026</b></div><div><small>Built</small><b>2026 retrospective</b></div></div></aside><main class="content">
-<section class="sec" id="intro"><div class="hero"><div class="hero-bar"><span class="hero-stamp">Continual Improvement Challenge</span><span class="hero-dates">Jan &ndash; Feb 2026</span></div>
-<h1>Turning field friction into a decision.</h1><p class="hero-sub">I authored an 11-page fleet right-sizing proposal for a joint challenge entry with a field lead at a regional fiber contractor. The proposal was selected as the winning submission.</p>
-<div class="hero-role"><div><small>My contribution</small><b>Proposal author</b></div><div><small>Scope</small><b>Requirements, sourcing &amp; specification</b></div><div><small>Document</small><b>11 pages</b></div><div><small>Decision rights</small><b>Fleet Operations</b></div></div>
-<p class="disclaim"><b>Proposal author, joint entry.</b> I had already left the contractor. My partner entered and submitted the joint entry under their name; I authored the document. Their first-person field experience in the submission belongs to them. This retrospective describes my contribution without publishing the original proposal, company photographs or personal details.</p></div>
-<p class="lede">The company had already decided to replace its service vans. The question was which replacement and upfit would fit the technician’s daily work. I translated a field lead’s loadout into a decision document, then made the recommendation specific enough for fleet reviewers to evaluate.</p></section>
-<section class="sec" id="reframe"><div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Start with the work</h2></div>
-<p class="lede">The field lead described tools and customer equipment spread through a cargo van, repeated searching at service stops, and parking friction. The proposal treated tool access and inventory organization as design requirements.</p>
-<div class="pull">Design storage around the daily loadout: tools, equipment and access patterns.</div>
-<div class="grid2"><div class="note"><b>What I did</b><p>Elicited the daily inventory from the field lead: equipment dimensions, quantities, weights, restocking needs and tool access. Converted that information into storage zones, a workflow comparison and an itemized upfit.</p></div><div class="note"><b>What that demonstrates</b><p>Requirements elicitation, translating user needs into a specification, writing for a decision-maker and influencing a function I did not manage.</p></div></div></section>
-<section class="sec" id="spec"><div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">A specification reviewers could examine</h2></div>
-<p class="lede">The proposed configuration paired a compact pickup with enclosed storage, a drawer system and a mounted tube. This diagram recreates the storage logic; it is not an engineering drawing or a verified fitment.</p>
-<div class="fig"><svg viewBox="0 0 700 220" role="img" aria-label="Conceptual storage zones: cab for daily essentials, enclosed bed for equipment, drawer for tools, rack tube for approximately five-foot items" style="width:100%;height:auto"><rect x="12" y="22" width="180" height="178" rx="16" fill="var(--accent-wash)" stroke="var(--accent)"/><rect x="204" y="22" width="484" height="82" rx="16" fill="var(--surface)" stroke="var(--rule)"/><rect x="204" y="116" width="300" height="84" rx="16" fill="var(--accent-wash)" stroke="var(--accent)"/><rect x="516" y="116" width="172" height="84" rx="16" fill="var(--surface)" stroke="var(--rule)"/><g fill="var(--ink)" font-family="system-ui" font-size="17"><text x="30" y="63">Cab</text><text x="30" y="96">Daily essentials</text><text x="224" y="55">Enclosed bed</text><text x="224" y="82">Equipment &amp; customer hardware</text><text x="224" y="151">Drawer</text><text x="224" y="179">Tools &amp; consumables</text><text x="532" y="151">Rack tube</text><text x="532" y="179">~5 ft items</text></g></svg><p class="fig-foot">Concept recreated for this retrospective using the actual ~5 ft inventory. The submitted document stated an erroneous 8–12 ft requirement, discussed in section 06. Physical clearances, mounting and product compatibility still require validation.</p></div>
-<details open><summary>The original seven-line upfit budget</summary><div class="tbl-wrap"><table><thead><tr><th>Component</th><th class="num">Proposal estimate</th></tr></thead><tbody>
-<tr><td>Commercial truck cap</td><td class="num">$2,000.00</td></tr><tr><td>Drawer system</td><td class="num">$1,699.99</td></tr><tr><td>Bed rack</td><td class="num">$600.00</td></tr><tr><td>Locking tube kit</td><td class="num">$120.00</td></tr><tr><td>Approximately 5 ft PVC pipe</td><td class="num">$20.00</td></tr><tr><td>Cab organization</td><td class="num">$80.00</td></tr><tr><td>Tailgate tote</td><td class="num">$40.00</td></tr><tr><td><b>Total</b></td><td class="num"><b>$4,559.99</b></td></tr></tbody></table></div><p class="tbl-note">The original budget already specified a 5 ft tube and pipe; the error was in the stated carry requirement. Historical proposal estimates, not current quotes or incurred spend. The truck, installation and a complete ownership-cost model were outside this total.</p></details>
-<p class="body-copy" style="margin-top:18px">The proposal included vendor references and alternatives, a seven-factor workflow comparison, a payload budget and a three-phase implementation framework. These gave reviewers concrete assumptions to challenge. The payload budget remained incomplete because it omitted occupants.</p></section>
-<section class="sec" id="handoff"><div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Hand the decision to its owner</h2></div>
-<div class="loop"><div class="step"><span class="step-n">Proposed phase 01</span><b>Pilot validation</b><p>Test one upfit with an active technician and collect workflow feedback.</p></div><div class="step"><span class="step-n">Proposed phase 02</span><b>Procurement setup</b><p>Fleet reviewers confirm fitment, suppliers, sourcing and installation.</p></div><div class="step"><span class="step-n">Proposed phase 03</span><b>Phased deployment</b><p>Fleet Operations determines timing and coordinates onboarding.</p></div></div>
-<p class="body-copy" style="margin-top:18px">I proposed the framework. Fleet Operations retained authority over timing, vendors and execution. The proposal’s pilot plan is not evidence that those stages were carried out.</p></section>
-<section class="sec" id="outcome"><div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">What happened</h2></div>
-<ul class="findings"><li><span class="k">01</span><div><b>The authored proposal was selected</b><p>The joint submission won the challenge. Selection is my first-hand account and is not independently documented here. The private proposal preserves the document content; my authorship is confirmed by my account and my partner’s acknowledgment.</p></div></li><li><span class="k">02</span><div><b>I participated in outfitter specification meetings</b><p>My partner and I attended meetings with vehicle outfitters to discuss the customizations. This is my first-hand account, recorded after the submission.</p></div></li><li><span class="k">03</span><div><b>Rollout was reported, with a narrower evidence boundary</b><p>The contractor had begun introducing replacement trucks. The vehicles were not yet outfitted to the proposal’s specifications when I recorded the update. I have no current verification of the final configuration or operational results.</p></div></li></ul>
-<div class="note"><b>Outcome boundary.</b> Selection and participation in specification discussions are supported. Cost savings, time savings, safety improvements and fleet-wide implementation to my exact specification have not been measured or verified.</div></section>
-<section class="sec" id="retrospective"><div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">What I would change now</h2></div>
-<p class="lede">A selected proposal can still contain weak requirements and incomplete analysis. These are retrospective improvements, not methods I claim to have completed during the challenge.</p>
-<ul class="findings"><li><span class="k">01</span><div><b>Validate the requirement before defending the solution</b><p>The submitted document repeatedly stated an 8–12 ft carry requirement. That was an error: the glow rods and PVC risers were approximately 5 ft. The 5 ft tube matched the actual inventory. Today I would check every dimension against the physical item and trace each requirement to its source.</p></div></li>
-<li><span class="k">02</span><div><b>Reconcile fit and payload before procurement</b><p>The document used conflicting drum dimensions and omitted occupants from its payload calculation. I would measure the actual drums, test clearances and include the driver, passengers and every installed component before accepting a configuration.</p></div></li>
-<li><span class="k">03</span><div><b>Compare the full cost of replacement options</b><p>The upfit budget did not establish total cost of ownership or payback. I would compare suitable replacement vans and trucks using vehicle acquisition, installation, maintenance, fuel and downtime assumptions with fleet reviewers.</p></div></li>
-<li><span class="k">04</span><div><b>Account for the vehicle as a workspace</b><p>An enclosed van can provide a sheltered standing workspace. I would test whether the pickup configuration supports weather-sensitive work, including splicing, before treating storage access as the complete decision.</p></div></li></ul></section>
-<section class="sec" id="validation"><div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title">How I would validate the recommendation</h2></div>
-<p class="lede">The original 5–10 minutes saved per day was an estimate without a time study. I would replace it with a baseline and a matched pilot that tests the same kind of service work.</p>
-<div class="tbl-wrap"><table><thead><tr><th>Question</th><th>Measure I would collect</th></tr></thead><tbody><tr><td>Are tools faster to access?</td><td>Park-to-first-tool time and retrieval time at comparable stops.</td></tr><tr><td>Does the daily inventory fit?</td><td>Loadout checks, clearances and warehouse trips per week.</td></tr><tr><td>Does the configuration support the work?</td><td>Weather interruptions, splicing setup and technician feedback.</td></tr><tr><td>Does the economic case hold?</td><td>Fuel per mile, mileage, installation, maintenance and downtime costs.</td></tr></tbody></table></div>
-<div class="note"><b>What this says about how I work.</b> I can turn field observations into a buildable recommendation and make its assumptions visible. My next step is to strengthen that recommendation with measured validation and a complete comparison of alternatives.</div></section>
-<footer class="foot" id="contact"><h3>Jacob Zamarripa</h3><p>Operations, implementation and service delivery: requirements, decision documents, stakeholder alignment and practical improvement.</p><a class="cta" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a><p><a href="../" style="color:inherit">All case studies &rarr;</a></p><p class="disclaim">Personal retrospective. The contractor and partner are unnamed. No affiliation or endorsement is implied. The original document remains private.</p></footer>
-</main></div><script>  (function(){
-    var rail = document.getElementById('railnav');
-    if (rail){
-      var links = Array.prototype.slice.call(rail.querySelectorAll('a'));
-      var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
-      var syncRail = function(){
-        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h')) || 54;
-        var probe = window.scrollY + h + window.innerHeight * 0.22, current = 0;
-        targets.forEach(function(t,i){
-          if (!t) return;
-          if (t.getBoundingClientRect().top + window.scrollY <= probe) current = i;
-        });
-        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = links.length - 1;
-        links.forEach(function(a,i){ a.classList.toggle('is-current', i === current); });
-      };
-      links.forEach(function(a){ a.addEventListener('click', function(){ setTimeout(syncRail, 460); }); });
-      window.addEventListener('scroll', syncRail, { passive:true });
-      window.addEventListener('resize', syncRail);
-      requestAnimationFrame(syncRail);
-    }
+@media (max-width:420px){
+  .parts-mini{grid-template-columns:minmax(0,1fr)}
+  .tblock{grid-template-columns:minmax(0,1fr)}
+  .tblock>div{border-right:0}
+}
+/* Reconstructed cargo studies: existing page mechanics and colors retained. */
+.van-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.van-layout .prose{max-width:52em}
+.van-study{margin:0}
+.van-study>svg{max-width:1100px;margin-inline:auto}
+.van-study .redlist{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:12px 0 16px}
+.van-study .redlist li{border-top:1px solid var(--rule);padding-top:12px}
+.van-study .redlist b{display:grid;margin:0 0 8px}
+.van-study>figcaption{max-width:70em}
+.cut-red-dot{fill:var(--red)}
+.cut-label .cut-lead{fill:none;stroke:var(--zone);stroke-width:1.2px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.cut-label .cut-dot,.cut-label .cut-badge{fill:var(--zone)}
+.cut-label .cut-badge{stroke:var(--paper);stroke-width:2px;vector-effect:non-scaling-stroke}
+.cut-label text{fill:#fff;font:700 17px var(--mono);text-anchor:middle;dominant-baseline:central}
+.cut-label[style*="--zb"] text,.cut-label[style*="--zd"] text{fill:#141619}
+.cut-detail{display:none;margin:18px 0 14px;border-top:1px solid var(--rule);padding-top:12px}
+.cut-detail p{margin:0 0 10px;text-align:left;font:400 .75rem/1.3 var(--mono);color:var(--muted)}
+.cut-detail svg{display:block;width:100%;max-width:600px;margin-inline:auto;overflow:hidden}
+@media(max-width:900px){.van-study .redlist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){
+  .cut-detail{display:block}
+  .van-layout{gap:12px}
+  .van-study .redlist{grid-template-columns:minmax(0,1fr);gap:10px}
+  .van-study .redlist li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding-top:10px}
+  .van-study .redlist b{margin:0}
+}
+@media print{.cut-detail{display:none}}
 
-    /* Session-only override; every load follows the visitor's OS preference. */
-    var root = document.documentElement, btn = document.getElementById('themeBtn');
-    if (!btn) return;
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    function effective(){ return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light'); }
-    function sync(){
-      var e = effective();
-      btn.textContent = e === 'dark' ? '☽' : '☀';
-      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
-      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
-    }
-    btn.addEventListener('click', function(){
-      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
-      sync();
+@media print{
+  .hero{background:#fff;color:#000}
+}
+
+/* Illustration backdrop follows the OS; vehicle geometry is shared by every stage. */
+.fleet-road--night{display:none}
+@media(prefers-color-scheme:dark){.fleet-road--day{display:none}.fleet-road--night{display:block}.tr-fin .build>g[clip-path^="url(#vehicle"]{filter:brightness(.72) saturate(.8)}}
+</style>
+</head>
+<body>
+<a class="fr-skip" href="#main">Skip to content</a>
+<header class="fr-head" data-frame-case="3" data-frame-static><div class="fr-head-in"><a class="fr-name" href="../" aria-label="Jacob Zamarripa, home"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M12.5 6.5v12.2a4.6 4.6 0 0 1-9.2 0" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><path d="M16.6 6.5h11L16.6 22.6h11" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><rect x="3" y="26.4" width="26" height="2.6" fill="var(--fr-mark)"/></svg><span>Jacob Zamarripa</span></a><div class="fr-where"><span class="fr-pos">Case 3 of 4</span><span class="fr-title">Right-Sizing the Fleet</span></div></div></header>
+<main id="main">
+
+<section class="hero" aria-labelledby="top-h">
+  <div class="wrap sheet">
+    <div class="hero-head">
+      <p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i></i><i></i><i></i><i></i></span><span>Draft</span></p>
+      <p class="org">Centric Fiber, continual-improvement challenge</p>
+      <div class="hero-title">
+      <h1 id="top-h">Right-Sizing the Fleet</h1>
+      <p class="subtitle">A proposal built to be questioned.</p>
+      <p class="stand">In early 2026, weeks after leaving Centric, I took on its continual-improvement challenge the way an outside consultant would: study the operation, find the real constraint, and put a costed plan in front of the people who own the decision. A former teammate entered; I wrote the eleven-page proposal. It was selected as the winning submission, and technicians now drive trucks built to its main <span class="nw">components. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      </div>
+    </div>
+    <figure class="hero-fig">
+      <svg class="tr tr-bp" viewBox="-124 -124 1128 594" role="img" aria-label="Line drawing, to one scale, of a compact crew-cab pickup with an enclosed bed cap with a solid side-access hatch, the drawer system in hidden lines, two low crossbars on the cap and a locking tube on top, drawn inside the dashed outline of a high-roof cargo van that is about 3 ft longer and much taller. Numbered balloons 1 to 7 point to the seven parts in the budget." preserveAspectRatio="xMidYMid meet"><g class="ghost"><path class="gh" d="M-44 302L-43 -18Q-43 -54 -12 -54L549 -48Q573 -48 593 -34L723 79L807 139L848 154L884 189L893 226L900 252V303H846Q839 207 772 207Q701 207 695 303H201Q196 207 127 207Q57 207 52 303Z"/><circle class="gh" cx="127" cy="288" r="60"/><circle class="gh" cx="772" cy="288" r="60"/><path class="gh" d="M589 22Q602 13 619 23L735 116L778 157L646 161L607 135Z"/></g><path class="lt" d="M-124 350H1004"/><path class="l" d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 Q 212.27 220.17 279.38 217.98 Q 347.36 217.10 351.75 299.56 L 385.96 299.56 Z"/><path class="l" d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 Q 857.89 225.00 787.28 216.67 Q 718.42 210.53 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path class="l" d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path class="lt" d="M 345.61 92.98 L 164.90 93.86 Q 152.18 93.86 148.68 105.70 L 136.83 129.82 Q 133.32 142.10 145.61 143.42 L 339.90 143.42 Q 348.24 142.54 349.12 134.21 L 352.19 106.58 Q 353.50 94.73 345.61 92.98 Z"/><rect class="lt" x="231" y="114" width="22" height="15" rx="2"/><path class="lt" d="M 373.68 146.93 Q 370.17 155.70 359.64 156.14 L 112.71 152.63 M 374.12 151.31 Q 370.17 160.96 359.64 161.84 L 110.52 157.89"/><path class="l" d="M 508.77 101.31 L 411.40 100.88 Q 403.50 101.31 403.06 109.65 L 404.82 152.19 Q 407.01 159.21 414.91 160.09 L 515.35 165.35 Z"/><path class="l" d="M 532.01 103.07 Q 592.10 102.63 615.35 111.84 L 669.73 155.26 L 664.91 171.05 L 526.31 165.79 L 521.49 101.75 Z"/><path class="lt" d="M 515.35 93.86 L 526.31 165.35 L 532.89 281.14 L 527.19 299.56 M 381.57 104.38 L 385.96 286.84 M 694.29 176.31 L 698.24 284.65 L 694.73 300.44 M 707.45 155.70 L 692.98 174.56 M 692.98 280.70 L 533.33 280.70 L 386.84 274.12"/><path class="lt" d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><path class="lt" d="M 690.35 213.16 L 388.59 208.77 M 376.31 209.65 L 153.94 203.51"/><rect class="lt" x="484" y="185" width="40" height="9" rx="1.5"/><rect class="lt" x="625" y="190" width="40" height="9" rx="1.5"/><path class="lt" d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path class="lt" d="M 886.40 189.03 Q 878.94 182.89 869.73 187.28 L 860.52 194.30 L 860.52 215.35 L 885.08 219.74 Z"/><path class="lt" d="M 112.27 173.68 Q 135.52 171.05 143.85 178.95 L 141.66 212.72 Q 127.62 223.24 110.08 218.86 Z"/><path class="lt" d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path class="lt" d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path class="lt" d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path class="lt" d="M 322.36 75.88 L 169.29 76.75"/><rect class="l" x="301" y="61" width="29" height="4" rx="1"/><rect class="l" x="168" y="61" width="45" height="4" rx="1"/><rect class="l" x="112" y="37" width="240" height="24" rx="2"/><rect class="lt" x="102" y="40" width="12" height="18" rx="2"/><circle class="l" cx="282" cy="288" r="62"/><circle class="lt" cx="282" cy="288" r="37"/><path class="lt" d="M283.9 298.8L291.6 319.6L280.3 321.0L278.8 298.5ZM273.6 295.1L259.5 312.1L252.6 303.0L271.3 290.5ZM271.7 284.2L249.8 280.6L254.3 270.0L274.5 280.0ZM280.1 277.2L272.4 256.4L283.7 255.0L285.2 277.5ZM290.4 280.9L304.5 263.9L311.4 273.0L292.7 285.5ZM292.3 291.8L314.2 295.4L309.7 306.0L289.5 296.0Z"/><circle class="lt" cx="282" cy="288" r="8"/><circle class="l" cx="782" cy="288" r="62"/><circle class="lt" cx="782" cy="288" r="37"/><path class="lt" d="M783.9 298.8L791.6 319.6L780.3 321.0L778.8 298.5ZM773.6 295.1L759.5 312.1L752.6 303.0L771.3 290.5ZM771.7 284.2L749.8 280.6L754.3 270.0L774.5 280.0ZM780.1 277.2L772.4 256.4L783.7 255.0L785.2 277.5ZM790.4 280.9L804.5 263.9L811.4 273.0L792.7 285.5ZM792.3 291.8L814.2 295.4L809.7 306.0L789.5 296.0Z"/><circle class="lt" cx="782" cy="288" r="8"/><rect class="lh" x="118" y="180.0" width="246" height="48.0" rx="2"/><rect class="lh" x="121" y="196" width="4" height="16" rx="1"/><rect class="lh" x="132" y="190.0" width="62" height="26" rx="2"/><rect class="lh" x="198" y="190.0" width="62" height="26" rx="2"/><rect class="lh" x="300" y="108.0" width="68" height="72" rx="8"/><rect class="lh" x="224" y="116.0" width="68" height="64" rx="3"/><path class="dim" d="M-44 -64V-86M900 -64V-86M-44 -94H900"/><path class="dima" d="M-44 -94l12 -4v8zM900 -94l-12 -4v8z"/><rect class="dimbg" x="344.0" y="-107" width="168" height="26"/><text class="dimt" x="428.0" y="-93">van ≈ 236 in</text><path class="dim" d="M-50 -54H-64M-50 350H-64M-72 -54V350"/><path class="dima" d="M-72 -54l-4 12h8zM-72 350l-4 -12h8z"/><rect class="dimbg" x="-118.0" y="135.0" width="92" height="26"/><text class="dimt" x="-72" y="149.0">100 in</text><path class="dim" d="M100 362V400M900 362V400M100 392H900"/><path class="dima" d="M100 392l12 -4v8zM900 392l-12 -4v8z"/><rect class="dimbg" x="404.0" y="379" width="192" height="26"/><text class="dimt" x="500.0" y="393">truck ≈ 200 in</text><path class="dim" d="M906 74H952M906 350H952M944 74V350"/><path class="dima" d="M944 74l-4 12h8zM944 350l-4 -12h8z"/><rect class="dimbg" x="904.0" y="199.0" width="80" height="26"/><text class="dimt" x="944" y="213.0">69 in</text><g class="bal"><path class="lead" d="M240 148L24 128"/><circle class="dot" cx="240" cy="148" r="3"/><circle cx="24" cy="128" r="16"/><text x="24" y="129">1</text></g><g class="bal"><path class="lead" d="M200 218L170 442"/><circle class="dot" cx="200" cy="218" r="3"/><circle cx="170" cy="442" r="16"/><text x="170" y="443">2</text></g><g class="bal"><path class="lead" d="M334 56L440 0"/><circle class="dot" cx="334" cy="56" r="3"/><circle cx="440" cy="0" r="16"/><text x="440" y="1">3</text></g><g class="bal"><path class="lead" d="M200 37L176 -24"/><circle class="dot" cx="200" cy="37" r="3"/><circle cx="176" cy="-24" r="16"/><text x="176" y="-23">4</text></g><g class="bal"><path class="lead" d="M270 49L214 -24"/><circle class="dot" cx="270" cy="49" r="3"/><circle cx="214" cy="-24" r="16"/><text x="214" y="-23">5</text></g><g class="bal"><path class="lead" d="M424 150L486 442"/><circle class="dot" cx="424" cy="150" r="3"/><circle cx="486" cy="442" r="16"/><text x="486" y="443">6</text></g><g class="bal"><path class="lead" d="M110 240L62 442"/><circle class="dot" cx="110" cy="240" r="3"/><circle cx="62" cy="442" r="16"/><text x="62" y="443">7</text></g></svg>
+    </figure>
+    <div class="hero-foot">
+      <ol class="parts-mini" aria-label="Balloon numbers">
+        <li><b>1</b> Commercial truck cap</li><li><b>2</b> Drawer system</li><li><b>3</b> Bed rack</li><li><b>4</b> Locking tube kit</li><li><b>5</b> 5 ft PVC pipe</li><li><b>6</b> Cab organizers</li><li><b>7</b> Tailgate tote</li>
+      </ol>
+      <p class="hero-cap">The proposed truck in side elevation, inside the outline of the van it would replace. Lengths are from the proposal. The drawing is a recreation for this page, not an engineering drawing. <span class="fr-ev" data-ev="illustrative">Illustrative</span></p>
+      <dl class="tblock">
+        <div class="tb-wide"><dt>Title</dt><dd>Service truck upfit, proposed</dd></div>
+        <div><dt>Author</dt><dd>Jacob Zamarripa</dd></div>
+        <div><dt>Entry</dt><dd>Joint, with a former teammate</dd></div>
+        <div><dt>Drafted</dt><dd>Jan 23 – Feb 6, 2026</dd></div>
+        <div><dt>Revisions</dt><dd>4, the last submitted</dd></div>
+        <div><dt>Length</dt><dd>11 pages</dd></div>
+        <div><dt>Decides</dt><dd>Fleet Operations</dd></div>
+        <div class="tb-wide tb-status"><dt>Status</dt><dd>Selected, now in service</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+<div class="wrap keywrap"><div class="fr-key" data-frame-key data-frame-static><p class="fr-key-title">How each claim is sourced</p><dl><div><dt><span class="fr-ev" data-ev="measured">Measured</span></dt><dd>Produced by an employer’s system or the live platform, not by me.</dd></div><div><dt><span class="fr-ev" data-ev="recorded">Recorded</span></dt><dd>My own artifacts, written at the time: plans, trackers, curriculum.</dd></div><div><dt><span class="fr-ev" data-ev="recalled">Recalled</span></dt><dd>My account, told now.</dd></div><div><dt><span class="fr-ev" data-ev="illustrative">Illustrative</span></dt><dd>Invented demo data or a recreation, shown to explain how something works.</dd></div></dl></div></div>
+
+<section class="sh sh-1" aria-labelledby="q-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i></i><i></i><i></i></span><span>Markup</span></p></div>
+    <div class="main">
+      <h2 id="q-h">Replace the vans with what?</h2>
+      <div class="van-layout">
+        <div class="prose">
+          <p class="lede">By the time of the challenge, Centric had already decided to replace its service vans. The open question was what should replace them.</p>
+          <p>So the proposal had one job: describe the right vehicle precisely enough for Fleet Operations to evaluate it. A standing-height cargo van is built to haul volume. The service technicians driving them made five or more stops a day, and at every stop they climbed into the cargo bay to find a tool and climbed back <span class="nw">out. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+        </div>
+        <figure class="van van-study">
+          <svg class="tr tr-paper tr-van" viewBox="-100 -106 1100 558" role="img" aria-label="Reconstructed high-roof cargo van cutaway: open metal shelves with cartons, hose and tool cases, compressor and generator on the floor, long materials across the cargo floor, and a retrieval aisle behind the cab. Four red numbered leaders identify the access, length, loose-material and shelving concerns described in the proposal." preserveAspectRatio="xMidYMid meet"><path class="lt" d="M-65 350H930"/><defs><clipPath id="van-photo-cargo"><rect x="-80" y="-54" width="1040" height="440"/></clipPath></defs><g clip-path="url(#van-photo-cargo)" opacity="1"><image href="artwork/van-cutaway-v2.webp" width="1774" height="887" transform="translate(917.81 -112.0) scale(-.5566 .5566)"/></g><g class="red van-callouts"><path class="rl" d="M655 -62V2L552 180"/><circle class="cut-red-dot" cx="552" cy="180" r="4"/><circle class="rn" cx="655" cy="-82" r="19"/><text class="rt" x="655" y="-81">1</text><path class="rl" d="M325 402V376L300 205"/><circle class="cut-red-dot" cx="300" cy="205" r="4"/><circle class="rn" cx="325" cy="422" r="19"/><text class="rt" x="325" y="423">3</text><path class="rl" d="M260 -62V30"/><circle class="cut-red-dot" cx="260" cy="30" r="4"/><circle class="rn" cx="260" cy="-82" r="19"/><text class="rt" x="260" y="-81">4</text><path class="rl" d="M-44 380H900M-44 370V390M900 370V390"/><circle class="rn" cx="938" cy="380" r="19"/><text class="rt" x="938" y="381">2</text></g></svg>
+          <div class="cut-detail"><p>Cargo bay, enlarged</p><svg class="tr tr-paper cut-detail-svg" viewBox="-28 -44 610 283" role="img" aria-label="Enlarged view of the reconstructed van cargo bay, showing open shelving, tools, floor equipment and long materials." preserveAspectRatio="xMidYMid meet"><defs><clipPath id="van-photo-cargo-detail"><rect x="-80" y="-54" width="1040" height="440"/></clipPath></defs><g clip-path="url(#van-photo-cargo-detail)" opacity="1"><image href="artwork/van-cutaway-v2.webp" width="1774" height="887" transform="translate(917.81 -112.0) scale(-.5566 .5566)"/></g></svg></div>
+          <ol class="redlist">
+            <li><b>1</b>Climb in, search, climb out, at every stop.</li>
+            <li><b>2</b>About 236 in long, hard to park in busy construction areas.</li>
+            <li><b>3</b>Long materials loose on the floor, with no secure mount.</li>
+            <li><b>4</b>Open shelving that turns into a catch-all.</li>
+          </ol>
+          <figcaption>Cargo storage reconstructed from the proposal’s description. Illustrative interior, not a photograph or measured layout. <span class="fr-ev" data-ev="illustrative">Illustrative</span></figcaption>
+        </figure>
+      </div>
+      <blockquote class="pull">
+        <p>Service techs are tool-dense, not volume-dense. They need less space with more structure.</p>
+        <footer>From the proposal <span class="fr-ev" data-ev="recorded">Recorded</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="sh sh-2" aria-labelledby="l-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i></i><i></i><i></i></span><span>Markup</span></p></div>
+    <div class="main">
+      <h2 id="l-h">Start with what rides along</h2>
+      <p class="lede">The specification began with the loadout: every tool, box and roll of material a service technician carries in a day, with sizes, counts, weights and how often the customer equipment needs restocking.</p>
+      <p class="prose-p">I put the whole loadout in the appendix because I wanted the proposal scrutinized. The goal was a plan with real business impact, and a plan earns that by surviving challenge, so I asked reviewers to question every <span class="nw">line. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span> <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      <div class="sched" role="table" aria-label="Daily loadout from the proposal">
+        <div class="sg" role="rowgroup">
+          <h3 class="sg-h">Core equipment</h3>
+          <div class="sr" role="row"><span role="cell">Portable compressor</span><span role="cell">10 gal</span><span role="cell">83.3 lb</span></div>
+          <div class="sr" role="row"><span role="cell">Portable generator</span><span role="cell"></span><span role="cell">58.6 lb</span></div>
+          <div class="sr" role="row"><span role="cell">Air hose, in a tote</span><span role="cell">about 100 ft</span><span role="cell"></span></div>
+          <div class="sr" role="row"><span role="cell">Two splicers</span><span role="cell">home side and hub side</span><span role="cell"></span></div>
+          <div class="sr" role="row"><span role="cell">Blown fiber gun, drill and fasteners, fiber test tools, hand tools, shovel</span><span role="cell"></span><span role="cell"></span></div>
+        </div>
+        <div class="sg" role="rowgroup">
+          <h3 class="sg-h">Fiber supply</h3>
+          <div class="sr" role="row"><span role="cell">Fiber drum</span><span role="cell">13,000 ft</span><span role="cell">20 lb</span></div>
+          <h3 class="sg-h">Customer equipment, kept dry and locked</h3>
+          <div class="sr" role="row"><span role="cell">Gateway boxes, 5 units each</span><span role="cell">13 × 21 × 9 in, at least 5</span><span role="cell"></span></div>
+          <div class="sr" role="row"><span role="cell">Mesh unit boxes, 22 units each</span><span role="cell">22 × 12 × 10 in</span><span role="cell"></span></div>
+          <div class="sr" role="row"><span role="cell">Fiber patch cables</span><span role="cell">up to 35 m</span><span role="cell"></span></div>
+        </div>
+        <div class="sg" role="rowgroup">
+          <h3 class="sg-h">Long items</h3>
+          <div class="sr" role="row"><span role="cell">PVC risers</span><span role="cell">5 ft</span><span role="cell"></span></div>
+          <div class="sr sr-red" role="row"><span role="cell">Push rods and conduit</span><span role="cell"><s>8–12 ft</s> <em class="pencil">about 5 ft</em></span><span role="cell"></span></div>
+          <p class="note-red">Corrected now. The proposal said 8–12 ft. The real items were about 5 ft, which is what its parts list already carried.</p>
+          <h3 class="sg-h">Safety</h3>
+          <div class="sr" role="row"><span role="cell">Cones, signage, PPE</span><span role="cell"></span><span role="cell"></span></div>
+        </div>
+      </div>
+      <p class="margin-note">Five gateway boxes on board meant no more than two warehouse stops a week.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sh sh-3" aria-labelledby="s-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i></i><i></i><i></i></span><span>Markup</span></p></div>
+    <div class="main">
+      <h2 id="s-h">Less space, more structure</h2>
+      <p class="lede">From the loadout I laid out four storage zones and specified the parts to build them.</p>
+      <p class="prose-p">Everything that has to stay dry and locked rides under the cap. Tools live in one full-width drawer that slides out at the tailgate. Long items ride in a locking tube on the rack, mounted so the tailgate still <span class="nw">opens. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+    </div>
+  </div>
+  <div class="wrap wide">
+    <figure class="zones">
+      <svg class="tr tr-paper" viewBox="40 -36 920 418" role="img" aria-label="Reconstructed compact pickup storage cutaway with four lettered zones: A a cab organizer; B the upper bed bay holding only a hose reel, compressor, generator and cones; C the lower-third storage drawer holding wide squat fiber drums, containers and smaller tools; D the proposed locking rack tube. Equipment positions are illustrative, not verified fitment." preserveAspectRatio="xMidYMid meet"><defs><clipPath id="w-zones"><rect id="wipe-zones" class="wipe" x="40" y="-36" width="920" height="418" data-x="40" data-w="920"/></clipPath><mask id="base-zones" maskUnits="userSpaceOnUse" x="40" y="-36" width="920" height="418" style="mask-type:luminance"><rect x="40" y="-36" width="920" height="418" fill="white"/><use href="#wipe-zones" fill="black"/></mask></defs><path class="lt" d="M56 350H944"/><g mask="url(#base-zones)"><path class="l" d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 Q 212.27 220.17 279.38 217.98 Q 347.36 217.10 351.75 299.56 L 385.96 299.56 Z"/><path class="l" d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 Q 857.89 225.00 787.28 216.67 Q 718.42 210.53 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path class="l" d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path class="lt" d="M 345.61 92.98 L 164.90 93.86 Q 152.18 93.86 148.68 105.70 L 136.83 129.82 Q 133.32 142.10 145.61 143.42 L 339.90 143.42 Q 348.24 142.54 349.12 134.21 L 352.19 106.58 Q 353.50 94.73 345.61 92.98 Z"/><rect class="lt" x="231" y="114" width="22" height="15" rx="2"/><path class="lt" d="M 373.68 146.93 Q 370.17 155.70 359.64 156.14 L 112.71 152.63 M 374.12 151.31 Q 370.17 160.96 359.64 161.84 L 110.52 157.89"/><path class="l" d="M 508.77 101.31 L 411.40 100.88 Q 403.50 101.31 403.06 109.65 L 404.82 152.19 Q 407.01 159.21 414.91 160.09 L 515.35 165.35 Z"/><path class="l" d="M 532.01 103.07 Q 592.10 102.63 615.35 111.84 L 669.73 155.26 L 664.91 171.05 L 526.31 165.79 L 521.49 101.75 Z"/><path class="lt" d="M 515.35 93.86 L 526.31 165.35 L 532.89 281.14 L 527.19 299.56 M 381.57 104.38 L 385.96 286.84 M 694.29 176.31 L 698.24 284.65 L 694.73 300.44 M 707.45 155.70 L 692.98 174.56 M 692.98 280.70 L 533.33 280.70 L 386.84 274.12"/><path class="lt" d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><path class="lt" d="M 690.35 213.16 L 388.59 208.77 M 376.31 209.65 L 153.94 203.51"/><rect class="lt" x="484" y="185" width="40" height="9" rx="1.5"/><rect class="lt" x="625" y="190" width="40" height="9" rx="1.5"/><path class="lt" d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path class="lt" d="M 886.40 189.03 Q 878.94 182.89 869.73 187.28 L 860.52 194.30 L 860.52 215.35 L 885.08 219.74 Z"/><path class="lt" d="M 112.27 173.68 Q 135.52 171.05 143.85 178.95 L 141.66 212.72 Q 127.62 223.24 110.08 218.86 Z"/><path class="lt" d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path class="lt" d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path class="lt" d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path class="lt" d="M 322.36 75.88 L 169.29 76.75"/><rect class="l" x="301" y="61" width="29" height="4" rx="1"/><rect class="l" x="168" y="61" width="45" height="4" rx="1"/><rect class="l" x="112" y="37" width="240" height="24" rx="2"/><rect class="lt" x="102" y="40" width="12" height="18" rx="2"/><circle class="l" cx="282" cy="288" r="62"/><circle class="lt" cx="282" cy="288" r="37"/><path class="lt" d="M283.9 298.8L291.6 319.6L280.3 321.0L278.8 298.5ZM273.6 295.1L259.5 312.1L252.6 303.0L271.3 290.5ZM271.7 284.2L249.8 280.6L254.3 270.0L274.5 280.0ZM280.1 277.2L272.4 256.4L283.7 255.0L285.2 277.5ZM290.4 280.9L304.5 263.9L311.4 273.0L292.7 285.5ZM292.3 291.8L314.2 295.4L309.7 306.0L289.5 296.0Z"/><circle class="lt" cx="282" cy="288" r="8"/><circle class="l" cx="782" cy="288" r="62"/><circle class="lt" cx="782" cy="288" r="37"/><path class="lt" d="M783.9 298.8L791.6 319.6L780.3 321.0L778.8 298.5ZM773.6 295.1L759.5 312.1L752.6 303.0L771.3 290.5ZM771.7 284.2L749.8 280.6L754.3 270.0L774.5 280.0ZM780.1 277.2L772.4 256.4L783.7 255.0L785.2 277.5ZM790.4 280.9L804.5 263.9L811.4 273.0L792.7 285.5ZM792.3 291.8L814.2 295.4L809.7 306.0L789.5 296.0Z"/><circle class="lt" cx="782" cy="288" r="8"/></g><g class="build" clip-path="url(#w-zones)"><defs><clipPath id="vehicle-zones-interior"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-zones-interior" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-zones-interior)"><image href="artwork/pickup-cutaway-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g><g class="cab-kit" opacity=".88"><rect x="426" y="130" width="36" height="27" rx="3" fill="#9b8a65" stroke="#403d35" stroke-width="1"/><path d="M437 130V126H451V130" fill="none" stroke="#403d35" stroke-width="2"/><rect x="470" y="123" width="21" height="32" rx="2" fill="#b7c4cc" stroke="#343e46" stroke-width="1.5"/><rect x="473" y="126" width="15" height="24" rx="1" fill="#26333e"/></g><rect class="f-tube" x="112" y="37" width="240" height="24" rx="2"/><rect class="f-metal" x="102" y="40" width="12" height="18" rx="2"/><rect class="f-rack" x="344" y="36" width="10" height="26" rx="2"/><path class="f-tubehi" d="M118 42H346"/><g class="cut-label" style="--zone:var(--za)"><path class="cut-lead" d="M485 29V60L445 139"/><circle class="cut-dot" cx="445" cy="139" r="3"/><circle class="cut-badge" cx="485" cy="14" r="15"/><text x="485" y="15">A</text></g><g class="cut-label" style="--zone:var(--zb)"><path class="cut-lead" d="M87 143H205"/><circle class="cut-dot" cx="205" cy="143" r="3"/><circle class="cut-badge" cx="72" cy="143" r="15"/><text x="72" y="144">B</text></g><g class="cut-label" style="--zone:var(--zc)"><path class="cut-lead" d="M72 271V201H210"/><circle class="cut-dot" cx="210" cy="201" r="3"/><circle class="cut-badge" cx="72" cy="286" r="15"/><text x="72" y="287">C</text></g><g class="cut-label" style="--zone:var(--zd)"><path class="cut-lead" d="M245 5V48"/><circle class="cut-dot" cx="245" cy="48" r="3"/><circle class="cut-badge" cx="245" cy="-10" r="15"/><text x="245" y="-9">D</text></g></g><line class="edge" x1="960" y1="-36" x2="960" y2="382"/></svg>
+      <div class="cut-detail"><p>Bed storage, enlarged</p><svg class="tr tr-paper cut-detail-svg" viewBox="98 76 285 165" role="img" aria-label="Enlarged conceptual bed storage: hose reel, compressor, generator and cones above a lower-third drawer with wide squat drums, containers and smaller tools." preserveAspectRatio="xMidYMid meet"><defs><clipPath id="vehicle-zones-detail"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-zones-detail" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-zones-detail)"><image href="artwork/pickup-cutaway-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g></svg></div>
+      <figcaption>Four storage zones, reconstructed around the loadout. Equipment positions and clearances are illustrative, not verified fitment. <span class="fr-ev" data-ev="illustrative">Illustrative</span></figcaption>
+    </figure>
+    <dl class="zlegend">
+      <div class="zk-a"><dt><b>A</b>Cab</dt><dd>Work orders and tablet, the day’s PPE and a small grab-and-go kit.</dd></div>
+      <div class="zk-b"><dt><b>B</b>Bed, under the cap</dt><dd>Only the hose reel, compressor, generator and cones ride in the bed above the drawer, protected by the locked cap.</dd></div>
+      <div class="zk-c"><dt><b>C</b>Drawer</dt><dd>One full-width system in the lower third of the bed-and-cap space. Wide, squat fiber drums, containers, hand tools, test gear, splicers and other smaller supplies are stored inside.</dd></div>
+      <div class="zk-d"><dt><b>D</b>Rack tube</dt><dd>Items about 5 ft long, locked in and off the floor.</dd></div>
+    </dl>
+  </div>
+  <div class="wrap cols">
+    <div class="side"></div>
+    <div class="main">
+      <div class="split">
+        <div>
+          <h3 class="h3">Seven parts, priced</h3>
+          <table class="bom">
+            <thead><tr><th scope="col">No.</th><th scope="col">Part</th><th scope="col" class="num">Estimate</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bn">1</span></td><td>Commercial truck cap</td><td class="num">$2,000.00</td></tr>
+              <tr><td><span class="bn">2</span></td><td>Drawer system</td><td class="num">$1,699.99</td></tr>
+              <tr><td><span class="bn">3</span></td><td>Bed rack</td><td class="num">$600.00</td></tr>
+              <tr><td><span class="bn">4</span></td><td>Locking tube kit, 5 ft</td><td class="num">$120.00</td></tr>
+              <tr><td><span class="bn">5</span></td><td>6 in PVC pipe, 5 ft</td><td class="num">$20.00</td></tr>
+              <tr><td><span class="bn">6</span></td><td>Cab organizers</td><td class="num">$80.00</td></tr>
+              <tr><td><span class="bn">7</span></td><td>Tailgate tote</td><td class="num">$40.00</td></tr>
+            </tbody>
+            <tfoot><tr><td></td><th scope="row">Per truck</th><td class="num">$4,559.99</td></tr></tfoot>
+          </table>
+          <p class="small">Historical estimates from the proposal. Each line named a vendor and a product, and most named an alternative source. The truck itself and installation were outside this <span class="nw">total. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+        </div>
+        <div>
+          <h3 class="h3">Would it carry the load?</h3>
+          <p>Before recommending the truck I checked its payload. Against a 1,500 lb rating, the upfit came to 458 lb, the heavy equipment to 214 lb and tools and materials to about 250 to 350 lb. That left a margin of 478 to 578 <span class="nw">lb. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+          <div class="pl">
+            <p class="pl-red"><span>Missing: the people. A payload rating includes the driver and any rider, and the table left them out.</span></p>
+            <div class="pl-bar" role="img" aria-label="Payload, 1,500 pounds: upfit 458, heavy equipment 214, tools and materials 250 to 350, margin 478 to 578.">
+              <span class="pl-s pl-up" style="flex-basis:30.53%" title="Upfit, 458 lb"></span>
+              <span class="pl-s pl-hv" style="flex-basis:14.27%" title="Heavy equipment, 214 lb"></span>
+              <span class="pl-s pl-tl" style="flex-basis:16.67%" title="Tools and materials, 250 lb"></span>
+              <span class="pl-s pl-rg" style="flex-basis:6.67%" title="Tools and materials range, up to 350 lb"></span>
+              <span class="pl-s pl-mg" style="flex-basis:31.86%" title="Margin, 478 to 578 lb"></span>
+            </div>
+            <div class="pl-scale" aria-hidden="true"><span>0</span><span>500</span><span>1,000</span><span>1,500 lb</span></div>
+            <dl class="pl-key">
+              <div><dt><i class="pl-up"></i>Upfit</dt><dd>458 lb</dd></div>
+              <div><dt><i class="pl-hv"></i>Heavy equipment</dt><dd>214 lb</dd></div>
+              <div><dt><i class="pl-tl"></i>Tools and materials</dt><dd>250–350 lb</dd></div>
+              <div><dt><i class="pl-mg"></i>Margin</dt><dd>478–578 lb</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sh sh-4" aria-labelledby="d-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i class=on></i><i></i><i></i></span><span>Review</span></p></div>
+    <div class="main">
+      <h2 id="d-h">Whose decision it was</h2>
+      <p class="lede">I worked it the way a consultant would: an outside view, a costed recommendation, and the decision left with the people who own it. The proposal closed with a three-phase plan and one sentence about who <span class="nw">decides. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      <blockquote class="pull pull-quiet">
+        <p>This roadmap is a proposed starting point for Fleet Management to evaluate and adapt as needed. Final execution timing, vendor selection, and rollout strategy would be determined by Fleet Operations.</p>
+        <footer>From the proposal <span class="fr-ev" data-ev="recorded">Recorded</span></footer>
+      </blockquote>
+      <div class="approve">
+        <ol class="phases">
+          <li><span class="ph-n">Phase 1</span><b>Pilot validation</b><p>One truck built to the configuration and driven by an active technician for 30 to 60 days, with feedback written down and adjustments noted.</p></li>
+          <li><span class="ph-n">Phase 2</span><b>Vendors and procurement</b><p>Fleet Management finalizes vendors, sources the base vehicle through its existing fleet channels and sets up the installer process.</p></li>
+          <li><span class="ph-n">Phase 3</span><b>Rollout</b><p>Phased, as vans reach their normal replacement cycle, with technician onboarding run by Fleet Operations.</p></li>
+        </ol>
+        <div class="signoff">
+          <div><span>Proposed by</span><b>Jacob Zamarripa</b></div>
+          <div><span>Decided by</span><b>Fleet Operations</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sh sh-5" aria-labelledby="sel-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i class=on></i><i class=on></i><i></i></span><span>Selected</span></p></div>
+    <div class="main">
+      <h2 id="sel-h">Selected, then specified</h2>
+      <p class="lede">The proposal was selected as the winning submission. After that, my teammate and I sat in on meetings with the vehicle outfitters to finalize the <span class="nw">customizations. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+    </div>
+  </div>
+  <div class="wrap wide">
+    <figure class="render" data-build>
+      <svg class="tr tr-paper" viewBox="56 12 888 358" role="img" aria-label="The same truck rendered in grey tones: shaded body and cap, dark glass, rack and tube, tyres." preserveAspectRatio="xMidYMid meet"><defs><clipPath id="w-shade"><rect id="wipe-shade" class="wipe" x="56" y="12" width="888" height="358" data-x="56" data-w="888"/></clipPath><linearGradient id="sb1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sg-hi"/><stop offset="1" class="sg-lo"/></linearGradient><linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="sg-g1"/><stop offset="1" class="sg-g2"/></linearGradient><mask id="base-shade" maskUnits="userSpaceOnUse" x="56" y="12" width="888" height="358" style="mask-type:luminance"><rect x="56" y="12" width="888" height="358" fill="white"/><use href="#wipe-shade" fill="black"/></mask></defs><path class="lt" d="M56 350H944"/><g mask="url(#base-shade)"><path class="l" d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 Q 212.27 220.17 279.38 217.98 Q 347.36 217.10 351.75 299.56 L 385.96 299.56 Z"/><path class="l" d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 Q 857.89 225.00 787.28 216.67 Q 718.42 210.53 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path class="l" d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path class="lt" d="M 345.61 92.98 L 164.90 93.86 Q 152.18 93.86 148.68 105.70 L 136.83 129.82 Q 133.32 142.10 145.61 143.42 L 339.90 143.42 Q 348.24 142.54 349.12 134.21 L 352.19 106.58 Q 353.50 94.73 345.61 92.98 Z"/><rect class="lt" x="231" y="114" width="22" height="15" rx="2"/><path class="lt" d="M 373.68 146.93 Q 370.17 155.70 359.64 156.14 L 112.71 152.63 M 374.12 151.31 Q 370.17 160.96 359.64 161.84 L 110.52 157.89"/><path class="l" d="M 508.77 101.31 L 411.40 100.88 Q 403.50 101.31 403.06 109.65 L 404.82 152.19 Q 407.01 159.21 414.91 160.09 L 515.35 165.35 Z"/><path class="l" d="M 532.01 103.07 Q 592.10 102.63 615.35 111.84 L 669.73 155.26 L 664.91 171.05 L 526.31 165.79 L 521.49 101.75 Z"/><path class="lt" d="M 515.35 93.86 L 526.31 165.35 L 532.89 281.14 L 527.19 299.56 M 381.57 104.38 L 385.96 286.84 M 694.29 176.31 L 698.24 284.65 L 694.73 300.44 M 707.45 155.70 L 692.98 174.56 M 692.98 280.70 L 533.33 280.70 L 386.84 274.12"/><path class="lt" d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><path class="lt" d="M 690.35 213.16 L 388.59 208.77 M 376.31 209.65 L 153.94 203.51"/><rect class="lt" x="484" y="185" width="40" height="9" rx="1.5"/><rect class="lt" x="625" y="190" width="40" height="9" rx="1.5"/><path class="lt" d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path class="lt" d="M 886.40 189.03 Q 878.94 182.89 869.73 187.28 L 860.52 194.30 L 860.52 215.35 L 885.08 219.74 Z"/><path class="lt" d="M 112.27 173.68 Q 135.52 171.05 143.85 178.95 L 141.66 212.72 Q 127.62 223.24 110.08 218.86 Z"/><path class="lt" d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path class="lt" d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path class="lt" d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path class="lt" d="M 322.36 75.88 L 169.29 76.75"/><rect class="l" x="301" y="61" width="29" height="4" rx="1"/><rect class="l" x="168" y="61" width="45" height="4" rx="1"/><rect class="l" x="112" y="37" width="240" height="24" rx="2"/><rect class="lt" x="102" y="40" width="12" height="18" rx="2"/><circle class="l" cx="282" cy="288" r="62"/><circle class="lt" cx="282" cy="288" r="37"/><path class="lt" d="M283.9 298.8L291.6 319.6L280.3 321.0L278.8 298.5ZM273.6 295.1L259.5 312.1L252.6 303.0L271.3 290.5ZM271.7 284.2L249.8 280.6L254.3 270.0L274.5 280.0ZM280.1 277.2L272.4 256.4L283.7 255.0L285.2 277.5ZM290.4 280.9L304.5 263.9L311.4 273.0L292.7 285.5ZM292.3 291.8L314.2 295.4L309.7 306.0L289.5 296.0Z"/><circle class="lt" cx="282" cy="288" r="8"/><circle class="l" cx="782" cy="288" r="62"/><circle class="lt" cx="782" cy="288" r="37"/><path class="lt" d="M783.9 298.8L791.6 319.6L780.3 321.0L778.8 298.5ZM773.6 295.1L759.5 312.1L752.6 303.0L771.3 290.5ZM771.7 284.2L749.8 280.6L754.3 270.0L774.5 280.0ZM780.1 277.2L772.4 256.4L783.7 255.0L785.2 277.5ZM790.4 280.9L804.5 263.9L811.4 273.0L792.7 285.5ZM792.3 291.8L814.2 295.4L809.7 306.0L789.5 296.0Z"/><circle class="lt" cx="782" cy="288" r="8"/></g><g class="build" clip-path="url(#w-shade)"><ellipse class="s-shadow" cx="500" cy="351" rx="420" ry="8"/><defs><clipPath id="vehicle-shade-1"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-shade-1" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-shade-1)" filter="url(#mono-shade-1)"><image href="artwork/pickup-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g><rect class="s-tube" x="112" y="37" width="240" height="24" rx="2"/><rect class="s-metal" x="102" y="40" width="12" height="18" rx="2"/><rect class="s-dark" x="344" y="36" width="10" height="26" rx="2"/><path class="s-tubehi" d="M118 42H346"/></g><line class="edge" x1="944" y1="12" x2="944" y2="370"/></svg>
+      <span class="stamp" aria-hidden="true">Selected</span>
+      <figcaption>The configuration rendered in tone. A recreation. <span class="fr-ev" data-ev="illustrative">Illustrative</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sh sh-6" aria-labelledby="r-h">
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i class=on></i><i class=on></i><i></i></span><span>Revisions</span></p></div>
+    <div class="main">
+      <h2 id="r-h">What I’d revise now</h2>
+      <table class="revs">
+        <thead><tr><th scope="col">Rev</th><th scope="col">Change</th><th scope="col">Why</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><th scope="row">Check every number against the thing it describes</th><td>The proposal said long items ran 8 to 12 ft, in six places. They were about 5 ft, which the parts list already specified. The requirement was the error.</td></tr>
+          <tr><td>B</td><th scope="row">Price the whole truck</th><td>I priced the upfit and left out total cost of ownership and payback, the first things a fleet budget asks about.</td></tr>
+          <tr><td>C</td><th scope="row">Put the people in the payload</th><td>The driver and any rider count against the rating. The margin was smaller than the table showed.</td></tr>
+          <tr><td>D</td><th scope="row">Measure the time saved</th><td>Five to ten minutes a day was my estimate, with no time study behind it.</td></tr>
+          <tr><td>E</td><th scope="row">Answer the workspace question</th><td>A standing-height van is also a dry place to splice in rain and heat. The proposal didn’t say how a truck handles that.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="done" aria-labelledby="done-h">
+  <figure class="fin" data-build>
+    <svg class="tr tr-fin" viewBox="-60 -30 1140 450" role="img" aria-label="The finished truck in colour on a road: white body and cap, black rack carrying the locking tube, under an open sky." preserveAspectRatio="xMidYMid meet"><defs><clipPath id="w-fin"><rect id="wipe-fin" class="wipe" x="-60" y="-30" width="1140" height="450" data-x="-60" data-w="1140"/></clipPath><linearGradient id="sb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sg-hi"/><stop offset="1" class="sg-lo"/></linearGradient><linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="sg-g1"/><stop offset="1" class="sg-g2"/></linearGradient><linearGradient id="fb3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="fg-hi"/><stop offset=".62" class="fg-mid"/><stop offset="1" class="fg-lo"/></linearGradient><linearGradient id="fg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="fg-g1"/><stop offset="1" class="fg-g2"/></linearGradient><linearGradient id="fs3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="fg-sky1"/><stop offset="1" class="fg-sky2"/></linearGradient><linearGradient id="fr3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="fg-rim1"/><stop offset="1" class="fg-rim2"/></linearGradient><linearGradient id="fl3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" class="fg-beam1"/><stop offset="1" class="fg-beam2"/></linearGradient><radialGradient id="ft3"><stop offset="0" class="fg-glow1"/><stop offset="1" class="fg-glow2"/></radialGradient><mask id="base-fin" maskUnits="userSpaceOnUse" x="-60" y="-30" width="1140" height="450" style="mask-type:luminance"><rect x="-60" y="-30" width="1140" height="450" fill="white"/><use href="#wipe-fin" fill="black"/></mask></defs><path class="lt" d="M-60 350H1080"/><g mask="url(#base-fin)"><ellipse class="s-shadow" cx="500" cy="351" rx="420" ry="8"/><defs><clipPath id="vehicle-shade-2"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-shade-2" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-shade-2)" filter="url(#mono-shade-2)"><image href="artwork/pickup-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g><rect class="s-tube" x="112" y="37" width="240" height="24" rx="2"/><rect class="s-metal" x="102" y="40" width="12" height="18" rx="2"/><rect class="s-dark" x="344" y="36" width="10" height="26" rx="2"/><path class="s-tubehi" d="M118 42H346"/></g><g class="build" clip-path="url(#w-fin)"><image class="fleet-road fleet-road--day" href="artwork/road-day.webp" x="-60" y="-30" width="1140" height="450" preserveAspectRatio="xMidYMid slice"/><image class="fleet-road fleet-road--night" href="artwork/road-night.webp" x="-60" y="-30" width="1140" height="450" preserveAspectRatio="xMidYMid slice"/><ellipse class="f-shadow" cx="500" cy="351" rx="430" ry="9"/><defs><clipPath id="vehicle-finish-3"><path d="M 381.57 157.89 L 110.52 157.89 L 109.20 173.24 L 111.39 254.82 L 101.31 264.47 L 99.99 293.86 L 207.89 297.37 L 351.75 299.56 L 385.96 299.56 Z"/><path d="M 381.57 157.89 L 381.13 96.49 Q 383.76 82.45 396.92 82.45 L 538.15 81.58 Q 601.31 81.14 630.26 93.42 Q 665.35 113.16 708.77 155.70 L 828.94 164.91 Q 866.22 171.49 882.89 187.72 L 889.03 217.10 Q 897.80 230.70 899.12 244.30 L 899.56 260.53 L 900.87 262.28 L 900.00 290.35 L 853.51 305.26 L 711.84 302.63 L 423.24 300.44 Q 398.24 295.61 385.96 286.84 Z"/><path d="M 374.55 149.12 L 376.31 94.73 Q 373.24 85.09 357.45 81.58 Q 328.94 75.00 306.13 75.44 L 152.18 77.19 Q 139.03 78.07 134.64 88.16 L 113.15 148.68 L 111.39 157.45 L 359.64 160.09 Q 371.48 157.89 374.55 149.12 Z"/><path d="M 110.96 254.39 L 99.99 264.47 L 99.99 294.30 L 208.32 297.37 L 207.45 278.51 L 135.08 272.81 Z"/><path d="M 899.56 259.65 L 884.65 262.28 L 879.38 273.68 L 854.82 277.19 L 853.51 304.39 L 898.68 296.49 L 900.87 289.47 Z"/><path d="M 322.36 76.31 L 323.68 66.66 L 320.17 62.28 L 311.83 64.03 L 299.12 73.68 L 308.33 76.75 Z M 208.32 76.75 L 210.52 67.10 L 207.45 62.28 L 199.55 63.16 L 167.97 73.68 L 171.48 78.07 Z"/><path d="M 671.05 150.44 Q 672.80 150.00 678.94 150.44 L 686.40 154.82 L 685.52 171.49 L 668.86 174.56 L 661.40 170.61 L 662.71 156.58 Z"/><path d="M 711.84 292.10 L 423.24 291.67 Q 396.92 284.65 383.76 275.00 L 358.76 275.44 L 352.62 300.44 L 711.84 304.39 M 849.12 263.16 Q 846.05 223.68 786.40 213.60 Q 726.75 211.84 715.79 261.40 M 348.68 260.96 Q 342.10 216.67 278.94 214.47 Q 218.85 214.03 210.52 261.84"/><circle cx="282" cy="288" r="62"/><circle cx="782" cy="288" r="62"/></clipPath><filter id="mono-finish-3" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter></defs><g clip-path="url(#vehicle-finish-3)"><image href="artwork/pickup-v2.webp" x="0" y="0" width="1918" height="820" transform="translate(921.05 21.05) scale(-.4386 .4386)"/></g><rect class="f-tube" x="112" y="37" width="240" height="24" rx="2"/><rect class="f-metal" x="102" y="40" width="12" height="18" rx="2"/><rect class="f-rack" x="344" y="36" width="10" height="26" rx="2"/><path class="f-tubehi" d="M118 42H346"/></g><line class="edge" x1="1080" y1="-30" x2="1080" y2="420"/></svg>
+  </figure>
+  <div class="wrap cols">
+    <div class="side"><p class="stage"><span class="pips" aria-hidden="true"><i class=on></i><i class=on></i><i class=on></i><i class=on></i><i class=on></i></span><span>In service</span></p></div>
+    <div class="main">
+      <h2 id="done-h">In service</h2>
+      <p class="lede">Technicians are driving the trucks now. They were built with the main components of the specification: the enclosed cap, the drawer system and the tool storage. Some details are being adjusted by position, so the setup varies with the <span class="nw">role. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></p>
+      <p class="prose-p">The recommendation was adopted. What the trucks have changed in the field isn’t measured yet, so there are no fuel, time or cost results here. The next step is to measure one truck against the old van baseline: time from parking to the first tool in hand, warehouse trips per week, fuel per mile, and where splicing happens when the weather turns.</p>
+      <p class="small fin-cap">The finished configuration, recreated. No company vehicle, photo or marking is shown. <span class="fr-ev" data-ev="illustrative">Illustrative</span></p>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="fr-foot" data-frame-case="3" data-frame-static><div class="fr-foot-in"><nav class="fr-pager" aria-label="Case studies"><a rel="prev" href="../centric-fiberops/"><small>Previous: case 2 of 4</small><b>Nexus FiberOps Unified</b></a><a rel="next" href="../omni-pmo/"><small>Next: case 4 of 4</small><b>OmniSight</b></a></nav><div class="fr-foot-meta"><a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Jacob Zamarripa on LinkedIn</a><p class="fr-prov">A personal portfolio. Not affiliated with or endorsed by any former employer.</p></div></div></footer>
+<script>
+/* Scroll-linked stage wipe. Each [data-build] figure draws its next stage
+   in from left to right as it rises through the viewport. Without JS, with
+   reduced motion, or once a figure is scrolled past, the clip rect keeps its
+   full width, so the finished stage of every figure is what rests on screen. */
+(function () {
+  "use strict";
+  var figs = [].slice.call(document.querySelectorAll("[data-build]"));
+  if (!figs.length || !window.matchMedia) return;
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var items = figs.map(function (f) {
+    var r = f.querySelector(".wipe");
+    return { f: f, r: r, e: f.querySelector(".edge"), x: +r.getAttribute("data-x"), w: +r.getAttribute("data-w"), p: -1 };
+  });
+  var ticking = false, on = false;
+
+  function set(it, p) {
+    if (Math.abs(p - it.p) < 0.002) return;
+    it.p = p;
+    var w = it.w * p;
+    it.r.setAttribute("width", w.toFixed(1));
+    if (it.e) { var x = (it.x + w).toFixed(1); it.e.setAttribute("x1", x); it.e.setAttribute("x2", x); }
+    it.f.classList.toggle("is-drawing", p > 0.002 && p < 0.998);
+  }
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    items.forEach(function (it) {
+      var top = it.f.getBoundingClientRect().top;
+      var p = (vh * 0.9 - top) / (vh * 0.5);
+      set(it, Math.max(0, Math.min(1, p)));
     });
-    if (mq.addEventListener) mq.addEventListener('change', sync);
-    else if (mq.addListener) mq.addListener(sync);
-    sync();
-  })();
-
-</script></body></html>
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  function start() {
+    if (on) return; on = true;
+    document.documentElement.classList.add("fl-scroll");
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+  function stop() {
+    if (!on) return; on = false;
+    document.documentElement.classList.remove("fl-scroll");
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    items.forEach(function (it) { set(it, 1); });
+  }
+  function sync() { if (still.matches) stop(); else start(); }
+  if (still.addEventListener) still.addEventListener("change", sync);
+  else if (still.addListener) still.addListener(sync);
+  /* Printing shows every finished stage. */
+  window.addEventListener("beforeprint", function () { items.forEach(function (it) { set(it, 1); }); });
+  window.addEventListener("afterprint", onScroll);
+  sync();
+})();
+</script>
+</body>
+</html>

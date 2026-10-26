@@ -3,24 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="OmniSight — the delivery-intelligence platform I conceived, specified and ran as Construction Project Manager at Omni Fiber, coordinating ~40 concurrent FTTH builds across nine municipalities and four vendors.">
+<meta name="description" content="OmniSight, the delivery platform I designed and ran as Construction Project Manager at Omni Fiber: about 40 concurrent fiber builds, nine municipalities, four vendors, and an AI-assisted build I directed and tested.">
 <meta name="author" content="Jacob Zamarripa">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OmniSight — PMO Operating System">
-<meta property="og:description" content="OmniSight — the delivery-intelligence platform I conceived, specified and ran as Construction Project Manager at Omni Fiber, coordinating ~40 concurrent FTTH builds across nine municipalities and four vendors.">
+<meta property="og:title" content="OmniSight: PMO Operating System">
+<meta property="og:description" content="OmniSight, the delivery platform I designed and ran as Construction Project Manager at Omni Fiber: about 40 concurrent fiber builds, nine municipalities, four vendors, and an AI-assisted build I directed and tested.">
 <meta property="og:url" content="https://jacobzamarripa.github.io/portfolio/omni-pmo/">
 <meta property="og:image" content="https://jacobzamarripa.github.io/portfolio/omni-pmo/og-omnisight.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OmniSight case-study card: 453 project IDs, 22,707 production records, nine municipalities, roughly 40 concurrent fiber builds.">
+<meta property="og:image:alt" content="OmniSight, case 4 of 4 by Jacob Zamarripa: Forty builds, one operating picture. 22,707 production records, 453 project IDs.">
 <meta name="twitter:image" content="https://jacobzamarripa.github.io/portfolio/omni-pmo/og-omnisight.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OmniSight — PMO Operating System">
-<meta name="twitter:description" content="OmniSight — the delivery-intelligence platform I conceived, specified and ran as Construction Project Manager at Omni Fiber, coordinating ~40 concurrent FTTH builds across nine municipalities and four vendors.">
+<meta name="twitter:title" content="OmniSight: PMO Operating System">
+<meta name="twitter:description" content="OmniSight, the delivery platform I designed and ran as Construction Project Manager at Omni Fiber: about 40 concurrent fiber builds, nine municipalities, four vendors, and an AI-assisted build I directed and tested.">
 <link rel="canonical" href="https://jacobzamarripa.github.io/portfolio/omni-pmo/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#129517;</text></svg>">
-<title>OmniSight — PMO Operating System</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/frame.css">
+<script src="../assets/frame.js" defer></script>
+<link rel="stylesheet" href="../assets/portfolio-explore.css">
+<script src="../assets/explore-data.js" defer></script>
+<script src="../assets/portfolio-explore.js" defer></script>
+<title>OmniSight: PMO Operating System</title>
+<noscript><style>
+#walkthrough .nav button:not(.active),#walkthrough .anat-toggle,#walkthrough .view button{opacity:.4;pointer-events:none;cursor:default}
+</style></noscript>
 </head>
 <body>
 <style>
@@ -39,9 +47,15 @@
   --card-bg:#ffffff;
   --border:#e2e8f0;
   --text-main:#0f172a;
-  --text-muted:#64748b;
+  --text-muted:#5e6b7f;
   --accent:#3b82f6;
   --accent-deep:#1d4ed8;
+  /* Text-safe companions. --accent and the status hues stay as the app's
+     decorative and fill colours; these carry small text and white labels. */
+  --accent-text:#1d4ed8;
+  --accent-btn:#2563eb;
+  --color-review-text:#b45309;
+  --starGold-text:#a16207;
   --color-critical:#ef4444;
   --color-review:#f59e0b;
   --color-insight:#a855f7;
@@ -67,7 +81,7 @@
   --pill-complete-txt:#ffffff; --pill-complete-bg:#22c55e;
   --pill-hold-txt:#ffffff;     --pill-hold-bg:#64748b;
   --pill-missing-txt:#ffffff;  --pill-missing-bg:#ef4444;
-  --pill-drg-txt:#0f766e;      --pill-drg-bg:rgba(20,184,166,.14); --pill-drg-bdr:#14b8a6;
+  --pill-direct-txt:#0f766e;      --pill-direct-bg:rgba(20,184,166,.14); --pill-direct-bdr:#14b8a6;
 
   /* Flag badge palette — _styles_badges.html */
   --tag-admin-bg:#fef9c3; --tag-admin-txt:#854d0e; --tag-admin-bdr:#facc15;
@@ -86,7 +100,6 @@
   --dark-muted:#a1a1aa;
 
   /* Shell geometry — _styles_glassflow_core.html, _styles_base.html */
-  --topbar-h:54px;
   --shell-radius:24px;
   --shell-shadow:0 8px 32px rgba(0,0,0,.12);
   --card-radius:14px;
@@ -107,6 +120,9 @@
     --border:#333338;
     --text-main:#fafafa;
     --text-muted:#a1a1aa;
+    --accent-text:#60a5fa;
+    --color-review-text:#f59e0b;
+    --starGold-text:#fbbf24;
     --qb-ae-bg:repeating-linear-gradient(115deg,#3f3f46,#3f3f46 3px,#27272a 3px,#27272a 6px);
     --shell-shadow:0 8px 32px rgba(0,0,0,.44);
     --lift-shadow:0 6px 18px rgba(0,0,0,.5);
@@ -117,7 +133,7 @@
     --pill-complete-bg:#166534;
     --pill-hold-bg:#3f3f46;
     --pill-missing-bg:#991b1b;
-    --pill-drg-txt:#99f6e4; --pill-drg-bg:rgba(13,148,136,.28); --pill-drg-bdr:#2dd4bf;
+    --pill-direct-txt:#99f6e4; --pill-direct-bg:rgba(13,148,136,.28); --pill-direct-bdr:#2dd4bf;
     --tag-admin-bg:rgba(234,179,8,.15); --tag-admin-txt:#fde047; --tag-admin-bdr:#eab308;
     --tag-warn-bg:rgba(245,158,11,.15); --tag-warn-txt:#fbbf24; --tag-warn-bdr:#f59e0b;
     --tag-anom-bg:rgba(251,146,60,.15); --tag-anom-txt:#fdba74; --tag-anom-bdr:#fb923c;
@@ -136,6 +152,9 @@
   --border:#333338;
   --text-main:#fafafa;
   --text-muted:#a1a1aa;
+  --accent-text:#60a5fa;
+  --color-review-text:#f59e0b;
+  --starGold-text:#fbbf24;
   --qb-ae-bg:repeating-linear-gradient(115deg,#3f3f46,#3f3f46 3px,#27272a 3px,#27272a 6px);
   --shell-shadow:0 8px 32px rgba(0,0,0,.44);
   --lift-shadow:0 6px 18px rgba(0,0,0,.5);
@@ -146,7 +165,7 @@
   --pill-complete-bg:#166534;
   --pill-hold-bg:#3f3f46;
   --pill-missing-bg:#991b1b;
-  --pill-drg-txt:#99f6e4; --pill-drg-bg:rgba(13,148,136,.28); --pill-drg-bdr:#2dd4bf;
+  --pill-direct-txt:#99f6e4; --pill-direct-bg:rgba(13,148,136,.28); --pill-direct-bdr:#2dd4bf;
   --tag-admin-bg:rgba(234,179,8,.15); --tag-admin-txt:#fde047; --tag-admin-bdr:#eab308;
   --tag-warn-bg:rgba(245,158,11,.15); --tag-warn-txt:#fbbf24; --tag-warn-bdr:#f59e0b;
   --tag-anom-bg:rgba(251,146,60,.15); --tag-anom-txt:#fdba74; --tag-anom-bdr:#fb923c;
@@ -159,9 +178,35 @@
   color-scheme:dark;
 }
 
+/* ---- Shared frame, themed with this page's own tokens ----
+   The site-wide header, footer and evidence key come from ../assets/frame.css.
+   Here they take the application's tokens and system stack, so the frame sits
+   quietly and the product's language stays the only identity on the page. */
+:root{
+  --fr-bg:var(--bg);
+  --fr-surface:var(--card-bg);
+  --fr-ink:var(--text-main);
+  --fr-ink-2:var(--text-main);
+  --fr-muted:var(--text-muted);
+  --fr-rule:var(--border);
+  --fr-mark:var(--accent);
+  --fr-mark-ink:var(--accent-deep);
+  --fr-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --fr-max:1440px;
+  --fr-gutter:20px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--fr-mark-ink:#93c5fd}
+}
+.fr-head .fr-name{font-weight:800;letter-spacing:-.02em}
+.fr-head .fr-title{font-weight:900;letter-spacing:-.01em}
+.fr-pager b{font-weight:900;letter-spacing:-.03em}
+.fr-key{padding:14px 4px}
+.fr-key-title{font-weight:900}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-section[id],header[id],footer[id]{scroll-margin-top:calc(var(--topbar-h) + 18px)}
+section[id],header[id],footer[id]{scroll-margin-top:18px}
 body{
   margin:0;
   background:var(--bg);
@@ -178,7 +223,7 @@ p{margin:0}
 h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;text-wrap:balance}
 
 .wrap{width:min(1440px,calc(100% - 40px));margin-inline:auto}
-/* Sections already sit inside the constrained shellgrid column; a second
+/* Sections already sit inside the constrained main column; a second
    gutter there only narrows the walkthrough for nothing. */
 .content .wrap{width:100%}
 
@@ -188,7 +233,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 /* .dash-title — 11px / 900 / uppercase / .5px, split color */
 .title-split{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;display:flex;gap:4px}
 .title-split span:first-child{color:var(--text-muted)}
-.title-split span:last-child{color:var(--accent)}
+.title-split span:last-child{color:var(--accent-text)}
 /* .dash-kpi-val — 32px / 900 / -1.5px / tabular */
 .figure{font-size:32px;font-weight:900;letter-spacing:-1.5px;line-height:1;font-variant-numeric:tabular-nums;color:var(--text-main)}
 .subtext{font-size:11px;color:var(--text-muted)}
@@ -197,7 +242,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 /* .dash-program-name — accent pill */
 .program-pill{
   display:inline-flex;align-items:center;width:fit-content;
-  font-size:13px;font-weight:900;color:var(--accent);
+  font-size:13px;font-weight:900;color:var(--accent-text);
   background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);
   padding:4px 14px;border-radius:999px;white-space:nowrap;
 }
@@ -215,7 +260,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   text-decoration:none;
 }
 .ws-btn:hover{transform:translateY(-2px);box-shadow:var(--lift-shadow);border-color:color-mix(in srgb,var(--accent) 60%,transparent)}
-.ws-btn.is-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ws-btn.is-primary{background:var(--accent-btn);color:#fff;border-color:var(--accent-btn)}
 .ws-btn.is-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep);box-shadow:0 6px 20px rgba(37,99,235,.35)}
 .ws-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -261,7 +306,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   border-radius:999px;border:1px solid var(--border);background:var(--card-bg);
   color:var(--text-muted);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;
 }
-.sev-chip b{color:var(--accent);font-variant-numeric:tabular-nums}
+.sev-chip b{color:var(--accent-text);font-variant-numeric:tabular-nums}
 
 /* ============================================================
    HERO
@@ -276,7 +321,6 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .hero-bar-left{display:flex;align-items:center;gap:14px;min-width:0}
 .hero-body{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:44px;padding:44px 24px 40px;align-items:center}
 .hero h1{font-size:clamp(2.3rem,5.4vw,4.4rem);margin:14px 0 20px}
-.hero h1 i{font-style:normal;color:var(--accent)}
 .hero-lede{font-size:15.5px;line-height:1.6;color:var(--text-muted);max-width:62ch;font-weight:500}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
 
@@ -292,6 +336,15 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .fact{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--row-radius);padding:10px 12px}
 .fact small{display:block;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:3px}
 .fact b{font-size:11.5px;font-weight:800;color:var(--text-main);line-height:1.35;display:block}
+.hero-results{display:grid;gap:14px}
+.hr-row{display:grid;gap:4px;padding-top:14px;border-top:1px solid var(--dark-border)}
+.hr-row:first-of-type{padding-top:0;border-top:0}
+.hr-row .figure{color:var(--dark-text);font-size:clamp(26px,3vw,34px)}
+.hr-row>span{font-size:12px;font-weight:700;color:var(--dark-muted);line-height:1.4}
+.inverted .fr-ev{color:var(--dark-muted)}
+.provenance{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:0 4px;font-size:11.5px;color:var(--text-muted);font-weight:500;line-height:1.5}
+.provenance .fr-ev{flex:none}
+.keyband{margin:22px 0 0}
 
 /* ============================================================
    SECTIONS
@@ -341,7 +394,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   border-color:color-mix(in srgb,var(--accent) 28%,var(--border));
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 16%,transparent);
 }
-.nav button.active .ic{color:var(--accent)}
+.nav button.active .ic{color:var(--accent-text)}
 .nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 
 .surface{padding:20px;background:var(--bg);min-width:0}
@@ -362,10 +415,10 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .kpi .kl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-top:6px}
 .kpi .kn{margin-top:5px;font-size:10px;color:var(--text-muted)}
 .is-critical .figure{color:var(--color-critical)}
-.is-warning .figure{color:var(--color-review)}
+.is-warning .figure{color:var(--color-review-text)}
 .is-visible .figure{color:var(--accent)}
 .is-admin .figure{color:var(--color-insight)}
-.is-ofs .figure{color:var(--starGold)}
+.is-ofs .figure{color:var(--starGold-text)}
 
 .panel{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:16px}
 .dash-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px}
@@ -393,7 +446,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .vendor-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;min-width:0;padding:10px 12px;border:1px solid var(--border);border-radius:var(--row-radius);background:var(--card-bg)}
 .vendor-rank{
   width:28px;height:28px;flex:none;display:grid;place-items:center;border-radius:50%;
-  background:rgba(59,130,246,.1);color:var(--accent);font-size:11px;font-weight:900;font-variant-numeric:tabular-nums;
+  background:rgba(59,130,246,.1);color:var(--accent-text);font-size:11px;font-weight:900;font-variant-numeric:tabular-nums;
 }
 .vendor-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vendor-meter{width:100%;height:6px;margin-top:4px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--border) 80%,transparent)}
@@ -571,6 +624,11 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .queue-flag-row{display:flex;gap:5px;margin-top:9px;flex-wrap:wrap}
 
 .detail{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--card-radius);overflow:hidden}
+.detail.is-none>:not(.detail-none){display:none}
+.detail-none{padding:24px 22px 28px}
+.detail-none:focus{outline:none}
+.detail-none h4{margin:8px 0 6px}
+.detail-none p{margin:0;font-size:13px;line-height:1.5;color:var(--text-muted);font-weight:500}
 .detail-top{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border-bottom:1px solid var(--border)}
 .detail-left{padding:18px;border-right:1px solid var(--border)}
 .detail-right{padding:18px;min-width:0}
@@ -901,62 +959,17 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .vel-week-pop__delta.is-flat{color:var(--text-muted)}
 
 /* ============================================================
-   PAGE SHELL — persistent chrome, scrolling content.
-   The product is a shell with a rail and switchable workspaces.
-   The page borrows the chrome; the content still scrolls, because
-   a portfolio link has to survive being skimmed.
+   PAGE LAYOUT
+   The shared frame header and footer replace the old topbar and section
+   rail. The page is one column at the walkthrough's width.
+   .rv no longer hides anything: it only triggers the count-up figures,
+   so text is readable with JS off and in full-page captures.
    ============================================================ */
-.topbar{
-  position:sticky;top:0;z-index:70;height:var(--topbar-h);
-  background:color-mix(in srgb,var(--card-bg) 90%,transparent);
-  backdrop-filter:blur(16px) saturate(170%);-webkit-backdrop-filter:blur(16px) saturate(170%);
-  border-bottom:1px solid var(--border);
-}
-.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;height:100%}
-.topbar-left{display:flex;align-items:center;gap:12px;min-width:0}
-.topbar .wordmark{font-size:16px}
-.topbar .program-pill{font-size:10px;padding:3px 10px}
-.topbar-right{display:flex;align-items:center;gap:8px}
-.topbar .ws-btn{height:32px;padding:0 13px;font-size:10px}
-
-/* Theme toggle. Deliberately NOT persisted: every load follows the visitor's
-   OS preference, and the button is a session-only override. That keeps the
-   page honest about `prefers-color-scheme` instead of trapping someone in a
-   mode they picked once months ago. */
-.theme-btn{
-  display:inline-grid;place-items:center;width:32px;height:32px;flex:none;
-  border:1px solid var(--border);border-radius:9px;background:var(--card-bg);
-  color:var(--text-muted);font-size:13px;line-height:1;cursor:pointer;
-  transition:color .18s,border-color .18s,transform .18s;
-}
-.theme-btn:hover{color:var(--text-main);border-color:var(--accent);transform:translateY(-1px)}
-.theme-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (prefers-reduced-motion: reduce){.theme-btn{transition:none}.theme-btn:hover{transform:none}}
-
-.shellgrid{display:grid;grid-template-columns:172px minmax(0,1fr);gap:24px;align-items:start;padding:22px 0 0}
-/* Deliberately not a panel. The app's own sidebar inside the walkthrough
-   must stay the only thing on screen that looks like an app sidebar. */
-.railnav{position:sticky;top:calc(var(--topbar-h) + 20px);display:flex;flex-direction:column;gap:2px}
-.rail-label{padding:0 10px 8px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)}
-.railnav a{
-  display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;text-decoration:none;
-  border-left:2px solid transparent;
-  font-size:11.5px;font-weight:900;letter-spacing:.2px;color:var(--text-muted);
-  transition:color var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast);
-}
-.railnav a:hover{color:var(--text-main);background:var(--card-bg)}
-.railnav a.is-current{color:var(--text-main);border-left-color:var(--accent);background:var(--card-bg)}
-.railnav a .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;font-weight:600;color:var(--text-muted)}
-.railnav a.is-current .n{color:var(--accent)}
-.railnav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.rail-meta{margin-top:20px;padding:12px 10px 0;border-top:1px solid var(--border);display:grid;gap:9px}
-.rail-meta div{display:grid;gap:2px}
-.rail-meta small{font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted)}
-.rail-meta b{font-size:10.5px;font-weight:800;line-height:1.3}
-
-/* ---- Scroll reveal ---- */
-.rv{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:none}
+.content{padding:22px 0 0;min-width:0}
+.jump{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.jump a{text-decoration:none;transition:color var(--transition-fast),border-color var(--transition-fast),background var(--transition-fast)}
+.jump a:hover{color:var(--text-main);border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.jump a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ---- Anatomy mode -------------------------------------------------------
    The vocabulary used to argue for these devices in a gallery of look-alike
@@ -970,7 +983,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   border-radius:var(--row-radius);text-align:left;
   border:1px solid color-mix(in srgb,var(--accent) 45%,var(--border));
   background:color-mix(in srgb,var(--accent) 8%,var(--card-bg));
-  color:var(--accent);
+  color:var(--accent-text);
   font-size:11px;font-weight:900;letter-spacing:-.01em;
   transition:border-color var(--transition-fast),color var(--transition-fast),
              background var(--transition-fast),box-shadow var(--transition-fast),transform .18s ease;
@@ -984,7 +997,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 }
 /* On is unmistakably different from off: filled, not merely outlined. */
 .anat-toggle.is-on{
-  background:var(--accent);border-color:var(--accent);color:#ffffff;
+  background:var(--accent-btn);border-color:var(--accent-btn);color:#ffffff;
   box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 34%,transparent);
 }
 .anat-toggle.is-on .anat-led{background:#ffffff;border-color:#ffffff;box-shadow:0 0 0 3px rgba(255,255,255,.32)}
@@ -1049,7 +1062,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;
   transition:border-color var(--transition-fast),color var(--transition-fast);
 }
-.vocab-show:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.vocab-show:hover{color:var(--accent-text);border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
 .vocab-show:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .vocab-card>.vocab-load{display:flex;align-items:center;gap:10px}
 @keyframes vocab-flash{
@@ -1111,7 +1124,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .vocab-load{
   display:flex;align-items:center;gap:5px;margin-top:11px;padding-top:9px;
   border-top:1px solid var(--border);font-size:8.5px;font-weight:900;text-transform:uppercase;
-  letter-spacing:.6px;color:var(--accent);
+  letter-spacing:.6px;color:var(--accent-text);
 }
 /* specimen helpers */
 .spec-row{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;background:var(--card-bg);border:1px solid var(--border);border-left:4px solid var(--color-critical);border-radius:8px}
@@ -1168,7 +1181,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .pipe{display:grid;gap:9px}
 .pipe-stage{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;padding:13px 14px;border:1px solid var(--border);border-radius:var(--card-radius);background:var(--card-bg);transition:border-color var(--transition-fast)}
 .pipe-stage:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--border))}
-.pipe-n{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(59,130,246,.1);color:var(--accent);font-size:11px;font-weight:900;font-variant-numeric:tabular-nums}
+.pipe-n{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(59,130,246,.1);color:var(--accent-text);font-size:11px;font-weight:900;font-variant-numeric:tabular-nums}
 .pipe-stage b{display:block;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
 .pipe-stage p{font-size:11.5px;line-height:1.5;color:var(--text-muted);font-weight:500}
 .pipe-mod{display:inline-block;margin-top:8px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border:1px solid var(--border);border-radius:6px;color:var(--text-muted);background:var(--bg)}
@@ -1198,8 +1211,10 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .study-body{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--shell-radius);padding:34px 36px;box-shadow:var(--shell-shadow)}
 .prose h3{font-size:17px;font-weight:900;letter-spacing:-.02em;margin:30px 0 10px}
 .prose h3:first-child{margin-top:0}
-.prose p{color:var(--text-muted);max-width:70ch;margin-bottom:13px;line-height:1.65;font-weight:500}
+.prose p{color:var(--text-muted);max-width:72ch;margin-bottom:13px;line-height:1.65;font-weight:500;font-size:14.5px}
 .prose strong{color:var(--text-main);font-weight:800}
+.prose a{color:var(--accent-text);font-weight:800;text-decoration:none}
+.prose a:hover{text-decoration:underline}
 .prose ul{margin:0 0 13px;padding:0;list-style:none;display:grid;gap:9px}
 .prose li{color:var(--text-muted);max-width:70ch;line-height:1.55;font-weight:500;padding-left:16px;position:relative}
 .prose li:before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:var(--accent);opacity:.55}
@@ -1212,61 +1227,263 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
 .ev-row span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted)}
 .ev-row b{font-size:14px;font-weight:900;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
 .ev.is-boundary{border-left:4px solid var(--accent)}
+.ev-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ev-headline{font-size:15px;font-weight:900;letter-spacing:-.02em;line-height:1.3;margin:8px 0 5px}
 
 /* ============================================================
-   FOOTER
+   THE LOOP: problem -> spec -> build -> operate -> result
+   The track is the platform's own stage chain: each segment takes one of
+   the four construction fills plus the done green, and each stage carries
+   a lettered bead, the same 18px disc the schedule face uses.
    ============================================================ */
-.footer{margin-top:8px;padding:0 0 30px}
+.lp{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--shell-radius);
+  box-shadow:var(--shell-shadow);padding:22px 22px 20px;
+}
+.lp-legend{display:flex;justify-content:space-between;align-items:center;gap:10px 20px;flex-wrap:wrap;margin:0 2px 20px}
+.lp-key{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:11px;font-weight:700;color:var(--text-muted)}
+.lp-key>span{display:inline-flex;align-items:center;gap:7px}
+.lp-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 12px}
+.lp-stage{display:flex;flex-direction:column;min-width:0}
+.lp-bar{position:relative;height:12px;border-radius:6px;margin:4px 0 16px;clip-path:inset(-8px -8px -8px -8px)}
+.lp-ug{background:var(--qb-ug)}
+.lp-ae{background:var(--qb-ae-bg);box-shadow:inset 0 0 0 1px #94a3b8}
+.lp-fib{background:var(--qb-fib-bg);box-shadow:inset 0 0 0 1px var(--qb-fib-border)}
+.lp-nap{background:var(--qb-nap-bg)}
+.lp-done{background:var(--qb-done)}
+.lp-bead{
+  position:absolute;left:10px;top:-3px;width:18px;height:18px;box-sizing:border-box;
+  background:var(--card-bg);border-radius:50%;border:2px solid;box-shadow:0 1px 3px rgba(0,0,0,.3);
+  display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;
+}
+.lp-ug .lp-bead{border-color:var(--qb-ug);color:var(--qb-ug)}
+.lp-ae .lp-bead{border-color:#94a3b8;color:var(--text-muted)}
+.lp-fib .lp-bead{border-color:var(--qb-fib-border);color:var(--text-main)}
+.lp-nap .lp-bead{border-color:var(--qb-nap-border);color:var(--qb-nap-border)}
+.lp-done .lp-bead{border-color:var(--qb-done);color:var(--qb-done)}
+.lp-card{
+  flex:1;display:flex;flex-direction:column;gap:7px;min-width:0;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:14px 14px 13px;
+}
+.lp-card h3{font-size:16px;letter-spacing:-.03em;line-height:1.15}
+.lp-card>p{font-size:12px;line-height:1.55;color:var(--text-muted);font-weight:500}
+.lp-who{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:6px}
+.lp-card--result{background:var(--card-bg);border-color:color-mix(in srgb,var(--qb-done) 40%,var(--border));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--qb-done) 14%,transparent)}
+.lp-chart{display:grid;gap:8px;margin:2px 0 4px}
+.lp-chart-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:8px}
+.lp-chart-k{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted)}
+.lp-chart-row b{font-size:13px;font-weight:900;letter-spacing:-.4px;font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+.lp-chart-track{position:relative;height:10px;border-radius:5px;background:var(--bg);box-shadow:inset 0 1px 2px rgba(0,0,0,.1)}
+.lp-chart-fill,.lp-chart-range{position:absolute;top:0;bottom:0;left:0;border-radius:4px}
+.lp-chart-fill.is-before{background:var(--text-muted);border-radius:4px 0 0 4px}
+.lp-chart-range{background:var(--qb-ae-bg);border-radius:0 4px 4px 0}
+.lp-chart-fill.is-after{background:var(--qb-done)}
+.lp-chart .note{margin-top:2px}
+/* The return path: operating feeds the next spec. Spans Spec..Operate. */
+.lp-return{
+  grid-column:2 / span 3;position:relative;height:30px;margin:0 calc(100% / 6) 0;
+  border:2px dashed color-mix(in srgb,var(--accent) 50%,transparent);border-top:0;border-radius:0 0 14px 14px;
+  display:flex;justify-content:center;align-items:flex-end;
+}
+.lp-return::before{
+  content:"";position:absolute;left:-7px;top:-6px;width:0;height:0;
+  border-left:6px solid transparent;border-right:6px solid transparent;
+  border-bottom:8px solid color-mix(in srgb,var(--accent) 70%,transparent);
+}
+.lp-return span{
+  transform:translateY(50%);background:var(--card-bg);padding:0 10px;
+  font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--accent-text);white-space:nowrap;
+}
+/* The one orchestrated moment: the chain fills left to right on first view.
+   Decoration only; the cards are never hidden. */
+.fr-motion .lp-bar{transition:clip-path .55s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i) * 150ms)}
+.fr-motion .lp-stage .lp-bar{transition-delay:calc(var(--i,0) * 150ms)}
+.fr-motion .lp:not(.is-in) .lp-bar{clip-path:inset(-8px 100% -8px -8px)}
+.lp-stage:nth-child(1) .lp-bar{--i:0}.lp-stage:nth-child(2) .lp-bar{--i:1}.lp-stage:nth-child(3) .lp-bar{--i:2}.lp-stage:nth-child(4) .lp-bar{--i:3}.lp-stage:nth-child(5) .lp-bar{--i:4}
+
+/* ============================================================
+   READ SPEED
+   Six queue cards built from the walkthrough's own card, pill, stripe,
+   flag chip and schedule-bead components. With JS off every card is
+   listed; with JS on they cycle on a 3s timer that advances on
+   animationend, so pausing the bar pauses the cycle.
+   ============================================================ */
+.rs{
+  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28px;align-items:center;margin-top:14px;
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--shell-radius);box-shadow:var(--shell-shadow);padding:24px 26px;
+}
+.rs-text h3{font-size:clamp(1.15rem,1.8vw,1.45rem);letter-spacing:-.035em;margin:6px 0 10px}
+.rs-text>p{font-size:13px;line-height:1.6;color:var(--text-muted);font-weight:500;max-width:52ch}
+.rs-text>p+p{margin-top:9px}
+.rs-text>.rs-foot{font-size:10px;margin-top:14px;display:flex;align-items:center;gap:6px}
+.rs-controls{display:none;align-items:center;gap:6px;margin-top:16px;flex-wrap:wrap}
+.rs.is-live .rs-controls{display:flex}
+.rs-btn{
+  display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;
+  border:1px solid var(--border);border-radius:9px;background:var(--bg);color:var(--text-main);
+  font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;
+  transition:border-color var(--transition-fast),background var(--transition-fast);
+}
+.rs-btn[hidden]{display:none}
+.rs-btn:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--border))}
+.rs-btn:focus-visible,.rs-stage:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rs-btn--play{min-width:64px;justify-content:center;color:var(--accent-text);border-color:color-mix(in srgb,var(--accent) 40%,var(--border));background:color-mix(in srgb,var(--accent) 8%,var(--card-bg))}
+.wt-nojs{margin:0 0 14px;padding:12px 14px;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--row-radius);background:var(--card-bg);font-size:14px;font-weight:600;color:var(--text-main)}
+.rs-say{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.rs.is-live.is-held .rs-timer i{animation-play-state:paused}
+.rs-count{font-size:10px;font-weight:900;color:var(--text-muted);font-variant-numeric:tabular-nums;margin-left:4px}
+.rs-view{min-width:0}
+.rs-stage{display:grid;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:12px}
+.rs-slide{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--row-radius);overflow:hidden;min-width:0}
+.rs .email-card{cursor:default;border-bottom:1px solid var(--border)}
+.rs .email-card:hover{transform:none;box-shadow:none;background:color-mix(in srgb,var(--card-bg) 92%,transparent)}
+.rs-sched{padding:12px 16px 14px}
+.rs-sched .qb-time-labels{justify-content:space-between;margin-bottom:10px}
+.rs-sched .proj-bead{cursor:default}
+.rs-today{position:absolute;top:-5px;bottom:-5px;width:2px;background:rgba(239,68,68,.8);transform:translateX(-50%);z-index:6;border-radius:1px}
+.rs-read{padding:10px 16px 12px;border-top:1px solid var(--border);font-size:12px;line-height:1.5;color:var(--text-main);font-weight:600}
+.rs-read .label{display:block;margin-bottom:3px}
+.rs-timer{display:none;height:3px;border-radius:2px;background:var(--border);overflow:hidden;margin:10px 2px 0}
+.rs-timer i{display:block;height:100%;width:0;background:var(--accent)}
+.rs.is-live .rs-stage{grid-template-areas:"s"}
+.rs.is-live .rs-slide{grid-area:s;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+.rs.is-live .rs-slide.is-on{opacity:1;visibility:visible;transition:opacity .3s ease}
+.rs.is-live.is-playing .rs-timer{display:block}
+.rs.is-playing .rs-timer i{animation:rs-fill 3s linear forwards}
+.rs-stage:hover+.rs-timer i,.rs-stage:focus-within+.rs-timer i{animation-play-state:paused}
+@keyframes rs-fill{from{width:0}to{width:100%}}
+@media (max-width:1100px){.rs{grid-template-columns:minmax(0,1fr);gap:18px}}
+@media (max-width:640px){.rs{padding:18px 14px}}
+
+/* ============================================================
+   ENGINEERING NOTES
+   ============================================================ */
+.en{display:grid;gap:14px}
+.en-note{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--shell-radius);
+  box-shadow:var(--shell-shadow);padding:26px 28px;min-width:0;
+}
+.en-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px;align-items:end;margin-bottom:20px}
+.en-note h3{font-size:clamp(1.15rem,1.8vw,1.45rem);margin-top:6px;letter-spacing:-.035em}
+.en-head p,.en-text p{font-size:13px;line-height:1.65;color:var(--text-muted);font-weight:500;max-width:66ch}
+.en-text p+p{margin-top:11px}
+.en-text h3{margin-bottom:12px}
+.en-text .inline,.en-text code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;color:var(--text-main);background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:0 4px;white-space:nowrap}
+
+/* Architecture map: four lanes, nodes carry the 4px edge stripe by kind. */
+.arch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px}
+.arch-lane{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:12px;min-width:0}
+.arch-lane+.arch-lane::before{
+  content:"→";position:absolute;left:-21px;top:50%;transform:translateY(-50%);
+  font-size:16px;font-weight:900;color:var(--accent);line-height:1;
+}
+.arch-lane-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:0 2px 10px;flex-wrap:wrap}
+.arch-node{
+  position:relative;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--row-radius);
+  padding:9px 11px 9px 14px;box-shadow:inset 4px 0 0 var(--node,var(--border));
+}
+.arch-node+.arch-node{margin-top:18px}
+.arch-node+.arch-node::before{
+  content:"↓";position:absolute;left:50%;top:-17px;transform:translateX(-50%);
+  font-size:12px;font-weight:900;line-height:16px;color:var(--text-muted);
+}
+.arch-node.is-two-way::before{content:"⇅";color:var(--accent)}
+.arch-node b{display:block;font-size:12px;font-weight:900;letter-spacing:-.01em;line-height:1.25}
+.arch-node small{display:block;font-size:10.5px;color:var(--text-muted);line-height:1.4;margin-top:2px;font-weight:500}
+.arch-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.n-ext{--node:#94a3b8}
+.n-run{--node:var(--accent)}
+.n-store{--node:var(--qb-nap-border)}
+.n-sor{--node:var(--starGold)}
+.n-ui{--node:var(--qb-done)}
+.arch-foot{display:flex;justify-content:space-between;align-items:center;gap:10px 24px;flex-wrap:wrap;margin-top:14px;padding:0 2px}
+.arch-legend{display:flex;flex-wrap:wrap;gap:6px 16px}
+.arch-legend span{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--text-muted)}
+.arch-legend i{width:4px;height:12px;border-radius:2px;background:var(--node)}
+
+/* Code and story notes */
+.en-split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+.en-split--story{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.code{background:var(--dark-bg);border:1px solid var(--dark-border);border-radius:var(--card-radius);overflow:hidden;min-width:0}
+.code-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--dark-border)}
+.code-bar .label,.code-bar .note{color:var(--dark-muted)}
+.code pre{margin:0;padding:14px 16px 16px;overflow-x:auto;font:500 11.5px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dark-text);tab-size:2}
+.code code{font:inherit}
+.c-com{color:var(--dark-muted)}
+.c-key{color:#93c5fd}
+.c-str{color:#86efac}
+.c-num{color:var(--starGold)}
+.en-side{display:grid;gap:12px;min-width:0}
+.diff{background:var(--bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:12px;display:grid;gap:8px}
+.diff-row{
+  display:grid;grid-template-columns:56px minmax(0,1fr);align-items:center;gap:10px;
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--row-radius);padding:10px 12px 10px 14px;
+}
+.diff-row code{font:600 12.5px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-main);overflow-wrap:anywhere}
+.diff-row.is-src{box-shadow:inset 4px 0 0 var(--qb-done)}
+.diff-row.is-out{box-shadow:inset 4px 0 0 var(--color-critical)}
+.diff-row.is-out code{color:var(--color-critical)}
+.rule{background:var(--card-bg);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--card-radius);padding:14px 16px}
+.rule p{margin-top:8px;font-size:12.5px;line-height:1.55;font-weight:600;color:var(--text-main)}
+.en-pull{font-size:15px;line-height:1.5;font-weight:800;letter-spacing:-.015em;color:var(--text-main);padding:4px 2px 0}
+.en-stats-wrap{padding:4px 0 0}
+.en-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.en-stats .be-stat{background:var(--card-bg)}
+
+/* ============================================================
+   HANDOVER (closer)
+   The app's own dark surface, used once, at the end.
+   ============================================================ */
 .footer-shell{
   background:var(--dark-bg);border:1px solid var(--dark-border);
-  border-radius:var(--shell-radius);padding:44px 36px;color:var(--dark-text);
+  border-radius:var(--shell-radius);padding:40px 36px;color:var(--dark-text);
 }
 .footer-shell .label{color:var(--dark-muted)}
-.footer-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:start}
+.footer-shell .fr-ev{color:var(--dark-muted)}
+.footer-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:start}
 .footer-lead{min-width:0}
-.footer-facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--dark-border);border:1px solid var(--dark-border);border-radius:var(--card-radius);overflow:hidden}
-.footer-facts div{padding:13px 14px;background:var(--dark-bg)}
-.footer-facts small{display:block;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:var(--dark-muted);margin-bottom:4px}
-.footer-facts b{font-size:11.5px;font-weight:800;line-height:1.35;color:var(--dark-text);display:block}
 .footer-shell h2{font-size:clamp(1.5rem,2.8vw,2.15rem);max-width:17ch;margin:10px 0 12px}
-.footer-shell h2 i{font-style:normal;color:var(--accent)}
-.footer-shell p{color:var(--dark-muted);max-width:56ch;line-height:1.6;font-weight:500;font-size:13px}
-.footer-cta{
-  display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 20px;margin-top:20px;
-  border-radius:var(--row-radius);background:var(--accent);color:#fff;text-decoration:none;
-  font-size:12px;font-weight:900;letter-spacing:.3px;border:1px solid var(--accent);
-  transition:transform .18s ease,box-shadow .18s ease,background var(--transition-fast);
+.footer-shell p{color:var(--dark-muted);max-width:52ch;line-height:1.6;font-weight:500;font-size:13px}
+.cl-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cl-list li{
+  background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--row-radius);
+  padding:12px 14px 12px 17px;box-shadow:inset 4px 0 0 var(--accent);
+  font-size:12.5px;line-height:1.55;color:var(--dark-muted);font-weight:500;
 }
-.footer-cta:hover{transform:translateY(-2px);background:var(--accent-deep);box-shadow:0 6px 20px rgba(37,99,235,.4)}
-.footer-cta:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.colophon{margin-top:34px;padding-top:20px;border-top:1px solid var(--dark-border);font-size:10.5px;line-height:1.65;color:var(--dark-muted);max-width:92ch;font-weight:500}
+.cl-list b{display:block;color:var(--dark-text);font-size:13px;font-weight:900;letter-spacing:-.01em;margin-bottom:2px}
+
+@media (max-width:1100px){
+  .lp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}
+  .lp-stage:last-of-type{grid-column:1 / -1}
+  .lp-return{grid-column:1 / -1;height:auto;margin:0;border:0;justify-content:flex-start}
+  .lp-return::before{display:none}
+  .lp-return span{transform:none;padding:0;background:none}
+  .lp-return span::before{content:"↺ ";font-size:12px}
+  .en-head,.en-split,.en-split--story,.footer-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  .arch{grid-template-columns:minmax(0,1fr);gap:26px}
+  .arch-lane+.arch-lane::before{content:"↓";left:50%;top:-22px;transform:translateX(-50%)}
+  .arch-lane{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+  .arch-lane-head{grid-column:1 / -1;padding-bottom:2px}
+  .arch-node+.arch-node{margin-top:0}
+  .arch-node+.arch-node::before{display:none}
+  .en-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .lp{padding:16px 14px}
+  .lp-grid{grid-template-columns:minmax(0,1fr)}
+  .en-note{padding:20px 16px}
+  .code pre{font-size:10.5px;padding:12px}
+  .footer-shell{padding:28px 18px}
+}
 
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;transition-duration:.001ms !important}
   html{scroll-behavior:auto}
-  .nav button:hover,.ws-btn:hover,.footer-cta:hover,.grid-card:hover,.kpi:hover{transform:none}
-  .rv{opacity:1;transform:none}
-}
-
-@media (max-width:1380px){
-  .shellgrid{grid-template-columns:158px minmax(0,1fr);gap:18px}
+  .nav button:hover,.ws-btn:hover,.grid-card:hover,.kpi:hover{transform:none}
 }
 
 @media (max-width:1100px){
-  .shellgrid{grid-template-columns:1fr;gap:14px;padding-top:14px}
-  /* Grid and flex items default to min-width:auto, so an overflow-x:auto child
-     is sized by its content instead of scrolling. Without these the section
-     rail and the whole content column blow past the viewport on a phone. */
-  .shellgrid>*,.content{min-width:0}
-  .railnav{
-    min-width:0;
-    position:sticky;top:var(--topbar-h);z-index:50;flex-direction:row;overflow-x:auto;gap:5px;
-    padding:10px 0;background:var(--bg);border-bottom:1px solid var(--border);
-  }
-  .railnav a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;border-radius:8px 8px 0 0}
-  .railnav a.is-current{border-left:0;border-bottom-color:var(--accent)}
-  .rail-label,.rail-meta{display:none}
+  .content{padding-top:14px}
   .section-head{grid-template-columns:minmax(0,1fr)}
   .section-note{text-align:left;max-width:70ch}
   /* Stacked, the 70ch measure left ~370px of dead space beside the prose. */
@@ -1303,7 +1520,9 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   .vocab-card>.vocab-spec{grid-column:1;grid-row:1}
   .vocab-card>div{grid-column:1;grid-row:2;margin-top:12px}
   .vocab-card>.vocab-load{grid-column:1;grid-row:3}
-  .topbar .program-pill{display:none}
+  :root{--fr-gutter:10px}
+  .hero-bar{padding:12px 16px}
+  .jump{justify-content:flex-start}
   .hero-body{padding:28px 18px 26px}
   .section{padding:30px 0}
   .section-note{text-align:left}
@@ -1312,41 +1531,14 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   .grid-cards{grid-template-columns:1fr}
   .footer-shell{padding:30px 20px}
   .study-body{padding:22px 18px}
-  .footer-grid{align-items:flex-start}
 }
 </style>
 
-<div class="topbar">
-  <div class="wrap topbar-inner">
-    <div class="topbar-left">
-      <span class="wordmark">OMNI<i>SIGHT</i></span>
-      <span class="program-pill">PMO Operating System</span>
-    </div>
-    <div class="topbar-right">
-      <span class="sev-chip">Demo data <b>fictional</b></span>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme"></button>
-      <a class="ws-btn is-primary" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-  </div>
-</div>
+<a class="fr-skip" href="#main">Skip to content</a>
+<header class="fr-head" data-frame-case="4" data-frame-static><div class="fr-head-in"><a class="fr-name" href="../" aria-label="Jacob Zamarripa, home"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M12.5 6.5v12.2a4.6 4.6 0 0 1-9.2 0" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><path d="M16.6 6.5h11L16.6 22.6h11" fill="none" stroke="var(--fr-bg)" stroke-width="3.2" stroke-linecap="square"/><rect x="3" y="26.4" width="26" height="2.6" fill="var(--fr-mark)"/></svg><span>Jacob Zamarripa</span></a><div class="fr-where"><span class="fr-pos">Case 4 of 4</span><span class="fr-title">OmniSight</span></div></div></header>
 
-<div class="wrap shellgrid">
-  <aside class="railnav" id="railnav" aria-label="Sections">
-    <div class="rail-label">Case study</div>
-    <a href="#overview"><span class="n">01</span>Overview</a>
-    <a href="#walkthrough"><span class="n">02</span>Walkthrough</a>
-    <a href="#vocabulary"><span class="n">03</span>Vocabulary</a>
-    <a href="#case"><span class="n">04</span>The write-up</a>
-    <a href="#contact"><span class="n">05</span>Contact</a>
-    <div class="rail-meta">
-      <div><small>Role</small><b>Construction Project Manager</b></div>
-      <div><small>Period</small><b>Jan – Aug 2026</b></div>
-      <div><small>Built on</small><b>Apps Script · Sheets · QB API</b></div>
-    </div>
-  </aside>
-
-<main class="content">
-<header class="hero" id="overview">
+<main class="content wrap" id="main">
+<div class="hero" id="overview">
   <div>
     <div class="shell hero-shell">
       <div class="hero-bar">
@@ -1354,40 +1546,133 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           <span class="wordmark">OMNI<i>SIGHT</i></span>
           <span class="program-pill">PMO Operating System</span>
         </div>
-        <div class="head-meta">
-          <span class="sev-chip">Portfolio case study</span>
-          <span class="sev-chip">Demo data <b>fictional</b></span>
-        </div>
+        <nav class="jump" aria-label="On this page">
+          <a class="sev-chip" href="#loop">How it was built</a>
+          <a class="sev-chip" href="#walkthrough">Walkthrough</a>
+          <a class="sev-chip" href="#vocabulary">Design vocabulary</a>
+          <a class="sev-chip" href="#engineering">Engineering notes</a>
+          <a class="sev-chip" href="#case">My role</a>
+        </nav>
       </div>
 
       <div class="hero-body">
         <div>
           <div class="title-split"><span>Fiber construction delivery</span><span>Ohio &amp; Michigan</span></div>
-          <h1>Forty builds,<br>one operating <i>picture.</i></h1>
-          <p class="hero-lede">A project manager's day is scattered across vendor spreadsheets, a system of record that disagrees with itself, and a weekly meeting nobody has time to prepare for. OmniSight is the platform I conceived, specified and ran to close that gap: ingestion, reconciliation, diagnostics, and the four surfaces a delivery portfolio is actually read through.</p>
+          <h1>Forty builds,<br>one operating picture.</h1>
+          <p class="hero-lede">Four construction vendors sent production reports every day. None of them matched each other, and none matched the system of record. I designed OmniSight to line them up, flag every disagreement and show the whole portfolio at a glance. Then I directed its AI-assisted build, tested it, and ran my builds on it every day.</p>
           <div class="hero-cta">
             <a class="ws-btn is-primary" href="#walkthrough">Open the walkthrough</a>
-            <a class="ws-btn" href="#vocabulary">Design vocabulary</a>
-            <a class="ws-btn" href="#case">Case study</a>
+            <a class="ws-btn" href="#loop">How it was built</a>
           </div>
         </div>
         <div>
-          <div class="inverted">
-            <div class="label">What this is</div>
-            <h4>Real platform, invented data.</h4>
-            <p>OmniSight was built and operated during my time as Construction Project Manager at Omni Fiber. Every market, delivery partner, person, project ID and figure inside the walkthrough is invented for this case study. No customer, employer or production record appears anywhere on this page.</p>
+          <div class="inverted hero-results">
+            <div class="label">What changed</div>
+            <div class="hr-row">
+              <b class="figure">6–8 h → ~2 h</b>
+              <span>Weekly meeting prep. About an hour and a half a day became one session a week. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span>
+            </div>
+            <div class="hr-row">
+              <b class="figure">22,707</b>
+              <span>Production records in one archive, across 453 project IDs. <span class="fr-ev fr-ev--mark" data-ev="measured">Measured</span></span>
+            </div>
           </div>
           <div class="fact-grid">
-            <div class="fact"><small>Role</small><b>Construction Project Manager</b></div>
+            <div class="fact"><small>Role</small><b>Construction Project Manager, Omni Fiber</b></div>
             <div class="fact"><small>Period</small><b>Jan – Aug 2026</b></div>
-            <div class="fact"><small>Built on</small><b>Apps Script · Sheets · QB API</b></div>
-            <div class="fact"><small>Method</small><b>AI-assisted development</b></div>
+            <div class="fact"><small>Built on</small><b>Apps Script, Sheets, QuickBase API</b></div>
+            <div class="fact"><small>Method</small><b>Self-initiated, AI-assisted</b></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</header>
+</div>
+
+<div class="fr-key keyband" data-frame-key data-frame-static><p class="fr-key-title">How each claim is sourced</p><dl><div><dt><span class="fr-ev" data-ev="measured">Measured</span></dt><dd>Produced by an employer’s system or the live platform, not by me.</dd></div><div><dt><span class="fr-ev" data-ev="recorded">Recorded</span></dt><dd>My own artifacts, written at the time: plans, trackers, curriculum.</dd></div><div><dt><span class="fr-ev" data-ev="recalled">Recalled</span></dt><dd>My account, told now.</dd></div><div><dt><span class="fr-ev" data-ev="illustrative">Illustrative</span></dt><dd>Invented demo data or a recreation, shown to explain how something works.</dd></div></dl></div>
+
+<section class="section" id="loop">
+  <div class="wrap">
+    <div class="section-head rv">
+      <div>
+        <div class="title-split"><span>Problem</span><span>To result</span></div>
+        <h2>The project behind the project</h2>
+      </div>
+      <p class="section-note">Alongside forty builds I ran one more project: this platform. I found the problem, wrote the spec, directed an AI-assisted build, tested it, and put my own portfolio on it.</p>
+    </div>
+
+    <div class="lp" data-fr-reveal>
+      <div class="lp-legend">
+        <div class="lp-key">
+          <span><span class="glass-pill chip-ofs">PM</span> me, the project manager</span>
+          <span><span class="glass-pill chip-hold">AI</span> the coding assistant, working to my spec</span>
+        </div>
+        <p class="note">Bars use the construction-stage fills the platform itself uses.</p>
+      </div>
+
+      <ol class="lp-grid">
+        <li class="lp-stage" style="--i:0">
+          <div class="lp-bar lp-ug"><span class="lp-bead">P</span></div>
+          <div class="lp-card">
+            <div class="label">Problem</div>
+            <h3>Reports that never agreed</h3>
+            <p>Four vendors sent daily production reports, each in its own format, and none matched the system of record. Answering one question, is this build behind, meant opening several spreadsheets.</p>
+            <div class="lp-who"><span class="glass-pill chip-ofs">PM spots it</span></div>
+          </div>
+        </li>
+        <li class="lp-stage" style="--i:1">
+          <div class="lp-bar lp-ae"><span class="lp-bead">S</span></div>
+          <div class="lp-card">
+            <div class="label">Spec</div>
+            <h3>Rules before code</h3>
+            <p>I decided what it had to do: keep one archive of record, flag every finding instead of quietly fixing it, and show state the same way on every screen. I designed the data model and every surface.</p>
+            <div class="lp-who"><span class="glass-pill chip-ofs">PM specifies</span></div>
+          </div>
+        </li>
+        <li class="lp-stage" style="--i:2">
+          <div class="lp-bar lp-fib"><span class="lp-bead">B</span></div>
+          <div class="lp-card">
+            <div class="label">Build</div>
+            <h3>AI writes, I direct</h3>
+            <p>AI wrote the code inside rules I set. Every change started as a written plan with its goal, files and risks, and nothing changed until I approved it. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span> 69 validation scripts check the work. <span class="fr-ev fr-ev--mark" data-ev="measured">Measured</span></p>
+            <div class="lp-who"><span class="glass-pill chip-hold">AI writes code</span><span class="glass-pill chip-ofs">PM directs and tests</span></div>
+          </div>
+        </li>
+        <li class="lp-stage" style="--i:3">
+          <div class="lp-bar lp-nap"><span class="lp-bead">O</span></div>
+          <div class="lp-card">
+            <div class="label">Operate</div>
+            <h3>Daily, on the real portfolio</h3>
+            <p>I ran my builds on it every day. When it got something wrong, the failure became a guardrail: catch it, flag it, check it against the archive, then write the rule so it gets caught automatically next time. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
+            <div class="lp-who"><span class="glass-pill chip-ofs">PM runs it daily</span></div>
+          </div>
+        </li>
+        <li class="lp-stage" style="--i:4">
+          <div class="lp-bar lp-done"><span class="lp-bead">R</span></div>
+          <div class="lp-card lp-card--result">
+            <div class="label">Result</div>
+            <h3>Hours back every week</h3>
+            <div class="lp-chart" role="img" aria-label="Weekly meeting prep: six to eight hours before OmniSight, about two hours after">
+              <div class="lp-chart-row" title="Before: 6 to 8 hours a week">
+                <span class="lp-chart-k">Before</span>
+                <span class="lp-chart-track"><i class="lp-chart-fill is-before" style="width:75%"></i><i class="lp-chart-range" style="left:75%;width:25%"></i></span>
+                <b>6–8 h</b>
+              </div>
+              <div class="lp-chart-row" title="After: about 2 hours a week">
+                <span class="lp-chart-k">After</span>
+                <span class="lp-chart-track"><i class="lp-chart-fill is-after" style="width:25%"></i></span>
+                <b>~2 h</b>
+              </div>
+              <p class="note">Weekly meeting prep <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></p>
+            </div>
+            <p>22,707 production records, 453 project IDs and 178 reporting dates in one archive. <span class="fr-ev fr-ev--mark" data-ev="measured">Measured</span></p>
+          </div>
+        </li>
+        <li class="lp-return" aria-label="Loop back from Operate to Spec"><span>Every failure became the next rule</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="walkthrough">
   <div class="wrap">
@@ -1396,10 +1681,12 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         <div class="title-split"><span>Interactive</span><span>Walkthrough</span></div>
         <h2>Inside OmniSight</h2>
       </div>
-      <p class="section-note">Every surface below is the product's own design language: the same tokens, radii, pills, flag badges and stage fills the application ships.</p>
+      <p class="section-note">Five workspaces rebuilt from the platform's own source: the same tokens, radii, pills, flag chips and stage fills it shipped with.</p>
     </div>
+    <p class="provenance"><span class="fr-ev" data-ev="illustrative">Illustrative</span><span>The projects, vendors, places, people, dates and figures in the walkthrough are invented. The screens and their behaviour are ported from the real platform.</span></p>
     <p class="anat-hint" id="anat-hint"><b>Anatomy mode</b> is in the sidebar. Turn it on to mark every deliberate device in the interface, then hover or tab through them to read why each one is shaped the way it is.</p>
 
+    <noscript><p class="wt-nojs">This walkthrough needs JavaScript. The case study and evidence remain available below.</p></noscript>
     <div class="shell app rv">
       <aside class="sidebar">
         <div class="side-brand">
@@ -1453,11 +1740,11 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           </div>
 
           <div class="kpis">
-            <div class="kpi is-critical"><div class="figure" data-count="7">0</div><div class="kl">Overdue</div><div class="kn">Past target completion</div></div>
-            <div class="kpi is-warning"><div class="figure" data-count="11">0</div><div class="kl">Stale report</div><div class="kn">No log inside 48h</div></div>
-            <div class="kpi is-visible"><div class="figure" data-count="5">0</div><div class="kl">Blocked</div><div class="kn">Permit or predecessor</div></div>
-            <div class="kpi is-admin"><div class="figure" data-count="9">0</div><div class="kl">Admin</div><div class="kn">Crossings · BOM · data</div></div>
-            <div class="kpi is-ofs"><div class="figure" data-count="6">0</div><div class="kl">Due ≤ 30d</div><div class="kn">Near-term OFS</div></div>
+            <div class="kpi is-critical"><div class="figure" data-count="7">7</div><div class="kl">Overdue</div><div class="kn">Past target completion</div></div>
+            <div class="kpi is-warning"><div class="figure" data-count="11">11</div><div class="kl">Stale report</div><div class="kn">No log inside 48h</div></div>
+            <div class="kpi is-visible"><div class="figure" data-count="5">5</div><div class="kl">Blocked</div><div class="kn">Permit or predecessor</div></div>
+            <div class="kpi is-admin"><div class="figure" data-count="9">9</div><div class="kl">Admin</div><div class="kn">Crossings · BOM · data</div></div>
+            <div class="kpi is-ofs"><div class="figure" data-count="6">6</div><div class="kl">Due ≤ 30d</div><div class="kn">Near-term OFS</div></div>
           </div>
 
           <div class="dash-grid">
@@ -1784,6 +2071,11 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
             </aside>
 
             <article class="detail">
+              <div class="detail-none" id="detail-none" tabindex="-1" hidden>
+                <div class="label">Project details</div>
+                <h4 id="detail-none-id"></h4>
+                <p>Details for this project aren't part of this demo.</p>
+              </div>
               <div class="detail-top">
                 <div class="detail-left">
                   <div class="view-head" style="border:0;padding:0;margin-bottom:0;align-items:center">
@@ -2146,7 +2438,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
                 <span class="pipe-n">3</span>
                 <div>
                   <b>Matching and dedup</b>
-                  <p>Project IDs arrive misspelled, transposed, or with the wrong market prefix. Fuzzy matching resolves the typo and records it as a soft match rather than fixing it invisibly. A dedup guard stops the same report being counted twice when a vendor resends.</p>
+                  <p>Project IDs arrive misspelled, transposed, or with the wrong market prefix. Fuzzy matching resolves the typo and records it as a soft match so the fix stays visible. A dedup guard stops the same report being counted twice when a vendor resends.</p>
                   <span class="pipe-mod">Matching engine · dedup guard</span>
                 </div>
               </div>
@@ -2162,7 +2454,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
                 <span class="pipe-n">5</span>
                 <div>
                   <b>Reconciliation</b>
-                  <p>A two-phase asynchronous sync pulls the enterprise system of record and compares it against reported actuals. Disagreements become explicit adjustment records with a reason, not a quiet overwrite. Bill-of-materials quantities reconcile against what crews actually used.</p>
+                  <p>A two-phase asynchronous sync pulls the enterprise system of record and compares it against reported actuals. Disagreements become explicit adjustment records, each with a reason. Bill-of-materials quantities reconcile against what crews actually used.</p>
                   <span class="pipe-mod">Reconciliation engine · async sync</span>
                 </div>
               </div>
@@ -2187,8 +2479,8 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
               <div class="panel" style="margin-top:12px">
                 <div class="label">Guardrails that earned their place</div>
                 <div class="guard-list">
-                  <div class="guard"><span class="tag t-muted">Soft match</span><div><b>Typos resolve visibly</b><p>An auto-corrected ID is reported, not hidden, so a systematic vendor error stays discoverable.</p></div></div>
-                  <div class="guard"><span class="tag t-muted">Ghost</span><div><b>Missing history is a finding</b><p>A project in the system of record with no production rows becomes a visible row, not an absence.</p></div></div>
+                  <div class="guard"><span class="tag t-muted">Soft match</span><div><b>Typos resolve visibly</b><p>An auto-corrected ID is reported, so a systematic vendor error stays discoverable.</p></div></div>
+                  <div class="guard"><span class="tag t-muted">Ghost</span><div><b>Missing history is a finding</b><p>A project in the system of record with no production rows still gets a visible row.</p></div></div>
                   <div class="guard"><span class="tag t-red">Stale</span><div><b>Silence is a signal</b><p>No report inside the expected window raises a flag whose severity escalates with the gap.</p></div></div>
                   <div class="guard"><span class="tag t-anom">Anomaly</span><div><b>Impossible pace is caught</b><p>Footage that outruns physical capacity is flagged before it reaches a report to leadership.</p></div></div>
                   <div class="guard"><span class="tag t-warn">Inferred</span><div><b>Derived state is labeled</b><p>When behavior implies a stage the system of record has not caught up to, the pill says so.</p></div></div>
@@ -2202,7 +2494,6 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
       </div>
     </div>
 
-    <div class="strip on-ground rv"><b>Demo data</b> Every market, delivery partner, person, project ID, date and figure in this walkthrough is invented for the case study. None of it is drawn from employer or customer records.</div>
   </div>
 </section>
 
@@ -2213,7 +2504,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         <div class="title-split"><span>Design</span><span>Vocabulary</span></div>
         <h2>Seventeen decisions, each one a cognitive-load argument</h2>
       </div>
-      <p class="section-note">A delivery portfolio is scanned under time pressure, usually minutes before someone has to answer for it. Every device below exists to move a question out of working memory — and every one of them links back to the live component it describes.</p>
+      <p class="section-note">Each of these devices takes one question off the reader's mind. Every card links back to the live component it describes.</p>
     </div>
 
     <div class="shell app app--plain rv">
@@ -2253,7 +2544,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           <span class="sev-chip">Family 01</span>
         </div>
       </div>
-      <p class="family-thesis">State is carried by form, not only by number, because form resolves in peripheral vision and a number has to be read.</p>
+      <p class="family-thesis">State is carried by form as well as number, because form registers in peripheral vision and a number has to be read.</p>
       <div class="vocab">
       <article data-vocab="fills" data-anat-view="portfolio" class="vocab-card rv is-lead">
         <div class="vocab-spec tall">
@@ -2266,7 +2557,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Four materials, four fill treatments</div>
-          <p class="vocab-why">Underground is solid, aerial strand is hatched, fiber is a layered dark stack, NAP runs indigo to cyan. They differ in <b>texture and direction, not just hue</b>, so they stay distinguishable in a ten-pixel bar, in greyscale, and to a colour-blind reader. The legend became unnecessary.</p>
+          <p class="vocab-why">Underground is solid, aerial strand is hatched, fiber is a layered dark stack, NAP runs indigo to cyan. They differ in <b>texture and direction as well as hue</b>, so they stay distinguishable in a ten-pixel bar, in greyscale, and to a colour-blind reader. The legend became unnecessary.</p>
         </div>
         <span class="vocab-load">No legend needed</span>
       </article>
@@ -2280,7 +2571,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">The 4px left-edge stripe</div>
-          <p class="vocab-why">Health lives on the row's edge, not inside it. Scanning a column of forty projects for the red ones costs no reading at all, and the stripe survives at any row height. Critical, review, administrative and clean each hold the same colour everywhere in the product.</p>
+          <p class="vocab-why">Health lives on the row's edge. Scanning a column of forty projects for the red ones costs no reading at all, and the stripe survives at any row height. Critical, review, administrative and clean each hold the same colour everywhere in the product.</p>
         </div>
         <span class="vocab-load">Triage without reading</span>
       </article>
@@ -2304,7 +2595,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Flag chips, classified from their own text</div>
-          <p class="vocab-why">Severity is derived from the finding's wording, not chosen at the call site. A crossing is always high-contrast black on amber; an anomaly is always orange; an upstream blocker always carries the NAP gradient that ties it to the splicing storyline. <b>A new flag inherits the correct colour for free.</b></p>
+          <p class="vocab-why">Severity comes from the finding's own wording, so nobody picks a colour by hand. A crossing is always high-contrast black on amber; an anomaly is always orange; an upstream blocker always carries the NAP gradient that ties it to the splicing storyline. <b>A new flag inherits the correct colour for free.</b></p>
         </div>
         <span class="vocab-load">Colour never lies</span>
       </article>
@@ -2321,7 +2612,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           <span class="sev-chip">Family 02</span>
         </div>
       </div>
-      <p class="family-thesis">At forty projects the scarce resource is not screen space, it is the reader's attention. Every device here spends it deliberately.</p>
+      <p class="family-thesis">At forty projects the scarce resource is attention. Every device here spends it deliberately.</p>
       <div class="vocab">
       <article data-vocab="focus" data-anat-view="timeline" class="vocab-card rv is-lead">
         <div class="vocab-spec">
@@ -2332,7 +2623,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Focus dims and desaturates</div>
-          <p class="vocab-why">Selecting a row drops every other row to 35% opacity <b>and 40% greyscale</b>. Dimming alone is not enough — a saturated amber at 35% still competes for attention. Removing the colour as well is what makes a single row genuinely quiet the other thirty-nine.</p>
+          <p class="vocab-why">Selecting a row drops every other row to 35% opacity <b>and 40% greyscale</b>. Dimming alone leaves a saturated amber competing for attention even at 35%. Taking the colour out as well is what makes the other thirty-nine rows go quiet.</p>
         </div>
         <span class="vocab-load">One row at a time</span>
       </article>
@@ -2345,7 +2636,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">The shell glows in the selected project's state</div>
-          <p class="vocab-why">Five states light the container border: blue for open-for-service, green for complete, violet for permitting, a subtle blue for merely active, and the strongest treatment — a 52px red bloom — for overdue. <b>Peripheral vision resolves it before the eye reads a label</b>, so the whole workspace tells you the stakes of what you have open.</p>
+          <p class="vocab-why">Five states light the container border: blue for open-for-service, green for complete, violet for permitting, a subtle blue for merely active, and the strongest treatment, a 52px red bloom, for overdue. <b>Peripheral vision catches it before the eye reads a label</b>, so the whole workspace carries the stakes of the open project.</p>
         </div>
         <span class="vocab-load">State in peripheral vision</span>
       </article>
@@ -2359,7 +2650,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Exactly one link in the chain is live</div>
-          <p class="vocab-why">Met milestones drop to 55% opacity and take a green check. The <b>earliest unmet</b> link — and only that one — stays full ink. The chain answers "what has to happen next" without the reader comparing three dates against today. An undated milestone can never be met, so the highlight correctly stalls there instead of skipping ahead.</p>
+          <p class="vocab-why">Met milestones drop to 55% opacity and take a green check. The <b>earliest unmet</b> link, and only that one, stays full ink. The chain answers "what has to happen next" without the reader comparing three dates against today. An undated milestone can never be met, so the highlight correctly stalls there instead of skipping ahead.</p>
         </div>
         <span class="vocab-load">Next action, pre-computed</span>
       </article>
@@ -2376,7 +2667,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">The dependency sits on the card</div>
-          <p class="vocab-why">A cabinet is rarely late on its own terms. The predecessor and successor chain runs across the project itself, with the blocking link carrying the warn treatment, so <b>the reason a project cannot move is on the card you are already reading</b> rather than two lookups away. Select MPR07-F22 in the queue: the constraint is upstream, and the path says so.</p>
+          <p class="vocab-why">A cabinet is rarely late on its own terms. The predecessor and successor chain runs across the project itself, with the blocking link carrying the warn treatment, so <b>the reason a project cannot move is on the card already open</b> instead of two lookups away. MPR07-F22 in the queue shows it: the constraint is upstream, and the path says so.</p>
         </div>
         <span class="vocab-load">Cause without a lookup</span>
       </article>
@@ -2390,7 +2681,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Today is never lost</div>
-          <p class="vocab-why">A solid red rule with a dashed edge marks today, and its label is clickable — it scrolls the timeline back. Scroll far enough that the rule leaves the viewport and <b>a pinned pill appears on the edge it left by</b>, so you always know which side of now you are looking at. Try scrolling the timeline sideways.</p>
+          <p class="vocab-why">A solid red rule with a dashed edge marks today, and its label is clickable and scrolls the timeline back. Once the rule leaves the viewport, <b>a pinned pill appears on the edge it left by</b>, so it is always clear which side of today is on screen. Scrolling the timeline sideways shows it.</p>
         </div>
         <span class="vocab-load">Temporal anchor held</span>
       </article>
@@ -2407,7 +2698,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           <span class="sev-chip">Family 03</span>
         </div>
       </div>
-      <p class="family-thesis">A number that flatters is worse than no number. These three exist to stop the interface from overstating what it knows.</p>
+      <p class="family-thesis">A number that flatters is worse than no number. These four keep the interface from overstating what it knows.</p>
       <div class="vocab">
       <article data-vocab="scope" data-anat-view="portfolio" class="vocab-card rv is-lead">
         <div class="vocab-spec tall">
@@ -2439,10 +2730,10 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           </div>
         </div>
         <div>
-          <div class="vocab-name">The pace bead, not a second number</div>
-          <p class="vocab-why">Every velocity bar carries a bead at the position this material <b>should</b> occupy today. Behind-schedule is then a spatial gap you see rather than a subtraction you perform, and the bars sit in an inset well so the fill reads as filling something. Four bars, one glance, no arithmetic.</p>
+          <div class="vocab-name">A pace bead instead of a second number</div>
+          <p class="vocab-why">Every velocity bar carries a bead at the position this material <b>should</b> occupy today. Behind schedule then shows up as a visible gap instead of a subtraction, and the bars sit in an inset well so the fill reads as filling something. Four bars, one glance, no arithmetic.</p>
         </div>
-        <span class="vocab-load">Comparison, not arithmetic</span>
+        <span class="vocab-load">Comparison without arithmetic</span>
       </article>
       <article data-vocab="mitigation" data-anat-view="portfolio" class="vocab-card rv">
         <div class="vocab-spec">
@@ -2465,7 +2756,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Derived and corrected values say so</div>
-          <p class="vocab-why">When production behaviour implies a stage the system of record has not caught up to, the pill reads <b>Inferred</b>. When a misspelled project ID is auto-resolved, it is tagged a soft match rather than quietly fixed. An automation that silently corrects things teaches its operator to stop looking, which is the most expensive cognitive habit of all.</p>
+          <p class="vocab-why">When production behaviour implies a stage the system of record has not caught up to, the pill reads <b>Inferred</b>. When a misspelled project ID is auto-resolved, it is tagged a soft match so the correction stays visible. An automation that silently corrects things teaches its operator to stop looking, which is the most expensive cognitive habit of all.</p>
         </div>
         <span class="vocab-load">Trust stays calibrated</span>
       </article>
@@ -2495,7 +2786,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         </div>
         <div>
           <div class="vocab-name">Hazard tape means a special crossing</div>
-          <p class="vocab-why">The owned date sits on a plinth that rises from the bottom of the card with an <b>upward shadow</b>, so it reads as a foundation rather than another panel. When the project carries a highway, rail or river crossing, the plinth is wrapped in literal hazard tape — a borrowed field convention that needs no key because everyone on a construction site already knows it.</p>
+          <p class="vocab-why">The owned date sits on a plinth that rises from the bottom of the card with an <b>upward shadow</b>, so it reads as a foundation. When the project carries a highway, rail or river crossing, the plinth is wrapped in literal hazard tape. Everyone on a construction site already knows what that means, so it needs no key.</p>
         </div>
         <span class="vocab-load">Borrowed from the field</span>
       </article>
@@ -2533,12 +2824,119 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
           </div>
         </div>
         <div>
-          <div class="vocab-name">Nesting depth tells you what level you are reading</div>
-          <p class="vocab-why">Slate ground, white shell at 24px, slate card at 14px, white row at 12px. The surface <b>alternates and the radius tightens</b> as you go deeper, so a glance at any fragment of the screen places it in the hierarchy without a heading. Same reason the shell shadow appears once, on the outermost frame only.</p>
+          <div class="vocab-name">Nesting depth shows the level</div>
+          <p class="vocab-why">Slate ground, white shell at 24px, slate card at 14px, white row at 12px. The surface <b>alternates and the radius tightens</b> at each level down, so a glance at any fragment of the screen places it in the hierarchy without a heading. Same reason the shell shadow appears once, on the outermost frame only.</p>
         </div>
         <span class="vocab-load">Position without headings</span>
       </article>
       </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="rs" id="read-speed" role="region" aria-roledescription="carousel" aria-label="Read speed: six queue cards">
+      <div class="rs-text">
+        <div class="label">Read speed</div>
+        <h3>A day's job log in thirty minutes</h3>
+        <p>I could work through the day's job log in about thirty minutes. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
+        <p>Each card carries a build's stage, status, health and flags. Once you know the vocabulary, one glance is enough.</p>
+        <div class="rs-controls">
+          <button type="button" class="rs-btn" data-rs="prev" aria-label="Previous card">&#8249; Prev</button>
+          <button type="button" class="rs-btn rs-btn--play" data-rs="play">Pause</button>
+          <button type="button" class="rs-btn" data-rs="next" aria-label="Next card">Next &#8250;</button>
+          <span class="rs-count">1 / 6</span>
+          <span class="rs-say" role="status"></span>
+        </div>
+        <p class="note rs-foot"><span class="fr-ev fr-ev--mark" data-ev="illustrative">Illustrative</span> Cards use the walkthrough's invented projects.</p>
+      </div>
+      <div class="rs-view">
+        <div class="rs-stage" tabindex="0" aria-label="Queue cards. Hover or focus pauses the cycle.">
+          <div class="rs-slide is-on" role="group" aria-roledescription="slide" aria-label="1 of 6">
+            <div class="email-card rs-card crit">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">FHV02-F10</div><div class="em-vendor">Fairhaven &middot; Ridgeline Group</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-active" title="Field CX | In Progress">Field CX | In Progress</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-red">Stale report 3d</span><span class="tag t-splice">Splicing handoff</span><span class="tag t-xing">Check crossings</span><span class="tag t-muted">+3</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 58%</span><span>Time 79%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:58%;background:var(--pill-active-bg)"></div><span class="rs-today" style="left:79%" title="Today: 79% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>Overdue in construction. No report for three days, a crossing to clear, and splicing up next.</p>
+          </div>
+          <div class="rs-slide" role="group" aria-roledescription="slide" aria-label="2 of 6">
+            <div class="email-card rs-card warn">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">CCF05-F31</div><div class="em-vendor">Concord Falls &middot; Ridgeline Group</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-active" title="Field CX | In Progress">Field CX | In Progress</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-anom">Pace anomaly UG</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 44%</span><span>Time 66%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:44%;background:var(--pill-active-bg)"></div><span class="rs-today" style="left:66%" title="Today: 66% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>Moving, but the underground footage is more than a crew can place. Check the report before trusting the number.</p>
+          </div>
+          <div class="rs-slide" role="group" aria-roledescription="slide" aria-label="3 of 6">
+            <div class="email-card rs-card warn">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">MPR07-F22</div><div class="em-vendor">Maple Ridge &middot; Keystone &amp; Reyes</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-active" title="Field CX (Inferred) | In Progress">Field CX (Inferred) | In Progress</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-muted">Inferred state</span><span class="tag t-warn">Blocked by predecessor</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 51%</span><span>Time 88%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:51%;background:var(--pill-active-bg)"></div><span class="rs-today" style="left:88%" title="Today: 88% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>The stage is inferred from production, and the real constraint is the cabinet upstream.</p>
+          </div>
+          <div class="rs-slide" role="group" aria-roledescription="slide" aria-label="4 of 6">
+            <div class="email-card rs-card ghost">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">CPB06-F19</div><div class="em-vendor">Copper Bend &middot; Keystone &amp; Reyes</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-hold" title="Field CX | On Hold">Field CX | On Hold</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-muted">Weekend carry</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 38%</span><span>Time 55%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:38%;background:var(--pill-hold-bg)"></div><span class="rs-today" style="left:55%" title="Today: 55% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>On hold over a weekend carry. Nothing to chase until it is released.</p>
+          </div>
+          <div class="rs-slide" role="group" aria-roledescription="slide" aria-label="5 of 6">
+            <div class="email-card rs-card info">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">RVT11-F04</div><div class="em-vendor">Riverton &middot; Meridian Comm</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-permit" title="Permit ROE | Pend. Approval">Permit ROE | Pend. Approval</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-warn">Awaiting ROE</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 0%</span><span>Time 41%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:2%;background:var(--pill-permit-bg)"></div><span class="rs-today" style="left:41%" title="Today: 41% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>Still in permitting, waiting on right of entry. No production expected yet.</p>
+          </div>
+          <div class="rs-slide" role="group" aria-roledescription="slide" aria-label="6 of 6">
+            <div class="email-card rs-card ghost">
+              <div class="em-header">
+                <div class="em-identity"><div class="em-fdh">THF01-F26</div><div class="em-vendor">Thornfield &middot; Meridian Comm</div></div>
+                <div class="em-pill-stack"><span class="glass-pill stage-status-pill chip-ofs" title="OFS | Complete">OFS | Complete</span></div>
+              </div>
+              <div class="em-tags"><span class="tag t-muted">Tracker linked</span></div>
+            </div>
+            <div class="rs-sched">
+              <div class="qb-time-labels"><span>Production 100%</span><span>Time 100%</span></div>
+              <div class="qb-time-bar"><div class="qb-time-fill" style="width:100%;background:var(--qb-done)"></div><span class="rs-today" style="left:100%" title="Today: 100% of schedule elapsed"></span><span class="proj-bead b-start" style="left:3%">S</span><span class="proj-bead b-cx" style="left:84%">C</span><span class="proj-bead b-ofs" style="left:97%">O</span></div>
+            </div>
+            <p class="rs-read"><span class="label">One glance</span>Lit and complete, tracker linked. Nothing to do here.</p>
+          </div>
+        </div>
+        <div class="rs-timer" aria-hidden="true"><i></i></div>
       </div>
     </div>
   </div>
@@ -2554,92 +2952,217 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
     </div>
 
     <div class="study">
-      <div class="study-body prose rv">
-        <h3>The operating problem</h3>
-        <p>I managed roughly forty concurrent fiber builds across nine municipalities and four construction vendors. The work generated a daily flood of vendor production reports, and the enterprise system of record held the schedule, but nothing joined them. Determining whether a single project was actually behind meant opening several spreadsheets, reconciling names that did not match, and trusting a status field nobody had updated in a week.</p>
-        <p>The cost showed up in two places. Preparing for weekly meetings took six to eight hours of manual assembly. The daily review that should have caught problems early was too expensive to do properly, so problems surfaced late, usually as a surprise in front of a director.</p>
+      <div class="study-body prose">
+        <h3>The problem everyone worked around</h3>
+        <p>I managed about forty concurrent fiber builds across nine municipalities and four construction vendors. Vendors reported production every day, the enterprise system of record held the schedule, and nothing joined the two. Finding out whether one build was actually behind meant opening several spreadsheets, matching up project names that never quite agreed, and trusting a status field nobody had updated in a week.</p>
+        <p>That cost showed up in two places. Weekly meeting prep took six to eight hours of assembly by hand. And the daily review that should have caught problems early was too expensive to do properly, so problems surfaced late, usually as a surprise in front of a director.</p>
+        <p>The spreadsheets were never going to start agreeing on their own, so I built the thing that made them agree.</p>
 
-        <h3>What I built</h3>
-        <p>OmniSight is an operating platform for the delivery portfolio: an ingestion and reconciliation engine underneath, four coordinated surfaces on top. It runs on Google Apps Script against Sheets and the enterprise system's API, with no server and no build step, because those were the constraints I actually had.</p>
-        <ul>
-          <li><strong>Ingestion:</strong> vendor reports are discovered, normalized through an alias-based schema adapter, matched against known projects, deduplicated, and appended to a single archive of record.</li>
-          <li><strong>Reconciliation:</strong> a two-phase asynchronous sync compares the enterprise system against reported actuals and writes explicit adjustment records rather than silently overwriting either side.</li>
-          <li><strong>Diagnostics:</strong> stale reporting, impossible production pace, inferred state, blocked predecessors, bill-of-materials variance and special crossings are each classified into a flag the interface renders consistently everywhere.</li>
-          <li><strong>Surfaces:</strong> the same portfolio read four ways, because a dashboard answers a different question than a timeline, a queue, or a risk map.</li>
-        </ul>
+        <h3>What I designed for</h3>
+        <p>Nobody reads a delivery portfolio. They scan it, usually minutes before they have to answer for it. Anything a reader has to decode, remember across a gap or cross-reference is a cost, so state is encoded in <strong>form as well as number</strong>: a stripe on an edge, a texture in a fill, a letter in a bead, a glow on the frame. Form registers in peripheral vision before anyone reads a figure. And the encoding is <strong>the same everywhere</strong>, so nobody has to learn a new language on each screen.</p>
+        <p>On these screens every colour, radius, weight and border is there to carry meaning. At forty projects, one ornamental element is one more thing to filter out.</p>
+        <p>Findings are surfaced, never silently corrected. A resolved typo shows as a soft match, a derived stage shows as inferred, and a reconciliation writes an adjustment record with a reason. An automation that quietly fixes things teaches its operator to stop looking, and an operator who has stopped looking is worse than no automation at all.</p>
+        <p>The rule I held every automation to: never remove the human from the equation, only improve the output, so the project managers' time goes into decisions that change how a build turns out instead of day-to-day reconciliation of data. The <a href="#vocabulary">design vocabulary</a> above sets out seventeen of these devices, and Anatomy mode attaches each argument to the live component.</p>
 
-        <h3>The design principle underneath</h3>
-        <p>Every visual device in this product was chosen to move a question out of the reader's working memory, and the <a href="#vocabulary" style="color:var(--accent);font-weight:800;text-decoration:none">design vocabulary above</a> sets out seventeen of them with the specimen next to the argument. Each one also links to the live component it describes: turn on Anatomy in the walkthrough and the argument attaches to the real thing. The principle they share is worth stating on its own.</p>
-        <p>A delivery portfolio is not read, it is scanned, usually a few minutes before someone has to answer for it in a meeting. Under that condition, anything the reader has to decode, remember across a gap, or cross-reference is a cost. So state gets encoded in <strong>form as well as number</strong> — a stripe on an edge, a texture in a fill, a letter in a bead, a glow on the frame — because form resolves in peripheral vision and number does not. And the encoding has to be <strong>the same everywhere</strong>, or the reader is learning a new language on each surface.</p>
-        <p>The corollary is that nothing is decorative. Every colour, radius, weight and border on a surface is either carrying meaning or is a mistake. That constraint is what makes the density survivable: at forty projects, a screen with one ornamental element is a screen with one more thing to filter out.</p>
-        <p>The second principle is that findings are surfaced, never silently corrected. A resolved typo shows as a soft match, a derived stage shows as inferred, a reconciliation writes an adjustment record with a reason. An automation that quietly fixes things teaches its operator to stop looking, and an operator who has stopped looking is worse than no automation at all.</p>
-        <p>When a later rebuild replaced these devices with generic cards and a plain risk band, the density collapsed and the surface stopped answering questions at a glance. Being able to say precisely why is the part of this work I would most want to be judged on.</p>
+        <h3 id="forecast">Keeping the forecast steady</h3>
+        <p>OmniSight let me track field velocity across the whole portfolio. When one build started falling behind, I could reliably find another that was running ahead, or could, and move it up to take its place. That kept the forecast steady for the VP's presentation to the board. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
 
-        <h3>My role, stated precisely</h3>
-        <p>I was the Construction Project Manager, not a software engineer on a platform team. I conceived the system, specified it, designed the interface and the data model, tested it, and operated it daily while running the portfolio it served. The code was written with AI assistance under my direction. I am the product owner, systems designer, domain expert, tester and operator; I did not hand-write the entire codebase and do not claim to have.</p>
-        <p>It was a self-initiated tool, not an assigned project and not a company product.</p>
+        <h3>My role</h3>
+        <p>I was the Construction Project Manager. OmniSight was my own initiative, not an assigned project and not a company product. I conceived it, specified it, designed the interface and the data model, tested it, and ran it every day alongside the portfolio it served. I designed the system and set the rules it ran on. The AI and I brainstormed approaches, it tested the ideas and wrote the code, and because every change worked inside rules I set, I could answer for everything it did.</p>
       </div>
 
-      <aside class="evidence rv">
+      <aside class="evidence">
         <div class="ev">
-          <div class="label">Time recovered</div>
+          <div class="ev-top"><div class="label">Time recovered</div><span class="fr-ev" data-ev="recorded">Recorded</span></div>
           <div class="ev-headline">6–8 hours → about 2</div>
-          <small>Weekly meeting preparation. Daily production review fell to roughly thirty minutes.</small>
+          <small>Weekly meeting prep. About an hour and a half a day became one two-hour session a week.</small>
+          <small style="margin-top:8px">I could work through the day's job log in about thirty minutes. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></small>
         </div>
         <div class="ev">
-          <div class="label">Operating scale</div>
+          <div class="ev-top"><div class="label">Operating scale</div><span class="fr-ev" data-ev="measured">Measured</span></div>
           <div class="ev-rows">
             <div class="ev-row"><span>Production records</span><b>22,707</b></div>
             <div class="ev-row"><span>Unique project IDs</span><b>453</b></div>
             <div class="ev-row"><span>Reporting dates</span><b>178</b></div>
             <div class="ev-row"><span>Workbook sheets</span><b>38</b></div>
           </div>
-          <small style="margin-top:11px">Actuals from the live platform, not demo figures.</small>
-        </div>
-        <div class="ev">
-          <div class="label">Build</div>
-          <div class="ev-rows">
-            <div class="ev-row"><span>Repository lines</span><b>119,000+</b></div>
-            <div class="ev-row"><span>Commits</span><b>1,106</b></div>
-            <div class="ev-row"><span>Validation scripts</span><b>69</b></div>
-          </div>
-          <small style="margin-top:11px">Developed with AI assistance under my direction and specification.</small>
+          <small style="margin-top:11px">From the live platform.</small>
         </div>
         <div class="ev is-boundary">
-          <div class="label">Portfolio managed</div>
-          <div class="ev-headline">~40 concurrent builds<br>9 municipalities · 4 vendors</div>
-          <small>Oversaw the vendors responsible for the production this platform tracked.</small>
+          <div class="ev-top"><div class="label">Portfolio managed</div><span class="fr-ev" data-ev="recalled">Recalled</span></div>
+          <div class="ev-headline">~40 concurrent builds<br>9 municipalities, 4 vendors</div>
+          <small>I oversaw the vendors whose production this platform tracked.</small>
         </div>
       </aside>
     </div>
   </div>
 </section>
 
-<footer class="footer" id="contact">
+<section class="section" id="engineering">
   <div class="wrap">
-    <div class="footer-shell rv">
-      <div class="footer-grid">
-        <div class="footer-lead">
-          <div class="label">Next</div>
-          <h2>Want the walkthrough <i>live?</i></h2>
-          <p>I can take you through the ingestion path, why each guardrail exists, the reconciliation model, and what I would change before handing this to anyone else to run.</p>
-          <a class="footer-cta" href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Connect on LinkedIn →</a>
-        </div>
-        <div class="footer-facts">
-          <div><small>Role</small><b>Construction Project Manager</b></div>
-          <div><small>Period</small><b>Jan – Aug 2026</b></div>
-          <div><small>Portfolio</small><b>~40 builds · 9 municipalities · 4 vendors</b></div>
-          <div><small>Time recovered</small><b>6–8 hours → about 2 per week</b></div>
-          <div><small>Built on</small><b>Apps Script · Sheets · QuickBase API</b></div>
-          <div><small>Method</small><b>AI-assisted development, self-directed</b></div>
-        </div>
+    <div class="section-head rv">
+      <div>
+        <div class="title-split"><span>Engineering</span><span>Notes</span></div>
+        <h2>Underneath the screens</h2>
       </div>
-      <p class="colophon">OmniSight — portfolio case study by Jacob Zamarripa. Not affiliated with, endorsed by, or a product of any former employer. The platform described here was a self-initiated tool built and operated during employment as Construction Project Manager at Omni Fiber, January to August 2026. Every market, delivery partner, person, project identifier, date, footage figure and percentage shown in the interactive walkthrough is invented for this case study; no customer, employer or production record is reproduced. Scale and time figures cited in the case study are actuals from the live platform and are labeled as such.</p>
+      <p class="section-note">I didn't hand-write this code. I did have to understand it well enough to specify it, test it and fix it, so here are three notes from that side of the work.</p>
+    </div>
+
+    <div class="en">
+      <article class="en-note" aria-labelledby="en-sys">
+        <div class="en-head">
+          <div>
+            <div class="label">Note 1</div>
+            <h3 id="en-sys">The system</h3>
+          </div>
+          <p>Everything runs on Google Apps Script, Sheets and the QuickBase API, with no server and no build step. Those were the tools I had, so the design works inside them: timed triggers instead of webhooks, and a sync split in two so each run fits inside Apps Script's time limit.</p>
+        </div>
+
+        <div class="arch" role="group" aria-label="Architecture: reports arrive, Apps Script ingests them into one archive, a two-phase sync reconciles against QuickBase, and a web app shows the results">
+          <div class="arch-lane">
+            <div class="arch-lane-head"><span class="label">Arrives</span></div>
+            <div class="arch-node n-ext"><b>Vendor daily reports</b><small>Spreadsheets by email, each vendor's own format</small></div>
+            <div class="arch-node n-ext"><b>Power Automate</b><small>Saves each attachment to a watched folder</small></div>
+            <div class="arch-node n-store"><b>Google Drive</b><small>The intake folder</small></div>
+          </div>
+          <div class="arch-lane">
+            <div class="arch-lane-head"><span class="label">Ingests</span><span class="note">Apps Script, on a timer</span></div>
+            <div class="arch-node n-run"><b>Timed discovery</b><small>Finds new files; no webhook receiver to own</small></div>
+            <div class="arch-node n-run"><b>Schema adapter</b><small>Finds each column by alias, whatever the vendor called it</small></div>
+            <div class="arch-node n-run"><b>Match and dedup</b><small>Fuzzy project match, soft-match flags, resend guard</small></div>
+            <div class="arch-node n-store"><b>Master archive</b><small>Append-only history in Sheets</small></div>
+          </div>
+          <div class="arch-lane">
+            <div class="arch-lane-head"><span class="label">Reconciles</span></div>
+            <div class="arch-node n-sor"><b>QuickBase API</b><small>The system of record: schedule and status</small></div>
+            <div class="arch-node n-run is-two-way"><b>Two-phase async sync</b><small>A run stages completely before anything commits</small>
+              <span class="arch-chips"><span class="tag t-muted">1 Fetch and stage</span><span class="tag t-muted">2 Rebuild and commit</span></span></div>
+            <div class="arch-node n-run"><b>Reconciliation engine</b><small>Bill of materials against actuals; every adjustment keeps its reason</small></div>
+            <div class="arch-node n-run"><b>Diagnostics</b><small>Stale reports, impossible pace, inferred stage, blockers, crossings</small></div>
+          </div>
+          <div class="arch-lane">
+            <div class="arch-lane-head"><span class="label">Surfaces</span><span class="note">HtmlService web app</span></div>
+            <div class="arch-node n-ui"><b>Dashboard</b><small>Portfolio health and diagnostics</small></div>
+            <div class="arch-node n-ui"><b>Active Portfolio</b><small>Queue and project detail</small></div>
+            <div class="arch-node n-ui"><b>Timeline</b><small>Schedule across every build</small></div>
+            <div class="arch-node n-ui"><b>Risk Grid</b><small>Pace against elapsed schedule</small></div>
+          </div>
+        </div>
+        <div class="arch-foot">
+          <div class="arch-legend">
+            <span><i class="n-ext"></i>Outside service</span>
+            <span><i class="n-run"></i>Apps Script job</span>
+            <span><i class="n-store"></i>Storage</span>
+            <span><i class="n-sor"></i>System of record</span>
+            <span><i class="n-ui"></i>Screen</span>
+          </div>
+          <p class="note">Data moves left to right. The screens read the archive and never edit it.</p>
+        </div>
+      </article>
+
+      <article class="en-note" aria-labelledby="en-schema">
+        <div class="en-split">
+          <div class="code" role="group" aria-label="Trimmed code excerpt from the schema adapter">
+            <div class="code-bar"><span class="label">Schema adapter, trimmed</span><span class="note">Alias names changed</span></div>
+<pre><code><span class="c-com">// Known header variants for each field the platform needs.</span>
+<span class="c-key">const</span> SCHEMA_ALIASES = {
+  PROJECT:    [<span class="c-str">"Project ID"</span>, <span class="c-str">"Job ID"</span>, <span class="c-str">"Work Order"</span>],
+  CONTRACTOR: [<span class="c-str">"Contractor"</span>, <span class="c-str">"Vendor"</span>, <span class="c-str">"Partner"</span>, <span class="c-str">"Company"</span>],
+  DATE:       [<span class="c-str">"Date"</span>, <span class="c-str">"Report Date"</span>, <span class="c-str">"Daily Work Date"</span>],
+  DAILY_UG:   [<span class="c-str">"UG Footage Today"</span>, <span class="c-str">"Bore Feet"</span>],
+};
+
+SchemaAdapter.prototype.getIdx = <span class="c-key">function</span> (name, options) {
+  <span class="c-key">const</span> want = name.toLowerCase().trim();
+
+  <span class="c-com">// 1. The header exactly as written</span>
+  <span class="c-key">let</span> idx = <span class="c-key">this</span>.lowerHeaders.indexOf(want);
+  <span class="c-key">if</span> (idx !== <span class="c-num">-1</span>) <span class="c-key">return</span> idx;
+
+  <span class="c-com">// 2. Any known alias for that field</span>
+  <span class="c-key">const</span> aliases = SCHEMA_ALIASES[name.toUpperCase()] || [];
+  <span class="c-key">for</span> (<span class="c-key">const</span> alias <span class="c-key">of</span> aliases) {
+    idx = <span class="c-key">this</span>.lowerHeaders.indexOf(alias.toLowerCase());
+    <span class="c-key">if</span> (idx !== <span class="c-num">-1</span>) <span class="c-key">return</span> idx;
+  }
+
+  <span class="c-com">// 3. Partial match, guarded: a footage column is never a date or a BOM</span>
+  <span class="c-key">return</span> <span class="c-key">this</span>.lowerHeaders.findIndex(h =&gt;
+    (h.includes(want) || aliases.some(a =&gt; h.includes(a.toLowerCase()))) &amp;&amp;
+    !(options?.isFootage &amp;&amp; /date|target|bom|ofs/.test(h))
+  );
+};</code></pre>
+          </div>
+          <div class="en-text">
+            <div class="label">Note 2</div>
+            <h3 id="en-schema">Vendors never agreed on column names</h3>
+            <p>Every vendor labelled its columns differently, and they renamed them without warning. Finding a column by its position breaks the day someone inserts one, and it breaks quietly: footage lands in the wrong field and the dashboard still looks fine.</p>
+            <p>So every column lookup in the platform goes through one schema adapter. It tries the exact header, then the known aliases for that field, then a guarded partial match that won't mistake a date column for footage. A shifted or renamed column turns into a warning instead of bad data.</p>
+            <p>The code was the last of three layers. First we standardized the report form so vendors sent nearly the same shape. The adapter absorbed the variations that were left. When a header was missing entirely, the platform inferred it and flagged the guess for me to check against the archive, and drift that kept coming back became a permanent rule. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="en-note" aria-labelledby="en-bug">
+        <div class="en-split en-split--story">
+          <div class="en-text">
+            <div class="label">Note 3</div>
+            <h3 id="en-bug">The day the queue stopped running</h3>
+            <p>On July 24 the queue module stopped working. The browser reported a syntax error inside Google's web app frame, but the same JavaScript parsed cleanly on my machine, and nothing in the queue logic had changed.</p>
+            <p>The obvious move was to start editing the queue code. I don't do that to something that was already running. Diagnose first, change second. The AI proposed reading the script text Google actually generated for the page and comparing it with the source, and I approved it.</p>
+            <p>One template literal held a web address. In the source it read <code class="inline">`https://...`</code>. In the served page it had been cut to <code class="inline">`https:</code>. HtmlService was evaluating that large script file as a template on its own, and the string didn't survive. One broken string was enough to stop the whole module.</p>
+            <p>The fix was small. The page shells still go through the template engine, but their CSS and script partials now load raw, through <code class="inline">createHtmlOutputFromFile(...).getContent()</code>. Fixing it was half the job. The other half was making sure the next one shows itself, so the rule went into the instructions the AI reads before every change: when code parses locally and fails in the frame, read the generated script first.</p>
+          </div>
+          <div class="en-side">
+            <div class="diff" role="group" aria-label="The same line in the source and in the served page">
+              <div class="diff-row is-src"><span class="label">Source</span><code>const link = `https://…`;</code></div>
+              <div class="diff-row is-out"><span class="label">Served</span><code>const link = `https:</code></div>
+              <p class="note">Illustration of the failure. The real line held a different address.</p>
+            </div>
+            <div class="rule">
+              <div class="ev-top"><div class="label">Rule 10 of the project's AI instructions</div><span class="fr-ev" data-ev="recorded">Recorded</span></div>
+              <p>Load CSS and script partials raw. When code parses locally but the web app reports a syntax error, inspect the generated script text before changing application logic.</p>
+            </div>
+            <p class="en-pull">That is most of what working with AI looks like for me. It writes code fast. My job is to know what the system should do, notice when it doesn't, and keep the diagnosis on evidence.</p>
+          </div>
+        </div>
+      </article>
+
+      <div class="en-stats-wrap">
+        <div class="en-stats">
+          <div class="be-stat"><div class="figure">119,000+</div><small>Repository lines</small></div>
+          <div class="be-stat"><div class="figure">1,106</div><small>Commits</small></div>
+          <div class="be-stat"><div class="figure">69</div><small>Validation scripts</small></div>
+          <div class="be-stat"><div class="figure">0</div><small>External servers</small></div>
+        </div>
+        <p class="provenance"><span class="fr-ev" data-ev="measured">Measured</span><span>Counts from the project's history. AI wrote the code under my direction.</span></p>
+      </div>
     </div>
   </div>
-</footer>
+</section>
+
+<section class="section" id="handover">
+  <div class="wrap">
+    <div class="footer-shell">
+      <div class="footer-grid">
+        <div class="footer-lead">
+          <div class="label">Handover</div>
+          <h2>Before anyone else runs it</h2>
+          <p>OmniSight worked because I ran it every day and knew where its assumptions lived. A tool that depends on one person isn't finished. Before handing it over, I would change four things. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
+        </div>
+        <ul class="cl-list">
+          <li><b>Document the alias layer</b>Give someone else a way to add aliases. Right now that knowledge lives with me.</li>
+          <li><b>Write down the constraints</b>Apps Script, Sheets, no server, no build step. Those were deliberate choices for the job, and a successor should know why.</li>
+          <li><b>Make the thresholds configurable</b>I tuned the diagnostics by running the portfolio. Tuning that only exists in my head is folklore.</li>
+          <li><b>Write down the vocabulary</b>Anatomy mode on this page is the first draft of the guide a successor would need.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
-</div>
+
+<footer class="fr-foot" data-frame-case="4" data-frame-static><div class="fr-foot-in"><nav class="fr-pager" aria-label="Case studies"><a rel="prev" href="../ci-fleet/"><small>Previous: case 3 of 4</small><b>Right-Sizing the Fleet</b></a><a rel="next" href="../"><small>All four cases</small><b>Jacob Zamarripa</b></a></nav><div class="fr-foot-meta"><a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Jacob Zamarripa on LinkedIn</a><p class="fr-prov">A personal portfolio. Not affiliated with or endorsed by any former employer.</p></div></div></footer>
 
 <div class="vel-week-pop" id="week-pop" role="tooltip" aria-hidden="true"></div>
 <div class="anat-pop" id="anat-pop" role="tooltip" aria-hidden="true"></div>
@@ -2711,7 +3234,27 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
     });
   });
 
-  var cards = document.querySelectorAll('.email-card');
+  var cards = document.querySelectorAll('.email-card:not(.rs-card)');
+  /* A diagnostic or grid row can name a project outside the five-record
+     demo slice. Say so in the detail pane instead of leaving another
+     project's details on screen. */
+  var detailEl = document.querySelector('#portfolio .detail');
+  var noDetail = document.getElementById('detail-none');
+  function clearNoDetail(){
+    if (!detailEl || !noDetail) return;
+    detailEl.classList.remove('is-none');
+    noDetail.hidden = true;
+  }
+  function showNoDetail(pid){
+    if (!detailEl || !noDetail) return;
+    Array.prototype.forEach.call(cards, function(c){
+      c.classList.remove('selected');
+      c.setAttribute('aria-pressed', 'false');
+    });
+    document.getElementById('detail-none-id').textContent = pid;
+    noDetail.hidden = false;
+    detailEl.classList.add('is-none');
+  }
   Array.prototype.forEach.call(cards, function(card){
     card.addEventListener('click', function(){
       Array.prototype.forEach.call(cards, function(c){
@@ -2720,6 +3263,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
       });
       card.classList.add('selected');
       card.setAttribute('aria-pressed', 'true');
+      clearNoDetail();
       var id = card.getAttribute('data-project');
       if (id && PROJECTS[id]){
         renderProject(id, 'civil');
@@ -2749,7 +3293,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
      surface was a mockup. Each card now selects a real record.
 
      Values follow the data boundary: markets, vendors and people come from
-     the decode key; dates, footages and percentages are synthetic. Time and
+     the decode key; dates, footages and percentages are invented. Time and
      production percentages match the timeline row and risk-grid card for the
      same project, because a portfolio that disagrees with itself across
      surfaces is the exact failure this platform existed to fix.
@@ -2784,7 +3328,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         splicing:{fill:'100%',tick:'is-muted',tail:'is-active',gate:true,
           owner:'Fairhaven · Meridian Comm · Alex Rivera', label:'OFS · Meridian Comm',
           date:'Sep 12, 2026', sub:'Splice window opens at the handoff bead', overdue:false,
-          note:'On the splicing card the handoff is the start gate — the moment the project became theirs — so it outranks the other beads instead of sitting as one more grey disc.'}
+          note:'On the splicing card the handoff is the start gate, the moment the project became theirs, so it outranks the other beads instead of sitting as one more grey disc.'}
       }
     },
 
@@ -2815,7 +3359,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         splicing:{fill:'100%',tick:'is-muted',tail:'is-active',gate:true,
           owner:'Concord Falls · Meridian Comm · Morgan Ellis', label:'OFS · Meridian Comm',
           date:'Sep 26, 2026', sub:'Splice window opens at the handoff bead', overdue:false,
-          note:'On the splicing card the handoff is the start gate — the moment the project became theirs — so it outranks the other beads instead of sitting as one more grey disc.'}
+          note:'On the splicing card the handoff is the start gate, the moment the project became theirs, so it outranks the other beads instead of sitting as one more grey disc.'}
       }
     },
 
@@ -2896,7 +3440,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         [['Tracker linked','t-muted']],
         'Nothing outstanding. Cabinet is lit and the enterprise tracker record is linked, so this drops out of the eligible queue on the next visibility pass.',
         'No action. Kept in view for one more cycle so the OFS date is verifiable against the tracker.',
-        'Every milestone is met, so no link in the chain is live — the highlight has nowhere left to advance to.'],
+        'Every milestone is met, so no link in the chain is live. The highlight has nowhere left to advance to.'],
       notes:[['Morgan Ellis · Aug 08','Cabinet lit and accepted. Tracker record linked the same day.'],
              ['Morgan Ellis · Jul 19','CX complete signed off. Splice crew released to Riverton.'],
              ['Alex Rivera · Jul 02','Clean build start to finish. No crossings, no permit holds.']],
@@ -3218,6 +3762,14 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
       var el = c.querySelector('.em-fdh');
       if (el && el.textContent.trim() === pid) target = c;
     });
+    if (!target){
+      show('portfolio');
+      showNoDetail(pid);
+      setGlow('glow-active');
+      noDetail.focus({ preventScroll: true });
+      noDetail.scrollIntoView({ block:'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+      return;
+    }
     show('portfolio');
     if (target){
       var grp = target.closest('.queue-group-body');
@@ -3229,6 +3781,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
         grp = grp.parentElement ? grp.parentElement.closest('.queue-group-body') : null;
       }
       target.click();
+      target.focus({ preventScroll: true });
       target.scrollIntoView({ block:'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
     }
   }
@@ -3344,6 +3897,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   };
 
   Array.prototype.forEach.call(document.querySelectorAll('.proj-bead, .gantt-bead'), function(bead){
+    if (bead.closest('.rs')) return;
     var ch = bead.textContent.trim();
     var meta = BEADS[ch];
     if (!meta){ bead.style.cursor = 'default'; return; }
@@ -3448,27 +4002,6 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
     });
   });
 
-  /* ---- Section rail: scroll-spy against the sticky chrome ---- */
-  var rail = document.getElementById('railnav');
-  var links = rail ? Array.prototype.slice.call(rail.querySelectorAll('a')) : [];
-  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
-
-  function syncRail(){
-    var topbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h')) || 54;
-    var probe = window.scrollY + topbarH + window.innerHeight * 0.22;
-    var current = 0;
-    targets.forEach(function(t, i){
-      if (!t) return;
-      var top = t.getBoundingClientRect().top + window.scrollY;
-      if (top <= probe) current = i;
-    });
-    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = links.length - 1;
-    links.forEach(function(a, i){ a.classList.toggle('is-current', i === current); });
-  }
-  links.forEach(function(a){ a.addEventListener('click', function(){ setTimeout(syncRail, 460); }); });
-  window.addEventListener('scroll', syncRail, { passive:true });
-  window.addEventListener('resize', syncRail);
-  requestAnimationFrame(syncRail);
 
   /* ---- Signature beat: the glow ladder introduces itself once ---- */
   if (!REDUCED){
@@ -3537,7 +4070,7 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
     /* --- mode ------------------------------------------------------------ */
     var label = toggle.querySelector('.anat-toggle-text');
     var HINT_OFF = 'is in the sidebar. Turn it on to mark every deliberate device in the interface, then hover or tab through them to read why each one is shaped the way it is.';
-    var HINT_ON  = 'is on. Every marked element is a deliberate decision — hover, tab to, or click one to read the argument, then follow it down to the full write-up.';
+    var HINT_ON  = 'is on. Every marked element is a deliberate decision. Hover, tab to, or click one to read the argument, then follow it down to the full write-up.';
 
     function setMode(on){
       shell.classList.toggle('is-anat', on);
@@ -3719,27 +4252,51 @@ h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.045em;line-height:1.04;tex
   })();
 
 
-  /* ---- Theme toggle: session-only override, system preference on load ---- */
+
+  /* ---- Read speed: cycles queue cards; pause/play, prev/next; no autoplay under reduced motion ---- */
   (function(){
-    var root = document.documentElement, btn = document.getElementById('themeBtn');
-    if (!btn) return;
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    function effective(){
-      return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light');
+    var rs = document.getElementById('read-speed');
+    if (!rs) return;
+    var slides = Array.prototype.slice.call(rs.querySelectorAll('.rs-slide'));
+    var bar = rs.querySelector('.rs-timer i');
+    var play = rs.querySelector('[data-rs="play"]');
+    var count = rs.querySelector('.rs-count');
+    var say = rs.querySelector('.rs-say');
+    var i = 0;
+    rs.classList.add('is-live');
+    function restart(){ bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+    /* Only manual Prev/Next is announced; the automatic cycle stays quiet. */
+    function show(n, manual){
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function(s, k){ var on = k === i; s.classList.toggle('is-on', on); s.setAttribute('aria-hidden', String(!on)); });
+      count.textContent = (i + 1) + ' / ' + slides.length;
+      if (manual && say) say.textContent = 'Card ' + (i + 1) + ' of ' + slides.length;
+      restart();
     }
-    function sync(){
-      var e = effective();
-      btn.textContent = e === 'dark' ? '\u263D' : '\u2600';
-      btn.setAttribute('aria-label', 'Switch to ' + (e === 'dark' ? 'light' : 'dark') + ' mode');
-      btn.setAttribute('title', e === 'dark' ? 'Light mode' : 'Dark mode');
+    /* The cycle runs only while the gallery is on screen and the tab is
+       visible; otherwise the timer holds where it is. */
+    var onScreen = false;
+    function hold(){ rs.classList.toggle('is-held', !onScreen || document.hidden); }
+    rs.classList.add('is-held');
+    if ('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        onScreen = entries[entries.length - 1].isIntersecting;
+        hold();
+      }, { threshold: 0.35 }).observe(rs);
+    } else { onScreen = true; hold(); }
+    document.addEventListener('visibilitychange', hold);
+    function setPlaying(on){
+      rs.classList.toggle('is-playing', on);
+      play.textContent = on ? 'Pause' : 'Play';
+      play.setAttribute('aria-label', on ? 'Pause the cards' : 'Play the cards');
+      restart();
     }
-    btn.addEventListener('click', function(){
-      root.setAttribute('data-theme', effective() === 'dark' ? 'light' : 'dark');
-      sync();
-    });
-    if (mq.addEventListener) mq.addEventListener('change', sync);
-    else if (mq.addListener) mq.addListener(sync);
-    sync();
+    bar.addEventListener('animationend', function(){ if (rs.classList.contains('is-playing')) show(i + 1); });
+    rs.querySelector('[data-rs="prev"]').addEventListener('click', function(){ show(i - 1, true); });
+    rs.querySelector('[data-rs="next"]').addEventListener('click', function(){ show(i + 1, true); });
+    play.addEventListener('click', function(){ setPlaying(!rs.classList.contains('is-playing')); });
+    if (REDUCED){ play.hidden = true; setPlaying(false); } else { setPlaying(true); }
+    show(0);
   })();
 
 })();

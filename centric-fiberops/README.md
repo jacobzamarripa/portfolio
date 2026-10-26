@@ -1,11 +1,10 @@
 # Nexus FiberOps Unified — Retrospective Case Study
 
 Sanitized interactive portfolio artifact based on the design language and
-workflow model of the `Centric_FiberOps_Unified` repository.
+workflow model of the Nexus prototype.
 
-Full lineage — what was real, what was retrospective, what was only planned —
-lives in `~/App-Projects/Centric_FiberOps_Unified/ORIGIN_AND_LINEAGE.md`.
-Read that before changing any claim on this page.
+Full lineage (what was real, what was retrospective, what was only planned)
+is kept in a private note. Check it before changing any claim on this page.
 
 ## Truth boundary — three tiers, never collapsed
 
@@ -14,7 +13,7 @@ The page states these separately and so must any edit to it.
 | Tier | What | Status |
 |---|---|---|
 | **Real** | The barcode/QR pipeline (created 2022, developed through 2024), the L-FIT tracker / Master_Tracker (from the Jan 2025 promotion), and the Sheets + Form field tooling with EOD reporting | Built and used during the Centric employment, all of it in Sheets and formulas. The **QR pipeline remained in use after his departure**. |
-| **Real** | The CTX Master Project Tracker | Built December 2025. **Demonstrated to the VP and upper management; one team ran on it.** |
+| **Real** | The CTX Master Project Tracker | Built December 2025. **Demonstrated to the VP and upper management; two of six teams used it, including my team as the test team. The official rollout never happened.** |
 | **Retrospective** | Nexus FiberOps Unified — the unified role-aware application in the walkthrough | Built after leaving Centric, as a portfolio prototype. Never deployed there. No production adoption. **The API integration exists only here, as design.** |
 | **Planned** | In-app SOP library; iPad rollout | Intent only, never built. Shown as roadmap, never as delivery. |
 
@@ -30,7 +29,8 @@ Additional locks:
   on 2026-09-01.
 - Verified field evidence here is eight employees trained, plus the QR round
   trip's survival after departure, plus the CTX tracker's demonstration to the
-  VP and upper management and its pilot with one team.
+  VP and upper management and its use by two of six teams before the official
+  rollout, which never happened.
 - **Third-party systems stay generic in public.** The real stack (the
   assignment board, the CRM of record, the provisioning platform) is named
   only in the private lineage note. Decision recorded 2026-09-01.
@@ -52,7 +52,8 @@ Additional locks:
 
 ## The QR codes are real
 
-The five codes rendered in the Closeout workspace are genuine, scannable
+The five codes rendered in the Closeout workspace (on the tablet, and on the
+phone's Closeout screen) are genuine, scannable
 QR codes (41×41 modules, error correction level M). They were generated at
 build time with a reference encoder and embedded as packed bitmaps in
 `QR_DATA`, then verified pixel-for-pixel against that encoder's output by
@@ -94,7 +95,11 @@ mismatched job code.
 ## What the walkthrough demonstrates
 
 Six workspaces: Dashboard, My Jobs, Calendar, Map View, **Closeout**, and
-Provisioning. The pipeline is the centerpiece because it is the piece that was
+Provisioning, shown inside a generic rugged tablet frame. Beside it, a phone
+frame runs the technician's Today list and a phone-sized Closeout screen from
+the same state, so either device can drive the pipeline. The app lays out
+from its screen width with container queries (`container: tab` and
+`container: ph`), not from the browser window. The pipeline is the centerpiece because it is the piece that was
 real. Its five steps mirror the actual workflow: the technician **pastes** the record
 in from the assignment board → formulas normalize what they can and the
 technician completes the rest → generate the code groups → scan into provisioning →
@@ -113,6 +118,11 @@ Selecting a job anywhere — job list, map stop, calendar filter — selects it
 everywhere. The dashboard HUD, morning brief counts and technician-output
 table are all derived from state, not hard-coded.
 
+ONT normalization strips spaces and punctuation and rebuilds the dashes
+(`normOnt()`). Before 2026-10-24 it only turned spaces into dashes, so
+`J-2288` (`CXNX55102277` from the board) was silently rejected with a serial
+message. Only `J-2286` should reject.
+
 ## One hazard worth knowing
 
 An author `display` rule beats the user-agent `[hidden]{display:none}`, so
@@ -122,6 +132,12 @@ explicit `[hidden]{display:none!important}`. Any new component that sets
 `display` and relies on `hidden` needs that rule to already be present.
 
 ## Status
+
+Redesigned 2026-10-24 (portfolio Stage 3): shared frame (case 2) with a JS-off
+fallback written by `.private/redesign-2026-10/frame-sync.js`; the evidence key
+replaces the three-tier badges; tablet + phone device frames; four-tool strand
+timeline; page identity in white, black and safety yellow with Barlow. The
+tier table above still governs every claim.
 
 Rebuilt 2026-09-01. Previously the page was four static panels behind tabs
 with nine lines of JavaScript, several inert buttons, a nav entry that pointed
@@ -136,3 +152,7 @@ reference encoder exactly.
 Hosting: published via GitHub Pages from the `portfolio` repository. Edit
 `index.html` and push to update. It is no longer a Claude Artifact — artifacts
 are private by default, which made them unusable as a public Featured link.
+
+## Guided record flow (2026-10-25)
+
+The shared enhancement script adds a six-step, user-controlled tour and a shared-record identity/progress strip. It uses the existing job and pipeline controls, including J-2286 rejection before encoding and explicit correction at source. Tour steps reset demo state deliberately so Back/replay reproduce the same state. Manual browsing remains available. All QR_DATA and QR_FIELD bytes are unchanged.

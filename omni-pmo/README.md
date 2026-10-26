@@ -388,3 +388,35 @@ invisible while this was an artifact, because the runtime injected the tag.
 
 Verified 2026-09-01 at 375px: `clientWidth` 375, no page-level horizontal
 overflow, both app shells unclipped.
+
+## Stage 2 redesign (2026-10-24)
+
+- The page now uses the shared site frame (`../assets/frame.css`, `../assets/frame.js`):
+  frame header and footer with `data-frame-case="4"`, the evidence key once
+  under the hero, and inline Measured / Recorded / Recalled / Illustrative marks.
+  The frame's `--fr-*` tokens are overridden with this page's own tokens and
+  the system stack, so the frame sits quietly inside the app language.
+- Removed: sticky topbar, left section rail and its Role/Period block, theme
+  toggle (theme follows the OS only), "Demo data fictional" chips, LinkedIn
+  button, emoji favicon, the "Real platform, invented data" box, the walkthrough
+  demo-data strip and the old colophon. Provenance is one line above the
+  walkthrough plus the key plus the frame footer's non-affiliation line.
+  The width notes above that mention the 172px section rail are historical.
+- Added: "The project behind the project" loop (problem, spec, build, operate,
+  result) drawn as the platform's own stage chain; an Engineering notes section
+  (architecture map, trimmed schema-adapter excerpt, the July 24 HtmlService
+  story, build counts); a Handover closer.
+- `.rv` no longer hides content. It only triggers the KPI count-up, and the KPI
+  markup carries the real values so JS-off and full-page captures read correctly.
+  The only entrance motion is the loop chain filling once (`data-fr-reveal`).
+
+- Read speed (Design vocabulary section): six queue cards built from the
+  walkthrough's card, pill, stripe, flag and bead components, cycling every 3s.
+  The cycle advances on the timer bar's `animationend`, so pausing the bar
+  (hover/focus on the stage) pauses the cycle. No autoplay under reduced motion.
+  Its cards carry `.rs-card`, and the walkthrough's card and bead wiring skips
+  `.rs`, so they never drive the detail pane or show FHV02-F10's bead dates.
+
+## Guided operating decision (2026-10-25)
+
+The shared enhancement script adds a five-step tour of existing invented record FHV02-F10: diagnostic, matching details, civil scope, splicing handoff and existing next action. Every step restores the intended record if someone explores another between steps. Sticky instructions, Back/Next/Exit and polite step announcements support touch and keyboard; reduced motion removes smooth scrolling. The role-path evidence index links the approved forecast account at `#forecast`. No new measured outcomes were added.

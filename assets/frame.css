@@ -1,0 +1,212 @@
+/* =====================================================================
+   Shared frame for jacobzamarripa.github.io/portfolio (Stage 1, 2026-10-24)
+
+   Adopting it on a page
+   1. <head>, with paths relative to the page (case pages use ../assets/):
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+        <link rel="stylesheet" href="../assets/frame.css">
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+        <script src="../assets/frame.js" defer></script>
+   2. Header and footer. Leave the placeholders empty and frame.js fills
+      them from its CASES list, so "Case N of 4", titles and prev/next
+      never drift between pages:
+        <header class="fr-head" data-frame-case="2"></header>
+        <footer class="fr-foot" data-frame-case="2"></footer>
+      data-frame-case is 1-4 (chronological) or "home". A placeholder that
+      already has markup (copied from the frame demo) is left alone.
+      JS-off fallback (every case page has one): put data-frame-static on
+      the header, footer and key, then from the portfolio root run
+        node .private/redesign-2026-10/frame-sync.js <page>/index.html
+      It writes the exact markup frame.js renders, with "../" links. When
+      JS runs, frame.js re-renders any data-frame-static block from CASES,
+      so the static copy never decides what JS visitors see. Re-run it
+      (or add --check) after editing CASES or EVIDENCE.
+   3. Evidence key, once per page:
+        <div class="fr-key" data-frame-key data-frame-static></div>
+      Inline tag beside a claim, only where it matters:
+        <span class="fr-ev" data-ev="measured">Measured</span>
+      Mark only (the word stays for screen readers and as a tooltip):
+        <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span>
+      data-ev: measured | recorded | recalled | illustrative
+      Marks: Measured = solid dot, Recorded = solid square,
+      Recalled = open ring, Illustrative = open diamond.
+      Filled = a record exists; open = an account or a recreation.
+   4. Isolation: every class is fr-*, every token --fr-*. Nothing here
+      styles bare elements outside .fr-head, .fr-foot, .fr-key, so each
+      interior keeps its own identity. <body class="fr-page"> opts a page
+      into frame background and typography (home and demo use it).
+   Focus: frame links outline in --fr-focus, which defaults to --fr-mark.
+      A page whose accent is too light against its own --fr-bg (Nexus
+      yellow on white) sets --fr-focus to a darker colour instead.
+   5. Theme follows prefers-color-scheme only. No toggle, no storage.
+   6. Motion: html gets .fr-js when frame.js runs and .fr-motion when the
+      visitor allows motion. Elements with [data-fr-reveal] get .is-in when
+      they enter the viewport. Only ever animate decoration with these
+      hooks; text must be readable with JS off and in full-page captures.
+   ===================================================================== */
+
+:root{
+  --fr-bg:#f1f2ed;
+  --fr-surface:#e7e9e2;
+  --fr-ink:#1a1d21;
+  --fr-ink-2:#3d434a;
+  --fr-muted:#646a66;
+  --fr-rule:#cdd1c8;
+  --fr-mark:#e2570f;
+  --fr-mark-ink:#a33f07;
+  --fr-focus:var(--fr-mark);
+  --fr-sans:"Archivo",ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  --fr-serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --fr-gutter:clamp(16px,4vw,48px);
+  --fr-max:1240px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --fr-bg:#141619;
+    --fr-surface:#1d2024;
+    --fr-ink:#e9eae5;
+    --fr-ink-2:#c3c7c1;
+    --fr-muted:#929892;
+    --fr-rule:#30343a;
+    --fr-mark:#ff7a2f;
+    --fr-mark-ink:#ff9d61;
+  }
+}
+
+/* ---------- page opt-in ---------- */
+.fr-page{
+  margin:0;
+  background:var(--fr-bg);
+  color:var(--fr-ink);
+  font:400 1.0625rem/1.6 var(--fr-serif);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.fr-page *,.fr-page *::before,.fr-page *::after{box-sizing:border-box}
+.fr-wrap{width:min(var(--fr-max),100% - 2*var(--fr-gutter));margin-inline:auto}
+.fr-skip{position:absolute;left:-999px;top:8px;z-index:50;padding:8px 12px;background:var(--fr-ink);color:var(--fr-bg);font:600 .875rem var(--fr-sans)}
+.fr-skip:focus{left:8px}
+
+/* ---------- header ---------- */
+.fr-head{
+  background:var(--fr-bg);
+  color:var(--fr-ink);
+  border-bottom:1px solid var(--fr-rule);
+  font-family:var(--fr-sans);
+}
+.fr-head *{box-sizing:border-box}
+.fr-head-in{
+  width:min(var(--fr-max),100% - 2*var(--fr-gutter));
+  margin-inline:auto;
+  min-height:52px;
+  display:flex;align-items:center;gap:14px;
+}
+.fr-name{
+  display:inline-flex;align-items:center;gap:9px;
+  color:inherit;text-decoration:none;
+  font-weight:650;font-size:.9375rem;font-stretch:112%;letter-spacing:-.005em;
+  white-space:nowrap;flex:none;
+}
+.fr-name svg{width:20px;height:20px;flex:none;display:block}
+.fr-name:hover span{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.fr-where{
+  display:flex;align-items:baseline;gap:12px;min-width:0;
+  padding-left:14px;border-left:1px solid var(--fr-rule);
+  font-size:.875rem;line-height:1.2;
+}
+.fr-pos{color:var(--fr-muted);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+.fr-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.fr-head-aside{margin-left:auto;font-size:.875rem;color:var(--fr-muted);white-space:nowrap}
+.fr-head-aside a{color:inherit}
+.fr-head a:focus-visible,.fr-foot a:focus-visible{outline:2px solid var(--fr-focus);outline-offset:3px;border-radius:2px}
+@media (max-width:640px){
+  .fr-head-in{gap:10px;min-height:48px}
+  .fr-name{min-width:44px;min-height:44px;justify-content:center;padding:0 12px;margin-inline:-12px}
+  .fr-name span{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+  .fr-where{padding-left:10px;gap:8px;font-size:.8125rem}
+  .fr-head-aside{display:none}
+}
+
+/* ---------- footer ---------- */
+.fr-foot{
+  background:var(--fr-bg);
+  color:var(--fr-ink);
+  border-top:1px solid var(--fr-rule);
+  font-family:var(--fr-sans);
+}
+.fr-foot *{box-sizing:border-box}
+.fr-foot-in{
+  width:min(var(--fr-max),100% - 2*var(--fr-gutter));
+  margin-inline:auto;
+  padding:36px 0 40px;
+}
+.fr-pager{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px}
+.fr-pager a{
+  display:block;color:inherit;text-decoration:none;
+  padding-top:14px;border-top:3px solid var(--fr-ink);
+}
+.fr-pager a[rel="next"]{text-align:right;grid-column:2}
+.fr-pager small{display:block;font-size:.8125rem;color:var(--fr-muted);font-variant-numeric:tabular-nums;margin-bottom:4px}
+.fr-pager b{display:block;font-weight:750;font-stretch:108%;font-size:clamp(1.125rem,2.2vw,1.5rem);line-height:1.15;letter-spacing:-.015em}
+.fr-pager a:hover{border-top-color:var(--fr-mark)}
+.fr-pager a:hover b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.fr-foot-meta{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 28px;
+  font-size:.875rem;color:var(--fr-muted);
+}
+.fr-foot-meta a{color:var(--fr-ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--fr-mark);text-decoration-thickness:2px;text-underline-offset:4px}
+.fr-foot-meta a:hover{color:var(--fr-mark-ink)}
+.fr-prov{margin:0;max-width:62ch}
+@media (max-width:640px){
+  .fr-pager{grid-template-columns:1fr;gap:14px}
+  .fr-pager a[rel="next"]{grid-column:1;text-align:left}
+}
+
+/* ---------- evidence marks ---------- */
+.fr-ev{
+  display:inline-flex;align-items:center;gap:.4em;
+  font:600 .75rem/1 var(--fr-sans);
+  font-stretch:100%;letter-spacing:0;text-transform:none;
+  color:var(--fr-ink-2);
+  white-space:nowrap;vertical-align:.08em;
+}
+.fr-ev::before{
+  content:"";flex:none;display:inline-block;
+  width:.62rem;height:.62rem;
+  background:currentColor;
+}
+.fr-ev[data-ev="measured"]::before{border-radius:50%}
+.fr-ev[data-ev="recorded"]::before{border-radius:1px;width:.56rem;height:.56rem}
+.fr-ev[data-ev="recalled"]::before{border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.6px currentColor}
+.fr-ev[data-ev="illustrative"]::before{
+  width:.5rem;height:.5rem;margin-inline:.06rem;
+  background:transparent;box-shadow:inset 0 0 0 1.5px currentColor;
+  transform:rotate(45deg);
+}
+.fr-ev--mark{gap:0;font-size:0;line-height:0;vertical-align:.1em;margin-inline:.15rem}
+.fr-ev--mark::before{width:.62rem;height:.62rem}
+.fr-ev--mark[data-ev="recorded"]::before{width:.56rem;height:.56rem}
+.fr-ev--mark[data-ev="illustrative"]::before{width:.5rem;height:.5rem}
+
+/* ---------- evidence key block ---------- */
+.fr-key{
+  font-family:var(--fr-sans);color:var(--fr-ink);
+  border-top:1px solid var(--fr-rule);border-bottom:1px solid var(--fr-rule);
+  padding:14px 0;
+}
+.fr-key *{box-sizing:border-box}
+.fr-key-title{margin:0 0 10px;font-size:.8125rem;font-weight:650;color:var(--fr-ink)}
+.fr-key dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 22px}
+.fr-key dl>div{min-width:0}
+.fr-key dt{margin:0 0 3px}
+.fr-key dt .fr-ev{font-size:.8125rem;color:var(--fr-ink)}
+.fr-key dd{margin:0;font-size:.8125rem;line-height:1.4;color:var(--fr-muted)}
+@media (max-width:900px){.fr-key dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.fr-key dl{grid-template-columns:1fr}}
+
+@media print{
+  .fr-head,.fr-foot{border-color:#999}
+}
