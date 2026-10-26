@@ -167,14 +167,24 @@
 .h-stop--event h3{font-size:1.125rem;font-stretch:100%;font-weight:700;letter-spacing:0}
 .h-stop--event .h-note{margin-top:4px}
 
-/* Apple ladder: a real sequence, so it steps */
-.h-ladder{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column-reverse;gap:0;max-width:26rem}
-.h-ladder li{
-  font:500 .875rem/1 var(--fr-sans);color:var(--fr-ink-2);
-  padding:8px 0 8px 10px;border-left:2px solid var(--fr-rule);border-bottom:2px solid var(--fr-rule);
-  margin-left:calc(var(--step) * 1.6rem);
-}
-.h-ladder li:first-child{color:var(--fr-ink);font-weight:700;border-color:var(--fr-ink)}
+/* Apple roles: compact Figure 5 from the period review */
+.h-roles{margin:20px 0 0;max-width:34rem}
+.h-roles ol{list-style:none;margin:0;padding:0}
+.h-roles li,.h-roles-yrs{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:14px;align-items:center}
+.h-roles li{padding:5px 0;border-bottom:1px solid var(--fr-rule)}
+.h-roles li span{font:500 .8125rem/1.2 var(--fr-sans);color:var(--fr-ink-2)}
+.h-roles i{position:relative;display:block;height:8px;margin-right:18px;font-style:normal}
+.h-roles b{position:absolute;top:0;height:8px;border-radius:2px;background:var(--fr-muted);opacity:.55;left:calc(var(--a) / 54 * 100%);width:calc((var(--b) - var(--a)) / 54 * 100%)}
+.h-roles .is-lead span{color:var(--fr-ink);font-weight:700}
+.h-roles .is-lead b{background:var(--fr-ink);opacity:1}
+.h-roles .is-rtl span{color:var(--fr-mark-ink);font-weight:700}
+.h-roles .is-rtl b{background:var(--fr-mark);opacity:1}
+.h-roles-yrs{margin-top:6px}
+.h-roles-yrs i{height:14px}
+.h-roles-yrs em{position:absolute;top:0;transform:translateX(-50%);font:500 .6875rem/1 var(--fr-sans);font-style:normal;color:var(--fr-muted);font-variant-numeric:tabular-nums}
+.h-roles figcaption{margin-top:10px;font:500 .8125rem/1.3 var(--fr-sans)}
+.h-roles figcaption a{color:var(--fr-ink-2);text-underline-offset:3px}
+@media (max-width:560px){.h-roles li,.h-roles-yrs{grid-template-columns:7.5rem minmax(0,1fr);gap:10px}}
 
 /* ---- case blocks ---- */
 .h-case{
@@ -366,13 +376,13 @@
       </div>
     </div>
 
-    <div class="h-row"><div class="h-col"><section id="explore" aria-label="Explore the evidence" hidden></section></div></div>
 
     <section id="work" aria-labelledby="work-title">
       <div class="h-row h-work-head">
         <div class="h-col">
           <h2 id="work-title">Technician, lead, project manager</h2>
           <p>Four case studies, placed where they happened.</p>
+          <div id="explore" class="px px-lens" role="region" aria-label="Evidence for a role" hidden></div>
           <div class="fr-key">
             <p class="fr-key-title">How each claim is sourced</p>
             <dl>
@@ -394,13 +404,18 @@
             <h3>Apple</h3>
             <p class="h-dates">Oct 2016 – Apr 2021</p>
             <p class="h-note">Apple is where I found my voice. I started part-time in sales and left leading a distributed support team. Along the way I learned I could see where a system was breaking and bring people along to fix it. I coached teammates into their own promotions, and learned that moving up meant having my replacement ready.</p>
-            <ol class="h-ladder" aria-label="Titles held, first to last">
-              <li style="--step:0">Specialist</li>
-              <li style="--step:1">Technical Specialist</li>
-              <li style="--step:2">Technical Expert</li>
-              <li style="--step:3">Genius</li>
-              <li style="--step:4">Lead Genius</li>
-            </ol>
+            <figure class="h-roles">
+              <ol aria-label="Roles held at Apple, October 2016 to April 2021">
+                <li><span>Specialist</span><i aria-hidden="true"><b style="--a:0;--b:6"></b></i></li>
+                <li><span>Technical Specialist</span><i aria-hidden="true"><b style="--a:6;--b:12"></b></i></li>
+                <li><span>Technical Expert</span><i aria-hidden="true"><b style="--a:12;--b:17"></b></i></li>
+                <li><span>Genius</span><i aria-hidden="true"><b style="--a:17;--b:40"></b></i></li>
+                <li class="is-lead"><span>Lead Genius</span><i aria-hidden="true"><b style="--a:40;--b:54"></b></i></li>
+                <li class="is-rtl"><span>Retail Team Lead</span><i aria-hidden="true"><b style="--a:46;--b:53"></b></i></li>
+              </ol>
+              <div class="h-roles-yrs" aria-hidden="true"><span></span><i><em style="left:calc(3 / 54 * 100%)">2017</em><em style="left:calc(15 / 54 * 100%)">2018</em><em style="left:calc(27 / 54 * 100%)">2019</em><em style="left:calc(39 / 54 * 100%)">2020</em><em style="left:calc(51 / 54 * 100%)">2021</em></i></div>
+              <figcaption><a href="./apple-rtl/#fig-5">Full role history in the period review</a></figcaption>
+            </figure>
           </div>
         </li>
 

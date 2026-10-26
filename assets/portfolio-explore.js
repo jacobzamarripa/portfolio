@@ -13,32 +13,34 @@
   function controls(label){var c=node('div','px-controls');c.setAttribute('role','group');c.setAttribute('aria-label',label);return c;}
   function scrollTo(el){if(el)el.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}
   function home(){
-    var host=document.getElementById('explore');if(!host)return;
-    host.hidden=false;host.className='px px-explore';
-    host.append(node('p','px-kicker','A path through the work'),node('h2','','Find the relevant work'),node('p','','Five role lenses, four case studies. Each path points to existing evidence; every case remains available below.'));
-    var lenses=node('div','px-lenses');lenses.setAttribute('role','group');lenses.setAttribute('aria-label','Explore by role');
-    var intro=node('p',''),route=node('ol','px-route-list'),start=link('Start this path','#','px-start');
-    var searchrow=node('div','px-search-row'),label=node('label','','Search the case studies'),input=node('input');input.type='search';input.id='evidence-search';input.placeholder='Try scope, coaching, validation or handover';input.autocomplete='off';label.htmlFor=input.id;label.append(input);
-    var clear=button('Clear',function(){input.value='';update(false);input.focus();});clear.className='px-clear';searchrow.append(label,clear);
-    var count=node('p','px-result-count');count.setAttribute('role','status');
-    var results=node('ul','px-results');results.id='evidence-results';input.setAttribute('aria-controls',results.id);
-    var disclosure=document.createElement('details'),summary=node('summary','','Browse the evidence index');disclosure.append(summary,count,results);
+    var host=document.getElementById('explore'),tl=document.querySelector('.h-tl');if(!host||!tl)return;
+    host.hidden=false;
+    var lenses=node('div','px-lenses');lenses.setAttribute('role','group');lenses.setAttribute('aria-label','Show evidence for a role');
+    var status=node('p','px-lens-status'),intro=node('span'),start=link('','#','px-lens-start');status.setAttribute('aria-live','polite');status.append(intro,start);
     var buttons=[];
-    function select(k){role=k;buttons.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.role===k));});var u=new URL(location.href);if(k)u.searchParams.set('focus',k);else u.searchParams.delete('focus');history.replaceState(null,'',u);update(true);}
+    function select(k){role=k;buttons.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.role===k));});var u=new URL(location.href);if(k)u.searchParams.set('focus',k);else u.searchParams.delete('focus');history.replaceState(null,'',u);update();}
     [''].concat(Object.keys(E.roles)).forEach(function(k){var b=button(k?E.roles[k].label:'All work',function(){select(k);});b.dataset.role=k;b.setAttribute('aria-pressed',String(role===k));buttons.push(b);lenses.append(b);});
-    function update(lensChanged){
-      var r=role?E.roles[role]:null;intro.textContent=r?r.intro:'Choose a role for a four-stop path, or search by topic across the evidence.';route.replaceChildren();route.hidden=!r;start.hidden=!r;
-      if(r){E.routeFor(role).forEach(function(e){var li=node('li');li.append(link(e.title,href(e,role)),node('small','',names[e.case]+' · '+e.source));route.append(li);});start.href=href(E.routeFor(role)[0],role);start.textContent='Start the '+r.short+' path';}
-      var list=E.search(input.value,role);results.replaceChildren();count.textContent=list.length+' matching '+(list.length===1?'section':'sections')+(role?' · '+E.roles[role].label:'');
-      if(!list.length){var empty=node('li');empty.append(node('p','','No matching sections. Clear the search or choose All work.'));results.append(empty);}
-      list.forEach(function(e){var li=node('li'),meta=node('small','',names[e.case]+' · '+e.source),body=node('div');body.append(link(e.title,href(e,role)),node('p','',e.text));li.append(meta,body);results.append(li);});
-      if(input.value.trim())disclosure.open=true;
-      document.querySelectorAll('.h-stop--case').forEach(function(stop,i){var key=['apple','nexus','fleet','omni'][i],hits=list.filter(function(e){return e.case===key;}),old=stop.querySelector('.px-relevance');if(old)old.remove();stop.classList.toggle('px-relevant',!!r&&hits.length>0);if(r&&hits.length){var note=node('p','px-relevance',r.short+' lens · '+hits[0].title);var title=stop.querySelector('.h-case-pos');if(title)title.after(note);}});
+    host.append(node('p','px-lens-label','Evidence for a role'),lenses,status);
+    var keys=['apple','nexus','fleet','omni'];
+    function update(){
+      var r=role?E.roles[role]:null,route=r?E.routeFor(role):[];
+      tl.classList.toggle('px-lens-on',!!r);status.hidden=!r;
+      if(r){intro.textContent=r.intro+' ';start.href=href(route[0],role);start.textContent='Start the '+r.short+' path';}
+      var c=0;
+      tl.querySelectorAll(':scope > .h-stop').forEach(function(stop){
+        var old=stop.querySelector('.px-lens-hits');if(old)old.remove();
+        if(!stop.classList.contains('h-stop--case')){stop.classList.toggle('px-lens-miss',!!r);return;}
+        var key=keys[c++],hits=[];route.forEach(function(e,i){if(e.case===key)hits.push([i,e]);});
+        stop.classList.toggle('px-lens-hit',hits.length>0);stop.classList.toggle('px-lens-miss',!!r&&!hits.length);
+        if(!hits.length)return;
+        var box=node('div','px px-lens-hits');box.append(node('p','px-kicker',r.label+' path'));var ol=node('ol');
+        hits.forEach(function(h){var li=node('li');li.append(node('span','px-lens-num',(h[0]<9?'0':'')+(h[0]+1)),link(h[1].title,href(h[1],role)),node('small','',h[1].source));ol.append(li);});
+        box.append(ol);var go=stop.querySelector('.h-go');if(go)go.before(box);
+      });
     }
-    input.addEventListener('input',function(){update(false);});
-    host.append(lenses,intro,route,start,searchrow,disclosure);update(true);var quick=link('Find work by role or topic','#explore','h-latest');var latest=document.querySelector('.h-latest');if(latest)latest.after(quick);
+    update();if(location.hash==='#explore')requestAnimationFrame(function(){host.scrollIntoView({block:'start'});});
     var previewNotes={apple:'Measured comparisons across four periods',nexus:'One record, shared between devices',fleet:'A specification made visible',omni:'From a diagnostic to its next action'};
-    ['apple','nexus','fleet','omni'].forEach(function(k){var e=document.querySelector('.pv-'+k);if(!e)return;e.classList.add('px-preview');var note=node('span','px-preview-note',previewNotes[k]);e.append(note);});
+    keys.forEach(function(k){var e=document.querySelector('.pv-'+k);if(!e)return;e.classList.add('px-preview');var note=node('span','px-preview-note',previewNotes[k]);e.append(note);});
   }
   function improvePreviews(){
     var grid=document.querySelector('.pv-a-grid');if(grid){var labels=Array.from(grid.children).filter(function(e){return e.tagName==='SPAN'&&e.textContent.trim();});['Customer-facing time','Issue resolution','Satisfaction','Handle time'].forEach(function(t,i){if(labels[i])labels[i].textContent=t;});}
