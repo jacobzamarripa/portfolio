@@ -86,10 +86,9 @@
 .px-j-list .px-j-here{border-top:3px solid var(--fr-mark-ink)}
 .px-j-num{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid var(--fr-rule);border-radius:50%;font:700 .75rem/1 var(--fr-sans);color:var(--fr-ink-2)}
 .px-j-seen .px-j-num{border-color:var(--fr-ink);color:var(--fr-ink)}.px-j-here .px-j-num{background:var(--fr-mark-ink);border-color:var(--fr-mark-ink);color:var(--fr-bg)}
-.px-j-list small{display:block;color:var(--fr-muted);font-size:.75rem;margin-bottom:3px}
+.px-j-list small{display:block;color:var(--fr-muted);font-size:.75rem;margin-top:3px}
 .px-j-list a{color:var(--fr-ink);font-weight:650;line-height:1.3;text-underline-offset:3px}
-.px-j-list p{margin:5px 0 0;font-size:.8125rem;color:var(--fr-ink-2);line-height:1.45}
-.px-j-tag{grid-column:2;font:600 .75rem/1.2 var(--fr-sans);color:var(--fr-mark-ink);margin-top:6px}.px-j-tag:empty{display:none}
+.px-j-tag{display:block;font:600 .75rem/1.2 var(--fr-sans);color:var(--fr-mark-ink);margin-top:6px}.px-j-tag:empty{display:none}
 .px-j-mapfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:14px 0 10px}
 .px-j-mapfoot a{color:var(--fr-ink);text-underline-offset:3px}
 .px-path-active{padding-bottom:96px}
@@ -100,13 +99,10 @@
 @media(prefers-reduced-motion:reduce){.px-j-toast{transition:none}}
 
 /* Timeline strip: path stops placed in career order */
-.px-stop-when{margin:0 0 6px;font:500 .8125rem/1.4 var(--fr-sans);color:var(--fr-muted)}
 .px-j-where{flex-wrap:wrap;gap:6px 16px}
 .px-j-tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(64px,92px));position:relative}
-.px-j-tl:before{content:"";position:absolute;left:8px;right:8px;top:30px;height:2px;background:var(--fr-rule)}
 .px-j-case{position:relative;display:grid;justify-items:center;gap:2px;text-align:center;padding:0 2px}
 .px-j-case-name{font:600 .6875rem/1.2 var(--fr-sans);color:var(--fr-ink-2)}
-.px-j-case-when{font:500 .625rem/1.2 var(--fr-sans);color:var(--fr-muted);white-space:nowrap}
 .px-j-case-here .px-j-case-name{color:var(--fr-mark-ink)}
 .px-j-case-stops{display:flex;gap:3px;min-height:26px;align-items:center;position:relative}
 .px-j-case-stops:empty:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--fr-rule)}
@@ -114,3 +110,24 @@
 .px-j-dot.px-j-seen{border-color:var(--fr-ink);color:var(--fr-ink)}
 .px-j-dot.px-j-here{background:var(--fr-mark-ink);border-color:var(--fr-mark-ink);color:var(--fr-bg)}
 @media(max-width:600px){.px-j-tl{grid-template-columns:repeat(4,minmax(0,1fr));width:100%}.px-j-where b{font-size:.8125rem}}
+
+/* Refinement: calmer arrival, lighter bar, one-line stop card */
+.px-lens-status p{margin:0}.px-lens-intro{color:var(--fr-ink-2)}
+.px-lens-preview{font-size:.875rem;color:var(--fr-muted);margin:4px 0 10px!important}
+.px-lens-start{display:inline-block}
+.px-stopcard,.px-journey{transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+.px-stopcard.px-enter{opacity:0;transform:translateY(10px)}
+.px-journey.px-enter{transform:translateY(100%)}
+.px-stop-look b{display:block;font:600 .75rem/1.3 var(--fr-sans);color:var(--fr-muted);margin:0 0 2px}
+.px-j-head{padding-top:8px;padding-bottom:8px}
+.px-j-tl{grid-template-columns:repeat(4,minmax(52px,76px))}
+.px-j-tl:after{content:"";position:absolute;left:10px;right:10px;bottom:13px;height:2px;background:var(--fr-rule);z-index:-1}
+.px-j-tl{z-index:0}
+.px-j-case-stops{justify-content:center}
+.px-j-hint{animation:px-hint 1.6s ease-in-out 1s 2}
+@keyframes px-hint{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--fr-mark-ink) 30%,transparent)}}
+.px-j-list{gap:0 24px}
+.px-j-list li{grid-template-rows:auto;align-items:start;padding:12px 0}
+.px-j-list a{font-size:.9375rem}
+@media(max-width:600px){.px-j-head{padding:6px 14px}.px-j-where{justify-content:flex-start;gap:4px 12px}.px-j-tl{grid-template-columns:repeat(4,minmax(0,1fr));flex:1}.px-path-active{padding-bottom:104px}}
+@media(prefers-reduced-motion:reduce){.px-stopcard,.px-journey{transition:none}.px-j-hint{animation:none}}

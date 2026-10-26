@@ -9,3 +9,5 @@ test('job-title aliases and employer names reach the relevant evidence',()=>{ass
 test('unrecognized and inherited role names cannot become routes',()=>{for(const k of ['constructor','__proto__','unknown',null]){assert.equal(E.hasRole(k),false);assert.deepEqual(E.routeFor(k),[]);}});
 
 test('every role has a short chip label for narrow screens',()=>{for(const k of Object.keys(E.roles))assert.ok(E.roles[k].chip,k);});
+
+test('paths open on adopted work, rank adopted above operated, and never include concept evidence',()=>{const rank={adopted:0,operated:1,concept:2};for(const e of E.entries){assert.ok(e.use in rank,e.id+' needs use');assert.ok(e.at,e.id+' needs at');}for(const k of Object.keys(E.roles)){const r=E.routeFor(k);assert.equal(r[0].use,'adopted',k+' opens on '+r[0].id);r.forEach(e=>assert.notEqual(e.use,'concept',k+' includes '+e.id));for(let i=1;i<r.length;i++)assert.ok(rank[r[i-1].use]<=rank[r[i].use],k+': '+r[i-1].id+' ('+r[i-1].use+') ranks above '+r[i].id+' ('+r[i].use+')');}});
