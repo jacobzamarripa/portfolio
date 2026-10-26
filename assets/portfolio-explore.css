@@ -149,7 +149,18 @@
 ::view-transition-old(px-journey),::view-transition-new(px-journey){animation:none}
 @media(prefers-reduced-motion:reduce){@view-transition{navigation:none}}
 
-/* Arrival highlight on the section heading */
-.px-hl{background-image:linear-gradient(rgba(255,122,47,.38),rgba(255,122,47,.38));background-repeat:no-repeat;background-position:0 88%;background-size:0% 38%;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:px-hl 3.2s cubic-bezier(.2,.7,.2,1) .1s forwards}
-@keyframes px-hl{0%{background-size:0% 38%}18%{background-size:100% 38%}72%{background-size:100% 38%}100%{background-size:100% 0%}}
-@media(prefers-reduced-motion:reduce){.px-hl{animation:none;background-size:100% 38%}}
+/* Arrival highlight on the section's leading heading (overlay; no layout change) */
+.px-hl-layer{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;z-index:40}
+.px-hl{position:absolute;display:block;background-image:linear-gradient(rgba(255,122,47,.38),rgba(255,122,47,.38));background-repeat:no-repeat;background-position:0 92%;background-size:0% 40%;animation:px-hl 3.2s cubic-bezier(.2,.7,.2,1) .1s forwards}
+@keyframes px-hl{0%{background-size:0% 40%}18%{background-size:100% 40%}72%{background-size:100% 40%}100%{background-size:100% 0%}}
+@media(prefers-reduced-motion:reduce){.px-hl{animation:none;background-size:100% 40%}}
+
+/* Curtain between stops: rises behind the guide on Next, lowers once the
+   next page has settled, so its late layout shifts are never seen. */
+.px-j-curtain{position:fixed;inset:0;z-index:59;background:#17191d;transform:translateY(100%);transition:transform .34s cubic-bezier(.65,0,.35,1);pointer-events:none}
+.px-j-curtain.px-on{transform:none}
+.px-j-curtain.px-still{transition:none}
+html.px-arriving body::after{content:"";position:fixed;inset:0;z-index:59;background:#17191d;animation:px-failsafe 0s linear 2.5s forwards}
+html:active-view-transition-type(px-path) body::after{content:"";position:fixed;inset:0;z-index:59;background:#17191d}
+@keyframes px-failsafe{to{visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.px-j-curtain{display:none}}
