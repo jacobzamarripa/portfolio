@@ -28,6 +28,7 @@
 <script src="../assets/explore-data.js" defer></script>
 <script src="../assets/portfolio-explore.js" defer></script>
 <script src="figures.js" defer></script>
+<link rel="stylesheet" href="photo-story.css">
 <style>
 /* =====================================================================
    Period Review: the operating review. A printed period report: serif
@@ -334,9 +335,15 @@ h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink
 
 <div class="rv-wrap">
   <header class="rv-cover">
+    <div class="rv-cover-story"><div class="rv-cover-copy">
     <p class="rv-org">Apple, Retail at Home</p>
     <h1>Period Review</h1>
     <p class="rv-stand">In 2020 I was handed a team of support advisors working from their homes, most of them from the sales floor. This is my review of that team: what was holding it back, what I taught, and what my employer’s numbers showed afterward.</p>
+    </div>
+    <figure class="rv-cover-photo">
+      <img src="photos/domain-opening-cleanup-v3.webp" width="480" height="360" alt="Jacob standing outside the Apple store at Austin’s Domain." fetchpriority="high">
+      <figcaption><span class="rv-photo-label">From the store floor</span>Helping open the store at Austin’s Domain. <small class="rv-photo-edit">Foreground bystanders removed with AI. <a href="photos/domain-opening-clear-original.webp">Original photo</a></small></figcaption>
+    </figure></div>
     <dl class="rv-colophon">
       <div><dt>Formal title</dt><dd>Lead Genius</dd></div>
       <div><dt>Assignment</dt><dd>Retail Team Lead, temporary</dd></div>
@@ -435,6 +442,11 @@ h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink
 
       <h3>A course, six drafts deep</h3>
       <p>I wrote a call-handling course aimed at the behaviors behind both numbers. The version I kept is the sixth. It follows a call through three stages: the start of the call, the first round of troubleshooting, and the deeper probing when the first answer doesn’t solve it. Each stage is taught twice, first as a principle, why the step matters, and then as behaviors, the actual words an advisor can use on their next call. Every behavior is tied to the number it <span class="rv-nw">moves. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span></p>
+      <ol class="rv-call-path" aria-label="Three stages of the call-handling course">
+<li><svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><path d="M6 3h4l2 6-3 2a15 15 0 0 0 8 8l2-3 6 2v4a3 3 0 0 1-3 3C12 25 3 16 3 6a3 3 0 0 1 3-3Z"/></svg><span class="rv-path-step">01</span><b>Start the call</b><p>Understand what the customer has already tried.</p></li>
+<li><svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7M9 12h6m-3-3v6"/></svg><span class="rv-path-step">02</span><b>Troubleshoot</b><p>Work through the first round of the problem.</p></li>
+<li><svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><path d="M4 6h8v16h12M12 6h12M12 14h12"/><circle cx="25" cy="6" r="2"/><circle cx="25" cy="14" r="2"/><circle cx="25" cy="22" r="2"/></svg><span class="rv-path-step">03</span><b>Probe deeper</b><p>Ask the next question when the first answer isn’t enough.</p></li>
+</ol>
       <p>A few of the lines I wrote for advisors to use:</p>
       <ul class="rv-lines">
         <li>“Outside of contacting me today, what have you already tried to resolve this?”</li>
@@ -449,6 +461,12 @@ h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink
 
       <h3>Handing the teaching to the team</h3>
       <p>When case logging and compliance needed work, I didn’t run those sessions myself. Two advisors who were among my strongest on issue resolution and satisfaction led the workshops. I set the targets in advance: logging from 66% to at least 80%, and compliance from 87% to above 90%. Logging finished at 88.7% and compliance at <span class="rv-nw">98.11%. <span class="fr-ev fr-ev--mark" data-ev="recorded">Recorded</span></span> Other things changed over the same stretch, so I don’t give the workshops all the credit.</p>
+
+      <aside class="rv-kept-note" aria-label="Excerpt from a handwritten note">
+        <p class="rv-photo-label">A note I kept</p>
+        <blockquote>“You are always there for the team, customers &amp; leaders.”</blockquote>
+        <p>Mindy, Store Leader · handwritten thank-you note. <span class="fr-ev" data-ev="recorded">Recorded</span></p>
+      </aside>
 
       <h3>Getting my replacement ready</h3>
       <p>Our store wanted more women in leadership, and the road there ran through the Genius role. Late in 2019 I took on four Technical Experts preparing for their Genius interviews, three women and one man. They had the skills. What they needed was a way to show how they think.</p>
@@ -569,6 +587,19 @@ h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink
       <h2 id="store-h">Before the team</h2>
       <p class="rv-lede">I joined Apple in October 2016 as a part-time Specialist in sales and worked my way through the store’s technical roles. The remote team was a temporary assignment on top of my role as a Lead Genius, and I stayed part of my store the whole time.</p>
 
+      <div class="rv-store-archive">
+      <figure class="rv-store-photo">
+        <img src="photos/genius-bar-enhanced-v1.webp" width="1536" height="2048" alt="Jacob in a red Apple shirt working with a customer at the Genius Bar." loading="lazy" decoding="async">
+        <figcaption><span class="rv-photo-label">On the floor</span>Working with a customer at the Genius Bar. <small class="rv-photo-edit">Photo enhanced with AI for exposure and clarity.</small></figcaption>
+      </figure>
+      <figure class="rv-store-photo">
+        <a class="rv-photo-full" href="photos/memoji-board.webp" aria-label="View the full store Memoji board photograph">
+          <img src="photos/memoji-board.webp" width="1536" height="2048" alt="The store’s Memoji leadership board. Jacob’s portrait at the lower right is labeled Jacob, Lead Genius." loading="lazy" decoding="async">
+        </a>
+        <figcaption><span class="rv-photo-label">A familiar face on the board</span>The store’s Memoji board, including my “Jacob / Lead Genius” label. <a href="photos/memoji-board.webp">View full-size photo</a></figcaption>
+      </figure>
+      </div>
+
       <figure class="rv-fig" id="fig-5">
         <div class="rv-fig-head"><h3 class="rv-fig-title">Figure 5. Roles held, October 2016 to April 2021</h3></div>
         <ol class="rv-roles">
@@ -583,6 +614,11 @@ h1,h2,h3{margin:0;font-family:var(--rv-serif);font-weight:400;color:var(--rv-ink
           <span style="left:calc(3 / 54 * 100%)">2017</span><span style="left:calc(15 / 54 * 100%)">2018</span><span style="left:calc(27 / 54 * 100%)">2019</span><span style="left:calc(39 / 54 * 100%)">2020</span><span style="left:calc(51 / 54 * 100%)">2021</span>
         </div></div>
         <figcaption class="rv-cap"><b>Lead Genius was my formal title to the end.</b> The Retail Team Lead assignment overlapped it, and I kept working with my store throughout.</figcaption>
+      </figure>
+
+      <figure class="rv-personal">
+        <img src="photos/apple-together.webp" width="360" height="480" alt="Jacob giving his wife a piggyback ride beneath an Apple logo." loading="lazy" decoding="async">
+        <figcaption><span class="rv-photo-label">More than a place I worked</span><p>My wife and I met working at Apple North Star.</p><p class="rv-personal-note">A personal photo from those years.</p></figcaption>
       </figure>
 
       <ul class="rv-moments">

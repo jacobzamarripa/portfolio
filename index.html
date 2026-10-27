@@ -235,6 +235,11 @@
   .pv-a-foot{border-top-color:#2c2c2a}
 }
 
+/* The opening-day photo places the operating review in a real career. */
+.pv-a-photo{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--fr-rule)}
+.pv-apple--photo .pv-a-page{margin:-44px 0 0 38px;box-shadow:0 8px 24px #0000000d}
+@media(max-width:480px){.pv-apple--photo .pv-a-page{margin:-24px 0 0 18px;padding:18px 16px}}
+
 /* ===== Preview: Nexus (rugged field tool, iPad first, phone second) ===== */
 .pv-nexus{position:relative;max-width:540px;margin-left:auto;padding:0 0 34px}
 .pv-n-ipad{
@@ -433,7 +438,8 @@
                 <a class="h-go" href="./apple-rtl/">Read the period review</a>
               </div>
               <a class="h-pv" href="./apple-rtl/" tabindex="-1" aria-hidden="true">
-                <div class="pv-apple" data-fr-reveal>
+                <div class="pv-apple pv-apple--photo" data-fr-reveal>
+                  <img class="pv-a-photo" src="./apple-rtl/photos/domain-opening-cleanup-v3.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
                   <div class="pv-a-page">
                     <div class="pv-a-top"><b>Period review</b><span>FY21 P02–P05</span></div>
                     <p class="pv-a-cap">Team against site benchmark, four KPIs</p>
