@@ -4,7 +4,7 @@ The proposal Jacob authored for a former teammate's joint entry in Centric Fiber
 
 Redesigned 2026-10-25 (Stage 5): the page starts as a blueprint sheet and finishes as a truck in service. Four inline SVG drawings share one geometry (line, marked-up zones, tonal rendering, colour scene); each wipes its next stage in on scroll. With JS off, reduced motion, or once scrolled past, every drawing rests at its own finished stage.
 
-Evidence: proposal contents, budget and payload = Recorded; selection, outfitter meetings, in-service outcome = Recalled; all drawings = Illustrative (recreations, not engineering drawings or verified fitment). No teammate name, vehicle IDs, company vehicle photos.
+Evidence: proposal contents, budget and payload = Recorded; selection, outfitter meetings, in-service outcome = Recalled; all drawings = Illustrative (recreations, not engineering drawings or verified fitment). No teammate name. A user-supplied actual Centric Fiber truck photograph now accompanies the closing section; the photograph documents the visible exterior only, not the interior drawer system or measured outcomes.
 
 The page is generated: sources in `.private/ci-fleet/stage5-build/` (`build.py`, `truck.py` for the shared real-scale truck and van geometry, `page.css`, `page.js`; `home2.py` redraws the homepage case 3 preview from the same geometry). After building, run `node .private/redesign-2026-10/frame-sync.js ci-fleet/index.html` from the portfolio root, then `--check`.
 
@@ -13,3 +13,7 @@ Vehicle artwork (October 25, 2026): the rendered stages, the two cutaways and th
 ## Refined illustrations and storage inspector (2026-10-25)
 
 Active illustrations are now `pickup-v2.webp`, `pickup-cutaway-v2.webp`, and `van-cutaway-v2.webp`; `road-day.webp` and `road-night.webp` provide matched OS-theme backgrounds. Original assets are preserved. Shared SVG registration, including the lower-body silhouette correction, stays in private `truck.py`; the cab kit and rack tube are deterministic overlays. The shared enhancement script adds a keyboard-operable exterior/storage slider, zone selection and a conceptual tailgate-access sketch. The sketch specifies no dimensions or mechanical travel; no fitment or payload certification is implied. Generator/source tests remain in the private build folder.
+
+## Actual truck photograph (2026-10-28)
+
+`artwork/centric-truck-actual.jpg` is the unchanged photograph supplied by Jacob in this chat and identified by him as the actual truck. It is displayed after the closing text with a caption limited to the visible cap and roof storage. Existing staged illustrations and interactions remain. Source SHA-256: `bfa581939d18f8a5f3980bffed1e8636c54e0affe26283a029d9df63de9b7b95`.
