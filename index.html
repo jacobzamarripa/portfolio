@@ -131,6 +131,22 @@
 @media (prefers-color-scheme:dark){.h-fig img{filter:drop-shadow(0 0 1px rgba(255,255,255,.5))}}
 @media (max-width:900px){.h-work-head .h-fig{display:none}}
 
+
+/* ---- era bands: one tinted chapter per employer, full bleed ---- */
+html,body{overflow-x:clip}
+.h-stop[data-era]{--fr-bg:var(--era-bg)}
+.h-stop[data-era]::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;background:var(--era-bg)}
+.h-stop.h-era-start{--era-pad:clamp(48px,6vw,80px);padding-top:var(--era-pad)}
+.h-era-start>.h-node{margin-top:var(--era-pad)}
+.h-stop[data-era="apple"]{--era-bg:#f9f9f6}
+.h-stop[data-era="centric"]{--era-bg:#f6efd4}
+.h-stop[data-era="omni"]{--era-bg:#e5ebf1}
+@media (prefers-color-scheme:dark){
+  .h-stop[data-era="apple"]{--era-bg:#1b1d20}
+  .h-stop[data-era="centric"]{--era-bg:#1f1c12}
+  .h-stop[data-era="omni"]{--era-bg:#131b25}
+}
+
 /* ---- timeline ---- */
 .h-tl{list-style:none;margin:0;padding:0}
 .h-stop{padding:0 0 clamp(36px,5vw,64px)}
@@ -414,7 +430,7 @@
 
       <ol class="h-tl">
         <!-- Apple -->
-        <li class="h-row h-stop h-stop--job">
+        <li data-era="apple" class="h-row h-stop h-era-start h-stop--job">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">2016</span>
           <div class="h-col">
@@ -436,7 +452,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--case">
+        <li data-era="apple" class="h-row h-stop h-stop--case">
           <span class="h-node" aria-hidden="true">1</span>
           <span class="h-when">2020</span>
           <div class="h-col">
@@ -470,7 +486,7 @@
         </li>
 
         <!-- Centric -->
-        <li class="h-row h-stop h-stop--job">
+        <li data-era="centric" class="h-row h-stop h-era-start h-stop--job">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">2022</span>
           <div class="h-col">
@@ -480,7 +496,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--event">
+        <li data-era="centric" class="h-row h-stop h-stop--event">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">2025</span>
           <div class="h-col">
@@ -490,7 +506,7 @@
         </li>
 
         <!-- The hinge -->
-        <li class="h-row h-stop h-stop--event">
+        <li data-era="centric" class="h-row h-stop h-stop--event">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">Nov 2025</span>
           <div class="h-col">
@@ -499,7 +515,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--event">
+        <li data-era="centric" class="h-row h-stop h-stop--event">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">Dec 2025</span>
           <div class="h-col">
@@ -508,7 +524,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--case">
+        <li data-era="centric" class="h-row h-stop h-stop--case">
           <span class="h-node" aria-hidden="true">2</span>
           <span class="h-when h-when--minor">Rebuilt 2026</span>
           <div class="h-col">
@@ -545,7 +561,7 @@
         </li>
 
         <!-- Omni -->
-        <li class="h-row h-stop h-stop--job">
+        <li data-era="omni" class="h-row h-stop h-era-start h-stop--job">
           <span class="h-node" aria-hidden="true"></span>
           <span class="h-when">Jan 2026</span>
           <div class="h-col">
@@ -555,7 +571,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--case">
+        <li data-era="omni" class="h-row h-stop h-stop--case">
           <span class="h-node" aria-hidden="true">3</span>
           <span class="h-when">Feb 2026</span>
           <div class="h-col">
@@ -581,7 +597,7 @@
           </div>
         </li>
 
-        <li class="h-row h-stop h-stop--case h-stop--omni">
+        <li data-era="omni" class="h-row h-stop h-stop--case h-stop--omni">
           <span class="h-node" aria-hidden="true">4</span>
           <span class="h-when">2026</span>
           <div class="h-col">
