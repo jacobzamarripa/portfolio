@@ -286,6 +286,15 @@ button,input{font:inherit}
 .nx-rail li{padding:16px 18px 18px;background:var(--nx-panel);border-left:6px solid var(--nx-hv)}
 .nx-rail b{display:block;font:800 clamp(1.75rem,3vw,2.25rem)/1 var(--nx-cond);color:var(--nx-ink)}
 .nx-rail li>span{display:block;margin-top:6px;font-size:1rem;line-height:1.4;color:var(--nx-ink2)}
+.nx-role-side{display:grid;gap:clamp(24px,3vw,36px);align-content:start;align-self:start}
+
+/* ---------- editorial figures: small, beside the text they belong to ---------- */
+.nx-fig{margin:0;pointer-events:none;user-select:none}
+.nx-fig img{display:block;width:auto;height:clamp(150px,15vw,200px)}
+.nx-fig--field{margin-top:clamp(28px,3.5vw,44px)}
+.nx-fig--desk{justify-self:center}
+@media (prefers-color-scheme:dark){.nx-fig img{filter:drop-shadow(0 0 1px rgba(244,244,238,.55))}}
+@media (max-width:700px){.nx-fig img{height:140px}}
 
 /* ---------- closer ---------- */
 .nx-close{background:var(--nx-hero-bg);color:var(--nx-hero-ink);padding:clamp(52px,7vw,92px) 0}
@@ -692,6 +701,7 @@ button,input{font:inherit}
       <h2 class="nx-h2" id="problem-title">Fourteen characters at the end of a long day</h2>
       <p class="nx-p">Every install ended at a keyboard. The technician typed the ONT ID, the serial and the address into each system that needed them. One transposed character meant a failed association, and often a second truck roll. <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></p>
       <p class="nx-p">That cost never showed up upstream. It landed on the technician, after the work was done. So in 2022, still a technician myself, I started replacing the typing with scanning.</p>
+      <figure class="nx-fig nx-fig--field" aria-hidden="true"><img src="../assets/figures/jacob-walking-site.webp" width="314" height="640" alt="" loading="lazy" decoding="async"></figure>
     </div>
     <div class="race" role="group" aria-labelledby="race-lbl">
       <noscript><p class="race-nojs">This comparison needs JavaScript. The workflow is explained below.</p></noscript>
@@ -965,10 +975,13 @@ button,input{font:inherit}
       <p class="nx-p">My titles at Centric were In-Home Installation Technician, then Fiber Installation Lead. Day to day that meant installs, fusion splicing, OTDR testing, troubleshooting and quality checks, and training the technicians who came after me.</p>
       <p class="nx-p">The tools came from the same place: a problem I hit on the job, then a fix the next person could use without me. The 2022 workflow is formulas I wrote in a spreadsheet. By 2025, AI was turning ideas like these into applications. For Nexus, I wrote the specs, directed the AI-assisted build, tested every screen and decided what went in.</p>
     </div>
+    <div class="nx-role-side">
     <ul class="nx-rail">
       <li><b>8</b><span>employees trained in our fiber methods <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></li>
       <li><b>2 markets</b><span>Austin and San Antonio, covered as a two-person team <span class="fr-ev fr-ev--mark" data-ev="recalled">Recalled</span></span></li>
     </ul>
+    <figure class="nx-fig nx-fig--desk" aria-hidden="true"><img src="../assets/figures/jacob-working.webp" width="440" height="640" alt="" loading="lazy" decoding="async"></figure>
+    </div>
   </div>
 </section>
 
