@@ -122,6 +122,14 @@
 }
 .h-work-head p{margin:0 0 22px;color:var(--fr-ink-2);max-width:40em}
 .h-work-head .fr-key{max-width:60rem}
+/* editorial figure: presents the work heading; wide screens only */
+.h-work-head>.h-col{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center}
+.h-work-head>.h-col>*{grid-column:1/-1}
+.h-work-head .h-fig{grid-column:1;grid-row:1;margin:0 clamp(16px,2vw,28px) 20px 0;pointer-events:none;user-select:none}
+.h-work-head .h-work-title{grid-column:2;grid-row:1}
+.h-fig img{display:block;width:auto;height:clamp(160px,13vw,190px)}
+@media (prefers-color-scheme:dark){.h-fig img{filter:drop-shadow(0 0 1px rgba(255,255,255,.5))}}
+@media (max-width:900px){.h-work-head .h-fig{display:none}}
 
 /* ---- timeline ---- */
 .h-tl{list-style:none;margin:0;padding:0}
@@ -386,8 +394,11 @@
     <section id="work" aria-labelledby="work-title">
       <div class="h-row h-work-head">
         <div class="h-col">
+          <figure class="h-fig" aria-hidden="true"><img src="./assets/figures/jacob-presenting-results.webp" width="357" height="640" alt="" loading="lazy" decoding="async"></figure>
+          <div class="h-work-title">
           <h2 id="work-title">Technician, lead, project manager</h2>
           <p>Four case studies, placed where they happened.</p>
+          </div>
           <div id="explore" class="px px-lens" role="region" aria-label="Evidence for a role" hidden></div>
           <div class="fr-key">
             <p class="fr-key-title">How each claim is sourced</p>
