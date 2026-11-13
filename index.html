@@ -65,6 +65,90 @@
 }
 .h-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
+
+/* ---- proof strip: one sourced result per era, each a link to its case.
+   Miniature work artifacts approved 2026-11-13 (Codex source, Lucide symbols).
+   The art is decorative; the value, label, detail and evidence tag carry the claim. ---- */
+.h-proof{grid-column:1/-1;--bp-paper:#fffefa;--bp-red:#d4453e;--bp-shadow:color-mix(in srgb,var(--fr-ink) 7%,transparent);margin-top:clamp(6px,1.5vw,18px)}
+@media (prefers-color-scheme:dark){.h-proof{--bp-paper:#252b2a;--bp-red:#ff796d}}
+.h-proof .bp-heading{margin:0 0 clamp(16px,2vw,24px);font:600 .75rem/1 var(--fr-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--fr-muted)}
+.h-proof ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2.6vw,36px)}
+.h-proof li{--era:#6553b1;min-width:0}
+.h-proof li[data-era="centric"]{--era:#9c7f15}
+.h-proof li[data-era="omni"]{--era:#4776aa}
+@media (prefers-color-scheme:dark){
+  .h-proof li{--era:#b1a3ef}
+  .h-proof li[data-era="centric"]{--era:#d5bc59}
+  .h-proof li[data-era="omni"]{--era:#88add7}
+}
+.h-proof a{display:flex;flex-direction:column;height:100%;padding-top:15px;border-top:3px solid var(--era);color:var(--fr-ink);text-decoration:none}
+.h-proof a:focus-visible{outline:2px solid var(--fr-mark);outline-offset:6px}
+.h-proof a:hover .bp-value{color:var(--fr-mark-ink)}
+.h-proof .bp-era{display:block;margin:0 0 8px;font:650 .6875rem/1.2 var(--fr-sans);letter-spacing:.07em;text-transform:uppercase;color:var(--fr-muted)}
+.h-proof .bp-art{height:154px;display:flex;justify-content:center;align-items:center;margin-bottom:16px;color:var(--fr-ink)}
+.h-proof .bp-value{display:block;margin:0 0 10px;font:780 clamp(1.3125rem,2.4vw,1.875rem)/1.1 var(--fr-sans);letter-spacing:-.04em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.h-proof .bp-label{display:block;margin:0 0 7px;font:650 .875rem/1.35 var(--fr-sans)}
+.h-proof .bp-detail{display:block;font:400 .8125rem/1.5 var(--fr-sans);color:var(--fr-muted)}
+.h-proof .fr-ev{margin-top:auto;padding-top:14px;font-size:.75rem}
+/* artifact scenes (ported unchanged in geometry from the approved source) */
+.h-proof .bp-scene{position:relative;width:166px;height:146px;flex:none}
+.h-proof .bp-scene svg{display:block}
+.h-proof .bp-paper{position:absolute;left:37px;top:11px;width:91px;height:124px;box-sizing:border-box;padding:10px 9px;background:var(--bp-paper);border:1.5px solid var(--fr-muted);border-radius:3px;transform:rotate(-5deg);box-shadow:3px 3px 0 var(--bp-shadow)}
+.h-proof .bp-paper-head{display:flex;align-items:center;gap:5px;color:var(--fr-muted);font:600 8px/1 var(--fr-sans);letter-spacing:.05em;margin-bottom:9px}
+.h-proof .bp-paper-head svg{width:13px;height:13px;stroke-width:1.5;flex:none}
+.h-proof .bp-checks{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.h-proof .bp-checks span{height:14px;background:color-mix(in srgb,var(--era) 9%,var(--bp-paper));border-radius:1px;display:flex;align-items:center;justify-content:center;color:var(--era)}
+.h-proof .bp-checks svg{width:10px;height:10px;stroke-width:1.8}
+.h-proof .bp-paper-foot{height:2px;background:var(--fr-rule);width:42px;margin-top:9px}
+.h-proof .bp-phone{position:absolute;left:5px;top:22px;width:57px;height:104px;box-sizing:border-box;background:var(--bp-paper);border:1.5px solid var(--fr-muted);border-radius:10px;transform:rotate(-5deg);box-shadow:3px 3px 0 var(--bp-shadow);display:flex;align-items:center;justify-content:center}
+.h-proof .bp-phone::before{content:"";position:absolute;top:8px;left:18px;width:18px;height:2px;background:var(--fr-rule);border-radius:2px}
+.h-proof .bp-phone::after{content:"";position:absolute;bottom:6px;left:19px;width:15px;height:2px;background:var(--fr-rule);border-radius:2px}
+.h-proof .bp-phone svg{width:35px;height:35px;stroke-width:1.5}
+.h-proof .bp-beam{position:absolute;left:45px;top:53px;width:50px;height:26px;background:linear-gradient(90deg,color-mix(in srgb,var(--bp-red) 6%,transparent),color-mix(in srgb,var(--bp-red) 21%,transparent));clip-path:polygon(0 0,100% 42%,100% 58%,0 100%);transform:rotate(-10deg)}
+.h-proof .bp-laser{position:absolute;left:53px;top:62px;width:39px;height:1px;background:var(--bp-red);transform:rotate(-10deg);box-shadow:0 0 5px color-mix(in srgb,var(--bp-red) 65%,transparent)}
+.h-proof .bp-gun{position:absolute;left:89px;top:44px;width:64px;height:76px;transform:rotate(-11deg)}
+.h-proof .bp-gun-head{position:absolute;top:0;left:0;width:57px;height:31px;box-sizing:border-box;background:var(--bp-paper);border:1.5px solid var(--fr-muted);border-radius:4px 10px 7px 4px;z-index:3;box-shadow:inset 0 -5px 0 color-mix(in srgb,var(--era) 11%,var(--bp-paper))}
+.h-proof .bp-gun-lens{position:absolute;left:3px;top:5px;width:5px;height:18px;background:color-mix(in srgb,var(--bp-red) 65%,var(--bp-paper));border:1px solid var(--bp-red);border-radius:1px;box-shadow:-3px 0 7px color-mix(in srgb,var(--bp-red) 35%,transparent)}
+.h-proof .bp-gun-seam{position:absolute;left:18px;top:5px;width:26px;height:11px;border-bottom:1px solid var(--fr-rule)}
+.h-proof .bp-gun-light{position:absolute;left:44px;top:5px;width:3px;height:3px;border-radius:50%;background:var(--era)}
+.h-proof .bp-grip{position:absolute;left:29px;top:24px;width:17px;height:48px;background:var(--bp-paper);border:1.5px solid var(--fr-muted);border-radius:3px 3px 6px 5px;transform:rotate(-22deg);transform-origin:top;z-index:2;box-shadow:inset -4px 0 0 color-mix(in srgb,var(--era) 11%,var(--bp-paper))}
+.h-proof .bp-grip::before{content:"";position:absolute;left:3px;top:17px;width:8px;height:17px;background:repeating-linear-gradient(0deg,transparent 0 4px,var(--fr-rule) 4px 5px)}
+.h-proof .bp-grip::after{content:"";position:absolute;left:3px;bottom:4px;width:8px;height:2px;background:var(--era);border-radius:1px}
+.h-proof .bp-trigger{position:absolute;left:21px;top:26px;width:8px;height:15px;border:1.5px solid var(--fr-muted);border-top:0;border-radius:0 0 5px 5px;transform:rotate(-15deg);z-index:1;background:color-mix(in srgb,var(--era) 17%,var(--bp-paper))}
+.h-proof .bp-sources{position:absolute;inset:0 0 auto;height:42px;display:flex;align-items:flex-start;justify-content:space-between;gap:4px}
+.h-proof .bp-source{position:relative;display:flex;align-items:center;justify-content:center;width:26px;height:30px;color:var(--fr-muted);background:var(--bp-paper);border:1px solid var(--fr-rule);border-radius:2px;box-sizing:border-box}
+.h-proof .bp-source svg{width:18px;height:18px;stroke-width:1.5}
+.h-proof .bp-source:nth-child(1){transform:rotate(-12deg);top:7px}
+.h-proof .bp-source:nth-child(2){transform:rotate(-5deg);top:1px}
+.h-proof .bp-source:nth-child(4){transform:rotate(5deg);top:1px}
+.h-proof .bp-source:nth-child(5){transform:rotate(12deg);top:7px}
+.h-proof .bp-source::after{content:"";position:absolute;top:32px;left:12px;height:14px;width:1px;background:var(--fr-rule)}
+.h-proof .bp-source:first-child::after{transform:rotate(-24deg);transform-origin:top}
+.h-proof .bp-source:last-child::after{transform:rotate(24deg);transform-origin:top}
+.h-proof .bp-funnel{position:absolute;top:45px;left:47px;color:var(--era);width:72px;height:51px}
+.h-proof .bp-funnel svg{width:72px;height:51px;stroke-width:1.5;fill:color-mix(in srgb,var(--era) 7%,var(--bp-paper))}
+.h-proof .bp-brief{position:absolute;left:57px;top:101px;width:52px;height:38px;box-sizing:border-box;border:1.5px solid var(--fr-muted);border-radius:2px;background:var(--bp-paper);display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 var(--bp-shadow);color:var(--era)}
+.h-proof .bp-brief>svg{width:32px;height:25px;stroke-width:1.5}
+.h-proof .bp-clock{position:absolute;right:-12px;bottom:-5px;background:var(--fr-bg);border-radius:50%;padding:2px;color:var(--era)}
+.h-proof .bp-clock svg{width:23px;height:23px;stroke-width:1.5}
+/* narrow: artifact left, result right, one per row (approved mobile layout) */
+@media (max-width:760px){
+  .h-proof ul{grid-template-columns:minmax(0,1fr);gap:26px}
+  .h-proof a{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:12px;align-content:start}
+  .h-proof .bp-era{grid-column:1/-1}
+  .h-proof .bp-art{grid-column:1;grid-row:2/7;height:140px;margin:0;justify-content:flex-start;align-self:center}
+  .h-proof .bp-scene{transform:scale(.62);transform-origin:left center}
+  .h-proof .bp-value,.h-proof .bp-label,.h-proof .bp-detail,.h-proof .fr-ev{grid-column:2}
+  .h-proof .bp-value{font-size:1.4375rem}
+  .h-proof .fr-ev{margin-top:0;padding-top:12px;justify-self:start}
+}
+@media (max-width:640px){.h-proof{order:5}}
+@media (max-width:350px){
+  .h-proof a{grid-template-columns:86px minmax(0,1fr);column-gap:9px}
+  .h-proof .bp-scene{transform:scale(.51)}
+  .h-proof .bp-value{font-size:1.3125rem}
+}
+
 /* ---- body grid shared by intro and timeline ---- */
 .h-body{position:relative;margin-top:clamp(22px,3vw,40px)}
 .h-body::before{
@@ -259,8 +343,8 @@ html,body{overflow-x:clip}
   .pv-a-foot{border-top-color:#2c2c2a}
 }
 
-/* The opening-day photo places the operating review in a real career. */
-.pv-a-photo{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--fr-rule)}
+/* The Genius Bar photo places the operating review in a real career. */
+.pv-a-photo{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 38%;border:1px solid var(--fr-rule)}
 .pv-apple--photo .pv-a-page{margin:-44px 0 0 38px;box-shadow:0 8px 24px #0000000d}
 @media(max-width:480px){.pv-apple--photo .pv-a-page{margin:-24px 0 0 18px;padding:18px 16px}}
 
@@ -395,7 +479,7 @@ html,body{overflow-x:clip}
         <div class="h-intro-text">
         <div class="h-bio">
           <p>I manage projects, people and AI, and I build the systems that connect them. I find where the work breaks down, design the tool that fixes it, direct how it gets built, and run it every day until the results show up in the numbers.</p>
-          <p>AI made me faster at work I was already doing. At Apple I went from the sales floor to leading a distributed support team. In fiber I went from installer to installation lead to project manager over forty concurrent builds. In every role, people did the work. My job was to give them tools built to outlast me: processes a team can run on its own, whether I’m online or not, and in one case, still in use after I left.</p>
+          <p>AI made me faster at work I was already doing. In every role, people did the work. My job was to give them tools built to outlast me: processes a team can run on its own, whether I’m online or not.</p>
         </div>
         <div class="h-open">
           <p>Open to product operations, technical program, implementation and operations manager roles. Based in the San Antonio, Texas area.
@@ -403,6 +487,35 @@ html,body{overflow-x:clip}
           <a href="https://www.linkedin.com/in/jacobizamarripa" target="_blank" rel="noopener">Contact me on LinkedIn</a>
         </div>
         </div>
+        <section class="h-proof" aria-labelledby="proof-title">
+          <h2 class="bp-heading" id="proof-title">Results from the work</h2>
+          <ul>
+          <li data-era="apple"><a href="./apple-rtl/">
+            <span class="bp-era">Apple</span>
+            <span class="bp-art" aria-hidden="true"><div class="bp-scene" aria-hidden="true"><div class="bp-paper"><div class="bp-paper-head"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0"></path><circle cx="10" cy="8" r="5"></circle><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"></path></svg><span>REVIEW</span></div><div class="bp-checks"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span></div><div class="bp-paper-foot"></div></div></div></span>
+            <b class="bp-value">16 of 16</b>
+            <span class="bp-label">Team performance</span>
+            <span class="bp-detail">Four KPIs above benchmark.<br>Four periods running.</span>
+            <span class="fr-ev" data-ev="measured">Measured</span>
+          </a></li>
+          <li data-era="centric"><a href="./centric-fiberops/">
+            <span class="bp-era">Centric Fiber</span>
+            <span class="bp-art" aria-hidden="true"><div class="bp-scene" aria-hidden="true"><div class="bp-phone"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-qr-code"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></div><div class="bp-beam"></div><div class="bp-laser"></div><div class="bp-gun"><div class="bp-trigger"></div><div class="bp-grip"></div><div class="bp-gun-head"><div class="bp-gun-lens"></div><div class="bp-gun-seam"></div><div class="bp-gun-light"></div></div></div></div></span>
+            <b class="bp-value">~10 → ~2 min</b>
+            <span class="bp-label">Technician closeout</span>
+            <span class="bp-detail">My QR workflow.<br>Still in use.</span>
+            <span class="fr-ev" data-ev="recalled">Recalled</span>
+          </a></li>
+          <li data-era="omni"><a href="./omni-pmo/">
+            <span class="bp-era">Omni Fiber</span>
+            <span class="bp-art" aria-hidden="true"><div class="bp-scene" aria-hidden="true"><div class="bp-sources"><span class="bp-source"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-file-spreadsheet"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></svg></span><span class="bp-source"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></span><span class="bp-source"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></span><span class="bp-source"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-file-text"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></span><span class="bp-source"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-table-properties"><path d="M15 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M21 9H3"></path><path d="M21 15H3"></path></svg></span></div><div class="bp-funnel"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-funnel"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path></svg></div><div class="bp-brief"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-chart-no-axes-combined"><path d="M12 16v5"></path><path d="M16 14.639V21"></path><path d="M20 10.656V21"></path><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"></path><path d="M4 18.463V21"></path><path d="M8 14.656V21"></path></svg><span class="bp-clock"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-clock-3"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6h4"></path></svg></span></div></div></span>
+            <b class="bp-value">6–8 h → ~2 h</b>
+            <span class="bp-label">Meeting preparation</span>
+            <span class="bp-detail">Spreadsheets, email and database records.<br>One brief for my weekly prep.</span>
+            <span class="fr-ev" data-ev="recorded">Recorded</span>
+          </a></li>
+          </ul>
+        </section>
       </div>
     </div>
 
@@ -466,7 +579,7 @@ html,body{overflow-x:clip}
               </div>
               <a class="h-pv" href="./apple-rtl/" tabindex="-1" aria-hidden="true">
                 <div class="pv-apple pv-apple--photo" data-fr-reveal>
-                  <img class="pv-a-photo" src="./apple-rtl/photos/domain-opening-cleanup-v3.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
+                  <img class="pv-a-photo" src="./apple-rtl/photos/genius-bar-enhanced-v1.webp" width="1086" height="1448" alt="" loading="lazy" decoding="async">
                   <div class="pv-a-page">
                     <div class="pv-a-top"><b>Period review</b><span>FY21 P02–P05</span></div>
                     <p class="pv-a-cap">Team against site benchmark, four KPIs</p>
